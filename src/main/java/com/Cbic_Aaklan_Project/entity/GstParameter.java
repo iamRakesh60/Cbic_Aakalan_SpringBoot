@@ -1,6 +1,8 @@
 package com.Cbic_Aaklan_Project.entity;
 
-public class GstParameter {
+import java.io.Serializable;
+
+public class GstParameter implements Serializable {
     private String zoneName;
     private String commName;
     private String zone_code;

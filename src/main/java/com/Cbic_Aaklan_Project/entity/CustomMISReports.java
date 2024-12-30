@@ -1,6 +1,8 @@
 package com.Cbic_Aaklan_Project.entity;
 
-public class CustomMISReports {
+import java.io.Serializable;
+
+public class CustomMISReports implements Serializable {
     private String zone_name;
     private String zone_code;
     private Double weighted_average;

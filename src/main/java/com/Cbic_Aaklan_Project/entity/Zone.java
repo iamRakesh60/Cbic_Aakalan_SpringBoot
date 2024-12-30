@@ -1,6 +1,8 @@
 package com.Cbic_Aaklan_Project.entity;
 
-public class Zone {
+import java.io.Serializable;
+
+public class Zone implements Serializable {
     private String name;
     private String code;
 

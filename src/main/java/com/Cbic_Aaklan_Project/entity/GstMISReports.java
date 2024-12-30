@@ -1,6 +1,8 @@
 package com.Cbic_Aaklan_Project.entity;
 
-public class GstMISReports {
+import java.io.Serializable;
+
+public class GstMISReports implements Serializable {
     private String zone_name;
     private String zone_code;
     private Double weighted_average;
