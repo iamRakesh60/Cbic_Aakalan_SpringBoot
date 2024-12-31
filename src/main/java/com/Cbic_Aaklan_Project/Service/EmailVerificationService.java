@@ -9,7 +9,8 @@ import java.util.Map;
 public class EmailVerificationService {
     static  final Map<String, String> emailOtpMapping = new HashMap<>();
 
-//    public Map<String, String> verifyOtp(String email, String otp) {
-//        String storedOtp = emailOtpMapping.get(email);
-//    }
+    public Map<String, String> verifyOtp(String email, String otp) {
+        String storedOtp = emailOtpMapping.get(email);
+        return null;
+    }
 }

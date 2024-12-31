@@ -2,25 +2,28 @@ package com.Cbic_Aaklan_Project.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Entity
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "user")
-public class User implements Serializable {
+public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
     private Long id;
 
     private String name;
     private String email;
     private String password;
-    private String mobile;
+
     private boolean emailVerivacation;
+
+    private LocalDateTime registrationTime;
 
     public Long getId() {
         return id;
@@ -54,19 +57,19 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public String getMobile() {
-        return mobile;
-    }
-
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
-    }
-
     public boolean isEmailVerivacation() {
         return emailVerivacation;
     }
 
     public void setEmailVerivacation(boolean emailVerivacation) {
         this.emailVerivacation = emailVerivacation;
+    }
+
+    public LocalDateTime getRegistrationTime() {
+        return registrationTime;
+    }
+
+    public void setRegistrationTime(LocalDateTime registrationTime) {
+        this.registrationTime = registrationTime;
     }
 }

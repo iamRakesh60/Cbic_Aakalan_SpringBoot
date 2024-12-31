@@ -1,16 +1,37 @@
 package com.Cbic_Aaklan_Project.Service;
 
 import com.Cbic_Aaklan_Project.entity.User;
+import com.Cbic_Aaklan_Project.repository.UserEmailRepository;
 import com.Cbic_Aaklan_Project.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 public class UserService {
+
     @Autowired
     private UserRepository userRepository;
 
-    public User registerUser(User user) {
-        return userRepository.save(user);
+    @Autowired
+    private UserEmailRepository userEmailRepository;
+
+    public boolean registerUser(User user) {
+        if (userEmailRepository.existsByEmail(user.getEmail())) {
+            user.setEmailVerivacation(true);
+            user.setRegistrationTime(LocalDateTime.now());
+            userRepository.save(user);
+            return true;
+        }
+        return false;
+    }
+
+    public void updatePassword(String email, String newPassword) {
+        User user = userRepository.findByEmail(email);
+        if (user != null) {
+            user.setPassword(newPassword);
+            userRepository.save(user);
+        }
     }
 }
