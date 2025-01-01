@@ -35,6 +35,24 @@ public class AdminController {
         return response;
     }
 
+    @PostMapping("/login")
+    // http://localhost:8080/api/login
+    public Map<String, String> loginUser(@RequestBody Map<String, String> request) {
+        String email = request.get("email");
+        String password = request.get("password");
+        Map<String, String> response = new HashMap<>();
+
+        boolean isAuthenticated = userService.authenticateUser(email, password);
+        if (isAuthenticated) {
+            response.put("status", "success");
+            response.put("message", "Login successful.");
+        } else {
+            response.put("status", "failure");
+            response.put("message", "Invalid email or password.");
+        }
+        return response;
+    }
+
     @PostMapping("/forget-password")
     // http://localhost:8080/api/forget-password
     public Map<String, String> forgetPassword(@RequestBody Map<String, String> request) {

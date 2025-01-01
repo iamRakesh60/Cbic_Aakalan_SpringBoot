@@ -27,6 +27,11 @@ public class UserService {
         return false;
     }
 
+    public boolean authenticateUser(String email, String password) {
+        User user = userRepository.findByEmail(email);
+        return user != null && user.getPassword().equals(password);
+    }
+
     public void updatePassword(String email, String newPassword) {
         User user = userRepository.findByEmail(email);
         if (user != null) {
