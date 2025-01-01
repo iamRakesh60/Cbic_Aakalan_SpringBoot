@@ -20,7 +20,11 @@ public class EmailService {
     public void sendOtpEmail(String email) {
         String otp = generateOtp();
         otpStore.put(email, otp);
-        sendEmail(email, "OTP for Password Reset", "Your OTP is: " + otp);
+        sendEmail(email, "Email Verification Code for AAKLAN DASHBOARD",
+                "To verify your email address, please use the following One-Time Password (OTP): " + otp  +
+                        "                        \"\\n This OTP is valid for the next 10 minutes. Please do not share it with anyone.\\n\" +\n" +
+                        "                        \"If you did not initiate this request, please contact our support team immediately.\\n\" +\n" +
+                        "                        \"Best regards,\\u2028The Aaklan Team");
     }
 
     public boolean verifyOtp(String email, String otp) {
@@ -29,6 +33,15 @@ public class EmailService {
 
     private String generateOtp() {
         return String.format("%06d", new Random().nextInt(1000000));
+    }
+
+    public void sendThankYouEmail(String email, String name) {
+        String subject = "Welcome to DGMP AAKLAN!";
+        String message = String.format(
+                "Hello %s,\n\nThank you for registering with AAKLAN DASHBOARD.\nWe are delighted to have you on board.\n\nBest Regards,\nThe AAKLAN Team",
+                name
+        );
+        sendEmail(email, subject, message);
     }
 
     private void sendEmail(String to, String subject, String text) {

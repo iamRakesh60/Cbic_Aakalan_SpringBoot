@@ -80,4 +80,24 @@ public class AdminController {
 
         return response;
     }
+
+    @PostMapping("/update-password")
+    // http://localhost:8080/api/update-password
+    public Map<String, String> updatePassword(@RequestBody Map<String, String> request) {
+        String email = request.get("email");
+        String oldPassword = request.get("oldPassword");
+        String newPassword = request.get("newPassword");
+
+        Map<String, String> response = new HashMap<>();
+
+        boolean isUpdated = userService.updatePasswordIfOldMatches(email, oldPassword, newPassword);
+        if (isUpdated) {
+            response.put("status", "success");
+            response.put("message", "Password updated successfully.");
+        } else {
+            response.put("status", "failure");
+            response.put("message", "Invalid email or old password.");
+        }
+        return response;
+    }
 }
