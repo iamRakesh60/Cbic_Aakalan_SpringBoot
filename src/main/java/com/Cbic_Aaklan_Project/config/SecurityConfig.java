@@ -35,7 +35,7 @@ public class SecurityConfig {
 
         manager.createUser(org.springframework.security.core.userdetails.User
                 .withUsername("CBIC")
-                .password(passwordEncoder.encode("Cbic@2024"))
+                .password(passwordEncoder.encode("Cbic@2024@"))
                 .roles("USER") // Assign roles as needed
                 .build());
 
