@@ -1,7 +1,7 @@
 //package com.Cbic_Aaklan_Project.config;
 //
-//import jakarta.servlet.*;
-//import jakarta.servlet.http.*;
+//import javax.servlet.*;
+//import javax.servlet.http.*;
 //import org.springframework.stereotype.*;
 //
 //import java.io.*;

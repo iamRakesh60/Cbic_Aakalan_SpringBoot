@@ -2,11 +2,15 @@ package com.Cbic_Aaklan_Project.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
 
 @Configuration
 public class SecurityConfig {
@@ -14,11 +18,13 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf().disable() // Disable CSRF for simplicity (not recommended for production)
-                .authorizeRequests()
-                .antMatchers("/cbicApi/**").authenticated() // Secure all /api endpoints
+                .cors()
                 .and()
-                .httpBasic(); // Enable Basic Authentication
+                .csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/cbicApi/**").authenticated() // Secure all /cbicApi endpoints
+                .and()
+                .httpBasic();
 
         return http.build();
     }
@@ -36,9 +42,23 @@ public class SecurityConfig {
         manager.createUser(org.springframework.security.core.userdetails.User
                 .withUsername("CBIC")
                 .password(passwordEncoder.encode("Cbic@2024@"))
-                .roles("USER") // Assign roles as needed
+                .roles("USER")
                 .build());
 
         return manager;
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
+        configuration.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+
+        return source;
     }
 }
