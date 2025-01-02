@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
  */
 
 //@CrossOrigin
-@RequestMapping("/cbic/custom/parameter")
+@RequestMapping("/cbicApi/cbic/custom/parameter")
 @Controller
 public class CustomParameterController {
     private Logger logger = LoggerFactory.getLogger(CustomParameterController.class);

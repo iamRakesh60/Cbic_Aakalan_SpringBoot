@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 //@CrossOrigin
-@RequestMapping("/cbic/MIS")
+@RequestMapping("/cbicApi/cbic/MIS")
 @Controller
 public class GstMISController {
     private Logger logger = LoggerFactory.getLogger(GstMISController.class);

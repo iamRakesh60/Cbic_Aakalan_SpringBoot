@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
  * @Author: @Kinshuk_Maity
  */
 //@CrossOrigin
-@RequestMapping("/cbic") //....
+@RequestMapping("/cbicApi/cbic") //....
 @Controller
 public class GstSubParameterController {
     private Logger logger = LoggerFactory.getLogger(GstSubParameterController.class);

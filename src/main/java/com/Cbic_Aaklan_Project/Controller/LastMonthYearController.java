@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 //@CrossOrigin
-@RequestMapping("/cbic/MonthYear")
+@RequestMapping("/cbicApi/cbic/MonthYear")
 @Controller
 public class LastMonthYearController {
     private Logger logger = LoggerFactory.getLogger(LastMonthYearController.class);

@@ -16,7 +16,7 @@ public class SecurityConfig {
         http
                 .csrf().disable() // Disable CSRF for simplicity (not recommended for production)
                 .authorizeRequests()
-                .antMatchers("/api/**").authenticated() // Secure all /api endpoints
+                .antMatchers("/cbicApi/**").authenticated() // Secure all /api endpoints
                 .and()
                 .httpBasic(); // Enable Basic Authentication
 

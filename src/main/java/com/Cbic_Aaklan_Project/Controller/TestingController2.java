@@ -20,7 +20,7 @@ import java.sql.SQLException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@RequestMapping("/cbic/testing2")
+@RequestMapping("/cbicApi/cbic/testing2")
 @Controller
 public class TestingController2 {
     private Logger logger = LoggerFactory.getLogger(TestingController2.class);

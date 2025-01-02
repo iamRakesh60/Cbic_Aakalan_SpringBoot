@@ -22,7 +22,7 @@
 //import java.util.stream.IntStream;
 //
 ////@CrossOrigin
-//@RequestMapping("/cbic/CustomMISReports")
+//@RequestMapping("/cbicApi/cbic/CustomMISReports")
 //@Controller
 //public class CustomMISReportsController {
 //    private Logger logger = LoggerFactory.getLogger(CustomMISReportsController.class);

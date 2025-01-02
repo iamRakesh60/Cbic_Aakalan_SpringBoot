@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 
 
 //@CrossOrigin
-@RequestMapping("/cbic/t_score")
+@RequestMapping("/cbicApi/cbic/t_score")
 @Controller
 public class GstParameterController {
 	private Logger logger = LoggerFactory.getLogger(GstParameterController.class);

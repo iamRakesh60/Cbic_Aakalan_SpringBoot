@@ -21,7 +21,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-@RequestMapping("/cbic/t_score/testing")
+@RequestMapping("/cbicApi/cbic/t_score/testing")
 @Controller
 public class TestingController {
     private Logger logger = LoggerFactory.getLogger(TestingController.class);

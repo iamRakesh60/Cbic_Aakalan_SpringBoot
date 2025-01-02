@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 //
 //@CrossOrigin
-@RequestMapping("/cbic/allParameter")
+@RequestMapping("/cbicApi/cbic/allParameter")
 @Controller
 public class AllParameterCGSTController {
     private Logger logger = LoggerFactory.getLogger(AllParameterCGSTController.class);

@@ -19,7 +19,7 @@ import java.util.*;
 
 // In this controller we will try to fatch data from cus6a,6b,6c,6d,6e,6f and try to make parameter
 @Controller
-@RequestMapping("/controller/Custom")
+@RequestMapping("/cbicApi/controller/Custom")
 public class TestingController3 {
     private Logger logger = LoggerFactory.getLogger(TestingController3.class);
     CustomGreadeScore score = new CustomGreadeScore();

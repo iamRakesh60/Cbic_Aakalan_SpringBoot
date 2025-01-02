@@ -12,7 +12,7 @@ import java.sql.Connection;
 import java.util.Arrays;
 import java.util.List;
 
-@RequestMapping("/zoneName")
+@RequestMapping("/cbicApi/zoneName")
 @Controller
 public class ZoneGstCustom {
     private Logger logger = LoggerFactory.getLogger(ZoneGstCustom.class);
