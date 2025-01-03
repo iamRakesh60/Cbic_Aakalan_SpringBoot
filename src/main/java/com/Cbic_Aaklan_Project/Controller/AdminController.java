@@ -3,6 +3,7 @@ package com.Cbic_Aaklan_Project.Controller;
 import com.Cbic_Aaklan_Project.Service.EmailService;
 import com.Cbic_Aaklan_Project.Service.UserService;
 import com.Cbic_Aaklan_Project.entity.User;
+import com.Cbic_Aaklan_Project.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,8 +48,10 @@ public class AdminController {
 
         boolean isAuthenticated = userService.authenticateUser(email, password);
         if (isAuthenticated) {
+            String token = JwtUtil.generateToken(email); // Generate JWT Token
             response.put("status", "success");
             response.put("message", "Login successful.");
+            response.put("token", token); // Add token to response
             return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
             response.put("status", "failure");
@@ -56,6 +59,7 @@ public class AdminController {
             return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
         }
     }
+
 
     @PostMapping("/forget-password")
     // http://localhost:8080/api/forget-password
