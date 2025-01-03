@@ -36,9 +36,9 @@ public class EmailService {
     }
 
     public void sendThankYouEmail(String email, String name) {
-        String subject = "Welcome to DGMP AAKLAN!";
+        String subject = "Welcome to DGMP Aakalan!";
         String message = String.format(
-                "Hello %s,\n\nThank you for registering with AAKLAN DASHBOARD.\nWe are delighted to have you on board.\n\nBest Regards,\nThe AAKLAN Team",
+                "Hello %s,\n\nThank you for registering with AAKALAN DASHBOARD.\nWe are delighted to have you on board.\n\nBest Regards,\nThe Aakalan Technical Team",
                 name
         );
         sendEmail(email, subject, message);

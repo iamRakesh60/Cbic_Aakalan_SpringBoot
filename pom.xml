@@ -8,11 +8,11 @@
 		<version>2.7.17</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.myblog</groupId>
-	<artifactId>myblog11</artifactId>
+	<groupId>com.CbicAkalan</groupId>
+	<artifactId>CbicAkalan</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>myblog11</name>
-	<description>Demo project for blog application</description>
+	<name>CBIC_AAKALAN_SpringBoot</name>
+	<description>Spring Boot project for Aakalan application</description>
 	<url/>
 	<licenses>
 		<license/>
