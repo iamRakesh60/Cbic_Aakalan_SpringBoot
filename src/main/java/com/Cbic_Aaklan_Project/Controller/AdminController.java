@@ -23,7 +23,7 @@ public class AdminController {
     private EmailService emailService;
 
     @PostMapping("/registration")
-    // http://localhost:8080/api/registration
+    // http://localhost:8080/cbicApi/api/registration
     public ResponseEntity<Map<String, String>> registerUser(@RequestBody User user) {
         Map<String, String> response = new HashMap<>();
         boolean isRegistered = userService.registerUser(user);
@@ -40,7 +40,7 @@ public class AdminController {
     }
 
     @PostMapping("/login")
-    // http://localhost:8080/api/login
+    // http://localhost:8080/cbicApi/api/login
     public ResponseEntity<Map<String, String>> loginUser(@RequestBody Map<String, String> request) {
         String email = request.get("email");
         String password = request.get("password");
@@ -56,13 +56,13 @@ public class AdminController {
         } else {
             response.put("status", "failure");
             response.put("message", "Invalid email or password.");
-            return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(response, HttpStatus.OK);
         }
     }
 
 
     @PostMapping("/forget-password")
-    // http://localhost:8080/api/forget-password
+    // http://localhost:8080/cbicApi/api/forget-password
     public ResponseEntity<Map<String, String>> forgetPassword(@RequestBody Map<String, String> request) {
         String email = request.get("email");
         String otp = request.get("otp");
@@ -91,7 +91,7 @@ public class AdminController {
     }
 
     @PostMapping("/update-password")
-    // http://localhost:8080/api/update-password
+    // http://localhost:8080/cbicApi/api/update-password
     public ResponseEntity<Map<String, String>> updatePassword(@RequestBody Map<String, String> request) {
         String email = request.get("email");
         String oldPassword = request.get("oldPassword");
