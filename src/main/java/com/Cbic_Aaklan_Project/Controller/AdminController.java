@@ -1,7 +1,7 @@
 package com.Cbic_Aaklan_Project.Controller;
 
 import com.Cbic_Aaklan_Project.Service.EmailService;
-import com.Cbic_Aaklan_Project.Service.UserService;
+import com.Cbic_Aaklan_Project.Service.AdminService;
 import com.Cbic_Aaklan_Project.entity.User;
 import com.Cbic_Aaklan_Project.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ import java.util.Map;
 public class AdminController {
 
     @Autowired
-    private UserService userService;
+    private AdminService adminService;
 
     @Autowired
     private EmailService emailService;
@@ -26,7 +26,7 @@ public class AdminController {
     // http://localhost:8080/cbicApi/api/registration
     public ResponseEntity<Map<String, String>> registerUser(@RequestBody User user) {
         Map<String, String> response = new HashMap<>();
-        boolean isRegistered = userService.registerUser(user);
+        boolean isRegistered = adminService.registerUser(user);
 
         if (isRegistered) {
             response.put("status", "success");
@@ -46,7 +46,7 @@ public class AdminController {
         String password = request.get("password");
         Map<String, String> response = new HashMap<>();
 
-        boolean isAuthenticated = userService.authenticateUser(email, password);
+        boolean isAuthenticated = adminService.authenticateUser(email, password);
         if (isAuthenticated) {
             String token = JwtUtil.generateToken(email); // Generate JWT Token
             response.put("status", "success");
@@ -78,7 +78,7 @@ public class AdminController {
         } else {
             boolean isVerified = emailService.verifyOtp(email, otp);
             if (isVerified) {
-                userService.updatePassword(email, newPassword);
+                adminService.updatePassword(email, newPassword);
                 response.put("status", "success");
                 response.put("message", "Password updated successfully.");
                 return new ResponseEntity<>(response, HttpStatus.OK);
@@ -99,7 +99,7 @@ public class AdminController {
 
         Map<String, String> response = new HashMap<>();
 
-        boolean isUpdated = userService.updatePasswordIfOldMatches(email, oldPassword, newPassword);
+        boolean isUpdated = adminService.updatePasswordIfOldMatches(email, oldPassword, newPassword);
         if (isUpdated) {
             response.put("status", "success");
             response.put("message", "Password updated successfully.");
