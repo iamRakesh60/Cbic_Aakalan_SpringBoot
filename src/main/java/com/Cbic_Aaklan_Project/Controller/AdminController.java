@@ -26,16 +26,28 @@ public class AdminController {
     // http://localhost:8080/cbicApi/api/registration
     public ResponseEntity<Map<String, String>> registerUser(@RequestBody User user) {
         Map<String, String> response = new HashMap<>();
-        boolean isRegistered = adminService.registerUser(user);
+        String result = adminService.registerUser(user);
 
-        if (isRegistered) {
-            response.put("status", "success");
-            response.put("message", "User registered successfully.");
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        } else {
-            response.put("status", "failure");
-            response.put("message", "Email not allowed for registration.");
-            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        switch (result) {
+            case "success":
+                response.put("status", "success");
+                response.put("message", "User registered successfully.");
+                return new ResponseEntity<>(response, HttpStatus.OK);
+
+            case "not_allowed":
+                response.put("status", "failure");
+                response.put("message", "Email not allowed for registration.");
+                return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+
+            case "already_registered":
+                response.put("status", "failure");
+                response.put("message", "User is already registered.");
+                return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+
+            default:
+                response.put("status", "failure");
+                response.put("message", "Unexpected error.");
+                return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

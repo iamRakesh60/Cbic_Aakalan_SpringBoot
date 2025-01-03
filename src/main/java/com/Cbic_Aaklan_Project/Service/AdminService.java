@@ -23,17 +23,24 @@ public class AdminService {
     @Autowired
     private EmailService emailService;
 
-    public boolean registerUser(User user) {
+    public String registerUser(User user) {
+        // Check if the user is already registered
+        if (userRepository.findByEmail(user.getEmail()) != null) {
+            return "already_registered";
+        }
+
+        // Check if the email is allowed for registration
         if (userEmailRepository.existsByEmail(user.getEmail())) {
             user.setEmailVerivacation(true);
             user.setRegistrationTime(LocalDateTime.now());
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             userRepository.save(user);
             emailService.sendThankYouEmail(user.getEmail(), user.getName());
-
-            return true;
+            return "success";
         }
-        return false;
+
+        // Email not allowed for registration
+        return "not_allowed";
     }
 
     public boolean authenticateUser(String email, String password) {
