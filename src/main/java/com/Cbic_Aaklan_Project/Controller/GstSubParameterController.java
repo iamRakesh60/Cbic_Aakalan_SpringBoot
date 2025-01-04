@@ -24,7 +24,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 /*
- * @Author: @Kinshuk_Maity
+ * @Author: @Rakesh shit
  */
 //@CrossOrigin
 @RequestMapping("/cbicApi/cbic") //....
@@ -89,8 +89,8 @@ public class GstSubParameterController {
                     Double numerator_3a = rsGst14aa.getDouble("col6");
                     int Zonal_rank = 0;
                     String gst = "no";
-                    
-                    
+
+
                     String absval=String.valueOf(col6)+"/"+String.valueOf(col2 + col4);
 
                     if((col2 + col4) != 0) {
@@ -130,8 +130,8 @@ public class GstSubParameterController {
                     Double numerator_3a = rsGst14aa.getDouble("col6");
                     int Zonal_rank = 0;
                     String gst = "no";
-                    
-                    
+
+
                     String absval=String.valueOf(col6)+"/"+String.valueOf(col2 + col4);
 
                     if((col2 + col4) != 0) {
@@ -170,8 +170,8 @@ public class GstSubParameterController {
                     Double numerator_3a = rsGst14aa.getDouble("col6");
                     int Zonal_rank = 0;
                     String gst = "no";
-                    
-                    
+
+
                     String absval=String.valueOf(col6)+"/"+String.valueOf(col2 + col4);
 
                     if((col2 + col4) != 0) {
@@ -191,7 +191,7 @@ public class GstSubParameterController {
                     }
                     Double sub_parameter_weighted_average = insentavization * 0.1 ;
                     sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
-                    
+
                     gsta=new GST4A(rsGst14aa.getString("ZONE_NAME"),commname,totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
@@ -204,10 +204,7 @@ public class GstSubParameterController {
         //return allGstaList;
         return allGstaList.stream()
                 .sorted(Comparator.comparing(GST4A::getTotal_score).reversed()).collect(Collectors.toList());
-            }
-
-        
-
+    }
 
     /*
      * Date: May 04, 2024
@@ -434,7 +431,7 @@ public class GstSubParameterController {
 //                .collect(Collectors.toList());
 
     }
-   
+
 
     @ResponseBody
     @RequestMapping(value = "/gst1d")
@@ -1071,7 +1068,7 @@ public class GstSubParameterController {
 
         try {
             if (type.equalsIgnoreCase("zone")) {
-                String prev_month_new = DateCalculate.getPreviousMonth(month_date);
+                String prev_month_new =DateCalculate.getPreviousMonth(month_date);
                 // Query string
 //                String queryGst14aa= "\n" +
 //                        "WITH ranked_data AS (SELECT current_data.ZONE_NAME, current_data.ZONE_CODE, current_data.col4,  current_data.col9,  current_data.col10,  current_data.col2,  previous_data.col1,\n" +
@@ -1139,10 +1136,10 @@ public class GstSubParameterController {
                     String ra = RelevantAspect.Gst3A_RA;
                     String zoneCode = rsGst14aa.getString("ZONE_CODE");
                     String commname=rsGst14aa.getString("COMM_NAME");
-                      String absval = rsGst14aa.getString("absval");
+                    String absval = rsGst14aa.getString("absval");
                     median = rsGst14aa.getDouble("median_3a");
                     Double numerator_3a = rsGst14aa.getDouble("col3a");
-                    Double t_score = rsGst14aa.getDouble("total_score"); 
+                    Double t_score = rsGst14aa.getDouble("total_score");
                     String formattedTotal = String.format("%.2f", t_score);
                     double totalScore = Double.parseDouble(formattedTotal);
                     int way_to_grade = score.marks3a(totalScore);
@@ -1168,7 +1165,7 @@ public class GstSubParameterController {
                     String zoneCode = rsGst14aa.getString("ZONE_CODE");
                     String commname=rsGst14aa.getString("COMM_NAME");
                     String absval = rsGst14aa.getString("absval");
-                    
+
                     median = rsGst14aa.getDouble("median_3a");
                     Double numerator_3a = rsGst14aa.getDouble("col3a");
                     Double t_score = rsGst14aa.getDouble("total_score");
@@ -3132,7 +3129,7 @@ public class GstSubParameterController {
                     double sub_parameter_weighted_average_bfore = insentavization * 0.6;
                     String formattedSubParameterWeightedAverage = String.format("%.2f", sub_parameter_weighted_average_bfore);
                     double sub_parameter_weighted_average = Double.parseDouble(formattedSubParameterWeightedAverage);
-                   // String absval = String.valueOf(col15) + "/" + String.valueOf(col3);
+                    // String absval = String.valueOf(col15) + "/" + String.valueOf(col3);
 //                    if ((col3) != 0){
 //                        total =(((double) (col13) * 100)/(col3));
 //                    }
@@ -3182,7 +3179,7 @@ public class GstSubParameterController {
                     double sub_parameter_weighted_average_bfore = insentavization * 0.6;
                     String formattedSubParameterWeightedAverage = String.format("%.2f", sub_parameter_weighted_average_bfore);
                     double sub_parameter_weighted_average = Double.parseDouble(formattedSubParameterWeightedAverage);
-                  //  String absval = String.valueOf(col15) + "/" + String.valueOf(col3);
+                    //  String absval = String.valueOf(col15) + "/" + String.valueOf(col3);
 //                    if ((col3) != 0){
 //                        total =(((double) (col13) * 100)/(col3));
 //                    }
@@ -3219,7 +3216,7 @@ public class GstSubParameterController {
                     String gst = "no";
 
 
-                   // String absval = String.valueOf(col15) + "/" + String.valueOf(col3);
+                    // String absval = String.valueOf(col15) + "/" + String.valueOf(col3);
 
                     int way_to_grade = score.marks8a(totalScore);
                     int insentavization = score.marks8a(totalScore);
@@ -3278,13 +3275,13 @@ public class GstSubParameterController {
                     int col21=rsGst14aa.getInt("col21");
                     int col23=rsGst14aa.getInt("col23");
                     Double t_score = rsGst14aa.getDouble("total_score");
-                   String absval=rsGst14aa.getString("abs_value");
+                    String absval=rsGst14aa.getString("abs_value");
                     int Zonal_rank = 0;
                     String gst = "no";
                     int insentavization = 0;
                     // int sub_parameter_weighted_average = 0;
                     rank=score.marks8b(total);
-                   // String absval = (col21-col23) + "/" +(col21);
+                    // String absval = (col21-col23) + "/" +(col21);
                     String formattedTotal = String.format("%.2f", t_score);
                     double totalScore = Double.parseDouble(formattedTotal);
                     //int way_to_grade = score.marks8b(totalScore);
