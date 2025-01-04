@@ -1,6 +1,7 @@
 package com.Cbic_Aaklan_Project.Service;
 
 import com.Cbic_Aaklan_Project.entity.User;
+import com.Cbic_Aaklan_Project.entity.UserEmail;
 import com.Cbic_Aaklan_Project.repository.UserEmailRepository;
 import com.Cbic_Aaklan_Project.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,5 +65,47 @@ public class AdminService {
             return true;
         }
         return false;
+    }
+
+    public boolean addEmail(String email, String role) {
+        if (!userEmailRepository.existsByEmail(email)) {
+            UserEmail userEmail = new UserEmail();
+            userEmail.setEmail(email);
+            userEmail.setRole(role);
+            userEmailRepository.save(userEmail);
+            return true;
+        }
+        return false;
+    }
+
+    // delete only from user email table
+    public boolean deleteEmailByEmail(String email) {
+        UserEmail userEmail = userEmailRepository.findByEmail(email);
+        if (userEmail != null) {
+            userEmailRepository.delete(userEmail);
+            return true;
+        }
+        return false;
+    }
+
+    // delete both from user email and user table
+    public boolean deleteEmailFromBothTables(String email) {
+        boolean isDeletedFromUserEmail = false;
+        boolean isDeletedFromUser = false;
+
+        // Delete from UserEmail table if exists
+        UserEmail userEmail = userEmailRepository.findByEmail(email);
+        if (userEmail != null) {
+            userEmailRepository.delete(userEmail);
+            isDeletedFromUserEmail = true;
+        }
+        // Delete from User table if exists
+        User user = userRepository.findByEmail(email);
+        if (user != null) {
+            userRepository.delete(user);
+            isDeletedFromUser = true;
+        }
+        // Return true if deletion happened in either or both tables
+        return isDeletedFromUserEmail || isDeletedFromUser;
     }
 }

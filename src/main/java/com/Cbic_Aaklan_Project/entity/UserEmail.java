@@ -2,10 +2,8 @@ package com.Cbic_Aaklan_Project.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+
+import javax.persistence.*;
 
 @Entity
 @AllArgsConstructor
@@ -15,7 +13,10 @@ public class UserEmail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String email;
+
+    private String role; // New field for role
 
     public Long getId() {
         return id;
@@ -31,5 +32,13 @@ public class UserEmail {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

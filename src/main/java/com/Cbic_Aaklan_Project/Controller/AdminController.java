@@ -122,4 +122,62 @@ public class AdminController {
             return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
         }
     }
+
+    @PostMapping("/add-email")
+    // http://localhost:8080/cbicApi/api/add-email
+    public ResponseEntity<Map<String, String>> addEmail(@RequestBody Map<String, String> request) {
+        String email = request.get("email");
+        String role = request.get("role");
+
+        Map<String, String> response = new HashMap<>();
+        boolean isAdded = adminService.addEmail(email, role);
+
+        if (isAdded) {
+            response.put("status", "success");
+            response.put("message", "Email added successfully.\nNow You are eligible for Registration");
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } else {
+            response.put("status", "failure");
+            response.put("message", "Email already exists.");
+            return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+        }
+    }
+
+    // email delete from only user email table
+    @DeleteMapping("/delete-email")
+    // http://localhost:8080/cbicApi/api/delete-email
+    public ResponseEntity<Map<String, String>> deleteEmail(@RequestBody Map<String, String> request) {
+        String email = request.get("email");
+        Map<String, String> response = new HashMap<>();
+        boolean isDeleted = adminService.deleteEmailByEmail(email);
+
+        if (isDeleted) {
+            response.put("status", "success");
+            response.put("message", "Email deleted successfully.");
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } else {
+            response.put("status", "failure");
+            response.put("message", "Email not found.");
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    // email delete from both user email and user table
+    @DeleteMapping("/delete-email-bothTable")
+    // http://localhost:8080/cbicApi/api/delete-email-bothTable
+    public ResponseEntity<Map<String, String>> deleteEmailFromBothtable(@RequestBody Map<String, String> request) {
+        String email = request.get("email");
+        Map<String, String> response = new HashMap<>();
+        boolean isDeleted = adminService.deleteEmailFromBothTables(email);
+
+        if (isDeleted) {
+            response.put("status", "success");
+            response.put("message", "Email deleted successfully from both tables.");
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } else {
+            response.put("status", "failure");
+            response.put("message", "Email not found in either table.");
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        }
+    }
 }
