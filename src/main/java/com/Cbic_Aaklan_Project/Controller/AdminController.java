@@ -136,7 +136,7 @@ public class AdminController {
 
         if (isAdded) {
             response.put("status", "success");
-            response.put("message", "Email added successfully.\nNow You are eligible for Registration");
+            response.put("message", "Email added successfully. Now You are eligible for Registration");
             return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
             response.put("status", "failure");
