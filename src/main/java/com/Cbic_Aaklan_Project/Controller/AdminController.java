@@ -3,24 +3,26 @@ package com.Cbic_Aaklan_Project.Controller;
 import com.Cbic_Aaklan_Project.Service.EmailService;
 import com.Cbic_Aaklan_Project.Service.AdminService;
 import com.Cbic_Aaklan_Project.entity.User;
+import com.Cbic_Aaklan_Project.entity.UserEmail;
 import com.Cbic_Aaklan_Project.util.JwtUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/cbicApi/api")
 public class AdminController {
 
-    @Autowired
     private AdminService adminService;
-
-    @Autowired
     private EmailService emailService;
+    public AdminController(AdminService adminService, EmailService emailService) {
+        this.adminService = adminService;
+        this.emailService = emailService;
+    }
 
     @PostMapping("/registration")
     // http://localhost:8080/cbicApi/api/registration
@@ -179,5 +181,21 @@ public class AdminController {
             response.put("message", "Email not found in either table.");
             return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }
+    }
+
+    // who is eligible for Registration
+    @GetMapping("/approved-user")
+    // http://localhost:8080/cbicApi/api/approved-user
+    private ResponseEntity <List<UserEmail>> approvedUser(){
+        List<UserEmail> approved_Email = adminService.approvedUser();
+        return new ResponseEntity<>(approved_Email, HttpStatus.FOUND);
+    }
+
+    // Who is register after approval
+    @GetMapping("/register-user")
+    // http://localhost:8080/cbicApi/api/register-user
+    private ResponseEntity <List<User>> registerUser(){
+        List<User> register_Email = adminService.registerUser();
+        return new ResponseEntity<>(register_Email, HttpStatus.FOUND);
     }
 }

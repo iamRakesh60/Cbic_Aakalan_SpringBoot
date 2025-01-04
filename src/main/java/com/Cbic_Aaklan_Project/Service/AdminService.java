@@ -4,25 +4,26 @@ import com.Cbic_Aaklan_Project.entity.User;
 import com.Cbic_Aaklan_Project.entity.UserEmail;
 import com.Cbic_Aaklan_Project.repository.UserEmailRepository;
 import com.Cbic_Aaklan_Project.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class AdminService {
 
-    @Autowired
     private UserRepository userRepository;
-
-    @Autowired
     private UserEmailRepository userEmailRepository;
-
-    @Autowired
     private PasswordEncoder passwordEncoder;
-    @Autowired
     private EmailService emailService;
+
+    public AdminService(UserRepository userRepository, UserEmailRepository userEmailRepository, PasswordEncoder passwordEncoder, EmailService emailService) {
+        this.userRepository = userRepository;
+        this.userEmailRepository = userEmailRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.emailService = emailService;
+    }
 
     public String registerUser(User user) {
         // Check if the user is already registered
@@ -107,5 +108,15 @@ public class AdminService {
         }
         // Return true if deletion happened in either or both tables
         return isDeletedFromUserEmail || isDeletedFromUser;
+    }
+
+    // who is eligible for Registration
+    public List<UserEmail> approvedUser() {
+        return userEmailRepository.findAll();
+    }
+
+    // Who is register after approval
+    public List<User> registerUser() {
+        return userRepository.findAll();
     }
 }
