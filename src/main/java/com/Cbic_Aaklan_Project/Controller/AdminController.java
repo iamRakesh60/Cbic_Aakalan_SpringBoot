@@ -70,7 +70,7 @@ public class AdminController {
         } else {
             response.put("status", "failure");
             response.put("message", "Invalid email or password.");
-            return new ResponseEntity<>(response, HttpStatus.OK);
+            return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
         }
     }
 

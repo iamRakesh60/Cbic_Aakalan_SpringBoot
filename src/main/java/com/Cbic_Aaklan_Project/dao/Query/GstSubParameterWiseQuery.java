@@ -2972,109 +2972,245 @@ public class GstSubParameterWiseQuery {
 				+ "";
 		return queryGst14aa;
 	}
-	// ********************************************************************************************************************************
+	// **********************************************GST_10a_ query*****************************************
 	public String QueryFor_gst10a_ZoneWise(String month_date){
 		//              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
 		String prev_month_new = DateCalculate.getPreviousMonth(month_date);
-		String queryGst14aa="SELECT \n" +
-				"    zc.ZONE_NAME, \n" +
-				"    cc.ZONE_CODE, \n" +
-				"    FORMAT(SUM(TAXPAYER_AUDITED_NO_LARGE + TAXPAYER_AUDITED_NO_MEDIUM + TAXPAYER_AUDITED_NO_SMALL), 2) AS col3,\n" +
-				"    FORMAT(SUM(TAXPAYER_ALLOTTED_AUDIT_FY_NO_LARGE + TAXPAYER_ALLOTTED_AUDIT_FY_NO_MEDIUM + TAXPAYER_ALLOTTED_AUDIT_FY_NO_SMALL), 2) AS total,\n" +
-				"    CASE \n" +
-				"        WHEN SUM(TAXPAYER_ALLOTTED_AUDIT_FY_NO_LARGE + TAXPAYER_ALLOTTED_AUDIT_FY_NO_MEDIUM + TAXPAYER_ALLOTTED_AUDIT_FY_NO_SMALL) != 0 \n" +
-				"        THEN (2 * SUM(TAXPAYER_ALLOTTED_AUDIT_FY_NO_LARGE + TAXPAYER_ALLOTTED_AUDIT_FY_NO_MEDIUM + TAXPAYER_ALLOTTED_AUDIT_FY_NO_SMALL)) / 12.0 \n" +
-				"        ELSE 0.00 \n" +
-				"    END AS col2,\n" +
-				"    (SUM(TAXPAYER_AUDITED_NO_LARGE + TAXPAYER_AUDITED_NO_MEDIUM + TAXPAYER_AUDITED_NO_SMALL) / \n" +
-				"    CASE \n" +
-				"        WHEN SUM(TAXPAYER_ALLOTTED_AUDIT_FY_NO_LARGE + TAXPAYER_ALLOTTED_AUDIT_FY_NO_MEDIUM + TAXPAYER_ALLOTTED_AUDIT_FY_NO_SMALL) != 0 \n" +
-				"        THEN (2 * SUM(TAXPAYER_ALLOTTED_AUDIT_FY_NO_LARGE + TAXPAYER_ALLOTTED_AUDIT_FY_NO_MEDIUM + TAXPAYER_ALLOTTED_AUDIT_FY_NO_SMALL)) / 12.0 \n" +
-				"        ELSE 1 \n" +
-				"    END) * 100 AS total_score\n" +
-				"FROM \n" +
-				"    mis_gst_commcode AS cc \n" +
-				"RIGHT JOIN \n" +
-				"    mis_dga_gst_adt_2 AS c2 \n" +
-				"    ON cc.COMM_CODE = c2.COMM_CODE \n" +
-				"LEFT JOIN \n" +
-				"    mis_gst_zonecode AS zc \n" +
-				"    ON zc.ZONE_CODE = cc.ZONE_CODE \n" +
-				"WHERE \n" +
-				"    c2.MM_YYYY = '" + month_date + "'  -- Replace with the appropriate month_date\n" +
-				"GROUP BY \n" +
-				"    cc.ZONE_CODE\n" +
-				"ORDER BY \n" +
-				"    total_score DESC;\n";
+		String queryGst14aa="WITH cte AS (\n"
+				+ "    SELECT \n"
+				+ "        zc.ZONE_NAME, \n"
+				+ "        zc.ZONE_CODE, \n"
+				+ "        SUM(UNIT_ALLOTTED_NO_LARGE + UNIT_ALLOTTED_NO_MEDIUM + UNIT_ALLOTTED_NO_SMALL) AS Col2, \n"
+				+ "        SUM(UNIT_AUDITED_NO_LARGE + UNIT_AUDITED_NO_MEDIUM + UNIT_AUDITED_NO_SMALL) AS Col6\n"
+				+ "    FROM \n"
+				+ "        mis_dga_gst_adt_1 AS lgl\n"
+				+ "    LEFT JOIN \n"
+				+ "        mis_gst_commcode AS cc ON lgl.COMM_CODE = cc.COMM_CODE\n"
+				+ "    LEFT JOIN \n"
+				+ "        mis_gst_zonecode AS zc ON cc.ZONE_CODE = zc.ZONE_CODE\n"
+				+ "    WHERE \n"
+				+ "        lgl.MM_YYYY = '" + month_date + "'\n"
+				+ "    GROUP BY \n"
+				+ "        zc.ZONE_CODE, zc.ZONE_NAME\n"
+				+ "),\n"
+				+ "cte1 AS (\n"
+				+ "    SELECT \n"
+				+ "        zc.ZONE_NAME, \n"
+				+ "        zc.ZONE_CODE, \n"
+				+ "        COALESCE(SUM(UNIT_ALLOTTED_NO_LARGE + UNIT_ALLOTTED_NO_MEDIUM + UNIT_ALLOTTED_NO_SMALL), 0) AS Col3, \n"
+				+ "        COALESCE(SUM(UNIT_AUDITED_NO_LARGE + UNIT_AUDITED_NO_MEDIUM + UNIT_AUDITED_NO_SMALL), 0) AS Col7\n"
+				+ "    FROM \n"
+				+ "        mis_dga_gst_adt_1 AS lgl\n"
+				+ "    LEFT JOIN \n"
+				+ "        mis_gst_commcode AS cc ON lgl.COMM_CODE = cc.COMM_CODE\n"
+				+ "    LEFT JOIN \n"
+				+ "        mis_gst_zonecode AS zc ON cc.ZONE_CODE = zc.ZONE_CODE\n"
+				+ "    WHERE \n"
+				+ "        lgl.MM_YYYY <= '"+ prev_month_new+"'\n"
+				+ "    GROUP BY \n"
+				+ "        zc.ZONE_CODE, zc.ZONE_NAME\n"
+				+ "),\n"
+				+ "median_cte AS (\n"
+				+ "    SELECT \n"
+				+ "        AVG(Col6) AS median_col6\n"
+				+ "    FROM (\n"
+				+ "        SELECT \n"
+				+ "            Col6,\n"
+				+ "            ROW_NUMBER() OVER (ORDER BY Col6 ASC) AS row_num,\n"
+				+ "            COUNT(*) OVER () AS total_rows\n"
+				+ "        FROM cte\n"
+				+ "    ) ordered_col6\n"
+				+ "    WHERE row_num IN (\n"
+				+ "        (total_rows + 1) / 2, \n"
+				+ "        total_rows / 2, \n"
+				+ "        (total_rows / 2) + 1\n"
+				+ "    )\n"
+				+ ")\n"
+				+ "SELECT \n"
+				+ "    cte.ZONE_NAME, \n"
+				+ "    cte.ZONE_CODE, \n"
+				+ "    cte.Col2, \n"
+				+ "    cte.Col6, \n"
+				+ "    SUM(cte1.Col3) OVER (PARTITION BY cte1.ZONE_CODE ORDER BY cte1.ZONE_NAME ASC) AS Col3, \n"
+				+ "    SUM(cte1.Col7) OVER (PARTITION BY cte1.ZONE_CODE ORDER BY cte1.ZONE_NAME ASC) AS Col7, \n"
+				+ "    (cte.Col6 / NULLIF(\n"
+				+ "        (SUM(cte1.Col3) OVER (PARTITION BY cte1.ZONE_CODE ORDER BY cte1.ZONE_NAME ASC) - \n"
+				+ "         SUM(cte1.Col7) OVER (PARTITION BY cte1.ZONE_CODE ORDER BY cte1.ZONE_NAME ASC)) + \n"
+				+ "         cte.Col2, 0)) * 100 AS total_score,\n"
+				+ "    median_cte.median_col6\n"
+				+ "FROM \n"
+				+ "    cte\n"
+				+ "JOIN \n"
+				+ "    cte1 ON cte.ZONE_CODE = cte1.ZONE_CODE\n"
+				+ "CROSS JOIN \n"
+				+ "    median_cte\n"
+				+ "ORDER BY \n"
+				+ "    total_score desc;";
 		return queryGst14aa;
 	}
 	public String QueryFor_gst10a_CommissonaryWise(String month_date, String zone_code){
 		//              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
 		String prev_month_new = DateCalculate.getPreviousMonth(month_date);
-		String queryGst14aa="SELECT\n" +
-				"    zc.ZONE_NAME,\n" +
-				"    cc.ZONE_CODE,\n" +
-				"    cc.COMM_NAME,\n" +
-				"    (TAXPAYER_AUDITED_NO_LARGE + TAXPAYER_AUDITED_NO_MEDIUM + TAXPAYER_AUDITED_NO_SMALL) AS col3,\n" +
-				"    (TAXPAYER_ALLOTTED_AUDIT_FY_NO_LARGE + TAXPAYER_ALLOTTED_AUDIT_FY_NO_MEDIUM + TAXPAYER_ALLOTTED_AUDIT_FY_NO_SMALL) AS total,\n" +
-				"    CASE\n" +
-				"        WHEN (TAXPAYER_ALLOTTED_AUDIT_FY_NO_LARGE + TAXPAYER_ALLOTTED_AUDIT_FY_NO_MEDIUM + TAXPAYER_ALLOTTED_AUDIT_FY_NO_SMALL) != 0\n" +
-				"        THEN (2 * (TAXPAYER_ALLOTTED_AUDIT_FY_NO_LARGE + TAXPAYER_ALLOTTED_AUDIT_FY_NO_MEDIUM + TAXPAYER_ALLOTTED_AUDIT_FY_NO_SMALL)) / 12.0\n" +
-				"        ELSE 0.00\n" +
-				"    END AS col2,\n" +
-				"    ((TAXPAYER_AUDITED_NO_LARGE + TAXPAYER_AUDITED_NO_MEDIUM + TAXPAYER_AUDITED_NO_SMALL) /\n" +
-				"        CASE\n" +
-				"            WHEN (TAXPAYER_ALLOTTED_AUDIT_FY_NO_LARGE + TAXPAYER_ALLOTTED_AUDIT_FY_NO_MEDIUM + TAXPAYER_ALLOTTED_AUDIT_FY_NO_SMALL) != 0\n" +
-				"            THEN (2 * (TAXPAYER_ALLOTTED_AUDIT_FY_NO_LARGE + TAXPAYER_ALLOTTED_AUDIT_FY_NO_MEDIUM + TAXPAYER_ALLOTTED_AUDIT_FY_NO_SMALL)) / 12.0\n" +
-				"            ELSE 1\n" +
-				"        END\n" +
-				"    ) * 100 AS total_score\n" +
-				"FROM\n" +
-				"    mis_gst_commcode AS cc\n" +
-				"RIGHT JOIN\n" +
-				"    mis_dga_gst_adt_2 AS 14c ON cc.COMM_CODE = 14c.COMM_CODE\n" +
-				"LEFT JOIN\n" +
-				"    mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
-				"WHERE\n" +
-				"    14c.MM_YYYY =  '" + month_date + "'\n" +
-				"    AND cc.ZONE_CODE = '" + zone_code + "'\n" +
-				"ORDER BY\n" +
-				"    total_score DESC\n" +
-				"LIMIT 0, 1000;\n";
+		String queryGst14aa="\n"
+				+ "WITH cte AS (\n"
+				+ "    SELECT \n"
+				+ "        zc.ZONE_NAME, \n"
+				+ "        zc.ZONE_CODE, \n"
+				+ "        cc.COMM_NAME, -- Added COMM_NAME\n"
+				+ "        SUM(UNIT_ALLOTTED_NO_LARGE + UNIT_ALLOTTED_NO_MEDIUM + UNIT_ALLOTTED_NO_SMALL) AS Col2, \n"
+				+ "        SUM(UNIT_AUDITED_NO_LARGE + UNIT_AUDITED_NO_MEDIUM + UNIT_AUDITED_NO_SMALL) AS Col6\n"
+				+ "    FROM \n"
+				+ "        mis_dga_gst_adt_1 AS lgl\n"
+				+ "    LEFT JOIN \n"
+				+ "        mis_gst_commcode AS cc ON lgl.COMM_CODE = cc.COMM_CODE\n"
+				+ "    LEFT JOIN \n"
+				+ "        mis_gst_zonecode AS zc ON cc.ZONE_CODE = zc.ZONE_CODE\n"
+				+ "    WHERE \n"
+				+ "        lgl.MM_YYYY = '" + month_date + "'\n"
+				+ "    GROUP BY \n"
+				+ "        zc.ZONE_CODE, zc.ZONE_NAME, cc.COMM_NAME -- Updated GROUP BY to include COMM_NAME\n"
+				+ "),\n"
+				+ "cte1 AS (\n"
+				+ "    SELECT \n"
+				+ "        zc.ZONE_NAME, \n"
+				+ "        zc.ZONE_CODE, \n"
+				+ "        cc.COMM_NAME, -- Added COMM_NAME\n"
+				+ "        COALESCE(SUM(UNIT_ALLOTTED_NO_LARGE + UNIT_ALLOTTED_NO_MEDIUM + UNIT_ALLOTTED_NO_SMALL), 0) AS Col3, \n"
+				+ "        COALESCE(SUM(UNIT_AUDITED_NO_LARGE + UNIT_AUDITED_NO_MEDIUM + UNIT_AUDITED_NO_SMALL), 0) AS Col7\n"
+				+ "    FROM \n"
+				+ "        mis_dga_gst_adt_1 AS lgl\n"
+				+ "    LEFT JOIN \n"
+				+ "        mis_gst_commcode AS cc ON lgl.COMM_CODE = cc.COMM_CODE\n"
+				+ "    LEFT JOIN \n"
+				+ "        mis_gst_zonecode AS zc ON cc.ZONE_CODE = zc.ZONE_CODE\n"
+				+ "    WHERE \n"
+				+ "        lgl.MM_YYYY <=  '"+ prev_month_new+"'\n"
+				+ "    GROUP BY \n"
+				+ "        zc.ZONE_CODE, zc.ZONE_NAME, cc.COMM_NAME -- Updated GROUP BY to include COMM_NAME\n"
+				+ "),\n"
+				+ "median_cte AS (\n"
+				+ "    SELECT \n"
+				+ "        AVG(Col6) AS median_col6\n"
+				+ "    FROM (\n"
+				+ "        SELECT \n"
+				+ "            Col6,\n"
+				+ "            ROW_NUMBER() OVER (ORDER BY Col6 ASC) AS row_num,\n"
+				+ "            COUNT(*) OVER () AS total_rows\n"
+				+ "        FROM cte\n"
+				+ "    ) ordered_col6\n"
+				+ "    WHERE row_num IN (\n"
+				+ "        (total_rows + 1) / 2, \n"
+				+ "        total_rows / 2, \n"
+				+ "        (total_rows / 2) + 1\n"
+				+ "    )\n"
+				+ ")\n"
+				+ "SELECT \n"
+				+ "    cte.ZONE_NAME, \n"
+				+ "    cte.ZONE_CODE, \n"
+				+ "    cte.COMM_NAME, -- Added COMM_NAME\n"
+				+ "    cte.Col2, \n"
+				+ "    cte.Col6, \n"
+				+ "    SUM(cte1.Col3) OVER (PARTITION BY cte1.ZONE_CODE, cte1.COMM_NAME ORDER BY cte1.ZONE_NAME ASC) AS Col3, -- Updated PARTITION BY to include COMM_NAME\n"
+				+ "    SUM(cte1.Col7) OVER (PARTITION BY cte1.ZONE_CODE, cte1.COMM_NAME ORDER BY cte1.ZONE_NAME ASC) AS Col7, -- Updated PARTITION BY to include COMM_NAME\n"
+				+ "    (cte.Col6 / NULLIF(\n"
+				+ "        (SUM(cte1.Col3) OVER (PARTITION BY cte1.ZONE_CODE, cte1.COMM_NAME ORDER BY cte1.ZONE_NAME ASC) - \n"
+				+ "         SUM(cte1.Col7) OVER (PARTITION BY cte1.ZONE_CODE, cte1.COMM_NAME ORDER BY cte1.ZONE_NAME ASC)) + \n"
+				+ "         cte.Col2, 0)) * 100 AS total_score,\n"
+				+ "    median_cte.median_col6\n"
+				+ "FROM \n"
+				+ "    cte\n"
+				+ "JOIN \n"
+				+ "    cte1 ON cte.ZONE_CODE = cte1.ZONE_CODE AND cte.COMM_NAME = cte1.COMM_NAME -- Added COMM_NAME to the join condition\n"
+				+ "CROSS JOIN \n"
+				+ "    median_cte\n"
+				+ "WHERE \n"
+				+ "    cte.ZONE_CODE = '" + zone_code + "'\n"
+				+ "ORDER BY \n"
+				+ "    total_score ASC;\n"
+				+ "\n"
+				+ "\n"
+				+ "\n"
+				+ "\n"
+				+ "\n"
+				+ "";
 		return queryGst14aa;
 	}
 	public String QueryFor_gst10a_AllCommissonaryWise(String month_date){
 		//              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
 		String prev_month_new = DateCalculate.getPreviousMonth(month_date);
-		String queryGst14aa="SELECT\n" +
-				"    zc.ZONE_NAME,\n" +
-				"    cc.ZONE_CODE,\n" +
-				"    cc.COMM_NAME,\n" +
-				"    (TAXPAYER_AUDITED_NO_LARGE + TAXPAYER_AUDITED_NO_MEDIUM + TAXPAYER_AUDITED_NO_SMALL) AS col3,\n" +
-				"    (TAXPAYER_ALLOTTED_AUDIT_FY_NO_LARGE + TAXPAYER_ALLOTTED_AUDIT_FY_NO_MEDIUM + TAXPAYER_ALLOTTED_AUDIT_FY_NO_SMALL) AS total,\n" +
-				"    CASE\n" +
-				"        WHEN (TAXPAYER_ALLOTTED_AUDIT_FY_NO_LARGE + TAXPAYER_ALLOTTED_AUDIT_FY_NO_MEDIUM + TAXPAYER_ALLOTTED_AUDIT_FY_NO_SMALL) != 0\n" +
-				"        THEN (2 * (TAXPAYER_ALLOTTED_AUDIT_FY_NO_LARGE + TAXPAYER_ALLOTTED_AUDIT_FY_NO_MEDIUM + TAXPAYER_ALLOTTED_AUDIT_FY_NO_SMALL)) / 12.0\n" +
-				"        ELSE 0.00\n" +
-				"    END AS col2,\n" +
-				"    ((TAXPAYER_AUDITED_NO_LARGE + TAXPAYER_AUDITED_NO_MEDIUM + TAXPAYER_AUDITED_NO_SMALL) /\n" +
-				"        CASE\n" +
-				"            WHEN (TAXPAYER_ALLOTTED_AUDIT_FY_NO_LARGE + TAXPAYER_ALLOTTED_AUDIT_FY_NO_MEDIUM + TAXPAYER_ALLOTTED_AUDIT_FY_NO_SMALL) != 0\n" +
-				"            THEN (2 * (TAXPAYER_ALLOTTED_AUDIT_FY_NO_LARGE + TAXPAYER_ALLOTTED_AUDIT_FY_NO_MEDIUM + TAXPAYER_ALLOTTED_AUDIT_FY_NO_SMALL)) / 12.0\n" +
-				"            ELSE 1\n" +
-				"        END\n" +
-				"    ) * 100 AS total_score\n" +
-				"FROM\n" +
-				"    mis_gst_commcode AS cc\n" +
-				"RIGHT JOIN\n" +
-				"    mis_dga_gst_adt_2 AS 14c ON cc.COMM_CODE = 14c.COMM_CODE\n" +
-				"LEFT JOIN\n" +
-				"    mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
-				"WHERE\n" +
-				"    14c.MM_YYYY = '" + month_date + "'\n" +
-				"ORDER BY\n" +
-				"    total_score DESC\n" +
-				"LIMIT 0, 1000;\n";
+		String queryGst14aa="WITH cte AS (\n"
+				+ "    SELECT \n"
+				+ "        zc.ZONE_NAME, \n"
+				+ "        zc.ZONE_CODE, \n"
+				+ "        cc.COMM_NAME, -- Added COMM_NAME\n"
+				+ "        SUM(UNIT_ALLOTTED_NO_LARGE + UNIT_ALLOTTED_NO_MEDIUM + UNIT_ALLOTTED_NO_SMALL) AS Col2, \n"
+				+ "        SUM(UNIT_AUDITED_NO_LARGE + UNIT_AUDITED_NO_MEDIUM + UNIT_AUDITED_NO_SMALL) AS Col6\n"
+				+ "    FROM \n"
+				+ "        mis_dga_gst_adt_1 AS lgl\n"
+				+ "    LEFT JOIN \n"
+				+ "        mis_gst_commcode AS cc ON lgl.COMM_CODE = cc.COMM_CODE\n"
+				+ "    LEFT JOIN \n"
+				+ "        mis_gst_zonecode AS zc ON cc.ZONE_CODE = zc.ZONE_CODE\n"
+				+ "    WHERE \n"
+				+ "        lgl.MM_YYYY ='" + month_date + "'\n"
+				+ "    GROUP BY \n"
+				+ "        zc.ZONE_CODE, zc.ZONE_NAME, cc.COMM_NAME -- Updated GROUP BY to include COMM_NAME\n"
+				+ "),\n"
+				+ "cte1 AS (\n"
+				+ "    SELECT \n"
+				+ "        zc.ZONE_NAME, \n"
+				+ "        zc.ZONE_CODE, \n"
+				+ "        cc.COMM_NAME, -- Added COMM_NAME\n"
+				+ "        COALESCE(SUM(UNIT_ALLOTTED_NO_LARGE + UNIT_ALLOTTED_NO_MEDIUM + UNIT_ALLOTTED_NO_SMALL), 0) AS Col3, \n"
+				+ "        COALESCE(SUM(UNIT_AUDITED_NO_LARGE + UNIT_AUDITED_NO_MEDIUM + UNIT_AUDITED_NO_SMALL), 0) AS Col7\n"
+				+ "    FROM \n"
+				+ "        mis_dga_gst_adt_1 AS lgl\n"
+				+ "    LEFT JOIN \n"
+				+ "        mis_gst_commcode AS cc ON lgl.COMM_CODE = cc.COMM_CODE\n"
+				+ "    LEFT JOIN \n"
+				+ "        mis_gst_zonecode AS zc ON cc.ZONE_CODE = zc.ZONE_CODE\n"
+				+ "    WHERE \n"
+				+ "        lgl.MM_YYYY <= '"+ prev_month_new+"'\n"
+				+ "    GROUP BY \n"
+				+ "        zc.ZONE_CODE, zc.ZONE_NAME, cc.COMM_NAME -- Updated GROUP BY to include COMM_NAME\n"
+				+ "),\n"
+				+ "median_cte AS (\n"
+				+ "    SELECT \n"
+				+ "        AVG(Col6) AS median_col6\n"
+				+ "    FROM (\n"
+				+ "        SELECT \n"
+				+ "            Col6,\n"
+				+ "            ROW_NUMBER() OVER (ORDER BY Col6 ASC) AS row_num,\n"
+				+ "            COUNT(*) OVER () AS total_rows\n"
+				+ "        FROM cte\n"
+				+ "    ) ordered_col6\n"
+				+ "    WHERE row_num IN (\n"
+				+ "        (total_rows + 1) / 2, \n"
+				+ "        total_rows / 2, \n"
+				+ "        (total_rows / 2) + 1\n"
+				+ "    )\n"
+				+ ")\n"
+				+ "SELECT \n"
+				+ "    cte.ZONE_NAME, \n"
+				+ "    cte.ZONE_CODE, \n"
+				+ "    cte.COMM_NAME, -- Added COMM_NAME\n"
+				+ "    cte.Col2, \n"
+				+ "    cte.Col6, \n"
+				+ "    SUM(cte1.Col3) OVER (PARTITION BY cte1.ZONE_CODE, cte1.COMM_NAME ORDER BY cte1.ZONE_NAME ASC) AS Col3, -- Updated PARTITION BY to include COMM_NAME\n"
+				+ "    SUM(cte1.Col7) OVER (PARTITION BY cte1.ZONE_CODE, cte1.COMM_NAME ORDER BY cte1.ZONE_NAME ASC) AS Col7, -- Updated PARTITION BY to include COMM_NAME\n"
+				+ "    (cte.Col6 / NULLIF(\n"
+				+ "        (SUM(cte1.Col3) OVER (PARTITION BY cte1.ZONE_CODE, cte1.COMM_NAME ORDER BY cte1.ZONE_NAME ASC) - \n"
+				+ "         SUM(cte1.Col7) OVER (PARTITION BY cte1.ZONE_CODE, cte1.COMM_NAME ORDER BY cte1.ZONE_NAME ASC)) + \n"
+				+ "         cte.Col2, 0)) * 100 AS total_score,\n"
+				+ "    median_cte.median_col6\n"
+				+ "FROM \n"
+				+ "    cte\n"
+				+ "JOIN \n"
+				+ "    cte1 ON cte.ZONE_CODE = cte1.ZONE_CODE AND cte.COMM_NAME = cte1.COMM_NAME -- Added COMM_NAME to the join condition\n"
+				+ "CROSS JOIN \n"
+				+ "    median_cte\n"
+				+ "ORDER BY \n"
+				+ "    total_score desc;";
 		return queryGst14aa;
 	}
 	// ********************************************************************************************************************************
