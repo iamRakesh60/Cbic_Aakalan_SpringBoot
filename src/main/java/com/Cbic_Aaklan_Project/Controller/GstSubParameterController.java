@@ -1863,7 +1863,7 @@ public class GstSubParameterController {
                     String zoneCode = rsGst14aa.getString("ZONE_CODE");
                     Double t_score = rsGst14aa.getDouble("score_of_subparameter4c");
                     String absval = rsGst14aa.getString("avsvl");
-                    median = rsGst14aa.getDouble("median_4c");
+                    median = rsGst14aa.getDouble("median");
                     int col1_7=rsGst14aa.getInt("col1_7");
                     int col1_8=rsGst14aa.getInt("col1_8");
 
@@ -1899,7 +1899,7 @@ public class GstSubParameterController {
                     String zoneCode = rsGst14aa.getString("ZONE_CODE");
                     Double t_score = rsGst14aa.getDouble("score_of_subparameter4c");
                     String absval = rsGst14aa.getString("avsvl");
-                    median = rsGst14aa.getDouble("median_4c");
+                    median = rsGst14aa.getDouble("median");
                     int col1_7=rsGst14aa.getInt("col1_7");
                     int col1_8=rsGst14aa.getInt("col1_8");
 
