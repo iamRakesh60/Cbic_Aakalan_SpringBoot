@@ -37,7 +37,7 @@ public class AdminService {
             user.setRegistrationTime(LocalDateTime.now());
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             userRepository.save(user);
-            emailService.sendThankYouEmail(user.getEmail(), user.getName());
+            // emailService.sendThankYouEmail(user.getEmail(), user.getName());
             return "success";
         }
 
