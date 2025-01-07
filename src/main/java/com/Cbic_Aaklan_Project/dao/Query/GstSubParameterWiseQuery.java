@@ -3488,7 +3488,41 @@ public class GstSubParameterWiseQuery {
 	public String QueryFor_gst10c_ZoneWise(String month_date){
 		//              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
 		String prev_month_new = DateCalculate.getPreviousMonth(month_date);
-		String queryGst14aa="";
+		String start_date=DateCalculate.getFinancialYearStart(month_date);
+		String queryGst14aa="WITH CumulativeData AS (\n" +
+				"    SELECT cc.ZONE_CODE,zc.ZONE_NAME,scr.MM_YYYY,\n" +
+				"        SUM(TOTAL_TAX_RECOVERED_TAX_AMT_LARGE + TOTAL_TAX_RECOVERED_TAX_AMT_MEDIUM + TOTAL_TAX_RECOVERED_TAX_AMT_SMALL) \n" +
+				"            OVER (PARTITION BY cc.ZONE_CODE, zc.ZONE_NAME ORDER BY scr.MM_YYYY) AS col22,\n" +
+				"        SUM(TOTAL_TAX_RECOVERED_INTEREST_AMT_LARGE + TOTAL_TAX_RECOVERED_INTEREST_AMT_MEDIUM + TOTAL_TAX_RECOVERED_INTEREST_AMT_SMALL) \n" +
+				"            OVER (PARTITION BY cc.ZONE_CODE, zc.ZONE_NAME ORDER BY scr.MM_YYYY) AS col23,\n" +
+				"        SUM(TOTAL_TAX_RECOVERED_OTHERS_AMT_LARGE + TOTAL_TAX_RECOVERED_OTHERS_AMT_MEDIUM + TOTAL_TAX_RECOVERED_OTHERS_AMT_SMALL) \n" +
+				"            OVER (PARTITION BY cc.ZONE_CODE, zc.ZONE_NAME ORDER BY scr.MM_YYYY) AS col24,\n" +
+				"        SUM(TOTAL_TAX_RECOVERED_ITC_AMT_LARGE + TOTAL_TAX_RECOVERED_ITC_AMT_MEDIUM + TOTAL_TAX_RECOVERED_ITC_AMT_SMALL) \n" +
+				"            OVER (PARTITION BY cc.ZONE_CODE, zc.ZONE_NAME ORDER BY scr.MM_YYYY) AS col26,\n" +
+				"        SUM(TOTAL_TAX_DETECTED_TAX_AMT_LARGE + TOTAL_TAX_DETECTED_TAX_AMT_MEDIUM + TOTAL_TAX_DETECTED_TAX_AMT_SMALL) \n" +
+				"            OVER (PARTITION BY cc.ZONE_CODE, zc.ZONE_NAME ORDER BY scr.MM_YYYY) AS col13,\n" +
+				"        SUM(TOTAL_TAX_DETECTED_OTHERS_AMT_LARGE + TOTAL_TAX_DETECTED_OTHERS_AMT_MEDIUM + TOTAL_TAX_DETECTED_OTHERS_AMT_SMALL) \n" +
+				"            OVER (PARTITION BY cc.ZONE_CODE, zc.ZONE_NAME ORDER BY scr.MM_YYYY) AS col14\n" +
+				"    FROM mis_gst_commcode AS cc\n" +
+				"    RIGHT JOIN mis_dga_gst_adt_3 AS scr ON cc.COMM_CODE = scr.COMM_CODE\n" +
+				"    LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
+				"    WHERE scr.MM_YYYY BETWEEN '" + start_date + "' AND '" + month_date + "'\n" +
+				"),\n" +
+				"AggregatedData AS (\n" +
+				"    SELECT ZONE_CODE,ZONE_NAME,MM_YYYY,\n" +
+				"        (MAX(col22) + MAX(col23) + MAX(col24) + MAX(col26)) AS col27,(MAX(col13) + MAX(col14)) AS col15,\n" +
+				"        CONCAT((MAX(col22) + MAX(col23) + MAX(col24) + MAX(col26)), '/', MAX(col13) + MAX(col14)) AS absvl\n" +
+				"    FROM CumulativeData WHERE MM_YYYY = '" + month_date + "' GROUP BY ZONE_CODE, ZONE_NAME, MM_YYYY\n" +
+				"),\n" +
+				"RankedData AS (\n" +
+				"    SELECT *, ROW_NUMBER() OVER (ORDER BY col27) AS row_num, COUNT(*) OVER () AS total_rows\n" +
+				"    FROM AggregatedData\n" +
+				"),\n" +
+				"MedianData AS (\n" +
+				"    SELECT CASE WHEN MOD(total_rows, 2) = 1 THEN (SELECT col27 FROM RankedData WHERE row_num = (total_rows + 1) / 2)\n" +
+				"            ELSE (SELECT AVG(col27) FROM RankedData WHERE row_num IN (total_rows / 2, total_rows / 2 + 1))\n" +
+				"        END AS median10c FROM RankedData LIMIT 1\n" +
+				") SELECT ad.*, md.median10c FROM AggregatedData AS ad CROSS JOIN MedianData AS md;\n";
 		return queryGst14aa;
 	}
 	public String QueryFor_gst10c_CommissonaryWise(String month_date, String zone_code){
