@@ -3919,7 +3919,7 @@ public class GstSubParameterController {
                     String absval = rsGst14aa.getString("absvl");
                     Double t_score;
                     if(col15 != 0){
-                        t_score = col27 / col15;
+                        t_score = (col27 / col15) * 100;
                     }else {
                         t_score = 0.00;
                     }
@@ -3959,7 +3959,7 @@ public class GstSubParameterController {
                     String absval = rsGst14aa.getString("absvl");
                     Double t_score;
                     if(col15 != 0){
-                         t_score = col27 / col15;
+                         t_score = (col27 / col15) * 100;
                     }else {
                          t_score = 0.00;
                     }
@@ -3997,7 +3997,7 @@ public class GstSubParameterController {
                     String absval = rsGst14aa.getString("absvl");
                     Double t_score;
                     if(col15 != 0){
-                        t_score = col27 / col15;
+                        t_score = (col27 / col15) * 100;
                     }else {
                         t_score = 0.00;
                     }
