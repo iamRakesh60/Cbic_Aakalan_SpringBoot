@@ -3528,13 +3528,80 @@ public class GstSubParameterWiseQuery {
 	public String QueryFor_gst10c_CommissonaryWise(String month_date, String zone_code){
 		//              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
 		String prev_month_new = DateCalculate.getPreviousMonth(month_date);
-		String queryGst14aa="";
+		String start_date=DateCalculate.getFinancialYearStart(month_date);
+		String queryGst14aa="WITH ComputedData AS (\n" +
+				"    SELECT cc.ZONE_CODE, zc.ZONE_NAME, cc.COMM_NAME,\n" +
+				"        SUM(tc.TOTAL_TAX_RECOVERED_TAX_AMT_LARGE + tc.TOTAL_TAX_RECOVERED_TAX_AMT_MEDIUM + tc.TOTAL_TAX_RECOVERED_TAX_AMT_SMALL) AS col22,\n" +
+				"        SUM(tc.TOTAL_TAX_RECOVERED_INTEREST_AMT_LARGE + tc.TOTAL_TAX_RECOVERED_INTEREST_AMT_MEDIUM + tc.TOTAL_TAX_RECOVERED_INTEREST_AMT_SMALL) AS col23,\n" +
+				"        SUM(tc.TOTAL_TAX_RECOVERED_OTHERS_AMT_LARGE + tc.TOTAL_TAX_RECOVERED_OTHERS_AMT_MEDIUM + tc.TOTAL_TAX_RECOVERED_OTHERS_AMT_SMALL) AS col24,\n" +
+				"        SUM(tc.TOTAL_TAX_RECOVERED_ITC_AMT_LARGE + tc.TOTAL_TAX_RECOVERED_ITC_AMT_MEDIUM + tc.TOTAL_TAX_RECOVERED_ITC_AMT_SMALL) AS col26,\n" +
+				"        SUM(tc.TOTAL_TAX_DETECTED_TAX_AMT_LARGE + tc.TOTAL_TAX_DETECTED_TAX_AMT_MEDIUM + tc.TOTAL_TAX_DETECTED_TAX_AMT_SMALL) AS col13,\n" +
+				"        SUM(tc.TOTAL_TAX_DETECTED_OTHERS_AMT_LARGE + tc.TOTAL_TAX_DETECTED_OTHERS_AMT_MEDIUM + tc.TOTAL_TAX_DETECTED_OTHERS_AMT_SMALL) AS col14\n" +
+				"    FROM mis_gst_commcode AS cc\n" +
+				"    RIGHT JOIN mis_dga_gst_adt_3 AS tc ON cc.COMM_CODE = tc.COMM_CODE\n" +
+				"    LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
+				"    WHERE tc.MM_YYYY BETWEEN '" + start_date + "' AND '" + month_date + "'\n" +
+				"    GROUP BY cc.ZONE_CODE, zc.ZONE_NAME, cc.COMM_NAME\n" +
+				"),\n" +
+				"RankedData AS (\n" +
+				"    SELECT ZONE_CODE, ZONE_NAME, COMM_NAME,\n" +
+				"        (col22 + col23 + col24 + col26) AS col27,(col13 + col14) AS col15,\n" +
+				"        (col22 + col23 + col24 + col26) / NULLIF((col13 + col14), 0) AS totalScore,\n" +
+				"        CONCAT((col22 + col23 + col24 + col26), '/', (col13 + col14)) AS absvl,\n" +
+				"        ROW_NUMBER() OVER (ORDER BY (col22 + col23 + col24 + col26)) AS rn,\n" +
+				"        COUNT(*) OVER () AS total_rows\n" +
+				"    FROM ComputedData\n" +
+				"),\n" +
+				"MedianCalc AS (\n" +
+				"    SELECT CASE WHEN total_rows % 2 = 1 THEN \n" +
+				"                (SELECT col27 FROM RankedData WHERE rn = (total_rows + 1) / 2)\n" +
+				"            ELSE \n" +
+				"                ((SELECT col27 FROM RankedData WHERE rn = total_rows / 2) +\n" +
+				"                 (SELECT col27 FROM RankedData WHERE rn = total_rows / 2 + 1)) / 2.0\n" +
+				"        END AS median10c\n" +
+				"    FROM (SELECT DISTINCT total_rows FROM RankedData) AS totalRowInfo\n" +
+				")\n" +
+				"SELECT r.ZONE_CODE,r.ZONE_NAME,r.COMM_NAME,r.col27,r.col15,r.totalScore,r.absvl,m.median10c\n" +
+				"FROM RankedData r\n" +
+				"CROSS JOIN MedianCalc m\n" +
+				"WHERE r.ZONE_CODE = '" + zone_code + "';";
 		return queryGst14aa;
 	}
 	public String QueryFor_gst10c_AllCommissonaryWise(String month_date){
 		//              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
 		String prev_month_new = DateCalculate.getPreviousMonth(month_date);
-		String queryGst14aa="";
+		String start_date=DateCalculate.getFinancialYearStart(month_date);
+		String queryGst14aa="WITH ComputedData AS (\n" +
+				"    SELECT cc.ZONE_CODE,zc.ZONE_NAME,cc.COMM_NAME,\n" +
+				"        SUM(tc.TOTAL_TAX_RECOVERED_TAX_AMT_LARGE + tc.TOTAL_TAX_RECOVERED_TAX_AMT_MEDIUM + tc.TOTAL_TAX_RECOVERED_TAX_AMT_SMALL) AS col22,\n" +
+				"        SUM(tc.TOTAL_TAX_RECOVERED_INTEREST_AMT_LARGE + tc.TOTAL_TAX_RECOVERED_INTEREST_AMT_MEDIUM + tc.TOTAL_TAX_RECOVERED_INTEREST_AMT_SMALL) AS col23,\n" +
+				"        SUM(tc.TOTAL_TAX_RECOVERED_OTHERS_AMT_LARGE + tc.TOTAL_TAX_RECOVERED_OTHERS_AMT_MEDIUM + tc.TOTAL_TAX_RECOVERED_OTHERS_AMT_SMALL) AS col24,\n" +
+				"        SUM(tc.TOTAL_TAX_RECOVERED_ITC_AMT_LARGE + tc.TOTAL_TAX_RECOVERED_ITC_AMT_MEDIUM + tc.TOTAL_TAX_RECOVERED_ITC_AMT_SMALL) AS col26,\n" +
+				"        SUM(tc.TOTAL_TAX_DETECTED_TAX_AMT_LARGE + tc.TOTAL_TAX_DETECTED_TAX_AMT_MEDIUM + tc.TOTAL_TAX_DETECTED_TAX_AMT_SMALL) AS col13,\n" +
+				"        SUM(tc.TOTAL_TAX_DETECTED_OTHERS_AMT_LARGE + tc.TOTAL_TAX_DETECTED_OTHERS_AMT_MEDIUM + tc.TOTAL_TAX_DETECTED_OTHERS_AMT_SMALL) AS col14\n" +
+				"    FROM mis_gst_commcode AS cc\n" +
+				"    RIGHT JOIN mis_dga_gst_adt_3 AS tc ON cc.COMM_CODE = tc.COMM_CODE\n" +
+				"    LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
+				"    WHERE tc.MM_YYYY BETWEEN '" + start_date + "' AND '" + month_date + "' \n" +
+				"    GROUP BY cc.ZONE_CODE, zc.ZONE_NAME, cc.COMM_NAME\n" +
+				"),\n" +
+				"RankedData AS (\n" +
+				"    SELECT ZONE_CODE, ZONE_NAME,COMM_NAME,(col22 + col23 + col24 + col26) AS col27,(col13 + col14) AS col15,\n" +
+				"        (col22 + col23 + col24 + col26) / NULLIF((col13 + col14), 0) AS totalScore,CONCAT((col22 + col23 + col24 + col26), '/', (col13 + col14)) AS absvl,\n" +
+				"        ROW_NUMBER() OVER (ORDER BY (col22 + col23 + col24 + col26)) AS rn,COUNT(*) OVER () AS total_rows\n" +
+				"    FROM ComputedData\n" +
+				"),\n" +
+				"MedianCalc AS (\n" +
+				"    SELECT CASE WHEN total_rows % 2 = 1 THEN \n" +
+				"                (SELECT col27  FROM RankedData  WHERE rn = (total_rows + 1) / 2)\n" +
+				"            ELSE ((SELECT col27  FROM RankedData WHERE rn = total_rows / 2) +\n" +
+				"                 (SELECT col27 FROM RankedData WHERE rn = total_rows / 2 + 1)) / 2.0\n" +
+				"        END AS median10c\n" +
+				"    FROM (SELECT DISTINCT total_rows FROM RankedData) AS totalRowInfo\n" +
+				")\n" +
+				"SELECT r.ZONE_CODE,r.ZONE_NAME,r.COMM_NAME,r.col27,r.col15,r.totalScore,r.absvl,m.median10c\n" +
+				"FROM RankedData r\n" +
+				"CROSS JOIN MedianCalc m;";
 		return queryGst14aa;
 	}
 	// ********************************************************************************************************************************
