@@ -149,19 +149,19 @@ import com.Cbic_Aaklan_Project.Service.DateCalculate;public class CustomSubParam
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
         String queryCustom2a="WITH calculated_data AS (\n" +
                 "    SELECT zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME, \n" +
-                "        (SUM(CASE WHEN c14.MM_YYYY <= '2024-10-01' THEN c14.CASES_PENDING ELSE 0 END) + SUM(c14.CASES_REMAINING)) AS col17f, \n" +
-                "        (SUM(CASE WHEN c14.MM_YYYY <= '2024-10-01' THEN c14.CASES_NOT_ACTION ELSE 0 END) + \n" +
-                "         SUM(CASE WHEN c14.MM_YYYY <= '2024-10-01' THEN c14.CASES_ADJUDICATION ELSE 0 END) + \n" +
-                "         (SUM(CASE WHEN c14.MM_YYYY <= '2024-10-01' THEN c14.CASES_PENDING ELSE 0 END) + \n" +
+                "        (SUM(CASE WHEN c14.MM_YYYY <= '" + month_date + "' THEN c14.CASES_PENDING ELSE 0 END) + SUM(c14.CASES_REMAINING)) AS col17f, \n" +
+                "        (SUM(CASE WHEN c14.MM_YYYY <= '" + month_date + "' THEN c14.CASES_NOT_ACTION ELSE 0 END) + \n" +
+                "         SUM(CASE WHEN c14.MM_YYYY <= '" + month_date + "' THEN c14.CASES_ADJUDICATION ELSE 0 END) + \n" +
+                "         (SUM(CASE WHEN c14.MM_YYYY <= '" + month_date + "' THEN c14.CASES_PENDING ELSE 0 END) + \n" +
                 "         SUM(c14.CASES_REMAINING))) AS col11 \n" +
                 "    FROM mis_gst_commcode AS cc\n" +
                 "    LEFT JOIN mis_dgi_cus_11 AS c14 ON c14.COMM_CODE = cc.COMM_CODE\n" +
                 "    LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
-                "    WHERE  c14.MM_YYYY <= '2024-10-01'  AND cc.ZONE_CODE <> '70'  AND cc.ZONE_CODE <> '59'  \n" +
+                "    WHERE  c14.MM_YYYY <= '" + month_date + "'  AND cc.ZONE_CODE <> '70'  AND cc.ZONE_CODE <> '59'  \n" +
                 "    GROUP BY zc.ZONE_CODE, zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME \n" +
-                "    HAVING (SUM(CASE WHEN c14.MM_YYYY <= '2024-10-01' THEN c14.CASES_PENDING ELSE 0 END) > 0 OR SUM(c14.CASES_REMAINING) > 0 OR \n" +
-                "    SUM(CASE WHEN c14.MM_YYYY <= '2024-10-01' THEN c14.CASES_NOT_ACTION ELSE 0 END) > 0 OR \n" +
-                "    SUM(CASE WHEN c14.MM_YYYY <= '2024-10-01' THEN c14.CASES_ADJUDICATION ELSE 0 END) > 0)\n" +
+                "    HAVING (SUM(CASE WHEN c14.MM_YYYY <= '" + month_date + "' THEN c14.CASES_PENDING ELSE 0 END) > 0 OR SUM(c14.CASES_REMAINING) > 0 OR \n" +
+                "    SUM(CASE WHEN c14.MM_YYYY <= '" + month_date + "' THEN c14.CASES_NOT_ACTION ELSE 0 END) > 0 OR \n" +
+                "    SUM(CASE WHEN c14.MM_YYYY <= '" + month_date + "' THEN c14.CASES_ADJUDICATION ELSE 0 END) > 0)\n" +
                 "),\n" +
                 "ranked_data AS (\n" +
                 "    SELECT cd.*,ROW_NUMBER() OVER (ORDER BY col17f) AS row_num,COUNT(*) OVER () AS total_rows\n" +
