@@ -176,6 +176,72 @@ import com.Cbic_Aaklan_Project.Service.DateCalculate;public class CustomSubParam
         return queryCustom2a;
     }
     // ********************************************************************************************************************************
+    public String QueryFor_cus2b_ZoneWise(String month_date){
+        //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
+        String prev_month_new = DateCalculate.getPreviousMonth(month_date);
+        String queryCustom4a="WITH calculated_data AS (\n" +
+                "    SELECT zc.ZONE_NAME, cc.ZONE_CODE, \n" +
+                "        SUM(CASE WHEN c14.MM_YYYY <= '2024-10-01' THEN c14.CASES_NOT_ACTION ELSE 0 END) AS col17b, \n" +
+                "        (SUM(CASE WHEN c14.MM_YYYY <= '2024-10-01' THEN c14.CASES_NOT_ACTION ELSE 0 END) + \n" +
+                "         SUM(CASE WHEN c14.MM_YYYY <= '2024-10-01' THEN c14.CASES_ADJUDICATION ELSE 0 END) + \n" +
+                "         (SUM(CASE WHEN c14.MM_YYYY <= '2024-10-01' THEN c14.CASES_PENDING ELSE 0 END) + \n" +
+                "         SUM(c14.CASES_REMAINING))) AS col11 \n" +
+                "    FROM mis_gst_commcode AS cc\n" +
+                "    LEFT JOIN mis_dgi_cus_11 AS c14 ON c14.COMM_CODE = cc.COMM_CODE\n" +
+                "    LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
+                "    WHERE  c14.MM_YYYY <= '2024-10-01' AND cc.ZONE_CODE <> '70'  AND cc.ZONE_CODE <> '59'  \n" +
+                "    GROUP BY zc.ZONE_CODE, zc.ZONE_NAME, cc.ZONE_CODE\n" +
+                "    HAVING \n" +
+                "        (SUM(CASE WHEN c14.MM_YYYY <= '2024-10-01' THEN c14.CASES_PENDING ELSE 0 END) > 0 OR \n" +
+                "        SUM(c14.CASES_REMAINING) > 0 OR \n" +
+                "        SUM(CASE WHEN c14.MM_YYYY <= '2024-10-01' THEN c14.CASES_NOT_ACTION ELSE 0 END) > 0 OR \n" +
+                "        SUM(CASE WHEN c14.MM_YYYY <= '2024-10-01' THEN c14.CASES_ADJUDICATION ELSE 0 END) > 0)\n" +
+                "),\n" +
+                "ranked_data AS (\n" +
+                "    SELECT cd.*,ROW_NUMBER() OVER (ORDER BY col17b) AS row_num,\n" +
+                "        COUNT(*) OVER () AS total_rows\n" +
+                "    FROM calculated_data AS cd\n" +
+                ")\n" +
+                "SELECT rd.ZONE_NAME,rd.ZONE_CODE,rd.col17b,rd.col11,\n" +
+                "    CASE WHEN total_rows % 2 = 1 THEN \n" +
+                "            (SELECT col17b FROM ranked_data WHERE row_num = (total_rows + 1) / 2)\n" +
+                "        ELSE (SELECT AVG(col17b) FROM ranked_data WHERE row_num IN (total_rows / 2, (total_rows / 2) + 1))\n" +
+                "    END AS median_2b\n" +
+                "FROM ranked_data AS rd LIMIT 0, 1000;";
+        return queryCustom4a;
+    }
+    public String QueryFor_cus2b_CommissonaryWise(String month_date, String zone_code){
+        //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
+        String prev_month_new = DateCalculate.getPreviousMonth(month_date);
+        String queryCustom4a="";
+        return queryCustom4a;
+    }
+    public String QueryFor_cus2b_AllCommissonaryWise(String month_date){
+        //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
+        String prev_month_new = DateCalculate.getPreviousMonth(month_date);
+        String queryCustom4a="";
+        return queryCustom4a;
+    }
+    // ********************************************************************************************************************************
+    public String QueryFor_cus2c_ZoneWise(String month_date){
+        //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
+        String prev_month_new = DateCalculate.getPreviousMonth(month_date);
+        String queryCustom4a="";
+        return queryCustom4a;
+    }
+    public String QueryFor_cus2c_CommissonaryWise(String month_date, String zone_code){
+        //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
+        String prev_month_new = DateCalculate.getPreviousMonth(month_date);
+        String queryCustom4a="";
+        return queryCustom4a;
+    }
+    public String QueryFor_cus2c_AllCommissonaryWise(String month_date){
+        //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
+        String prev_month_new = DateCalculate.getPreviousMonth(month_date);
+        String queryCustom4a="";
+        return queryCustom4a;
+    }
+    // ********************************************************************************************************************************
     public String QueryFor_cus4a_ZoneWise(String month_date){
         //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
