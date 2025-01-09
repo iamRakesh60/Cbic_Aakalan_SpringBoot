@@ -283,19 +283,99 @@ import com.Cbic_Aaklan_Project.Service.DateCalculate;public class CustomSubParam
     public String QueryFor_cus2c_ZoneWise(String month_date){
         //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
-        String queryCustom4a="";
+        String queryCustom4a="WITH calculated_data AS (\n" +
+                "    SELECT zc.ZONE_NAME, cc.ZONE_CODE, \n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' THEN c14.DUTY_RECOVERED_BY_DEPOSIT ELSE 0 END), 0) AS col14, \n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' THEN c14.DUTY_RECOVERED_ENFORCEMENT ELSE 0 END), 0) AS col16, \n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY <= '" + month_date + "' THEN c14.TOTAL_DUTY_EXPIRED ELSE 0 END), 0) AS col13 \n" +
+                "    FROM mis_gst_commcode AS cc\n" +
+                "    INNER JOIN mis_dgi_cus_11 AS c14 ON c14.COMM_CODE = cc.COMM_CODE\n" +
+                "    INNER JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
+                "    WHERE  c14.MM_YYYY <= '" + month_date + "' AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65') \n" +
+                "    GROUP BY zc.ZONE_CODE, zc.ZONE_NAME, cc.ZONE_CODE\n" +
+                "),\n" +
+                "ranked_data AS (\n" +
+                "    SELECT cd.*,(cd.col14 + cd.col16) AS col14_16, ROW_NUMBER() OVER (ORDER BY col14 DESC) AS row_num \n" +
+                "    FROM calculated_data AS cd\n" +
+                "),\n" +
+                "sorted_data AS (\n" +
+                "    SELECT rd.*, ROW_NUMBER() OVER (ORDER BY col14_16 ASC) AS rn,\n" +
+                "        COUNT(*) OVER () AS total_rows\n" +
+                "    FROM ranked_data AS rd\n" +
+                "),\n" +
+                "median_calc AS (\n" +
+                "    SELECT AVG(col14_16) AS median_2c\n" +
+                "    FROM sorted_data\n" +
+                "    WHERE rn IN (FLOOR((total_rows + 1) / 2), CEIL((total_rows + 1) / 2)) \n" +
+                ")\n" +
+                "SELECT rd.ZONE_NAME,rd.ZONE_CODE,rd.col14,rd.col16,rd.col13,rd.col14_16,mc.median_2c \n" +
+                "FROM ranked_data AS rd\n" +
+                "CROSS JOIN median_calc AS mc LIMIT 0, 1000;";
         return queryCustom4a;
     }
     public String QueryFor_cus2c_CommissonaryWise(String month_date, String zone_code){
         //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
-        String queryCustom4a="";
+        String queryCustom4a="WITH calculated_data AS (\n" +
+                "    SELECT zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME,\n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' THEN c14.DUTY_RECOVERED_BY_DEPOSIT ELSE 0 END), 0) AS col14, \n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' THEN c14.DUTY_RECOVERED_ENFORCEMENT ELSE 0 END), 0) AS col16,\n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY <= '" + month_date + "' THEN c14.TOTAL_DUTY_EXPIRED ELSE 0 END), 0) AS col13 \n" +
+                "    FROM mis_gst_commcode AS cc\n" +
+                "    INNER JOIN mis_dgi_cus_11 AS c14 ON c14.COMM_CODE = cc.COMM_CODE\n" +
+                "    INNER JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
+                "    WHERE  c14.MM_YYYY <= '" + month_date + "' AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65', '57') \n" +
+                "    GROUP BY zc.ZONE_CODE, zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME\n" +
+                "),\n" +
+                "ranked_data AS (\n" +
+                "    SELECT cd.*,(cd.col14 + cd.col16) AS col14_16, ROW_NUMBER() OVER (ORDER BY col14 DESC) AS row_num \n" +
+                "    FROM calculated_data AS cd\n" +
+                "),\n" +
+                "sorted_data AS (\n" +
+                "    SELECT rd.*, ROW_NUMBER() OVER (ORDER BY col14_16 ASC) AS rn,COUNT(*) OVER () AS total_rows\n" +
+                "    FROM ranked_data AS rd\n" +
+                "),\n" +
+                "median_calc AS (\n" +
+                "    SELECT AVG(col14_16) AS median_2c FROM sorted_data\n" +
+                "    WHERE rn IN (FLOOR((total_rows + 1) / 2), CEIL((total_rows + 1) / 2)) \n" +
+                ")\n" +
+                "SELECT rd.ZONE_NAME,rd.ZONE_CODE,rd.COMM_NAME,rd.col14,rd.col16,rd.col13,rd.col14_16,mc.median_2c \n" +
+                "FROM ranked_data AS rd\n" +
+                "CROSS JOIN median_calc AS mc\n" +
+                "WHERE rd.ZONE_CODE = '" + zone_code + "'  LIMIT 0, 1000;";
         return queryCustom4a;
     }
     public String QueryFor_cus2c_AllCommissonaryWise(String month_date){
         //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
-        String queryCustom4a="";
+        String queryCustom4a="WITH calculated_data AS (\n" +
+                "    SELECT zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME, \n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' THEN c14.DUTY_RECOVERED_BY_DEPOSIT ELSE 0 END), 0) AS col14, \n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' THEN c14.DUTY_RECOVERED_ENFORCEMENT ELSE 0 END), 0) AS col16,\n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY <= '" + month_date + "' THEN c14.TOTAL_DUTY_EXPIRED ELSE 0 END), 0) AS col13\n" +
+                "    FROM mis_gst_commcode AS cc\n" +
+                "    INNER JOIN mis_dgi_cus_11 AS c14 ON c14.COMM_CODE = cc.COMM_CODE\n" +
+                "    INNER JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
+                "    WHERE  c14.MM_YYYY <= '" + month_date + "' AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65','57') \n" +
+                "    GROUP BY zc.ZONE_CODE, zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME\n" +
+                "),\n" +
+                "ranked_data AS (\n" +
+                "    SELECT cd.*,(cd.col14 + cd.col16) AS col14_16, \n" +
+                "        ROW_NUMBER() OVER (ORDER BY col14 DESC) AS row_num \n" +
+                "    FROM calculated_data AS cd\n" +
+                "),\n" +
+                "sorted_data AS (\n" +
+                "    SELECT rd.*, ROW_NUMBER() OVER (ORDER BY col14_16 ASC) AS rn,COUNT(*) OVER () AS total_rows\n" +
+                "    FROM ranked_data AS rd\n" +
+                "),\n" +
+                "median_calc AS (\n" +
+                "    SELECT AVG(col14_16) AS median_2c\n" +
+                "    FROM sorted_data\n" +
+                "    WHERE rn IN (FLOOR((total_rows + 1) / 2), CEIL((total_rows + 1) / 2)) \n" +
+                ")\n" +
+                "SELECT rd.ZONE_NAME,rd.ZONE_CODE,rd.COMM_NAME, rd.col14,rd.col16,rd.col13,rd.col14_16,mc.median_2c \n" +
+                "FROM ranked_data AS rd\n" +
+                "CROSS JOIN median_calc AS mc LIMIT 0, 1000;";
         return queryCustom4a;
     }
     // ********************************************************************************************************************************
