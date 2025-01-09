@@ -341,18 +341,14 @@ public class CustomSubParameterController {
                     Double numerator_2a = rsGst14aa.getDouble("col17b");
                     String absval = String.format("%.2f", col17b) + "/" + String.format("%.2f", col11);
 
-                    rank=score.c_marks9a(total);
                     String formattedTotal = String.format("%.2f", total);
                     double totalScore = Double.parseDouble(formattedTotal);
                     int way_to_grade = score.c_marks2a(totalScore);
                     int insentavization = score.c_marks2a(totalScore);
-                    // System.out.println("insentavization3b :-" + insentavization);
 
                     if (numerator_2a > median && way_to_grade < 10) {
                         insentavization += 1;
                     }
-
-                    //System.out.println("insentavization3b after :-" + insentavization);
 
                     int Zonal_rank = 0;
                     String gst = "no";
@@ -381,7 +377,6 @@ public class CustomSubParameterController {
                     Double numerator_2a = rsGst14aa.getDouble("col17b");
                     String absval = String.format("%.2f", col17b) + "/" + String.format("%.2f", col11);
 
-                    rank=score.c_marks9a(total);
                     String formattedTotal = String.format("%.2f", total);
                     double totalScore = Double.parseDouble(formattedTotal);
                     int way_to_grade = score.c_marks2a(totalScore);
@@ -402,23 +397,22 @@ public class CustomSubParameterController {
                     allGstaList.add(gsta);
                 }
                 System.out.println("cus 2b median commi wise :- "+median);
-            }else if (type.equalsIgnoreCase("all_commissary")) {  // cus9a
+            }else if (type.equalsIgnoreCase("all_commissary")) {  // cus2b
                 //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
-                String queryGst14aa = new CustomSubParameterWiseQuery().QueryFor_cus2a_AllCommissonaryWise(month_date);
+                String queryGst14aa = new CustomSubParameterWiseQuery().QueryFor_cus2b_AllCommissonaryWise(month_date);
                 ResultSet rsGst14aa = GetExecutionSQL.getResult(queryGst14aa);
                 while(rsGst14aa.next()) {
-                    String ra= CustomRelaventAspect.cus2a_RA;
+                    String ra= CustomRelaventAspect.cus2b_RA;
                     String zoneCode = rsGst14aa.getString("ZONE_CODE");
                     String zoneName =rsGst14aa.getString("ZONE_NAME");
                     String commname= rsGst14aa.getString("COMM_NAME");
-                    double col17f=rsGst14aa.getDouble("col17f");
+                    double col17b=rsGst14aa.getDouble("col17b");
                     double col11=rsGst14aa.getDouble("col11");
-                    total = (col17f / col11) * 100;
-                    median = rsGst14aa.getDouble("median_2a");
-                    Double numerator_2a = rsGst14aa.getDouble("col17f");
-                    String absval = String.format("%.2f", col17f) + "/" + String.format("%.2f", col11);
+                    total = (col17b / col11) * 100;
+                    median = rsGst14aa.getDouble("median_2b");
+                    Double numerator_2a = rsGst14aa.getDouble("col17b");
+                    String absval = String.format("%.2f", col17b) + "/" + String.format("%.2f", col11);
 
-                    rank=score.c_marks9a(total);
                     String formattedTotal = String.format("%.2f", total);
                     double totalScore = Double.parseDouble(formattedTotal);
                     int way_to_grade = score.c_marks2a(totalScore);
@@ -432,13 +426,13 @@ public class CustomSubParameterController {
                     String gst = "no";
 
                     // 2 floating point
-                    double sub_parameter_weighted_average = insentavization * 0.3 ;
+                    double sub_parameter_weighted_average = insentavization * 0.4 ;
                     sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
                     gsta=new GST4A(zoneName,commname,totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
-                System.out.println("cus 2a median commi wise :- "+median);
+                System.out.println("cus 2b median commi wise :- "+median);
             }
         } catch (SQLException e) {
             e.printStackTrace();
