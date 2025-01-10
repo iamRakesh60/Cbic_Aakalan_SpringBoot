@@ -355,7 +355,7 @@ public class CustomSubParameterController {
                     String gst = "no";
 
                     // 2 floating point
-                    double sub_parameter_weighted_average = insentavization * 0.4 ;
+                    double sub_parameter_weighted_average = way_to_grade * 0.4 ;
                     sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
                     gsta=new GST4A(zoneName,commname,totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
@@ -391,7 +391,7 @@ public class CustomSubParameterController {
                     String gst = "no";
 
                     // 2 floating point
-                    double sub_parameter_weighted_average = insentavization * 0.4 ;
+                    double sub_parameter_weighted_average = way_to_grade * 0.4 ;
                     sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
                     gsta=new GST4A(zoneName,commname,totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
@@ -427,7 +427,7 @@ public class CustomSubParameterController {
                     String gst = "no";
 
                     // 2 floating point
-                    double sub_parameter_weighted_average = insentavization * 0.4 ;
+                    double sub_parameter_weighted_average = way_to_grade * 0.4 ;
                     sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
                     gsta=new GST4A(zoneName,commname,totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
