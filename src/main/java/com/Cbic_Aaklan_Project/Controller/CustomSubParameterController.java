@@ -482,8 +482,8 @@ public class CustomSubParameterController {
 
                     String formattedTotal = String.format("%.2f", total);
                     double totalScore = Double.parseDouble(formattedTotal);
-                    int way_to_grade = score.c_marks2a(totalScore);
-                    int insentavization = score.c_marks2a(totalScore);
+                    int way_to_grade = score.c_marks2c(totalScore);
+                    int insentavization = score.c_marks2c(totalScore);
 
                     if (numerator_2c > median && way_to_grade < 10) {
                         insentavization += 1;
@@ -525,8 +525,8 @@ public class CustomSubParameterController {
 
                     String formattedTotal = String.format("%.2f", total);
                     double totalScore = Double.parseDouble(formattedTotal);
-                    int way_to_grade = score.c_marks2a(totalScore);
-                    int insentavization = score.c_marks2a(totalScore);
+                    int way_to_grade = score.c_marks2c(totalScore);
+                    int insentavization = score.c_marks2c(totalScore);
 
                     if (numerator_2c > median && way_to_grade < 10) {
                         insentavization += 1;
@@ -568,8 +568,8 @@ public class CustomSubParameterController {
 
                     String formattedTotal = String.format("%.2f", total);
                     double totalScore = Double.parseDouble(formattedTotal);
-                    int way_to_grade = score.c_marks2a(totalScore);
-                    int insentavization = score.c_marks2a(totalScore);
+                    int way_to_grade = score.c_marks2c(totalScore);
+                    int insentavization = score.c_marks2c(totalScore);
 
                     if (numerator_2c > median && way_to_grade < 10) {
                         insentavization += 1;
