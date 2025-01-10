@@ -344,8 +344,8 @@ public class CustomSubParameterController {
 
                     String formattedTotal = String.format("%.2f", total);
                     double totalScore = Double.parseDouble(formattedTotal);
-                    int way_to_grade = score.c_marks2a(totalScore);
-                    int insentavization = score.c_marks2a(totalScore);
+                    int way_to_grade = score.c_marks2b(totalScore);
+                    int insentavization = score.c_marks2b(totalScore);
 
                     if (numerator_2a > median && way_to_grade < 10) {
                         insentavization += 1;
@@ -380,8 +380,8 @@ public class CustomSubParameterController {
 
                     String formattedTotal = String.format("%.2f", total);
                     double totalScore = Double.parseDouble(formattedTotal);
-                    int way_to_grade = score.c_marks2a(totalScore);
-                    int insentavization = score.c_marks2a(totalScore);
+                    int way_to_grade = score.c_marks2b(totalScore);
+                    int insentavization = score.c_marks2b(totalScore);
 
                     if (numerator_2a > median && way_to_grade < 10) {
                         insentavization += 1;
@@ -416,8 +416,8 @@ public class CustomSubParameterController {
 
                     String formattedTotal = String.format("%.2f", total);
                     double totalScore = Double.parseDouble(formattedTotal);
-                    int way_to_grade = score.c_marks2a(totalScore);
-                    int insentavization = score.c_marks2a(totalScore);
+                    int way_to_grade = score.c_marks2b(totalScore);
+                    int insentavization = score.c_marks2b(totalScore);
 
                     if (numerator_2a > median && way_to_grade < 10) {
                         insentavization += 1;
@@ -614,11 +614,11 @@ public class CustomSubParameterController {
             } else if (type.equalsIgnoreCase("commissary")) {  // cus3a
                 String queryGst14aa = new CustomSubParameterWiseQuery().QueryFor_cus3a_CommissonaryWise(month_date,zone_code);
                 ResultSet rsGst14aa = GetExecutionSQL.getResult(queryGst14aa);
-                allGstaList.addAll(customSubParameterService.cus3aZoneWiseCommi(rsGst14aa));
+                allGstaList.addAll(customSubParameterService.cus3aZoneWiseCommissionary(rsGst14aa));
             }else if (type.equalsIgnoreCase("all_commissary")) {  // cus3a
                 String queryGst14aa = new CustomSubParameterWiseQuery().QueryFor_cus3a_AllCommissonaryWise(month_date);
                 ResultSet rsGst14aa = GetExecutionSQL.getResult(queryGst14aa);
-                allGstaList.addAll(customSubParameterService.cus3aAllCommissionar(rsGst14aa));
+                allGstaList.addAll(customSubParameterService.cus3aAllCommissionary(rsGst14aa));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -626,9 +626,69 @@ public class CustomSubParameterController {
         return allGstaList.stream().sorted(Comparator.comparing(GST4A::getTotal_score).reversed()).collect(Collectors.toList());
     }
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=cus3B*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+    @ResponseBody
+    @RequestMapping(value = "/cus3b")
+    //  http://localhost:8080/cbicApi/cbic/custom/cus3b?month_date=2024-10-01&type=zone
+    //  http://localhost:8080/cbicApi/cbic/custom/cus3b?month_date=2024-10-01&zone_code=58&type=commissary
+    //  http://localhost:8080/cbicApi/cbic/custom/cus3b?month_date=2024-10-01&type=all_commissary
+    public Object Custom3b(@RequestParam String month_date,@RequestParam String type, @RequestParam(required = false) String zone_code){
+        List<GST4A> allGstaList = new ArrayList<>();
+        GST4A gsta = null;
+        int rank = 0;
+        double total = 0.00;
+        Double median = 0.00;
 
+        try {
+            if (type.equalsIgnoreCase("zone")) { // cus3b
+                String queryGst14aa = new CustomSubParameterWiseQuery().QueryFor_cus3b_ZoneWise(month_date);
+                ResultSet rsGst14aa = GetExecutionSQL.getResult(queryGst14aa);
+                allGstaList.addAll(customSubParameterService.cus3bZone(rsGst14aa));
+            } else if (type.equalsIgnoreCase("commissary")) {  // cus3b
+                String queryGst14aa = new CustomSubParameterWiseQuery().QueryFor_cus3b_CommissonaryWise(month_date,zone_code);
+                ResultSet rsGst14aa = GetExecutionSQL.getResult(queryGst14aa);
+                allGstaList.addAll(customSubParameterService.cus3bZoneWiseCommissionary(rsGst14aa));
+            }else if (type.equalsIgnoreCase("all_commissary")) {  // cus3b
+                String queryGst14aa = new CustomSubParameterWiseQuery().QueryFor_cus3b_AllCommissonaryWise(month_date);
+                ResultSet rsGst14aa = GetExecutionSQL.getResult(queryGst14aa);
+                allGstaList.addAll(customSubParameterService.cus3bAllCommissionary(rsGst14aa));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return allGstaList.stream().sorted(Comparator.comparing(GST4A::getTotal_score)).collect(Collectors.toList());
+    }
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=cus3C*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+    @ResponseBody
+    @RequestMapping(value = "/cus3c")
+    //  http://localhost:8080/cbicApi/cbic/custom/cus3c?month_date=2024-10-01&type=zone
+    //  http://localhost:8080/cbicApi/cbic/custom/cus3c?month_date=2024-10-01&zone_code=58&type=commissary
+    //  http://localhost:8080/cbicApi/cbic/custom/cus3c?month_date=2024-10-01&type=all_commissary
+    public Object Custom3c(@RequestParam String month_date,@RequestParam String type, @RequestParam(required = false) String zone_code){
+        List<GST4A> allGstaList = new ArrayList<>();
+        GST4A gsta = null;
+        int rank = 0;
+        double total = 0.00;
+        Double median = 0.00;
 
+        try {
+            if (type.equalsIgnoreCase("zone")) { // cus3b
+                String queryGst14aa = new CustomSubParameterWiseQuery().QueryFor_cus3c_ZoneWise(month_date);
+                ResultSet rsGst14aa = GetExecutionSQL.getResult(queryGst14aa);
+                allGstaList.addAll(customSubParameterService.cus3cZone(rsGst14aa));
+            } else if (type.equalsIgnoreCase("commissary")) {  // cus3b
+                String queryGst14aa = new CustomSubParameterWiseQuery().QueryFor_cus3c_CommissonaryWise(month_date,zone_code);
+                ResultSet rsGst14aa = GetExecutionSQL.getResult(queryGst14aa);
+                allGstaList.addAll(customSubParameterService.cus3cZoneWiseCommissionary(rsGst14aa));
+            }else if (type.equalsIgnoreCase("all_commissary")) {  // cus3b
+                String queryGst14aa = new CustomSubParameterWiseQuery().QueryFor_cus3b_AllCommissonaryWise(month_date);
+                ResultSet rsGst14aa = GetExecutionSQL.getResult(queryGst14aa);
+                allGstaList.addAll(customSubParameterService.cus3cAllCommissionary(rsGst14aa));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return allGstaList.stream().sorted(Comparator.comparing(GST4A::getTotal_score)).collect(Collectors.toList());
+    }
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=cus4A*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
 
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=cus4B*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
