@@ -288,7 +288,8 @@ public class GstSubParameterController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return allGstaList;
+        return allGstaList.stream().sorted(Comparator.comparing(GST4A::getTotal_score)
+                ).collect(Collectors.toList());
     }
 
 
@@ -301,9 +302,9 @@ public class GstSubParameterController {
 
     @ResponseBody
     @RequestMapping(value = "/gst1c")
-    //  http://localhost:8080/cbicApi/cbic/gst1c?month_date=2023-04-01&type=zone
-    //  http://localhost:8080/cbicApi/cbic/gst1c?month_date=2023-04-01&zone_code=70&type=commissary
-//	  http://localhost:8080/cbicApi/cbic/gst1c?month_date=2023-04-01&type=all_commissary
+    //  http://localhost:8080/cbicApi/cbic/gst1c?month_date=2024-10-01&type=zone
+    //  http://localhost:8080/cbicApi/cbic/gst1c?month_date=2024-10-01&zone_code=70&type=commissary
+//	  http://localhost:8080/cbicApi/cbic/gst1c?month_date=2024-10-01&type=all_commissary
     public Object getGst1C(@RequestParam String month_date, @RequestParam String type, @RequestParam(required = false) String zone_code) {
         List<GST4A> allGstaList = new ArrayList<>();
         GST4A gsta = null;
@@ -425,10 +426,9 @@ public class GstSubParameterController {
         }catch (SQLException e) {
             e.printStackTrace();
         }
-        return allGstaList;
-//        return allGstaList.stream()
-//                .sorted(Comparator.comparing(GST4A::getSub_parameter_weighted_average))
-//                .collect(Collectors.toList());
+//        return allGstaList;
+        return allGstaList.stream().sorted(Comparator.comparing(GST4A::getTotal_score)
+                .reversed()).collect(Collectors.toList());
 
     }
 
@@ -559,7 +559,8 @@ public class GstSubParameterController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return allGstaList;
+        return allGstaList.stream().sorted(Comparator.comparing(GST4A::getTotal_score)
+                ).collect(Collectors.toList());
     }
 
     /*
@@ -682,7 +683,8 @@ public class GstSubParameterController {
         } catch (SQLException e) {
             e.printStackTrace() ;
         }
-        return allGstaList;
+        return allGstaList.stream().sorted(Comparator.comparing(GST4A::getTotal_score)
+        ).collect(Collectors.toList());
     }
 
 
@@ -802,7 +804,8 @@ public class GstSubParameterController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return allGstaList;
+        return allGstaList.stream().sorted(Comparator.comparing(GST4A::getTotal_score)
+        ).collect(Collectors.toList());
     }
 
     /*
