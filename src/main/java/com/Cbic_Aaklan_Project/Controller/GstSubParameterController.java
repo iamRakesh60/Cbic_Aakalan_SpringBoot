@@ -102,8 +102,8 @@ public class GstSubParameterController {
                     rank = score.marks1a(total);
                     String formattedTotal = String.format("%.2f", total);
                     double totalScore = Double.parseDouble(formattedTotal);
-                    int way_to_grade = score.marks3a(totalScore);
-                    int insentavization = score.marks3a(totalScore);
+                    int way_to_grade = score.marks1a(totalScore);
+                    int insentavization = score.marks1a(totalScore);
 
                     if (numerator_3a > median && way_to_grade < 10) {
                         insentavization += 1;
@@ -143,8 +143,8 @@ public class GstSubParameterController {
                     rank = score.marks1a(total);
                     String formattedTotal = String.format("%.2f", total);
                     double totalScore = Double.parseDouble(formattedTotal);
-                    int way_to_grade = score.marks3a(totalScore);
-                    int insentavization = score.marks3a(totalScore);
+                    int way_to_grade = score.marks1a(totalScore);
+                    int insentavization = score.marks1a(totalScore);
 
                     if (numerator_3a > median && way_to_grade < 10) {
                         insentavization += 1;
@@ -183,8 +183,8 @@ public class GstSubParameterController {
                     rank = score.marks1a(total);
                     String formattedTotal = String.format("%.2f", total);
                     double totalScore = Double.parseDouble(formattedTotal);
-                    int way_to_grade = score.marks3a(totalScore);
-                    int insentavization = score.marks3a(totalScore);
+                    int way_to_grade = score.marks1a(totalScore);
+                    int insentavization = score.marks1a(totalScore);
 
                     if (numerator_3a > median && way_to_grade < 10) {
                         insentavization += 1;
