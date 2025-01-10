@@ -867,7 +867,6 @@ public class GstSubParameterController {
                     String ra=RelevantAspect.Gst2_RA;
                     String zoneCode = rsGst14aa.getString("ZONE_CODE");
                     String commname=rsGst14aa.getString("COMM_NAME");
-                    //String zoneName = rsGst14aa.getString("ZONE_NAME");
                     int col21=rsGst14aa.getInt("col21");
                     int col3=rsGst14aa.getInt("col3");
                     int Zonal_rank = 0;
@@ -875,7 +874,6 @@ public class GstSubParameterController {
                     int insentavization = 0;
                     String absval=String.valueOf(col21)+"/"+String.valueOf(col3);
 
-                    //total=((double) col21 / col3);
                     total=(((double) col21) * 100 / col3);
                     String formattedTotal = String.format("%.2f", total);
                     double totalScore = Double.parseDouble(formattedTotal);
