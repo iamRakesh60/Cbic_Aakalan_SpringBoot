@@ -3778,12 +3778,9 @@ public class GstSubParameterController {
 
 
         try {
-            // Query string
             if (type.equalsIgnoreCase("zone")) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst10b_ZoneWise(month_date);
-
                 ResultSet rsGst14aa =GetExecutionSQL.getResult(queryGst14aa);
-
                 while(rsGst14aa.next()) {
                     String ra= RelevantAspect.Gst10B_RA;
                     String zoneCode = rsGst14aa.getString("ZONE_CODE");
@@ -3794,18 +3791,10 @@ public class GstSubParameterController {
                     Double t_score = rsGst14aa.getDouble("total_score10b");
                     int Zonal_rank = 0;
                     String gst = "no";
-                    //int way_to_grade = 0;
                     int insentavization = 0;
-                    // int sub_parameter_weighted_average = 0;
                     String absval=String.valueOf(col28 + col30)+"/"+String.valueOf(col22);
-//                    if(col30 != 0){
-//                        total=(((double) (col36 + col38) * 100) / (col30));
-//                    }else {
-//                        total = 0.00;
-//                    }
 
-                    rank=score.marks10b(total);
-                    String formattedTotal = String.format("%.2f", total);
+                    String formattedTotal = String.format("%.2f", t_score);
                     double totalScore = Double.parseDouble(formattedTotal);
                     int way_to_grade = score.marks10b(totalScore);
                     Double sub_parameter_weighted_average_before = way_to_grade * 0.3;
@@ -3818,7 +3807,6 @@ public class GstSubParameterController {
 
             } else if (type.equalsIgnoreCase("commissary")) { // Gst 10b
                 String queryGst14aa= new GstSubParameterWiseQuery().QueryFor_gst10b_CommissonaryWise(month_date,zone_code);
-
                 ResultSet rsGst14aa =GetExecutionSQL.getResult(queryGst14aa);
                 while(rsGst14aa.next()) {
                     String ra= RelevantAspect.Gst10B_RA;
@@ -3830,18 +3818,10 @@ public class GstSubParameterController {
                     Double t_score = rsGst14aa.getDouble("total_score10b");
                     int Zonal_rank = 0;
                     String gst = "no";
-                    //int way_to_grade = 0;
                     int insentavization = 0;
-                    // int sub_parameter_weighted_average = 0;
                     String absval=String.valueOf(col28 + col30)+"/"+String.valueOf(col22);
-//                    if(col30 != 0){
-//                        total=(((double) (col36 + col38) * 100) / (col30));
-//                    }else {
-//                        total = 0.00;
-//                    }
 
-                    rank=score.marks10b(total);
-                    String formattedTotal = String.format("%.2f", total);
+                    String formattedTotal = String.format("%.2f", t_score);
                     double totalScore = Double.parseDouble(formattedTotal);
                     int way_to_grade = score.marks10b(totalScore);
                     Double sub_parameter_weighted_average_before = way_to_grade * 0.3;
@@ -3853,7 +3833,6 @@ public class GstSubParameterController {
                 }
             }else if (type.equalsIgnoreCase("all_commissary")) { // Gst 10b
                 String queryGst14aa= new GstSubParameterWiseQuery().QueryFor_gst10b_AllCommissonaryWise(month_date);
-
                 ResultSet rsGst14aa =GetExecutionSQL.getResult(queryGst14aa);
                 while(rsGst14aa.next()) {
                     String ra= RelevantAspect.Gst10B_RA;
@@ -3865,18 +3844,10 @@ public class GstSubParameterController {
                     Double t_score = rsGst14aa.getDouble("total_score10b");
                     int Zonal_rank = 0;
                     String gst = "no";
-                    //int way_to_grade = 0;
                     int insentavization = 0;
-                    // int sub_parameter_weighted_average = 0;
                     String absval=String.valueOf(col28 + col30)+"/"+String.valueOf(col22);
-//                    if(col30 != 0){
-//                        total=(((double) (col36 + col38) * 100) / (col30));
-//                    }else {
-//                        total = 0.00;
-//                    }
 
-                    rank=score.marks10b(total);
-                    String formattedTotal = String.format("%.2f", total);
+                    String formattedTotal = String.format("%.2f", t_score);
                     double totalScore = Double.parseDouble(formattedTotal);
                     int way_to_grade = score.marks10b(totalScore);
                     Double sub_parameter_weighted_average_before = way_to_grade * 0.3;
