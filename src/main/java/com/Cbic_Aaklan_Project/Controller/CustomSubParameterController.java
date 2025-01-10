@@ -675,16 +675,14 @@ public class CustomSubParameterController {
                 ResultSet rsGst14aa = GetExecutionSQL.getResult(queryGst14aa);
                 allGstaList.addAll(customSubParameterService.cus3cZoneWiseCommissionary(rsGst14aa));
             } else if (type.equalsIgnoreCase("all_commissary")) {
-                String queryGst14aa = new CustomSubParameterWiseQuery().QueryFor_cus3b_AllCommissonaryWise(month_date);
+                String queryGst14aa = new CustomSubParameterWiseQuery().QueryFor_cus3c_AllCommissonaryWise(month_date);
                 ResultSet rsGst14aa = GetExecutionSQL.getResult(queryGst14aa);
                 allGstaList.addAll(customSubParameterService.cus3cAllCommissionary(rsGst14aa));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return allGstaList.stream()
-                .sorted(Comparator.comparing(GST4A::getTotal_score))
-                .collect(Collectors.toList());
+        return allGstaList.stream().sorted(Comparator.comparing(GST4A::getTotal_score)).collect(Collectors.toList());
     }
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=cus4A*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
 

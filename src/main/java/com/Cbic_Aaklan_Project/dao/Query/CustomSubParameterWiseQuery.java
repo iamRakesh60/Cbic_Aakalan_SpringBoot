@@ -600,7 +600,7 @@ import com.Cbic_Aaklan_Project.Service.DateCalculate;public class CustomSubParam
                 "    FROM sorted_data\n" +
                 "    WHERE rn IN (FLOOR((total_rows + 1) / 2), CEIL((total_rows + 1) / 2)) \n" +
                 ")\n" +
-                "SELECT rd.ZONE_NAME,rd.ZONE_CODE,rd.col14,rd.col16,rd.col13,rd.col14_16,mc.median_3c\n" +
+                "SELECT rd.ZONE_NAME,rd.ZONE_CODE,rd.col14,rd.col16,rd.col13,rd.col14_16, concat(rd.col14_16 ,'/',rd.col13)as absvl,median_3c\n" +
                 "FROM ranked_data AS rd\n" +
                 "CROSS JOIN median_calc AS mc LIMIT 0, 1000;";
         return queryCustom3c;
@@ -633,7 +633,7 @@ import com.Cbic_Aaklan_Project.Service.DateCalculate;public class CustomSubParam
                 "    FROM sorted_data\n" +
                 "    WHERE rn IN (FLOOR((total_rows + 1) / 2), CEIL((total_rows + 1) / 2)) \n" +
                 ")\n" +
-                "SELECT rd.ZONE_NAME,rd.ZONE_CODE,rd.COMM_NAME,rd.col14,rd.col16,rd.col13,rd.col14_16,mc.median_3c\n" +
+                "SELECT rd.ZONE_NAME,rd.ZONE_CODE,rd.COMM_NAME,rd.col14,rd.col16,rd.col13,rd.col14_16, concat(rd.col14_16 ,'/',rd.col13)as absvl,median_3c\n" +
                 "FROM ranked_data AS rd\n" +
                 "CROSS JOIN median_calc AS mc\n" +
                 "WHERE rd.ZONE_CODE = '77'  LIMIT 0, 1000;\n";
@@ -666,7 +666,7 @@ import com.Cbic_Aaklan_Project.Service.DateCalculate;public class CustomSubParam
                 "    SELECT AVG(col14_16) AS median_3c\n" +
                 "    FROM sorted_data WHERE rn IN (FLOOR((total_rows + 1) / 2), CEIL((total_rows + 1) / 2)) \n" +
                 ")\n" +
-                "SELECT rd.ZONE_NAME,rd.ZONE_CODE,rd.COMM_NAME, rd.col14,rd.col16,rd.col13,rd.col14_16,mc.median_3c \n" +
+                "SELECT rd.ZONE_NAME,rd.ZONE_CODE,rd.COMM_NAME,rd.col14,rd.col16,rd.col13,rd.col14_16, concat(rd.col14_16 ,'/',rd.col13)as absvl,median_3c\n" +
                 "FROM ranked_data AS rd\n" +
                 "CROSS JOIN median_calc AS mc LIMIT 0, 1000;";
         return queryCustom3c;
