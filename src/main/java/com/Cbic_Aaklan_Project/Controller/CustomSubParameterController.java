@@ -663,8 +663,7 @@ public class CustomSubParameterController {
     //  http://localhost:8080/cbicApi/cbic/custom/cus3c?month_date=2024-10-01&type=zone
     //  http://localhost:8080/cbicApi/cbic/custom/cus3c?month_date=2024-10-01&zone_code=58&type=commissary
     //  http://localhost:8080/cbicApi/cbic/custom/cus3c?month_date=2024-10-01&type=all_commissary
-    public Object Custom3c(@RequestParam String month_date, @RequestParam String type,
-                           @RequestParam(required = false) String zone_code) {
+    public Object Custom3c(@RequestParam String month_date, @RequestParam String type, @RequestParam(required = false) String zone_code) {
         List<GST4A> allGstaList = new ArrayList<>();
         try {
             if (type.equalsIgnoreCase("zone")) {
