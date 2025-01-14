@@ -307,7 +307,7 @@ public class CustomSubParameterController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return allGstaList.stream()
+        return allGstaList.stream().filter(gst4a -> !"0/0".equals(gst4a.getAbsolutevale()))
                 .sorted(Comparator.comparing(GST4A::getTotal_score).reversed()).collect(Collectors.toList());
     }
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=cus2b*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
@@ -438,7 +438,7 @@ public class CustomSubParameterController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return allGstaList.stream()
+        return allGstaList.stream().filter(gst4a -> !"0/0".equals(gst4a.getAbsolutevale()))
                 .sorted(Comparator.comparing(GST4A::getTotal_score)).collect(Collectors.toList());
     }
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=cus2c*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
@@ -590,7 +590,7 @@ public class CustomSubParameterController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return allGstaList.stream()
+        return allGstaList.stream().filter(gst4a -> !"0/0".equals(gst4a.getAbsolutevale()))
                 .sorted(Comparator.comparing(GST4A::getTotal_score).reversed()).collect(Collectors.toList());
     }
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=cus3A*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
@@ -623,7 +623,8 @@ public class CustomSubParameterController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return allGstaList.stream().sorted(Comparator.comparing(GST4A::getTotal_score).reversed()).collect(Collectors.toList());
+        return allGstaList.stream().filter(gst4a -> !"0/0".equals(gst4a.getAbsolutevale()))
+                .sorted(Comparator.comparing(GST4A::getTotal_score).reversed()).collect(Collectors.toList());
     }
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=cus3B*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
     @ResponseBody
@@ -655,7 +656,8 @@ public class CustomSubParameterController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return allGstaList.stream().sorted(Comparator.comparing(GST4A::getTotal_score)).collect(Collectors.toList());
+        return allGstaList.stream().filter(gst4a -> !"0/0".equals(gst4a.getAbsolutevale()))
+                .sorted(Comparator.comparing(GST4A::getTotal_score)).collect(Collectors.toList());
     }
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=cus3C*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
     @ResponseBody
@@ -682,7 +684,8 @@ public class CustomSubParameterController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return allGstaList.stream().sorted(Comparator.comparing(GST4A::getTotal_score).reversed()).collect(Collectors.toList());
+        return allGstaList.stream().filter(gst4a -> !"0/0".equals(gst4a.getAbsolutevale()))
+                .sorted(Comparator.comparing(GST4A::getTotal_score).reversed()).collect(Collectors.toList());
     }
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=cus4A*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
     @ResponseBody
@@ -709,7 +712,8 @@ public class CustomSubParameterController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return allGstaList.stream().sorted(Comparator.comparing(GST4A::getTotal_score)).collect(Collectors.toList());
+        return allGstaList.stream().filter(gst4a -> !"0/0".equals(gst4a.getAbsolutevale()))
+                .sorted(Comparator.comparing(GST4A::getTotal_score)).collect(Collectors.toList());
     }
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=cus4B*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
     @ResponseBody
@@ -736,7 +740,10 @@ public class CustomSubParameterController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return allGstaList.stream().sorted(Comparator.comparing(GST4A::getTotal_score)).collect(Collectors.toList());
+        return allGstaList.stream()
+                .filter(gst4a -> !"0/0".equals(gst4a.getAbsolutevale())) // Exclude entries with absolutevale = "0/0"
+                .sorted(Comparator.comparing(GST4A::getTotal_score)) // Sort by total_score
+                .collect(Collectors.toList());
     }
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=cus4C*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
     @ResponseBody
@@ -763,7 +770,8 @@ public class CustomSubParameterController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return allGstaList.stream().sorted(Comparator.comparing(GST4A::getTotal_score)).collect(Collectors.toList());
+        return allGstaList.stream().filter(gst4a -> !"0/0".equals(gst4a.getAbsolutevale()))
+                .sorted(Comparator.comparing(GST4A::getTotal_score)).collect(Collectors.toList());
     }
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=cus4D*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
     @ResponseBody
@@ -1038,7 +1046,7 @@ public class CustomSubParameterController {
 
             e.printStackTrace();
         }
-        return allGstaList.stream()
+        return allGstaList.stream().filter(gst4a -> !"0/0".equals(gst4a.getAbsolutevale()))
                 .sorted(Comparator.comparing(GST4A::getTotal_score).reversed()).collect(Collectors.toList());
     }
 
@@ -1174,7 +1182,7 @@ public class CustomSubParameterController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return allGstaList.stream()
+        return allGstaList.stream().filter(gst4a -> !"0/0".equals(gst4a.getAbsolutevale()))
                 .sorted(Comparator.comparing(GST4A::getTotal_score)).collect(Collectors.toList());
     }
 
@@ -1273,7 +1281,7 @@ public class CustomSubParameterController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return allGstaList.stream()
+        return allGstaList.stream().filter(gst4a -> !"0/0".equals(gst4a.getAbsolutevale()))
                 .sorted(Comparator.comparing(GST4A::getTotal_score)).collect(Collectors.toList());
     }
 
