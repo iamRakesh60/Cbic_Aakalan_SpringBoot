@@ -393,7 +393,7 @@ public class CustomSubParameterService {
             int col13 = rs.getInt("col13");
             int col15 = rs.getInt("col15");
             int col17 = rs.getInt("col17");
-            int col9 = rs.getInt("col9");
+            int col9 = rs.getInt("col3");
             int Zonal_rank = 0;
             String gst = "no";
             String absval = "";
@@ -432,7 +432,7 @@ public class CustomSubParameterService {
             int col13 = rs.getInt("col13");
             int col15 = rs.getInt("col15");
             int col17 = rs.getInt("col17");
-            int col9 = rs.getInt("col9");
+            int col9 = rs.getInt("col3");
             int Zonal_rank = 0;
             String gst = "no";
             String absval = "";
