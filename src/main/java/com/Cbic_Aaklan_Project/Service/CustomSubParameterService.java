@@ -168,18 +168,18 @@ public class CustomSubParameterService {
             }
             String formattedTotal = String.format("%.2f", total);
             double totalScore = Double.parseDouble(formattedTotal);
-            int way_to_grade = score.c_marks3a(totalScore);
-            int insentavization = score.c_marks3a(totalScore);
-            if (numerator_3b > median && way_to_grade < 10) {
-                insentavization += 1;
-            }
-            double sub_parameter_weighted_average = insentavization * 0.4 ;
+            int way_to_grade = score.c_marks3b(totalScore);
+//            int insentavization = score.c_marks3a(totalScore);
+//            if (numerator_3b > median && way_to_grade < 10) {
+//                insentavization += 1;
+//            }
+            double sub_parameter_weighted_average = way_to_grade * 0.4 ;
             sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
             gsta=new GST4A(zoneName,commname,totalScore,absval,zoneCode,ra,
-                    Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
+                    Zonal_rank,gst,way_to_grade,0,sub_parameter_weighted_average);
             allGstaList.add(gsta);
         }
-        System.out.println("CUS 3b median zone wise :- "+median);
+        // System.out.println("CUS 3b median zone wise :- "+median);
         return allGstaList;
     }
 
@@ -210,18 +210,18 @@ public class CustomSubParameterService {
             }
             String formattedTotal = String.format("%.2f", total);
             double totalScore = Double.parseDouble(formattedTotal);
-            int way_to_grade = score.c_marks3a(totalScore);
-            int insentavization = score.c_marks3a(totalScore);
-            if (numerator_3b > median && way_to_grade < 10) {
-                insentavization += 1;
-            }
-            double sub_parameter_weighted_average = insentavization * 0.4 ;
+            int way_to_grade = score.c_marks3b(totalScore);
+//            int insentavization = score.c_marks3b(totalScore);
+//            if (numerator_3b > median && way_to_grade < 10) {
+//                insentavization += 1;
+//            }
+            double sub_parameter_weighted_average = way_to_grade * 0.4 ;
             sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
             gsta=new GST4A(zoneName,commname,totalScore,absval,zoneCode,ra,
-                    Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
+                    Zonal_rank,gst,way_to_grade,0,sub_parameter_weighted_average);
             allGstaList.add(gsta);
         }
-        System.out.println("CUS 3B median zone wise :- "+median);
+        // System.out.println("CUS 3B median zone wise :- "+median);
         return allGstaList;
     }
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CUS3B All Commissionary=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
@@ -251,18 +251,18 @@ public class CustomSubParameterService {
             }
             String formattedTotal = String.format("%.2f", total);
             double totalScore = Double.parseDouble(formattedTotal);
-            int way_to_grade = score.c_marks3a(totalScore);
-            int insentavization = score.c_marks3a(totalScore);
-            if (numerator_3b > median && way_to_grade < 10) {
-                insentavization += 1;
-            }
-            double sub_parameter_weighted_average = insentavization * 0.4 ;
+            int way_to_grade = score.c_marks3b(totalScore);
+//            int insentavization = score.c_marks3b(totalScore);
+//            if (numerator_3b > median && way_to_grade < 10) {
+//                insentavization += 1;
+//            }
+            double sub_parameter_weighted_average = way_to_grade * 0.4 ;
             sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
             gsta=new GST4A(zoneName,commname,totalScore,absval,zoneCode,ra,
-                    Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
+                    Zonal_rank,gst,way_to_grade,0,sub_parameter_weighted_average);
             allGstaList.add(gsta);
         }
-        System.out.println("CUS 3B median zone wise :- "+median);
+       // System.out.println("CUS 3B median zone wise :- "+median);
         return allGstaList;
     }
 
@@ -287,8 +287,8 @@ public class CustomSubParameterService {
             String formattedTotal = String.format("%.2f", total);
             double totalScore = Double.parseDouble(formattedTotal);
 
-            int way_to_grade = score.c_marks3a(totalScore);
-            int insentavization = score.c_marks3a(totalScore);
+            int way_to_grade = score.c_marks3c(totalScore);
+            int insentavization = score.c_marks3c(totalScore);
             if (col14_16 > median && way_to_grade < 10) {
                 insentavization += 1;
             }
@@ -322,8 +322,8 @@ public class CustomSubParameterService {
             String formattedTotal = String.format("%.2f", total);
             double totalScore = Double.parseDouble(formattedTotal);
 
-            int way_to_grade = score.c_marks3a(totalScore);
-            int insentavization = score.c_marks3a(totalScore);
+            int way_to_grade = score.c_marks3c(totalScore);
+            int insentavization = score.c_marks3c(totalScore);
             if (col14_16 > median && way_to_grade < 10) {
                 insentavization += 1;
             }
@@ -334,7 +334,7 @@ public class CustomSubParameterService {
             GST4A gsta = new GST4A(zoneName, commname, totalScore, absval, zoneCode, ra, 0, "no", way_to_grade, insentavization, sub_parameter_weighted_average);
             allGstaList.add(gsta);
         }
-        System.out.println("CUS 3C median zone wise :- "+median);
+        // System.out.println("CUS 3C median zone wise :- "+median);
         return allGstaList;
     }
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CUS3C All Commissionary=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
@@ -357,8 +357,8 @@ public class CustomSubParameterService {
             String formattedTotal = String.format("%.2f", total);
             double totalScore = Double.parseDouble(formattedTotal);
 
-            int way_to_grade = score.c_marks3a(totalScore);
-            int insentavization = score.c_marks3a(totalScore);
+            int way_to_grade = score.c_marks3c(totalScore);
+            int insentavization = score.c_marks3c(totalScore);
             if (col14_16 > median && way_to_grade < 10) {
                 insentavization += 1;
             }
