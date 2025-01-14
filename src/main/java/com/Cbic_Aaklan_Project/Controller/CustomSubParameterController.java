@@ -739,7 +739,32 @@ public class CustomSubParameterController {
         return allGstaList.stream().sorted(Comparator.comparing(GST4A::getTotal_score)).collect(Collectors.toList());
     }
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=cus4C*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-
+    @ResponseBody
+    @RequestMapping(value = "/cus4c")
+    //  http://localhost:8080/cbicApi/cbic/custom/cus4c?month_date=2024-10-01&type=zone
+    //  http://localhost:8080/cbicApi/cbic/custom/cus4c?month_date=2024-10-01&zone_code=58&type=commissary
+    //  http://localhost:8080/cbicApi/cbic/custom/cus4c?month_date=2024-10-01&type=all_commissary
+    public Object Custom4c(@RequestParam String month_date, @RequestParam String type, @RequestParam(required = false) String zone_code) {
+        List<GST4A> allGstaList = new ArrayList<>();
+        try {
+            if (type.equalsIgnoreCase("zone")) {
+                String queryGst14aa = new CustomSubParameterWiseQuery().QueryFor_cus4c_ZoneWise(month_date);
+                ResultSet rsGst14aa = GetExecutionSQL.getResult(queryGst14aa);
+                allGstaList.addAll(customSubParameterService.cus4cZone(rsGst14aa));
+            } else if (type.equalsIgnoreCase("commissary")) {
+                String queryGst14aa = new CustomSubParameterWiseQuery().QueryFor_cus4c_CommissonaryWise(month_date, zone_code);
+                ResultSet rsGst14aa = GetExecutionSQL.getResult(queryGst14aa);
+                allGstaList.addAll(customSubParameterService.cus4cZoneWiseCommissionary(rsGst14aa));
+            } else if (type.equalsIgnoreCase("all_commissary")) {
+                String queryGst14aa = new CustomSubParameterWiseQuery().QueryFor_cus4c_AllCommissonaryWise(month_date);
+                ResultSet rsGst14aa = GetExecutionSQL.getResult(queryGst14aa);
+                allGstaList.addAll(customSubParameterService.cus4cAllCommissionary(rsGst14aa));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return allGstaList.stream().sorted(Comparator.comparing(GST4A::getTotal_score)).collect(Collectors.toList());
+    }
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=cus4D*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
     @ResponseBody
     @RequestMapping(value = "/cus4d")
