@@ -764,7 +764,7 @@ public class CustomSubParameterController {
             e.printStackTrace();
         }
         return allGstaList.stream()
-                .sorted(Comparator.comparing(GST4A::getTotal_score)).collect(Collectors.toList());
+                .sorted(Comparator.comparing(GST4A::getTotal_score).reversed()).collect(Collectors.toList());
 //        return allGstaList.stream().filter(gst4a -> !"0/0".equals(gst4a.getAbsolutevale()))
 //                .sorted(Comparator.comparing(GST4A::getTotal_score)).collect(Collectors.toList());
     }
