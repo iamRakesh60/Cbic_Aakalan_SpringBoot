@@ -2853,12 +2853,12 @@ import com.Cbic_Aaklan_Project.Service.DateCalculate;public class CustomSubParam
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
         String queryCustom7a="WITH calculated_data AS (\n" +
                 "    SELECT zc.ZONE_NAME, cc.ZONE_CODE, \n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '2024-10-01' THEN c14.NO_PROSECUTION_NOT_LAUNCH ELSE 0 END), 0) AS col8, \n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '2024-10-01' THEN c14.NO_PROSECUTION_HAS_SANCTIONED ELSE 0 END), 0) AS col5\n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' THEN c14.NO_PROSECUTION_NOT_LAUNCH ELSE 0 END), 0) AS col8, \n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' THEN c14.NO_PROSECUTION_HAS_SANCTIONED ELSE 0 END), 0) AS col5\n" +
                 "    FROM mis_gst_commcode AS cc\n" +
                 "    INNER JOIN mis_dla_cus_1a AS c14 ON c14.COMM_CODE = cc.COMM_CODE\n" +
                 "    INNER JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
-                "    WHERE c14.MM_YYYY = '2024-10-01'\n" +
+                "    WHERE c14.MM_YYYY = '" + month_date + "'\n" +
                 "      AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65')\n" +
                 "    GROUP BY zc.ZONE_CODE, zc.ZONE_NAME, cc.ZONE_CODE\n" +
                 "), \n" +
@@ -2876,12 +2876,12 @@ import com.Cbic_Aaklan_Project.Service.DateCalculate;public class CustomSubParam
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
         String queryCustom7a="WITH calculated_data AS (\n" +
                 "    SELECT zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME,\n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '2024-10-01' THEN c14.NO_PROSECUTION_NOT_LAUNCH ELSE 0 END), 0) AS col8,\n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '2024-10-01' THEN c14.NO_PROSECUTION_HAS_SANCTIONED ELSE 0 END), 0) AS col5\n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' THEN c14.NO_PROSECUTION_NOT_LAUNCH ELSE 0 END), 0) AS col8,\n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' THEN c14.NO_PROSECUTION_HAS_SANCTIONED ELSE 0 END), 0) AS col5\n" +
                 "    FROM mis_gst_commcode AS cc\n" +
                 "    INNER JOIN mis_dla_cus_1a AS c14 ON c14.COMM_CODE = cc.COMM_CODE\n" +
                 "    INNER JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
-                "    WHERE c14.MM_YYYY = '2024-10-01'\n" +
+                "    WHERE c14.MM_YYYY = '" + month_date + "'\n" +
                 "      AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65')\n" +
                 "    GROUP BY zc.ZONE_CODE, zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME\n" +
                 "), \n" +
@@ -2891,7 +2891,7 @@ import com.Cbic_Aaklan_Project.Service.DateCalculate;public class CustomSubParam
                 ")\n" +
                 "SELECT rd.ZONE_NAME, rd.ZONE_CODE, rd.COMM_NAME, rd.col8, rd.col5\n" +
                 "FROM ranked_data AS rd\n" +
-                "WHERE rd.ZONE_CODE = 79\n" +
+                "WHERE rd.ZONE_CODE = '" + zone_code + "'	\n" +
                 "LIMIT 1000;\n";
         return queryCustom7a;
     }
@@ -2900,12 +2900,12 @@ import com.Cbic_Aaklan_Project.Service.DateCalculate;public class CustomSubParam
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
         String queryCustom7a="WITH calculated_data AS (\n" +
                 "    SELECT zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME, \n" +
-                "           IFNULL(SUM(CASE WHEN c14.MM_YYYY = '2024-10-01' THEN c14.NO_PROSECUTION_NOT_LAUNCH ELSE 0 END), 0) AS col8, \n" +
-                "           IFNULL(SUM(CASE WHEN c14.MM_YYYY = '2024-10-01' THEN c14.NO_PROSECUTION_HAS_SANCTIONED ELSE 0 END), 0) AS col5\n" +
+                "           IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' THEN c14.NO_PROSECUTION_NOT_LAUNCH ELSE 0 END), 0) AS col8, \n" +
+                "           IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' THEN c14.NO_PROSECUTION_HAS_SANCTIONED ELSE 0 END), 0) AS col5\n" +
                 "    FROM mis_gst_commcode AS cc\n" +
                 "    INNER JOIN mis_dla_cus_1a AS c14 ON c14.COMM_CODE = cc.COMM_CODE\n" +
                 "    INNER JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
-                "    WHERE c14.MM_YYYY = '2024-10-01' \n" +
+                "    WHERE c14.MM_YYYY = '" + month_date + "' \n" +
                 "      AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65')\n" +
                 "    GROUP BY zc.ZONE_CODE, zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME\n" +
                 "), \n" +
@@ -2922,19 +2922,98 @@ import com.Cbic_Aaklan_Project.Service.DateCalculate;public class CustomSubParam
     public String QueryFor_cus7b_ZoneWise(String month_date){
         //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
-        String queryCustom7b="";
+        String start_date=DateCalculate.getFinancialYearStart(month_date);
+
+        String queryCustom7b="WITH calculated_data AS (\n" +
+                "    SELECT zc.ZONE_NAME, cc.ZONE_CODE, \n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY BETWEEN '" + start_date + "' AND '" + month_date + "' THEN c14.NO_PROSECUTION ELSE 0 END), 0) AS col7, \n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY BETWEEN '" + start_date + "' AND '" + month_date + "' THEN c14.NO_OF_ARREST_MADE ELSE 0 END), 0) AS col10 \n" +
+                "    FROM mis_gst_commcode AS cc\n" +
+                "    INNER JOIN mis_dla_cus_1a AS c14 ON c14.COMM_CODE = cc.COMM_CODE\n" +
+                "    INNER JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
+                "    WHERE c14.MM_YYYY BETWEEN '" + start_date + "' AND '" + month_date + "'\n" +
+                "      AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65') \n" +
+                "    GROUP BY zc.ZONE_CODE, zc.ZONE_NAME, cc.ZONE_CODE\n" +
+                "), \n" +
+                "ranked_data AS (\n" +
+                "    SELECT cd.*, ROW_NUMBER() OVER (ORDER BY col7 ASC) AS row_asc, \n" +
+                "        ROW_NUMBER() OVER (ORDER BY col7 DESC) AS row_desc, COUNT(*) OVER () AS total_rows\n" +
+                "    FROM calculated_data AS cd\n" +
+                "), \n" +
+                "median_calculation AS (\n" +
+                "    SELECT AVG(col7) AS median_7b\n" +
+                "    FROM ranked_data\n" +
+                "    WHERE row_asc = FLOOR((total_rows + 1) / 2) OR row_asc = CEIL((total_rows + 1) / 2) \n" +
+                ")\n" +
+                "SELECT rd.ZONE_NAME, rd.ZONE_CODE, rd.col7, rd.col10, mc.median_7b \n" +
+                "FROM ranked_data AS rd\n" +
+                "CROSS JOIN median_calculation AS mc LIMIT 1000;\n";
         return queryCustom7b;
     }
     public String QueryFor_cus7b_CommissonaryWise(String month_date, String zone_code){
         //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
-        String queryCustom7b="";
+        String start_date=DateCalculate.getFinancialYearStart(month_date);
+
+        String queryCustom7b="WITH calculated_data AS (\n" +
+                "    SELECT zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME, \n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY BETWEEN '" + start_date + "' AND '" + month_date + "' THEN c14.NO_PROSECUTION ELSE 0 END), 0) AS col7,\n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY BETWEEN '" + start_date + "' AND '" + month_date + "' THEN c14.NO_OF_ARREST_MADE ELSE 0 END), 0) AS col10\n" +
+                "    FROM mis_gst_commcode AS cc\n" +
+                "    INNER JOIN mis_dla_cus_1a AS c14 ON c14.COMM_CODE = cc.COMM_CODE\n" +
+                "    INNER JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
+                "    WHERE c14.MM_YYYY BETWEEN '" + start_date + "' AND '" + month_date + "' \n" +
+                "        AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65')\n" +
+                "    GROUP BY zc.ZONE_CODE, zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME\n" +
+                "), \n" +
+                "ranked_data AS (\n" +
+                "    SELECT cd.*, \n" +
+                "        ROW_NUMBER() OVER (ORDER BY col7 ASC) AS row_asc,\n" +
+                "        ROW_NUMBER() OVER (ORDER BY col7 DESC) AS row_desc,\n" +
+                "        COUNT(*) OVER () AS total_rows\n" +
+                "    FROM calculated_data AS cd\n" +
+                "), \n" +
+                "median_calculation AS (\n" +
+                "    SELECT AVG(col7) AS median_7b\n" +
+                "    FROM ranked_data\n" +
+                "    WHERE row_asc = FLOOR((total_rows + 1) / 2) OR row_asc = CEIL((total_rows + 1) / 2)\n" +
+                ")\n" +
+                "SELECT rd.ZONE_NAME, rd.ZONE_CODE, rd.COMM_NAME, rd.col7, rd.col10, mc.median_7b\n" +
+                "FROM ranked_data AS rd\n" +
+                "CROSS JOIN median_calculation AS mc\n" +
+                "WHERE rd.ZONE_CODE = '" + zone_code + "'	\n" +
+                "LIMIT 1000;\n";
         return queryCustom7b;
     }
     public String QueryFor_cus7b_AllCommissonaryWise(String month_date){
         //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
-        String queryCustom7b="";
+        String start_date=DateCalculate.getFinancialYearStart(month_date);
+
+        String queryCustom7b="WITH calculated_data AS (\n" +
+                "    SELECT zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME,\n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY BETWEEN '" + start_date + "' AND '" + month_date + "' THEN c14.NO_PROSECUTION ELSE 0 END), 0) AS col7,\n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY BETWEEN '" + start_date + "' AND '" + month_date + "' THEN c14.NO_OF_ARREST_MADE ELSE 0 END), 0) AS col10\n" +
+                "    FROM mis_gst_commcode AS cc\n" +
+                "    INNER JOIN mis_dla_cus_1a AS c14 ON c14.COMM_CODE = cc.COMM_CODE\n" +
+                "    INNER JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
+                "    WHERE c14.MM_YYYY BETWEEN '" + start_date + "' AND '" + month_date + "'\n" +
+                "        AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65')\n" +
+                "    GROUP BY zc.ZONE_CODE, zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME\n" +
+                "), \n" +
+                "ranked_data AS (\n" +
+                "    SELECT cd.*, ROW_NUMBER() OVER (ORDER BY col7 ASC) AS row_asc,\n" +
+                "        ROW_NUMBER() OVER (ORDER BY col7 DESC) AS row_desc,\n" +
+                "        COUNT(*) OVER () AS total_rows\n" +
+                "    FROM calculated_data AS cd\n" +
+                "), \n" +
+                "median_calculation AS (\n" +
+                "    SELECT AVG(col7) AS median_7b FROM ranked_data\n" +
+                "    WHERE row_asc = FLOOR((total_rows + 1) / 2) OR row_asc = CEIL((total_rows + 1) / 2)\n" +
+                ")\n" +
+                "SELECT rd.ZONE_NAME, rd.ZONE_CODE, rd.COMM_NAME, rd.col7, rd.col10, mc.median_7b\n" +
+                "FROM ranked_data AS rd\n" +
+                "CROSS JOIN median_calculation AS mc LIMIT 1000;\n";
         return queryCustom7b;
     }
     // ********************************************************************************************************************************
