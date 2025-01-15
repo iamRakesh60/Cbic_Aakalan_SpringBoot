@@ -1013,87 +1013,217 @@ import com.Cbic_Aaklan_Project.Service.DateCalculate;public class CustomSubParam
     public String QueryFor_cus4d_ZoneWise(String month_date){
         //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
-        String queryCustom4d="SELECT \n"
-                + "    zc.ZONE_NAME, \n"
-                + "    cc.ZONE_CODE, \n"
-                + "    SUM(14c.PENDING_YEAR_1TO2_NO) AS col6, \n"
-                + "    SUM(14c.PENDING_MORE_2YEAR_NO) AS col8, \n"
-                + "    SUM(14c.PENDING_MONTHS_0TO6_NO) AS col2, \n"
-                + "    SUM(14c.PENDING_MONTHS_6TO12_NO) AS col4 \n"
-                + "FROM \n"
-                + "    MIS_DGI_CUS_5B AS 14c \n"
-                + "RIGHT JOIN \n"
-                + "    mis_gst_commcode AS cc ON 14c.COMM_CODE = cc.COMM_CODE \n"
-                + "LEFT JOIN \n"
-                + "    mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE \n"
-                + "WHERE \n"
-                + "    14c.MM_YYYY = '" + month_date + "' \n"
-                + "GROUP BY \n"
-                + "    zc.ZONE_NAME, \n"
-                + "    cc.ZONE_CODE;\n"
-                + "";
+        String queryCustom4d="WITH calculated_data AS (\n" +
+                "    SELECT \n" +
+                "        zc.ZONE_NAME, \n" +
+                "        cc.ZONE_CODE, \n" +
+                "        IFNULL(SUM(CASE \n" +
+                "                WHEN c14.MM_YYYY = '" + month_date + "' \n" +
+                "                THEN c14.SVB_PENDING_YEAR_1TO2_NO \n" +
+                "                ELSE 0 \n" +
+                "            END), 0) AS col15,\n" +
+                "        IFNULL(SUM(CASE \n" +
+                "                WHEN c14.MM_YYYY = '" + month_date + "' \n" +
+                "                THEN c14.SVB_PENDING_MORE_2YEAR_NO \n" +
+                "                ELSE 0 \n" +
+                "            END), 0) AS col17, \n" +
+                "        IFNULL(SUM(CASE \n" +
+                "                WHEN c14.MM_YYYY = '" + month_date + "' \n" +
+                "                THEN c14.SVB_BE_CLOSING_NO \n" +
+                "                ELSE 0 \n" +
+                "            END), 0) AS col9 \n" +
+                "    FROM \n" +
+                "        mis_gst_commcode AS cc\n" +
+                "    INNER JOIN \n" +
+                "        mis_dpm_cus_5b AS c14 ON c14.COMM_CODE = cc.COMM_CODE\n" +
+                "    INNER JOIN \n" +
+                "        mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
+                "    WHERE  \n" +
+                "        c14.MM_YYYY = '" + month_date + "' \n" +
+                "        AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65') \n" +
+                "    GROUP BY \n" +
+                "        zc.ZONE_CODE, zc.ZONE_NAME, cc.ZONE_CODE\n" +
+                "),\n" +
+                "ranked_data AS (\n" +
+                "    SELECT \n" +
+                "        cd.*,\n" +
+                "        ROW_NUMBER() OVER (ORDER BY col15 DESC) AS row_num \n" +
+                "    FROM \n" +
+                "        calculated_data AS cd\n" +
+                "),\n" +
+                "sorted_data AS (\n" +
+                "    SELECT \n" +
+                "        rd.*, \n" +
+                "        ROW_NUMBER() OVER (ORDER BY col15 ASC) AS rn,\n" +
+                "        COUNT(*) OVER () AS total_rows\n" +
+                "    FROM \n" +
+                "        ranked_data AS rd\n" +
+                "),\n" +
+                "median_calc AS (\n" +
+                "    SELECT \n" +
+                "        AVG(col15) AS median_4c\n" +
+                "    FROM \n" +
+                "        sorted_data\n" +
+                "    WHERE \n" +
+                "        rn IN (FLOOR((total_rows + 1) / 2), CEIL((total_rows + 1) / 2)) \n" +
+                ")\n" +
+                "SELECT \n" +
+                "    rd.ZONE_NAME,\n" +
+                "    rd.ZONE_CODE,\n" +
+                "    rd.col15,\n" +
+                "    rd.col17,\n" +
+                "    rd.col9\n" +
+                "FROM \n" +
+                "    sorted_data AS rd \n" +
+                "CROSS JOIN \n" +
+                "    median_calc AS mc \n" +
+                "LIMIT 1000; ";
         return queryCustom4d;
     }
     public String QueryFor_cus4d_CommissonaryWise(String month_date, String zone_code){
         //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
-        String queryCustom4d="SELECT \n"
-                + "    zc.ZONE_NAME, \n"
-                + "    cc.ZONE_CODE, \n"
-                + "    cc.COMM_NAME,   -- Added COMM_NAME here\n"
-                + "    14c.PENDING_YEAR_1TO2_NO AS col6, \n"
-                + "    14c.PENDING_MORE_2YEAR_NO AS col8, \n"
-                + "    14c.PENDING_MONTHS_0TO6_NO AS col2, \n"
-                + "    14c.PENDING_MONTHS_6TO12_NO AS col4 \n"
-                + "FROM \n"
-                + "    MIS_DGI_CUS_5B AS 14c \n"
-                + "RIGHT JOIN \n"
-                + "    mis_gst_commcode AS cc ON 14c.COMM_CODE = cc.COMM_CODE \n"
-                + "LEFT JOIN \n"
-                + "    mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE \n"
-                + "WHERE \n"
-                + "    14c.MM_YYYY = '" + month_date + "' \n"
-                + "    AND cc.ZONE_CODE ='"+zone_code+"' -- Added condition for ZONE_CODE = 70\n"
-                + "GROUP BY \n"
-                + "    zc.ZONE_NAME, \n"
-                + "    cc.ZONE_CODE, \n"
-                + "    cc.COMM_NAME,  -- Added COMM_NAME to GROUP BY\n"
-                + "    14c.PENDING_YEAR_1TO2_NO, \n"
-                + "    14c.PENDING_MORE_2YEAR_NO, \n"
-                + "    14c.PENDING_MONTHS_0TO6_NO, \n"
-                + "    14c.PENDING_MONTHS_6TO12_NO;\n"
-                + "";
+        String queryCustom4d="WITH calculated_data AS (\n" +
+                "    SELECT \n" +
+                "        zc.ZONE_NAME, \n" +
+                "        cc.ZONE_CODE, \n" +
+                "        cc.COMM_NAME, \n" +
+                "        IFNULL(SUM(CASE \n" +
+                "                WHEN c14.MM_YYYY = '" + month_date + "' \n" +
+                "                THEN c14.SVB_PENDING_YEAR_1TO2_NO \n" +
+                "                ELSE 0 \n" +
+                "            END), 0) AS col15, \n" +
+                "        IFNULL(SUM(CASE \n" +
+                "                WHEN c14.MM_YYYY = '" + month_date + "' \n" +
+                "                THEN c14.SVB_PENDING_MORE_2YEAR_NO \n" +
+                "                ELSE 0 \n" +
+                "            END), 0) AS col17, \n" +
+                "        IFNULL(SUM(CASE \n" +
+                "                WHEN c14.MM_YYYY = '" + month_date + "' \n" +
+                "                THEN c14.SVB_BE_CLOSING_NO \n" +
+                "                ELSE 0 \n" +
+                "            END), 0) AS col9 \n" +
+                "    FROM \n" +
+                "        mis_gst_commcode AS cc\n" +
+                "    INNER JOIN \n" +
+                "        mis_dpm_cus_5b AS c14 ON c14.COMM_CODE = cc.COMM_CODE\n" +
+                "    INNER JOIN \n" +
+                "        mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
+                "    WHERE  \n" +
+                "        c14.MM_YYYY = '" + month_date + "' \n" +
+                "        AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65') \n" +
+                "    GROUP BY \n" +
+                "        zc.ZONE_CODE, zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME \n" +
+                "),\n" +
+                "ranked_data AS (\n" +
+                "    SELECT \n" +
+                "        cd.*,\n" +
+                "        ROW_NUMBER() OVER (ORDER BY col15 DESC) AS row_num \n" +
+                "    FROM \n" +
+                "        calculated_data AS cd\n" +
+                "),\n" +
+                "sorted_data AS (\n" +
+                "    SELECT \n" +
+                "        rd.*, \n" +
+                "        ROW_NUMBER() OVER (ORDER BY col15 ASC) AS rn,\n" +
+                "        COUNT(*) OVER () AS total_rows\n" +
+                "    FROM \n" +
+                "        ranked_data AS rd\n" +
+                "),\n" +
+                "median_calc AS (\n" +
+                "    SELECT \n" +
+                "        AVG(col15) AS median_4c\n" +
+                "    FROM \n" +
+                "        sorted_data\n" +
+                "    WHERE \n" +
+                "        rn IN (FLOOR((total_rows + 1) / 2), CEIL((total_rows + 1) / 2)) \n" +
+                ")\n" +
+                "SELECT \n" +
+                "    rd.ZONE_NAME,\n" +
+                "    rd.ZONE_CODE,\n" +
+                "    rd.COMM_NAME, \n" +
+                "    rd.col15,\n" +
+                "    rd.col17,\n" +
+                "    rd.col9\n" +
+                "FROM \n" +
+                "    sorted_data AS rd\n" +
+                "CROSS JOIN \n" +
+                "    median_calc AS mc \n" +
+                "WHERE \n" +
+                "    rd.ZONE_CODE = '" + zone_code + "' \n" +
+                "LIMIT 1000;\n";
         return queryCustom4d;
     }
     public String QueryFor_cus4d_AllCommissonaryWise(String month_date){
         //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
-        String queryCustom4d="SELECT \n"
-                + "    zc.ZONE_NAME, \n"
-                + "    cc.ZONE_CODE, \n"
-                + "    cc.COMM_NAME,   -- Added COMM_NAME here\n"
-                + "    14c.PENDING_YEAR_1TO2_NO AS col6, \n"
-                + "    14c.PENDING_MORE_2YEAR_NO AS col8, \n"
-                + "    14c.PENDING_MONTHS_0TO6_NO AS col2, \n"
-                + "    14c.PENDING_MONTHS_6TO12_NO AS col4 \n"
-                + "FROM \n"
-                + "    MIS_DGI_CUS_5B AS 14c \n"
-                + "RIGHT JOIN \n"
-                + "    mis_gst_commcode AS cc ON 14c.COMM_CODE = cc.COMM_CODE \n"
-                + "LEFT JOIN \n"
-                + "    mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE \n"
-                + "WHERE \n"
-                + "    14c.MM_YYYY = '" + month_date + "' \n"
-                + "   \n"
-                + "GROUP BY \n"
-                + "    zc.ZONE_NAME, \n"
-                + "    cc.ZONE_CODE, \n"
-                + "    cc.COMM_NAME,  -- Added COMM_NAME to GROUP BY\n"
-                + "    14c.PENDING_YEAR_1TO2_NO, \n"
-                + "    14c.PENDING_MORE_2YEAR_NO, \n"
-                + "    14c.PENDING_MONTHS_0TO6_NO, \n"
-                + "    14c.PENDING_MONTHS_6TO12_NO;\n"
-                + "";
+        String queryCustom4d="WITH calculated_data AS (\n" +
+                "    SELECT \n" +
+                "        zc.ZONE_NAME, \n" +
+                "        cc.ZONE_CODE, \n" +
+                "        cc.COMM_NAME, \n" +
+                "        IFNULL(SUM(CASE \n" +
+                "                WHEN c14.MM_YYYY = '" + month_date + "' \n" +
+                "                THEN c14.SVB_PENDING_YEAR_1TO2_NO \n" +
+                "                ELSE 0 \n" +
+                "            END), 0) AS col15, \n" +
+                "        IFNULL(SUM(CASE \n" +
+                "                WHEN c14.MM_YYYY = '" + month_date + "' \n" +
+                "                THEN c14.SVB_PENDING_MORE_2YEAR_NO \n" +
+                "                ELSE 0 \n" +
+                "            END), 0) AS col17, \n" +
+                "        IFNULL(SUM(CASE \n" +
+                "                WHEN c14.MM_YYYY = '" + month_date + "' \n" +
+                "                THEN c14.SVB_BE_CLOSING_NO \n" +
+                "                ELSE 0 \n" +
+                "            END), 0) AS col9 \n" +
+                "    FROM \n" +
+                "        mis_gst_commcode AS cc\n" +
+                "    INNER JOIN \n" +
+                "        mis_dpm_cus_5b AS c14 ON c14.COMM_CODE = cc.COMM_CODE\n" +
+                "    INNER JOIN \n" +
+                "        mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
+                "    WHERE  \n" +
+                "        c14.MM_YYYY = '" + month_date + "' \n" +
+                "        AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65') \n" +
+                "    GROUP BY \n" +
+                "        zc.ZONE_CODE, zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME \n" +
+                "),\n" +
+                "ranked_data AS (\n" +
+                "    SELECT \n" +
+                "        cd.*,\n" +
+                "        ROW_NUMBER() OVER (ORDER BY col15 DESC) AS row_num \n" +
+                "    FROM \n" +
+                "        calculated_data AS cd\n" +
+                "),\n" +
+                "sorted_data AS (\n" +
+                "    SELECT \n" +
+                "        rd.*, \n" +
+                "        ROW_NUMBER() OVER (ORDER BY col15 ASC) AS rn,\n" +
+                "        COUNT(*) OVER () AS total_rows\n" +
+                "    FROM \n" +
+                "        ranked_data AS rd\n" +
+                "),\n" +
+                "median_calc AS (\n" +
+                "    SELECT \n" +
+                "        AVG(col15) AS median_4c\n" +
+                "    FROM \n" +
+                "        sorted_data\n" +
+                "    WHERE \n" +
+                "        rn IN (FLOOR((total_rows + 1) / 2), CEIL((total_rows + 1) / 2)) \n" +
+                ")\n" +
+                "SELECT \n" +
+                "    rd.ZONE_NAME,\n" +
+                "    rd.ZONE_CODE,\n" +
+                "    rd.COMM_NAME, \n" +
+                "    rd.col15,\n" +
+                "    rd.col17,\n" +
+                "    rd.col9\n" +
+                "FROM \n" +
+                "    sorted_data AS rd\n" +
+                "CROSS JOIN \n" +
+                "    median_calc AS mc \n" +
+                "LIMIT 1000;\n";
         return queryCustom4d;
     }
     // ********************************************************************************************************************************
