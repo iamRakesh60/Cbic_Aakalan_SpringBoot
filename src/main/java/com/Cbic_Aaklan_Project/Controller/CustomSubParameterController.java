@@ -794,7 +794,7 @@ public class CustomSubParameterController {
             e.printStackTrace();
         }
         return allGstaList.stream()
-                .sorted(Comparator.comparing(GST4A::getTotal_score).reversed()).collect(Collectors.toList());
+                .sorted(Comparator.comparing(GST4A::getTotal_score)).collect(Collectors.toList());
     }
 
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=cus5A*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
@@ -1797,7 +1797,33 @@ public class CustomSubParameterController {
     }
 
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=cus7A*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-
+    @ResponseBody
+    @RequestMapping(value = "/cus7a")
+    //  http://localhost:8080/cbicApi/cbic/custom/cus7a?month_date=2024-10-01&type=zone
+    //  http://localhost:8080/cbicApi/cbic/custom/cus7a?month_date=2024-10-01&zone_code=58&type=commissary
+    //  http://localhost:8080/cbicApi/cbic/custom/cus7a?month_date=2024-10-01&type=all_commissary
+    public Object Custom7a(@RequestParam String month_date, @RequestParam String type, @RequestParam(required = false) String zone_code) {
+        List<GST4A> allGstaList = new ArrayList<>();
+        try {
+            if (type.equalsIgnoreCase("zone")) {
+                String queryGst14aa = new CustomSubParameterWiseQuery().QueryFor_cus7a_ZoneWise(month_date);
+                ResultSet rsGst14aa = GetExecutionSQL.getResult(queryGst14aa);
+                allGstaList.addAll(customSubParameterService.cus7aZone(rsGst14aa));
+            } else if (type.equalsIgnoreCase("commissary")) {
+                String queryGst14aa = new CustomSubParameterWiseQuery().QueryFor_cus7a_CommissonaryWise(month_date, zone_code);
+                ResultSet rsGst14aa = GetExecutionSQL.getResult(queryGst14aa);
+                allGstaList.addAll(customSubParameterService.cus7aZoneWiseCommissionary(rsGst14aa));
+            } else if (type.equalsIgnoreCase("all_commissary")) {
+                String queryGst14aa = new CustomSubParameterWiseQuery().QueryFor_cus7a_AllCommissonaryWise(month_date);
+                ResultSet rsGst14aa = GetExecutionSQL.getResult(queryGst14aa);
+                allGstaList.addAll(customSubParameterService.cus7aAllCommissionary(rsGst14aa));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return allGstaList.stream()
+                .sorted(Comparator.comparing(GST4A::getTotal_score)).collect(Collectors.toList());
+    }
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=cus7B*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
 
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=cus8A*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*

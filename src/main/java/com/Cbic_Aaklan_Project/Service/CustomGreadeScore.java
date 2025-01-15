@@ -320,7 +320,7 @@ public class CustomGreadeScore {
     }
 
     // Custom grade score for custom 7A
-    public int c_marks7A(double total) {
+    public int c_marks7a(double total) {
         int rank = 0;
         if(total <= 20 ) {
             rank = 10;
@@ -337,7 +337,7 @@ public class CustomGreadeScore {
     }
 
     // Custom grade score for custom 7B
-    public int c_marks7B(double total) {
+    public int c_marks7b(double total) {
         int rank=0;
         if(total >= 40 ) {
             rank=10;
@@ -354,7 +354,7 @@ public class CustomGreadeScore {
     }
 
     // Custom grade score for custom 8A
-    public int c_marks8A(double total) {
+    public int c_marks8a(double total) {
         int rank=0;
         if(total >= 30 ) {
             rank=10;
@@ -371,7 +371,7 @@ public class CustomGreadeScore {
     }
 
     // Custom grade score for custom 8B
-    public int c_marks8B(double total) {
+    public int c_marks8b(double total) {
         int rank=0;
         if(total <= 20 ) {
             rank=10;
