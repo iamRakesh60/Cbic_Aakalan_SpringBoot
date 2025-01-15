@@ -631,7 +631,6 @@ public class CustomSubParameterService {
             if (col7 > median && way_to_grade < 10) {
                 insentavization += 1;
             }
-
             double sub_parameter_weighted_average = insentavization * 0.3;
             sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
 

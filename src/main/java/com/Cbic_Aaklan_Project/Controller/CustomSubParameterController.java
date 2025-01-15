@@ -85,11 +85,7 @@ public class CustomSubParameterController {
 
                     int insentavization = 0;
                     int way_to_grade = score.c_marks1(totalScore);
-                    //String absval = String.valueOf(col_difference) + "/" + String.valueOf(col10);
-                    String absval = "";
-                    if (!(col_difference == 0 && col10 == 0)) {
-                        absval = String.valueOf(col_difference) + "/" + String.valueOf(col10);
-                    }
+                    String absval = String.valueOf(col_difference) + "/" + String.valueOf(col10);
                     double sub_parameter_weighted_average_bfore = way_to_grade * .5 ;
                     String formattedSubParameterWeightedAverage = String.format("%.2f", sub_parameter_weighted_average_bfore);
                     double sub_parameter_weighted_average = Double.parseDouble(formattedSubParameterWeightedAverage);
@@ -119,11 +115,8 @@ public class CustomSubParameterController {
 
                     int insentavization = 0;
                     int way_to_grade = score.c_marks1(totalScore);
-                    // String absval = String.valueOf(col_difference) + "/" + String.valueOf(col10);
-                    String absval = "";
-                    if (!(col_difference == 0 && col10 == 0)) {
-                        absval = String.valueOf(col_difference) + "/" + String.valueOf(col10);
-                    }
+                    String absval = String.valueOf(col_difference) + "/" + String.valueOf(col10);
+
                     double sub_parameter_weighted_average_bfore = way_to_grade * .5 ;
                     String formattedSubParameterWeightedAverage = String.format("%.2f", sub_parameter_weighted_average_bfore);
                     double sub_parameter_weighted_average = Double.parseDouble(formattedSubParameterWeightedAverage);
@@ -151,11 +144,8 @@ public class CustomSubParameterController {
 
                     int insentavization = 0;
                     int way_to_grade = score.c_marks1(totalScore);
-                    //String absval = String.valueOf(col_difference) + "/" + String.valueOf(col10);
-                    String absval = "";
-                    if (!(col_difference == 0 && col10 == 0)) {
-                        absval = String.valueOf(col_difference) + "/" + String.valueOf(col10);
-                    }
+                    String absval = String.valueOf(col_difference) + "/" + String.valueOf(col10);
+
                     double sub_parameter_weighted_average_bfore = way_to_grade * 0.5 ;
                     String formattedSubParameterWeightedAverage = String.format("%.2f", sub_parameter_weighted_average_bfore);
                     double sub_parameter_weighted_average = Double.parseDouble(formattedSubParameterWeightedAverage);
@@ -307,7 +297,7 @@ public class CustomSubParameterController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return allGstaList.stream().filter(gst4a -> !"0/0".equals(gst4a.getAbsolutevale()))
+        return allGstaList.stream()
                 .sorted(Comparator.comparing(GST4A::getTotal_score).reversed()).collect(Collectors.toList());
     }
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=cus2b*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
@@ -438,7 +428,7 @@ public class CustomSubParameterController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return allGstaList.stream().filter(gst4a -> !"0/0".equals(gst4a.getAbsolutevale()))
+        return allGstaList.stream()
                 .sorted(Comparator.comparing(GST4A::getTotal_score)).collect(Collectors.toList());
     }
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=cus2c*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
@@ -590,7 +580,7 @@ public class CustomSubParameterController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return allGstaList.stream().filter(gst4a -> !"0/0".equals(gst4a.getAbsolutevale()))
+        return allGstaList.stream()
                 .sorted(Comparator.comparing(GST4A::getTotal_score).reversed()).collect(Collectors.toList());
     }
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=cus3A*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
@@ -623,7 +613,7 @@ public class CustomSubParameterController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return allGstaList.stream().filter(gst4a -> !"0/0".equals(gst4a.getAbsolutevale()))
+        return allGstaList.stream()
                 .sorted(Comparator.comparing(GST4A::getTotal_score).reversed()).collect(Collectors.toList());
     }
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=cus3B*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
@@ -656,7 +646,7 @@ public class CustomSubParameterController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return allGstaList.stream().filter(gst4a -> !"0/0".equals(gst4a.getAbsolutevale()))
+        return allGstaList.stream()
                 .sorted(Comparator.comparing(GST4A::getTotal_score)).collect(Collectors.toList());
     }
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=cus3C*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
@@ -684,7 +674,7 @@ public class CustomSubParameterController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return allGstaList.stream().filter(gst4a -> !"0/0".equals(gst4a.getAbsolutevale()))
+        return allGstaList.stream()
                 .sorted(Comparator.comparing(GST4A::getTotal_score).reversed()).collect(Collectors.toList());
     }
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=cus4A*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
@@ -712,7 +702,7 @@ public class CustomSubParameterController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return allGstaList.stream().filter(gst4a -> !"0/0".equals(gst4a.getAbsolutevale()))
+        return allGstaList.stream()
                 .sorted(Comparator.comparing(GST4A::getTotal_score)).collect(Collectors.toList());
     }
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=cus4B*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
@@ -741,9 +731,12 @@ public class CustomSubParameterController {
             e.printStackTrace();
         }
         return allGstaList.stream()
-                .filter(gst4a -> !"0/0".equals(gst4a.getAbsolutevale())) // Exclude entries with absolutevale = "0/0"
-                .sorted(Comparator.comparing(GST4A::getTotal_score)) // Sort by total_score
-                .collect(Collectors.toList());
+                .sorted(Comparator.comparing(GST4A::getTotal_score)).collect(Collectors.toList());
+//        return allGstaList.stream()
+//                .sorted(Comparator
+//                        .comparing((GST4A gst4a) -> gst4a.getAbsolutevale().equals("0/0"))
+//                        .thenComparing(GST4A::getTotal_score))
+//                .collect(Collectors.toList());
     }
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=cus4C*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
     @ResponseBody
@@ -770,8 +763,10 @@ public class CustomSubParameterController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return allGstaList.stream().filter(gst4a -> !"0/0".equals(gst4a.getAbsolutevale()))
+        return allGstaList.stream()
                 .sorted(Comparator.comparing(GST4A::getTotal_score)).collect(Collectors.toList());
+//        return allGstaList.stream().filter(gst4a -> !"0/0".equals(gst4a.getAbsolutevale()))
+//                .sorted(Comparator.comparing(GST4A::getTotal_score)).collect(Collectors.toList());
     }
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=cus4D*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
     @ResponseBody
@@ -908,7 +903,8 @@ public class CustomSubParameterController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return allGstaList;
+        return allGstaList.stream()
+                .sorted(Comparator.comparing(GST4A::getTotal_score).reversed()).collect(Collectors.toList());
     }
 
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=cus5A*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
@@ -1046,8 +1042,10 @@ public class CustomSubParameterController {
 
             e.printStackTrace();
         }
-        return allGstaList.stream().filter(gst4a -> !"0/0".equals(gst4a.getAbsolutevale()))
+        return allGstaList.stream()
                 .sorted(Comparator.comparing(GST4A::getTotal_score).reversed()).collect(Collectors.toList());
+//        return allGstaList.stream().filter(gst4a -> !"0/0".equals(gst4a.getAbsolutevale()))
+//                .sorted(Comparator.comparing(GST4A::getTotal_score).reversed()).collect(Collectors.toList());
     }
 
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=cus5B*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
@@ -1182,8 +1180,10 @@ public class CustomSubParameterController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return allGstaList.stream().filter(gst4a -> !"0/0".equals(gst4a.getAbsolutevale()))
+        return allGstaList.stream()
                 .sorted(Comparator.comparing(GST4A::getTotal_score)).collect(Collectors.toList());
+//        return allGstaList.stream().filter(gst4a -> !"0/0".equals(gst4a.getAbsolutevale()))
+//                .sorted(Comparator.comparing(GST4A::getTotal_score)).collect(Collectors.toList());
     }
 
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=cus5c*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
@@ -1281,7 +1281,7 @@ public class CustomSubParameterController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return allGstaList.stream().filter(gst4a -> !"0/0".equals(gst4a.getAbsolutevale()))
+        return allGstaList.stream()
                 .sorted(Comparator.comparing(GST4A::getTotal_score)).collect(Collectors.toList());
     }
 
