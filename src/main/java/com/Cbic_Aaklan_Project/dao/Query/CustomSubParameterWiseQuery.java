@@ -921,12 +921,12 @@ import com.Cbic_Aaklan_Project.Service.DateCalculate;public class CustomSubParam
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
         String queryCustom4c="WITH calculated_data AS (\n" +
                 "    SELECT zc.ZONE_NAME, cc.ZONE_CODE, \n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '2024-10-01' THEN c14.SVB_BE_FINALIZED_NO ELSE 0 END), 0) AS col7, \n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = DATE_FORMAT(DATE_SUB('2024-10-01', INTERVAL 1 MONTH), '%Y-%m-%d') THEN c14.SVB_BE_CLOSING_NO ELSE 0 END), 0) AS col3\n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' THEN c14.SVB_BE_FINALIZED_NO ELSE 0 END), 0) AS col7, \n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = DATE_FORMAT(DATE_SUB('" + month_date + "', INTERVAL 1 MONTH), '%Y-%m-%d') THEN c14.SVB_BE_CLOSING_NO ELSE 0 END), 0) AS col3\n" +
                 "    FROM mis_gst_commcode AS cc\n" +
                 "    INNER JOIN mis_dpm_cus_5b AS c14 ON c14.COMM_CODE = cc.COMM_CODE\n" +
                 "    INNER JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
-                "    WHERE  c14.MM_YYYY IN ('2024-10-01', DATE_FORMAT(DATE_SUB('2024-10-01', INTERVAL 1 MONTH), '%Y-%m-%d')) \n" +
+                "    WHERE  c14.MM_YYYY IN ('" + month_date + "', DATE_FORMAT(DATE_SUB('" + month_date + "', INTERVAL 1 MONTH), '%Y-%m-%d')) \n" +
                 "    AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65') \n" +
                 "    GROUP BY zc.ZONE_CODE, zc.ZONE_NAME, cc.ZONE_CODE\n" +
                 "),\n" +
@@ -953,12 +953,12 @@ import com.Cbic_Aaklan_Project.Service.DateCalculate;public class CustomSubParam
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
         String queryCustom4c="WITH calculated_data AS (\n" +
                 "    SELECT zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME, \n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '2024-10-01' THEN c14.SVB_BE_FINALIZED_NO ELSE 0 END), 0) AS col7, \n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = DATE_FORMAT(DATE_SUB('2024-10-01', INTERVAL 1 MONTH), '%Y-%m-%d') THEN c14.SVB_BE_CLOSING_NO ELSE 0 END), 0) AS col3 \n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' THEN c14.SVB_BE_FINALIZED_NO ELSE 0 END), 0) AS col7, \n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = DATE_FORMAT(DATE_SUB('" + month_date + "', INTERVAL 1 MONTH), '%Y-%m-%d') THEN c14.SVB_BE_CLOSING_NO ELSE 0 END), 0) AS col3 \n" +
                 "    FROM mis_gst_commcode AS cc\n" +
                 "    INNER JOIN mis_dpm_cus_5b AS c14 ON c14.COMM_CODE = cc.COMM_CODE\n" +
                 "    INNER JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
-                "    WHERE  c14.MM_YYYY IN ('2024-10-01', DATE_FORMAT(DATE_SUB('2024-10-01', INTERVAL 1 MONTH), '%Y-%m-%d')) AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65') \n" +
+                "    WHERE  c14.MM_YYYY IN ('" + month_date + "', DATE_FORMAT(DATE_SUB('" + month_date + "', INTERVAL 1 MONTH), '%Y-%m-%d')) AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65') \n" +
                 "    GROUP BY zc.ZONE_CODE, zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME \n" +
                 "),\n" +
                 "ranked_data AS (\n" +
@@ -975,7 +975,7 @@ import com.Cbic_Aaklan_Project.Service.DateCalculate;public class CustomSubParam
                 "SELECT rd.ZONE_NAME,rd.ZONE_CODE,rd.COMM_NAME, rd.col7,rd.col3,mc.median_4c \n" +
                 "FROM ranked_data AS rd\n" +
                 "CROSS JOIN median_calc AS mc\n" +
-                "WHERE rd.ZONE_CODE = 74 LIMIT 1000;\n" +
+                "WHERE rd.ZONE_CODE = '" + zone_code + "'	 LIMIT 1000;\n" +
                 "\n";
         return queryCustom4c;
     }
@@ -984,12 +984,12 @@ import com.Cbic_Aaklan_Project.Service.DateCalculate;public class CustomSubParam
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
         String queryCustom4c="WITH calculated_data AS (\n" +
                 "    SELECT zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME, \n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '2024-10-01' THEN c14.SVB_BE_FINALIZED_NO ELSE 0 END), 0) AS col7,\n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = DATE_FORMAT(DATE_SUB('2024-10-01', INTERVAL 1 MONTH), '%Y-%m-%d') THEN c14.SVB_BE_CLOSING_NO ELSE 0 END), 0) AS col3\n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' THEN c14.SVB_BE_FINALIZED_NO ELSE 0 END), 0) AS col7,\n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = DATE_FORMAT(DATE_SUB('" + month_date + "', INTERVAL 1 MONTH), '%Y-%m-%d') THEN c14.SVB_BE_CLOSING_NO ELSE 0 END), 0) AS col3\n" +
                 "    FROM mis_gst_commcode AS cc\n" +
                 "    INNER JOIN mis_dpm_cus_5b AS c14 ON c14.COMM_CODE = cc.COMM_CODE\n" +
                 "    INNER JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
-                "    WHERE  c14.MM_YYYY IN ('2024-10-01', DATE_FORMAT(DATE_SUB('2024-10-01', INTERVAL 1 MONTH), '%Y-%m-%d')) \n" +
+                "    WHERE  c14.MM_YYYY IN ('" + month_date + "', DATE_FORMAT(DATE_SUB('" + month_date + "', INTERVAL 1 MONTH), '%Y-%m-%d')) \n" +
                 "        AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65') \n" +
                 "    GROUP BY zc.ZONE_CODE, zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME\n" +
                 "),\n" +
