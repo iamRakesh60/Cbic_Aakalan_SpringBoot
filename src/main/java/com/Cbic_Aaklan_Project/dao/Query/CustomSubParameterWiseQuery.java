@@ -3116,19 +3116,74 @@ import com.Cbic_Aaklan_Project.Service.DateCalculate;public class CustomSubParam
     public String QueryFor_cus8b_ZoneWise(String month_date){
         //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
-        String queryCustom8b="";
+        String queryCustom8b="WITH calculated_data AS (\n" +
+                "    SELECT zc.ZONE_NAME, cc.ZONE_CODE, \n" +
+                "           IFNULL(SUM(c14.PENDENCYGr6), 0) AS col13c, \n" +
+                "           IFNULL(SUM(c14.PENDENCY03 + c14.PENDENCY06 + c14.PENDENCYGr6), 0) AS col11\n" +
+                "    FROM mis_gst_commcode cc \n" +
+                "    INNER JOIN mis_dol_cus_4 c14 ON c14.COMM_CODE = cc.COMM_CODE \n" +
+                "    INNER JOIN mis_gst_zonecode zc ON zc.ZONE_CODE = cc.ZONE_CODE \n" +
+                "    WHERE c14.MM_YYYY = '" + month_date + "' \n" +
+                "      AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65') \n" +
+                "    GROUP BY zc.ZONE_CODE, zc.ZONE_NAME, cc.ZONE_CODE\n" +
+                "), \n" +
+                "ranked_data AS (\n" +
+                "    SELECT cd.*, \n" +
+                "           ROW_NUMBER() OVER (ORDER BY col13c ASC) AS row_asc, \n" +
+                "           ROW_NUMBER() OVER (ORDER BY col13c DESC) AS row_desc, \n" +
+                "           COUNT(*) OVER () AS total_rows \n" +
+                "    FROM calculated_data cd\n" +
+                ")\n" +
+                "SELECT rd.ZONE_NAME, rd.ZONE_CODE, rd.col13c, rd.col11 \n" +
+                "FROM ranked_data rd \n" +
+                "LIMIT 1000;\n";
         return queryCustom8b;
     }
     public String QueryFor_cus8b_CommissonaryWise(String month_date, String zone_code){
         //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
-        String queryCustom8b="";
+        String queryCustom8b="WITH calculated_data AS (\n" +
+                "    SELECT zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME, \n" +
+                "        IFNULL(SUM(c14.PENDENCYGr6), 0) AS col13c, \n" +
+                "        IFNULL(SUM(c14.PENDENCY03 + c14.PENDENCY06 + c14.PENDENCYGr6), 0) AS col11\n" +
+                "    FROM mis_gst_commcode AS cc \n" +
+                "    INNER JOIN mis_dol_cus_4 AS c14 ON c14.COMM_CODE = cc.COMM_CODE \n" +
+                "    INNER JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE \n" +
+                "    WHERE c14.MM_YYYY = '" + month_date + "' AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65') \n" +
+                "    GROUP BY zc.ZONE_CODE, zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME\n" +
+                "), \n" +
+                "ranked_data AS (\n" +
+                "    SELECT cd.*, ROW_NUMBER() OVER (ORDER BY col13c ASC) AS row_asc, \n" +
+                "        ROW_NUMBER() OVER (ORDER BY col13c DESC) AS row_desc, \n" +
+                "        COUNT(*) OVER () AS total_rows \n" +
+                "    FROM calculated_data AS cd\n" +
+                ")\n" +
+                "SELECT rd.ZONE_NAME, rd.ZONE_CODE, rd.COMM_NAME, rd.col13c, rd.col11\n" +
+                "FROM ranked_data AS rd\n" +
+                "WHERE rd.ZONE_CODE = '" + zone_code + "'	 LIMIT 1000;\n";
         return queryCustom8b;
     }
     public String QueryFor_cus8b_AllCommissonaryWise(String month_date){
         //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
-        String queryCustom8b="";
+        String queryCustom8b="WITH calculated_data AS (\n" +
+                "    SELECT zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME,\n" +
+                "        IFNULL(SUM(c14.PENDENCYGr6), 0) AS col13c,\n" +
+                "        IFNULL(SUM(c14.PENDENCY03 + c14.PENDENCY06 + c14.PENDENCYGr6), 0) AS col11\n" +
+                "    FROM mis_gst_commcode AS cc \n" +
+                "    INNER JOIN mis_dol_cus_4 AS c14 ON c14.COMM_CODE = cc.COMM_CODE \n" +
+                "    INNER JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE \n" +
+                "    WHERE c14.MM_YYYY = '" + month_date + "' AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65')\n" +
+                "    GROUP BY zc.ZONE_CODE, zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME\n" +
+                "), \n" +
+                "ranked_data AS (\n" +
+                "    SELECT cd.*, ROW_NUMBER() OVER (ORDER BY col13c ASC) AS row_asc,\n" +
+                "        ROW_NUMBER() OVER (ORDER BY col13c DESC) AS row_desc,\n" +
+                "        COUNT(*) OVER () AS total_rows\n" +
+                "    FROM calculated_data AS cd\n" +
+                ")\n" +
+                "SELECT rd.ZONE_NAME, rd.ZONE_CODE, rd.COMM_NAME,rd.col13c, rd.col11\n" +
+                "FROM ranked_data AS rd LIMIT 1000;\n";
         return queryCustom8b;
     }
     // ********************************************************************************************************************************
