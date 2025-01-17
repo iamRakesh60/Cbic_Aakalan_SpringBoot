@@ -146,11 +146,11 @@ public class CustomGreadeScore {
     // Custom grade score for custom 4c
     public int c_marks4d(double total) {
         int rank=0;
-        if(total >=30) {
+        if(total <= 30) {
             rank=10;
-        }else if(total >= 20 && total < 30) {
+        }else if(total > 30 && total <= 35) {
             rank=7;
-        }else if(total >= 10 && total < 20) {
+        }else if(total > 35 && total <= 40) {
             rank=4;
         }else {
             rank=2;

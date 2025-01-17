@@ -808,7 +808,7 @@ public class CustomSubParameterService {
             }
             String formattedTotal = String.format("%.2f", total);
             double totalScore = Double.parseDouble(formattedTotal);
-            int way_to_grade = score.c_marks4b(totalScore);
+            int way_to_grade = score.c_marks4d(totalScore);
             double sub_parameter_weighted_average = way_to_grade * 0.1;
             sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
             gsta=new GST4A(zoneName,commname,totalScore,absval,zoneCode,ra,
