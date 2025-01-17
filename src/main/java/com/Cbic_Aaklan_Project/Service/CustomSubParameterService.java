@@ -718,33 +718,33 @@ public class CustomSubParameterService {
     public List<GST4A> cus4dZone(ResultSet rs) throws SQLException {
         List<GST4A> allGstaList = new ArrayList<>();
         while (rs.next()) {
-//            String ra = CustomRelaventAspect.cus4d_RA;
-//            String commname = "ALL";
-//            // String commname= rs.getString("COMM_NAME");
-//            String zoneName = rs.getString("ZONE_NAME");
-//            String zoneCode = rs.getString("ZONE_CODE");
-//            int col15 = rs.getInt("col15");
-//            int col17 = rs.getInt("col17");
-//            int col9 = rs.getInt("col9");
-//            int Zonal_rank = 0;
-//            String gst = "no";
-//            String absval = "";
-//
-//            absval = String.valueOf( col15 + col17) + "/" + String.valueOf(col9);
-//
-//            if(col9 != 0) {
-//                total = ((double) (col15 + col17) * 100 / (col9));
-//            }else {
-//                total = 0.00;
-//            }
-//            String formattedTotal = String.format("%.2f", total);
-//            double totalScore = Double.parseDouble(formattedTotal);
-//            int way_to_grade = score.c_marks4d(totalScore);
-//            double sub_parameter_weighted_average = way_to_grade * 0.1 ;
-//            sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
-//            gsta=new GST4A(zoneName,commname,totalScore,absval,zoneCode,ra,
-//                    Zonal_rank,gst,way_to_grade,0,sub_parameter_weighted_average);
-//            allGstaList.add(gsta);
+            String ra = CustomRelaventAspect.cus4d_RA;
+            String commname = "ALL";
+            // String commname= rs.getString("COMM_NAME");
+            String zoneName = rs.getString("ZONE_NAME");
+            String zoneCode = rs.getString("ZONE_CODE");
+            int col15 = rs.getInt("col15");
+            int col17 = rs.getInt("col17");
+            int col9 = rs.getInt("col9");
+            int Zonal_rank = 0;
+            String gst = "no";
+            String absval = "";
+
+            absval = String.valueOf( col15 + col17) + "/" + String.valueOf(col9);
+
+            if(col9 != 0) {
+                total = ((double) (col15 + col17) * 100 / (col9));
+            }else {
+                total = 0.00;
+            }
+            String formattedTotal = String.format("%.2f", total);
+            double totalScore = Double.parseDouble(formattedTotal);
+            int way_to_grade = score.c_marks4d(totalScore);
+            double sub_parameter_weighted_average = way_to_grade * 0.1 ;
+            sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
+            gsta=new GST4A(zoneName,commname,totalScore,absval,zoneCode,ra,
+                    Zonal_rank,gst,way_to_grade,0,sub_parameter_weighted_average);
+            allGstaList.add(gsta);
         }
         return allGstaList;
     }
@@ -753,33 +753,33 @@ public class CustomSubParameterService {
     public List<GST4A> cus4dZoneWiseCommissionary(ResultSet rs) throws SQLException {
         List<GST4A> allGstaList = new ArrayList<>();
         while (rs.next()) {
-//            String ra = CustomRelaventAspect.cus4d_RA;
-//            // String commname = "ALL";
-//            String commname= rs.getString("COMM_NAME");
-//            String zoneName = rs.getString("ZONE_NAME");
-//            String zoneCode = rs.getString("ZONE_CODE");
-//            int col15 = rs.getInt("col15");
-//            int col17 = rs.getInt("col17");
-//            int col9 = rs.getInt("col9");
-//            int Zonal_rank = 0;
-//            String gst = "no";
-//            String absval = "";
-//
-//            absval = String.valueOf( col15  + col17) + "/" + String.valueOf(col9);
-//
-//            if(col9 != 0) {
-//                total = ((double) ( col15 +  col17) * 100 / (col9));
-//            }else {
-//                total = 0.00;
-//            }
-//            String formattedTotal = String.format("%.2f", total);
-//            double totalScore = Double.parseDouble(formattedTotal);
-//            int way_to_grade = score.c_marks4d(totalScore);
-//            double sub_parameter_weighted_average = way_to_grade * 0.1 ;
-//            sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
-//            gsta=new GST4A(zoneName,commname,totalScore,absval,zoneCode,ra,
-//                    Zonal_rank,gst,way_to_grade,0,sub_parameter_weighted_average);
-//            allGstaList.add(gsta);
+            String ra = CustomRelaventAspect.cus4d_RA;
+            // String commname = "ALL";
+            String commname= rs.getString("COMM_NAME");
+            String zoneName = rs.getString("ZONE_NAME");
+            String zoneCode = rs.getString("ZONE_CODE");
+            int col15 = rs.getInt("col15");
+            int col17 = rs.getInt("col17");
+            int col9 = rs.getInt("col9");
+            int Zonal_rank = 0;
+            String gst = "no";
+            String absval = "";
+
+            absval = String.valueOf( col15  + col17) + "/" + String.valueOf(col9);
+
+            if(col9 != 0) {
+                total = ((double) ( col15 +  col17) * 100 / (col9));
+            }else {
+                total = 0.00;
+            }
+            String formattedTotal = String.format("%.2f", total);
+            double totalScore = Double.parseDouble(formattedTotal);
+            int way_to_grade = score.c_marks4d(totalScore);
+            double sub_parameter_weighted_average = way_to_grade * 0.1 ;
+            sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
+            gsta=new GST4A(zoneName,commname,totalScore,absval,zoneCode,ra,
+                    Zonal_rank,gst,way_to_grade,0,sub_parameter_weighted_average);
+            allGstaList.add(gsta);
         }
         return allGstaList;
     }
@@ -788,32 +788,32 @@ public class CustomSubParameterService {
     public List<GST4A> cus4dAllCommissionary(ResultSet rs) throws SQLException {
         List<GST4A> allGstaList = new ArrayList<>();
         while (rs.next()) {
-//            String ra = CustomRelaventAspect.cus4d_RA;
-//            // String commname = "ALL";
-//            String commname= rs.getString("COMM_NAME");
-//            String zoneName = rs.getString("ZONE_NAME");
-//            String zoneCode = rs.getString("ZONE_CODE");
-//            int col15 = rs.getInt("col15");
-//            int col17 = rs.getInt("col17");
-//            int col9 = rs.getInt("col9");
-//            int Zonal_rank = 0;
-//            String gst = "no";
-//
-//            String absval = String.valueOf( col15 +  col17) + "/" + String.valueOf(col9);
-//
-//            if(col9 != 0) {
-//                total = ((double) ( col15 +  col17) * 100 / (col9));
-//            }else {
-//                total = 0.00;
-//            }
-//            String formattedTotal = String.format("%.2f", total);
-//            double totalScore = Double.parseDouble(formattedTotal);
-//            int way_to_grade = score.c_marks4b(totalScore);
-//            double sub_parameter_weighted_average = way_to_grade * 0.1;
-//            sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
-//            gsta=new GST4A(zoneName,commname,totalScore,absval,zoneCode,ra,
-//                    Zonal_rank,gst,way_to_grade,0,sub_parameter_weighted_average);
-//            allGstaList.add(gsta);
+            String ra = CustomRelaventAspect.cus4d_RA;
+            // String commname = "ALL";
+            String commname= rs.getString("COMM_NAME");
+            String zoneName = rs.getString("ZONE_NAME");
+            String zoneCode = rs.getString("ZONE_CODE");
+            int col15 = rs.getInt("col15");
+            int col17 = rs.getInt("col17");
+            int col9 = rs.getInt("col9");
+            int Zonal_rank = 0;
+            String gst = "no";
+
+            String absval = String.valueOf( col15 +  col17) + "/" + String.valueOf(col9);
+
+            if(col9 != 0) {
+                total = ((double) ( col15 +  col17) * 100 / (col9));
+            }else {
+                total = 0.00;
+            }
+            String formattedTotal = String.format("%.2f", total);
+            double totalScore = Double.parseDouble(formattedTotal);
+            int way_to_grade = score.c_marks4b(totalScore);
+            double sub_parameter_weighted_average = way_to_grade * 0.1;
+            sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
+            gsta=new GST4A(zoneName,commname,totalScore,absval,zoneCode,ra,
+                    Zonal_rank,gst,way_to_grade,0,sub_parameter_weighted_average);
+            allGstaList.add(gsta);
         }
         return allGstaList;
     }

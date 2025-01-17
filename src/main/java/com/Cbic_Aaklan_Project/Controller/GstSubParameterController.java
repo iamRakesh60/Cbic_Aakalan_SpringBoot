@@ -1340,10 +1340,8 @@ public class GstSubParameterController {
 
         try {
             if (type.equalsIgnoreCase("zone")) {
-                String queryGst14aa =new GstSubParameterWiseQuery().QueryFor_gst3b_ZoneWise(month_date);
-                PreparedStatement psGst14aa=con.prepareStatement(queryGst14aa);
-                //Result Set
-                ResultSet rsGst14aa= psGst14aa.executeQuery();
+                String queryGst14aa=new GstSubParameterWiseQuery().QueryFor_gst3b_ZoneWise(month_date);
+                ResultSet rsGst14aa = GetExecutionSQL.getResult(queryGst14aa);
                 while(rsGst14aa.next() ) {
                     String commname = "ALL";
                     String ra = RelevantAspect.Gst3B_RA;
@@ -1472,15 +1470,9 @@ public class GstSubParameterController {
         double total = 0.00;
         try {
             if (type.equalsIgnoreCase("zone")) {
-                // Query string
-
-                // Query string
                 String queryGst14aa=new GstSubParameterWiseQuery().QueryFor_gst4a_ZoneWise(month_date);
-
-
                 //Result Set
                 ResultSet rsGst14aa = GetExecutionSQL.getResult(queryGst14aa);
-
                 while(rsGst14aa.next()) {
                     String commname="ALL";
                     String ra=RelevantAspect.GST4A_RA;
