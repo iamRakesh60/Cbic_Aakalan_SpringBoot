@@ -3586,19 +3586,107 @@ import com.Cbic_Aaklan_Project.Service.DateCalculate;public class CustomSubParam
     public String QueryFor_cus11b_ZoneWise(String month_date){
         //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
-        String queryCustom10a="";
+        String queryCustom10a="WITH calculated_data AS (\n" +
+                "    SELECT zc.ZONE_NAME, cc.ZONE_CODE, \n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '2024-11-01' THEN c14.RECOVERY_AMT ELSE 0 END), 0) AS col11,\n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = DATE_FORMAT(DATE_SUB('2024-11-01', INTERVAL 1 MONTH), '%Y-%m-%d') THEN c14.CLOSING_BALANCE_AMT ELSE 0 END), 0) AS col2,\n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '2024-11-01' THEN c14.RECEIVED_EXPIRED_WH_AMT ELSE 0 END), 0) AS col4\n" +
+                "    FROM mis_gst_commcode AS cc \n" +
+                "    INNER JOIN mis_dgi_cus_7b_new AS c14 ON c14.COMM_CODE = cc.COMM_CODE \n" +
+                "    INNER JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE \n" +
+                "    WHERE c14.MM_YYYY IN ('2024-11-01', DATE_FORMAT(DATE_SUB('2024-11-01', INTERVAL 1 MONTH), '%Y-%m-%d'))\n" +
+                "        AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65')\n" +
+                "    GROUP BY zc.ZONE_CODE, zc.ZONE_NAME, cc.ZONE_CODE\n" +
+                "), \n" +
+                "ranked_data AS (\n" +
+                "    SELECT cd.*, \n" +
+                "        ROW_NUMBER() OVER (ORDER BY col11 ASC) AS row_asc,ROW_NUMBER() OVER (ORDER BY col11 DESC) AS row_desc,COUNT(*) OVER () AS total_rows_ranked\n" +
+                "    FROM calculated_data AS cd\n" +
+                "),\n" +
+                "sorted_data AS (\n" +
+                "    SELECT rd.*, \n" +
+                "        ROW_NUMBER() OVER (ORDER BY rd.col11 ASC) AS rn, COUNT(*) OVER () AS total_rows_sorted\n" +
+                "    FROM ranked_data AS rd\n" +
+                "),\n" +
+                "median_calc AS (\n" +
+                "    SELECT AVG(col11) AS median_11b\n" +
+                "    FROM sorted_data\n" +
+                "    WHERE rn IN (FLOOR((total_rows_sorted + 1) / 2), CEIL((total_rows_sorted + 1) / 2))\n" +
+                ")\n" +
+                "SELECT rd.ZONE_NAME, rd.ZONE_CODE, rd.col11, rd.col2, rd.col4,mc.median_11b\n" +
+                "FROM ranked_data AS rd\n" +
+                "CROSS JOIN median_calc AS mc LIMIT 1000;\n";
         return queryCustom10a;
     }
     public String QueryFor_cus11b_CommissonaryWise(String month_date, String zone_code){
         //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
-        String queryCustom10a="";
+        String queryCustom10a="WITH calculated_data AS (\n" +
+                "    SELECT zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME, \n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '2024-11-01' THEN c14.RECOVERY_AMT ELSE 0 END), 0) AS col11,\n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = DATE_FORMAT(DATE_SUB('2024-11-01', INTERVAL 1 MONTH), '%Y-%m-%d') THEN c14.CLOSING_BALANCE_AMT ELSE 0 END), 0) AS col2,\n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '2024-11-01' THEN c14.RECEIVED_EXPIRED_WH_AMT ELSE 0 END), 0) AS col4\n" +
+                "    FROM mis_gst_commcode AS cc \n" +
+                "    INNER JOIN mis_dgi_cus_7b_new AS c14 ON c14.COMM_CODE = cc.COMM_CODE \n" +
+                "    INNER JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE \n" +
+                "    WHERE c14.MM_YYYY IN ('2024-11-01', DATE_FORMAT(DATE_SUB('2024-11-01', INTERVAL 1 MONTH), '%Y-%m-%d')) \n" +
+                "        AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65')\n" +
+                "    GROUP BY zc.ZONE_CODE, zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME\n" +
+                "), \n" +
+                "ranked_data AS (\n" +
+                "    SELECT cd.*, ROW_NUMBER() OVER (ORDER BY col11 ASC) AS row_asc,\n" +
+                "        ROW_NUMBER() OVER (ORDER BY col11 DESC) AS row_desc,COUNT(*) OVER () AS total_rows_ranked\n" +
+                "    FROM calculated_data AS cd\n" +
+                "),\n" +
+                "sorted_data AS (\n" +
+                "    SELECT rd.*, \n" +
+                "        ROW_NUMBER() OVER (ORDER BY rd.col11 ASC) AS rn, COUNT(*) OVER () AS total_rows_sorted\n" +
+                "    FROM ranked_data AS rd\n" +
+                "),\n" +
+                "median_calc AS (\n" +
+                "    SELECT AVG(col11) AS median_11b\n" +
+                "    FROM sorted_data\n" +
+                "    WHERE rn IN (FLOOR((total_rows_sorted + 1) / 2), CEIL((total_rows_sorted + 1) / 2))\n" +
+                ")\n" +
+                "SELECT rd.ZONE_NAME, rd.ZONE_CODE, rd.COMM_NAME, rd.col11, rd.col2, rd.col4,mc.median_11b\n" +
+                "FROM ranked_data AS rd\n" +
+                "CROSS JOIN median_calc AS mc\n" +
+                "WHERE rd.ZONE_CODE = '79' LIMIT 1000;\n";
         return queryCustom10a;
     }
     public String QueryFor_cus11b_AllCommissonaryWise(String month_date){
         //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
-        String queryCustom10a="";
+        String queryCustom10a="WITH calculated_data AS (\n" +
+                "    SELECT zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME, \n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '2024-11-01' THEN c14.RECOVERY_AMT ELSE 0 END), 0) AS col11, \n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = DATE_FORMAT(DATE_SUB('2024-11-01', INTERVAL 1 MONTH), '%Y-%m-%d') THEN c14.CLOSING_BALANCE_AMT ELSE 0 END), 0) AS col2, \n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '2024-11-01' THEN c14.RECEIVED_EXPIRED_WH_AMT ELSE 0 END), 0) AS col4\n" +
+                "    FROM mis_gst_commcode AS cc \n" +
+                "    INNER JOIN mis_dgi_cus_7b_new AS c14 ON c14.COMM_CODE = cc.COMM_CODE \n" +
+                "    INNER JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE \n" +
+                "    WHERE c14.MM_YYYY IN ('2024-11-01', DATE_FORMAT(DATE_SUB('2024-11-01', INTERVAL 1 MONTH), '%Y-%m-%d')) \n" +
+                "        AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65') \n" +
+                "    GROUP BY zc.ZONE_CODE, zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME\n" +
+                "), \n" +
+                "ranked_data AS (\n" +
+                "    SELECT cd.*, \n" +
+                "        ROW_NUMBER() OVER (ORDER BY col11 ASC) AS row_asc, ROW_NUMBER() OVER (ORDER BY col11 DESC) AS row_desc, \n" +
+                "        COUNT(*) OVER () AS total_rows_ranked\n" +
+                "    FROM calculated_data AS cd\n" +
+                "),\n" +
+                "sorted_data AS (\n" +
+                "    SELECT rd.*,ROW_NUMBER() OVER (ORDER BY rd.col11 ASC) AS rn,  COUNT(*) OVER () AS total_rows_sorted\n" +
+                "    FROM ranked_data AS rd\n" +
+                "),\n" +
+                "median_calc AS (\n" +
+                "    SELECT AVG(col11) AS median_11b\n" +
+                "    FROM sorted_data\n" +
+                "    WHERE rn IN (FLOOR((total_rows_sorted + 1) / 2), CEIL((total_rows_sorted + 1) / 2))\n" +
+                ")\n" +
+                "SELECT rd.ZONE_NAME, rd.ZONE_CODE, rd.COMM_NAME, rd.col11, rd.col2, rd.col4,mc.median_11b\n" +
+                "FROM ranked_data AS rd\n" +
+                "CROSS JOIN median_calc AS mc LIMIT 1000;";
         return queryCustom10a;
     }
     // ********************************************************************************************************************************
