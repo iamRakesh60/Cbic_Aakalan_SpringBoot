@@ -3511,19 +3511,75 @@ import com.Cbic_Aaklan_Project.Service.DateCalculate;public class CustomSubParam
     public String QueryFor_cus11a_ZoneWise(String month_date){
         //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
-        String queryCustom10a="";
+        String queryCustom10a="WITH calculated_data AS (\n" +
+                "    SELECT zc.ZONE_NAME, cc.ZONE_CODE, \n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '2024-10-01' THEN c14.CLOSING_BALANCE_NO ELSE 0 END), 0) AS col9, \n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = DATE_FORMAT(DATE_SUB('2024-10-01', INTERVAL 1 MONTH), '%Y-%m-%d') THEN c14.CLOSING_BALANCE_NO ELSE 0 END), 0) AS col1, \n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '2024-10-01' THEN c14.RECEIVED_EXPIRED_WH_NO ELSE 0 END), 0) AS col3 \n" +
+                "    FROM mis_gst_commcode AS cc \n" +
+                "    INNER JOIN mis_dgi_cus_7b_new AS c14 ON c14.COMM_CODE = cc.COMM_CODE \n" +
+                "    INNER JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE \n" +
+                "    WHERE c14.MM_YYYY IN ('2024-10-01', DATE_FORMAT(DATE_SUB('2024-10-01', INTERVAL 1 MONTH), '%Y-%m-%d')) \n" +
+                "        AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65') \n" +
+                "    GROUP BY zc.ZONE_CODE, zc.ZONE_NAME, cc.ZONE_CODE\n" +
+                "), \n" +
+                "ranked_data AS (\n" +
+                "    SELECT \n" +
+                "        cd.*, ROW_NUMBER() OVER (ORDER BY col9 ASC) AS row_asc, \n" +
+                "        ROW_NUMBER() OVER (ORDER BY col9 DESC) AS row_desc, COUNT(*) OVER () AS total_rows \n" +
+                "    FROM calculated_data AS cd\n" +
+                ")\n" +
+                "SELECT rd.ZONE_NAME, rd.ZONE_CODE, rd.col9, rd.col1, rd.col3\n" +
+                "FROM ranked_data AS rd LIMIT 1000;";
         return queryCustom10a;
     }
     public String QueryFor_cus11a_CommissonaryWise(String month_date, String zone_code){
         //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
-        String queryCustom10a="";
+        String queryCustom10a="WITH calculated_data AS (\n" +
+                "    SELECT zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME, \n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '2024-10-01' THEN c14.CLOSING_BALANCE_NO ELSE 0 END), 0) AS col9,\n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = DATE_FORMAT(DATE_SUB('2024-10-01', INTERVAL 1 MONTH), '%Y-%m-%d') THEN c14.CLOSING_BALANCE_NO ELSE 0 END), 0) AS col1,\n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '2024-10-01' THEN c14.RECEIVED_EXPIRED_WH_NO ELSE 0 END), 0) AS col3\n" +
+                "    FROM mis_gst_commcode AS cc \n" +
+                "    INNER JOIN mis_dgi_cus_7b_new AS c14 ON c14.COMM_CODE = cc.COMM_CODE \n" +
+                "    INNER JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE \n" +
+                "    WHERE c14.MM_YYYY IN ('2024-10-01', DATE_FORMAT(DATE_SUB('2024-10-01', INTERVAL 1 MONTH), '%Y-%m-%d')) \n" +
+                "        AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65') AND cc.ZONE_CODE = '76' \n" +
+                "    GROUP BY zc.ZONE_CODE, zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME\n" +
+                "), \n" +
+                "ranked_data AS (\n" +
+                "    SELECT cd.*, \n" +
+                "        ROW_NUMBER() OVER (ORDER BY col9 ASC) AS row_asc, \n" +
+                "        ROW_NUMBER() OVER (ORDER BY col9 DESC) AS row_desc, COUNT(*) OVER () AS total_rows \n" +
+                "    FROM calculated_data AS cd\n" +
+                ")\n" +
+                "SELECT rd.ZONE_NAME, rd.ZONE_CODE, rd.COMM_NAME, rd.col9, rd.col1, rd.col3\n" +
+                "FROM ranked_data AS rd LIMIT 1000;\n";
         return queryCustom10a;
     }
     public String QueryFor_cus11a_AllCommissonaryWise(String month_date){
         //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
-        String queryCustom10a="";
+        String queryCustom10a="WITH calculated_data AS (\n" +
+                "    SELECT zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME,\n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '2024-10-01' THEN c14.CLOSING_BALANCE_NO ELSE 0 END), 0) AS col9,\n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = DATE_FORMAT(DATE_SUB('2024-10-01', INTERVAL 1 MONTH), '%Y-%m-%d') THEN c14.CLOSING_BALANCE_NO ELSE 0 END), 0) AS col1,\n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '2024-10-01' THEN c14.RECEIVED_EXPIRED_WH_NO ELSE 0 END), 0) AS col3\n" +
+                "    FROM mis_gst_commcode AS cc \n" +
+                "    INNER JOIN mis_dgi_cus_7b_new AS c14 ON c14.COMM_CODE = cc.COMM_CODE \n" +
+                "    INNER JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE \n" +
+                "    WHERE c14.MM_YYYY IN ('2024-10-01', DATE_FORMAT(DATE_SUB('2024-10-01', INTERVAL 1 MONTH), '%Y-%m-%d'))\n" +
+                "        AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65')\n" +
+                "    GROUP BY zc.ZONE_CODE, zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME\n" +
+                "), \n" +
+                "ranked_data AS (\n" +
+                "    SELECT cd.*, ROW_NUMBER() OVER (ORDER BY col9 ASC) AS row_asc, \n" +
+                "        ROW_NUMBER() OVER (ORDER BY col9 DESC) AS row_desc, COUNT(*) OVER () AS total_rows \n" +
+                "    FROM calculated_data AS cd\n" +
+                ")\n" +
+                "SELECT rd.ZONE_NAME, rd.ZONE_CODE, rd.COMM_NAME, rd.col9, rd.col1, rd.col3\n" +
+                "FROM ranked_data AS rd LIMIT 1000;";
         return queryCustom10a;
     }
     // ********************************************************************************************************************************

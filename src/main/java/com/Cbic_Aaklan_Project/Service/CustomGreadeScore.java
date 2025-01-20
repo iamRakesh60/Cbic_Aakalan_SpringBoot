@@ -404,6 +404,36 @@ public class CustomGreadeScore {
         return rank;
     }
 
+    // Custom grade score for custom 11A
+    public int c_marks11a(double total) {
+        int rank = 0;
+        if (total <= 30) {
+            rank = 10;
+        } else if (total > 30 && total <= 35) {
+            rank = 7;
+        } else if (total > 35 && total <= 40) {
+            rank = 4;
+        } else {
+            rank = 2;
+        }
+        return rank;
+    }
+
+    // Custom grade score for custom 11B
+    public int c_marks11B(double total) {
+        int rank=0;
+        if(total <= 10 ) {
+            rank=10;
+        }else if(total >10 && total <= 20) {
+            rank=7;
+        }else if(total > 20 && total <=30) {
+            rank=4;
+        }else {
+            rank=2;
+        }
+        return rank;
+    }
+
     // Custom grade score for custom 9B
     public int c_marks12a(double total, double numerator) {
         int rank=0;
@@ -433,4 +463,6 @@ public class CustomGreadeScore {
         }
         return rank;
     }
+
+
 }

@@ -2202,6 +2202,33 @@ public class CustomSubParameterController {
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=cus10A*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=cus10B*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=cus11A*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+    @ResponseBody
+    @RequestMapping(value = "/cus11A")
+    //  http://localhost:8080/cbicApi/cbic/custom/cus11A?month_date=2024-10-01&type=zone
+    //  http://localhost:8080/cbicApi/cbic/custom/cus11A?month_date=2024-10-01&zone_code=58&type=commissary
+    //  http://localhost:8080/cbicApi/cbic/custom/cus11A?month_date=2024-10-01&type=all_commissary
+    public Object Custom11a(@RequestParam String month_date, @RequestParam String type, @RequestParam(required = false) String zone_code) {
+        List<GST4A> allGstaList = new ArrayList<>();
+        try {
+            if (type.equalsIgnoreCase("zone")) {
+                String queryGst14aa = new CustomSubParameterWiseQuery().QueryFor_cus11a_ZoneWise(month_date);
+                ResultSet rsGst14aa = GetExecutionSQL.getResult(queryGst14aa);
+                allGstaList.addAll(customSubParameterService.cus11aZone(rsGst14aa));
+            } else if (type.equalsIgnoreCase("commissary")) {
+                String queryGst14aa = new CustomSubParameterWiseQuery().QueryFor_cus11a_CommissonaryWise(month_date, zone_code);
+                ResultSet rsGst14aa = GetExecutionSQL.getResult(queryGst14aa);
+                allGstaList.addAll(customSubParameterService.cus11aZoneWiseCommissionary(rsGst14aa));
+            } else if (type.equalsIgnoreCase("all_commissary")) {
+                String queryGst14aa = new CustomSubParameterWiseQuery().QueryFor_cus11a_AllCommissonaryWise(month_date);
+                ResultSet rsGst14aa = GetExecutionSQL.getResult(queryGst14aa);
+                allGstaList.addAll(customSubParameterService.cus11aAllCommissionary(rsGst14aa));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return allGstaList.stream()
+                .sorted(Comparator.comparing(GST4A::getTotal_score)).collect(Collectors.toList());
+    }
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=cus11B*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=cus12A*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
     @ResponseBody
