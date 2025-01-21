@@ -28,7 +28,7 @@ public class CustomRelaventAspect {
     public static final String cus8b_RA ="No of packages of uncleared/unclaimed cargo pending more than six months vis-à-vis total number of packages of uncleared/unclaimed cargo pending";
     public static final String cus9a_RA ="Quantity of Gold disposed during the month vis-à-vis total quantity of gold ripe for disposal at the beginning of the month";
     public static final String cus9b_RA ="Quantity of confiscated narcotics disposed  (during the months) vis- a vis total  quantity pending for disposal at the beginning of the month";
-    public static final String cus10a_RA ="Recoverable arrears recovered vis-à-vis pro rata TAR target  upto the month ";
+    public static final String cus10a_RA ="Recoverable arrears recovered vis-à-vis pro rata TAR target  upto the month";
     public static final String cus10b_RA ="Amount of Recoverable arrears pending for more than one year vis-à-vis total amount of recoverable arrears pending at the end of the month.";
     public static final String cus11a_RA ="Number of cases where W/H bond has expired and no action taken during the month vis-à-vis total number of cases where W/H bond has expired upto the month";
     public static final String cus11b_RA ="Customs duty recovered from expired W/H bonds  during the month vis -a- vis total duty involved on  W/H bonds  upto the month";

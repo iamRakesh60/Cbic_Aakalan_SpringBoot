@@ -3473,19 +3473,200 @@ import com.Cbic_Aaklan_Project.Service.DateCalculate;public class CustomSubParam
     public String QueryFor_cus10a_ZoneWise(String month_date){
         //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
-        String queryCustom10a="";
+        String queryCustom10a="WITH cumulative_target AS (\n" +
+                "    SELECT \n" +
+                "        zc.ZONE_CODE, \n" +
+                "        SUM(t.TARGET) AS total_target\n" +
+                "    FROM \n" +
+                "        mis_tar_cus_target AS t\n" +
+                "    INNER JOIN \n" +
+                "        mis_gst_commcode AS cc ON t.COMM_CODE = cc.COMM_CODE\n" +
+                "    INNER JOIN \n" +
+                "        mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
+                "    WHERE \n" +
+                "        t.MM_YYYY BETWEEN '2024-01-01' AND '2024-10-01'\n" +
+                "    GROUP BY \n" +
+                "        zc.ZONE_CODE\n" +
+                "), \n" +
+                "calculated_data AS (\n" +
+                "    SELECT \n" +
+                "        zc.ZONE_NAME, \n" +
+                "        zc.ZONE_CODE, \n" +
+                "        SUM(c14.REALISED_AMT) AS col15, \n" +
+                "        COALESCE(ct.total_target, 0) AS col3\n" +
+                "    FROM \n" +
+                "        mis_gst_commcode AS cc\n" +
+                "    INNER JOIN \n" +
+                "        mis_tar_cus_1d AS c14 ON c14.COMM_CODE = cc.COMM_CODE\n" +
+                "    INNER JOIN \n" +
+                "        mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
+                "    LEFT JOIN \n" +
+                "        cumulative_target AS ct ON zc.ZONE_CODE = ct.ZONE_CODE\n" +
+                "    WHERE \n" +
+                "        c14.MM_YYYY BETWEEN '2024-04-01' AND '2024-10-01' \n" +
+                "        AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65')\n" +
+                "    GROUP BY \n" +
+                "        zc.ZONE_NAME, \n" +
+                "        zc.ZONE_CODE, \n" +
+                "        ct.total_target\n" +
+                "), \n" +
+                "ranked_data AS (\n" +
+                "    SELECT          \n" +
+                "        cd.*,         \n" +
+                "        cd.col15 AS col15_1,         \n" +
+                "        ROW_NUMBER() OVER (ORDER BY cd.col15 DESC) AS row_num\n" +
+                "    FROM          \n" +
+                "        calculated_data AS cd\n" +
+                "), \n" +
+                "sorted_data AS (\n" +
+                "    SELECT          \n" +
+                "        rd.*,          \n" +
+                "        ROW_NUMBER() OVER (ORDER BY rd.col15_1 ASC) AS rn,         \n" +
+                "        COUNT(*) OVER () AS total_rows\n" +
+                "    FROM          \n" +
+                "        ranked_data AS rd\n" +
+                "), \n" +
+                "median_calc AS (\n" +
+                "    SELECT          \n" +
+                "        AVG(col15_1) AS median_10a\n" +
+                "    FROM          \n" +
+                "        sorted_data     \n" +
+                "    WHERE          \n" +
+                "        rn IN (FLOOR((total_rows + 1) / 2), CEIL((total_rows + 1) / 2))\n" +
+                ") \n" +
+                "SELECT \n" +
+                "    cd.ZONE_NAME, \n" +
+                "    cd.ZONE_CODE, \n" +
+                "    cd.col15, \n" +
+                "    cd.col3, \n" +
+                "    COALESCE(mc.median_10a, 0) AS median_10a\n" +
+                "FROM \n" +
+                "    calculated_data AS cd\n" +
+                "LEFT JOIN \n" +
+                "    median_calc AS mc ON 1=1\n" +
+                "ORDER BY \n" +
+                "    cd.col15 DESC;";
         return queryCustom10a;
     }
     public String QueryFor_cus10a_CommissonaryWise(String month_date, String zone_code){
         //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
-        String queryCustom10a="";
+        String queryCustom10a="WITH cumulative_target AS (\n" +
+                "    SELECT \n" +
+                "        zc.ZONE_CODE, \n" +
+                "        cc.COMM_NAME,  \n" +
+                "        SUM(t.TARGET) AS total_target,\n" +
+                "        ROW_NUMBER() OVER (PARTITION BY zc.ZONE_CODE ORDER BY cc.COMM_NAME) AS rn\n" +
+                "    FROM \n" +
+                "        mis_tar_cus_target AS t\n" +
+                "    INNER JOIN \n" +
+                "        mis_gst_commcode AS cc ON t.COMM_CODE = cc.COMM_CODE\n" +
+                "    INNER JOIN \n" +
+                "        mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
+                "    WHERE \n" +
+                "        t.MM_YYYY BETWEEN '2024-01-01' AND '2024-10-01'\n" +
+                "    GROUP BY \n" +
+                "        zc.ZONE_CODE, cc.COMM_NAME\n" +
+                "), \n" +
+                "calculated_data AS (\n" +
+                "    SELECT \n" +
+                "        zc.ZONE_NAME, \n" +
+                "        zc.ZONE_CODE, \n" +
+                "        cc.COMM_NAME, \n" +
+                "        SUM(c14.REALISED_AMT) AS col15, \n" +
+                "        COALESCE(MAX(CASE WHEN ct.rn = 1 THEN ct.total_target END), 0) AS col3\n" +
+                "    FROM \n" +
+                "        mis_gst_commcode AS cc\n" +
+                "    INNER JOIN \n" +
+                "        mis_tar_cus_1d AS c14 ON c14.COMM_CODE = cc.COMM_CODE\n" +
+                "    INNER JOIN \n" +
+                "        mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
+                "    LEFT JOIN \n" +
+                "        cumulative_target AS ct ON zc.ZONE_CODE = ct.ZONE_CODE AND cc.COMM_NAME = ct.COMM_NAME  \n" +
+                "    WHERE \n" +
+                "        c14.MM_YYYY BETWEEN '2024-04-01' AND '2024-10-01'\n" +
+                "        AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65')\n" +
+                "    GROUP BY \n" +
+                "        zc.ZONE_NAME, zc.ZONE_CODE, cc.COMM_NAME\n" +
+                "), \n" +
+                "ranked_data AS (     \n" +
+                "    SELECT          \n" +
+                "        cd.*,         \n" +
+                "        cd.col15 AS col15_1,         \n" +
+                "        ROW_NUMBER() OVER (ORDER BY cd.col15 DESC) AS row_num     \n" +
+                "    FROM          \n" +
+                "        calculated_data AS cd \n" +
+                "), \n" +
+                "sorted_data AS (     \n" +
+                "    SELECT          \n" +
+                "        rd.*,          \n" +
+                "        ROW_NUMBER() OVER (ORDER BY rd.col15_1 ASC) AS rn,         \n" +
+                "        COUNT(*) OVER () AS total_rows     \n" +
+                "    FROM          \n" +
+                "        ranked_data AS rd \n" +
+                "), \n" +
+                "median_calc AS (     \n" +
+                "    SELECT          \n" +
+                "        AVG(col15_1) AS median_10a     \n" +
+                "    FROM          \n" +
+                "        sorted_data     \n" +
+                "    WHERE          \n" +
+                "        rn IN (FLOOR((total_rows + 1) / 2), CEIL((total_rows + 1) / 2))\n" +
+                ") \n" +
+                "SELECT \n" +
+                "    cd.ZONE_NAME, \n" +
+                "    cd.ZONE_CODE, \n" +
+                "    cd.COMM_NAME, \n" +
+                "    cd.col15, \n" +
+                "    cd.col3, \n" +
+                "    COALESCE(mc.median_10a, 0) AS median_10a\n" +
+                "FROM \n" +
+                "    calculated_data AS cd\n" +
+                "LEFT JOIN \n" +
+                "    median_calc AS mc ON 1=1\n" +
+                "WHERE \n" +
+                "    cd.ZONE_CODE = '71'\n" +
+                "ORDER BY \n" +
+                "    cd.col15 DESC;";
         return queryCustom10a;
     }
     public String QueryFor_cus10a_AllCommissonaryWise(String month_date){
         //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
-        String queryCustom10a="";
+        String queryCustom10a="WITH cumulative_target AS (\n" +
+                "    SELECT zc.ZONE_CODE, cc.COMM_NAME,  SUM(t.TARGET) AS total_target,\n" +
+                "        ROW_NUMBER() OVER (PARTITION BY zc.ZONE_CODE ORDER BY cc.COMM_NAME) AS rn\n" +
+                "    FROM mis_tar_cus_target AS t\n" +
+                "    INNER JOIN mis_gst_commcode AS cc ON t.COMM_CODE = cc.COMM_CODE\n" +
+                "    INNER JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
+                "    WHERE t.MM_YYYY BETWEEN '2024-01-01' AND '2024-10-01'\n" +
+                "    GROUP BY zc.ZONE_CODE, cc.COMM_NAME\n" +
+                "), calculated_data AS (\n" +
+                "    SELECT zc.ZONE_NAME, zc.ZONE_CODE, cc.COMM_NAME, SUM(c14.REALISED_AMT) AS col15, \n" +
+                "        COALESCE(MAX(CASE WHEN ct.rn = 1 THEN ct.total_target END), 0) AS col3\n" +
+                "    FROM mis_gst_commcode AS cc\n" +
+                "    INNER JOIN mis_tar_cus_1d AS c14 ON c14.COMM_CODE = cc.COMM_CODE\n" +
+                "    INNER JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
+                "    LEFT JOIN cumulative_target AS ct ON zc.ZONE_CODE = ct.ZONE_CODE AND cc.COMM_NAME = ct.COMM_NAME  \n" +
+                "    WHERE c14.MM_YYYY BETWEEN '2024-04-01' AND '2024-10-01'\n" +
+                "        AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65')\n" +
+                "    GROUP BY zc.ZONE_NAME, zc.ZONE_CODE, cc.COMM_NAME\n" +
+                "), ranked_data AS (     \n" +
+                "    SELECT cd.*, cd.col15 AS col15_1,ROW_NUMBER() OVER (ORDER BY cd.col15 DESC) AS row_num     \n" +
+                "    FROM calculated_data AS cd \n" +
+                "), sorted_data AS (     \n" +
+                "    SELECT rd.*,          ROW_NUMBER() OVER (ORDER BY rd.col15_1 ASC) AS rn,        \n" +
+                "        COUNT(*) OVER () AS total_rows     \n" +
+                "    FROM ranked_data AS rd \n" +
+                "), median_calc AS (     \n" +
+                "    SELECT AVG(col15_1) AS median_10a     \n" +
+                "    FROM sorted_data     \n" +
+                "    WHERE rn IN (FLOOR((total_rows + 1) / 2), CEIL((total_rows + 1) / 2))\n" +
+                ") \n" +
+                "SELECT cd.ZONE_NAME, cd.ZONE_CODE, cd.COMM_NAME, cd.col15, cd.col3, COALESCE(mc.median_10a, 0) AS median_10a\n" +
+                "FROM calculated_data AS cd\n" +
+                "LEFT JOIN median_calc AS mc ON 1=1\n" +
+                "ORDER BY cd.col15 DESC;";
         return queryCustom10a;
     }
     // ********************************************************************************************************************************
