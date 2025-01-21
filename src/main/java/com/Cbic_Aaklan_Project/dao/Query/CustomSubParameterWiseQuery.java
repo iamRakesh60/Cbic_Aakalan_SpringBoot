@@ -3840,7 +3840,7 @@ import com.Cbic_Aaklan_Project.Service.DateCalculate;public class CustomSubParam
                 "    FROM sorted_data\n" +
                 "    WHERE rn IN (FLOOR((total_rows_sorted + 1) / 2), CEIL((total_rows_sorted + 1) / 2))\n" +
                 ")\n" +
-                "SELECT rd.ZONE_NAME, rd.ZONE_CODE, rd.col11, rd.col2, rd.col4,mc.median_11b\n" +
+                "SELECT rd.ZONE_NAME, rd.ZONE_CODE, rd.col11, rd.col2, rd.col4, concat(rd.col11,'/',(rd.col2 + rd.col4)) as absval11b,mc.median_11b\n" +
                 "FROM ranked_data AS rd\n" +
                 "CROSS JOIN median_calc AS mc LIMIT 1000;\n";
         return queryCustom10a;
@@ -3875,7 +3875,7 @@ import com.Cbic_Aaklan_Project.Service.DateCalculate;public class CustomSubParam
                 "    FROM sorted_data\n" +
                 "    WHERE rn IN (FLOOR((total_rows_sorted + 1) / 2), CEIL((total_rows_sorted + 1) / 2))\n" +
                 ")\n" +
-                "SELECT rd.ZONE_NAME, rd.ZONE_CODE, rd.COMM_NAME, rd.col11, rd.col2, rd.col4,mc.median_11b\n" +
+                "SELECT rd.ZONE_NAME, rd.ZONE_CODE, rd.COMM_NAME, rd.col11, rd.col2, rd.col4,concat(rd.col11,'/',(rd.col2 + rd.col4)) as absval11b,mc.median_11b\n" +
                 "FROM ranked_data AS rd\n" +
                 "CROSS JOIN median_calc AS mc\n" +
                 "WHERE rd.ZONE_CODE = '79' LIMIT 1000;\n";
@@ -3911,7 +3911,7 @@ import com.Cbic_Aaklan_Project.Service.DateCalculate;public class CustomSubParam
                 "    FROM sorted_data\n" +
                 "    WHERE rn IN (FLOOR((total_rows_sorted + 1) / 2), CEIL((total_rows_sorted + 1) / 2))\n" +
                 ")\n" +
-                "SELECT rd.ZONE_NAME, rd.ZONE_CODE, rd.COMM_NAME, rd.col11, rd.col2, rd.col4,mc.median_11b\n" +
+                "SELECT rd.ZONE_NAME, rd.ZONE_CODE, rd.COMM_NAME, rd.col11, rd.col2, rd.col4,concat(rd.col11,'/',(rd.col2 + rd.col4)) as absval11b,mc.median_11b\n" +
                 "FROM ranked_data AS rd\n" +
                 "CROSS JOIN median_calc AS mc LIMIT 1000;";
         return queryCustom10a;

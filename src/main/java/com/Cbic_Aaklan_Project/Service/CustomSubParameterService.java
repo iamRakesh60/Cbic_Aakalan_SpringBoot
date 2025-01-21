@@ -1765,16 +1765,15 @@ public class CustomSubParameterService {
             // String commname= rs.getString("COMM_NAME");
             String zoneName = rs.getString("ZONE_NAME");
             String zoneCode = rs.getString("ZONE_CODE");
-            int col11 = rs.getInt("col11");
-            int col2 = rs.getInt("col2");
-            int col4 = rs.getInt("col4");
+            double col11 = rs.getInt("col11");
+            double col2 = rs.getInt("col2");
+            double col4 = rs.getInt("col4");
             median = rs.getDouble("median_11b");
+            String absval = rs.getString("absval11b");
 
             int Zonal_rank = 0;
             String gst = "no";
-            String absval = "";
 
-            absval = String.valueOf( col11) + "/" + String.valueOf(col2 + col4);
 
             if((col2 + col4) != 0) {
                 total = ((double) (col11) * 100 / (col2 + col4));
@@ -1814,9 +1813,8 @@ public class CustomSubParameterService {
 
             int Zonal_rank = 0;
             String gst = "no";
-            String absval = "";
 
-            absval = String.valueOf( col11) + "/" + String.valueOf(col2 + col4);
+            String absval = rs.getString("absval11b");
 
             if((col2 + col4) != 0) {
                 total = ((double) (col11) * 100 / (col2 + col4));
@@ -1856,9 +1854,8 @@ public class CustomSubParameterService {
 
             int Zonal_rank = 0;
             String gst = "no";
-            String absval = "";
+            String absval = rs.getString("absval11b");
 
-            absval = String.valueOf( col11) + "/" + String.valueOf(col2 + col4);
 
             if((col2 + col4) != 0) {
                 total = ((double) (col11) * 100 / (col2 + col4));
