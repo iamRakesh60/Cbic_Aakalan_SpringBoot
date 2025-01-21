@@ -169,7 +169,7 @@ public class AdminController {
     // email delete from both user email and user table
     @DeleteMapping("/delete-email-bothTable")
     // http://localhost:8080/cbicApi/api/delete-email-bothTable
-    public ResponseEntity<Map<String, String>> deleteEmailFromBothtable(@RequestBody Map<String, String> request) {
+    public ResponseEntity<Map<String, String>> deleteEmailFromBothTable(@RequestBody Map<String, String> request) {
         String email = request.get("email");
         Map<String, String> response = new HashMap<>();
         boolean isDeleted = adminService.deleteEmailFromBothTables(email);
