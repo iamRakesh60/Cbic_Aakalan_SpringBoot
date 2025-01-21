@@ -3484,7 +3484,7 @@ import com.Cbic_Aaklan_Project.Service.DateCalculate;public class CustomSubParam
                 "    INNER JOIN \n" +
                 "        mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
                 "    WHERE \n" +
-                "        t.MM_YYYY BETWEEN '2024-01-01' AND '2024-10-01'\n" +
+                "        t.MM_YYYY BETWEEN '2024-01-01' AND '" + month_date + "'\n" +
                 "    GROUP BY \n" +
                 "        zc.ZONE_CODE\n" +
                 "), \n" +
@@ -3503,7 +3503,7 @@ import com.Cbic_Aaklan_Project.Service.DateCalculate;public class CustomSubParam
                 "    LEFT JOIN \n" +
                 "        cumulative_target AS ct ON zc.ZONE_CODE = ct.ZONE_CODE\n" +
                 "    WHERE \n" +
-                "        c14.MM_YYYY BETWEEN '2024-04-01' AND '2024-10-01' \n" +
+                "        c14.MM_YYYY BETWEEN '2024-04-01' AND '" + month_date + "' \n" +
                 "        AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65')\n" +
                 "    GROUP BY \n" +
                 "        zc.ZONE_NAME, \n" +
@@ -3564,7 +3564,7 @@ import com.Cbic_Aaklan_Project.Service.DateCalculate;public class CustomSubParam
                 "    INNER JOIN \n" +
                 "        mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
                 "    WHERE \n" +
-                "        t.MM_YYYY BETWEEN '2024-01-01' AND '2024-10-01'\n" +
+                "        t.MM_YYYY BETWEEN '2024-01-01' AND '" + month_date + "'\n" +
                 "    GROUP BY \n" +
                 "        zc.ZONE_CODE, cc.COMM_NAME\n" +
                 "), \n" +
@@ -3584,7 +3584,7 @@ import com.Cbic_Aaklan_Project.Service.DateCalculate;public class CustomSubParam
                 "    LEFT JOIN \n" +
                 "        cumulative_target AS ct ON zc.ZONE_CODE = ct.ZONE_CODE AND cc.COMM_NAME = ct.COMM_NAME  \n" +
                 "    WHERE \n" +
-                "        c14.MM_YYYY BETWEEN '2024-04-01' AND '2024-10-01'\n" +
+                "        c14.MM_YYYY BETWEEN '2024-04-01' AND '" + month_date + "'\n" +
                 "        AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65')\n" +
                 "    GROUP BY \n" +
                 "        zc.ZONE_NAME, zc.ZONE_CODE, cc.COMM_NAME\n" +
@@ -3625,7 +3625,7 @@ import com.Cbic_Aaklan_Project.Service.DateCalculate;public class CustomSubParam
                 "LEFT JOIN \n" +
                 "    median_calc AS mc ON 1=1\n" +
                 "WHERE \n" +
-                "    cd.ZONE_CODE = '71'\n" +
+                "    cd.ZONE_CODE = '" + zone_code + "'\n" +
                 "ORDER BY \n" +
                 "    cd.col15 DESC;";
         return queryCustom10a;
@@ -3639,7 +3639,7 @@ import com.Cbic_Aaklan_Project.Service.DateCalculate;public class CustomSubParam
                 "    FROM mis_tar_cus_target AS t\n" +
                 "    INNER JOIN mis_gst_commcode AS cc ON t.COMM_CODE = cc.COMM_CODE\n" +
                 "    INNER JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
-                "    WHERE t.MM_YYYY BETWEEN '2024-01-01' AND '2024-10-01'\n" +
+                "    WHERE t.MM_YYYY BETWEEN '2024-01-01' AND '" + month_date + "'\n" +
                 "    GROUP BY zc.ZONE_CODE, cc.COMM_NAME\n" +
                 "), calculated_data AS (\n" +
                 "    SELECT zc.ZONE_NAME, zc.ZONE_CODE, cc.COMM_NAME, SUM(c14.REALISED_AMT) AS col15, \n" +
@@ -3648,7 +3648,7 @@ import com.Cbic_Aaklan_Project.Service.DateCalculate;public class CustomSubParam
                 "    INNER JOIN mis_tar_cus_1d AS c14 ON c14.COMM_CODE = cc.COMM_CODE\n" +
                 "    INNER JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
                 "    LEFT JOIN cumulative_target AS ct ON zc.ZONE_CODE = ct.ZONE_CODE AND cc.COMM_NAME = ct.COMM_NAME  \n" +
-                "    WHERE c14.MM_YYYY BETWEEN '2024-04-01' AND '2024-10-01'\n" +
+                "    WHERE c14.MM_YYYY BETWEEN '2024-04-01' AND '" + month_date + "'\n" +
                 "        AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65')\n" +
                 "    GROUP BY zc.ZONE_NAME, zc.ZONE_CODE, cc.COMM_NAME\n" +
                 "), ranked_data AS (     \n" +
@@ -3673,19 +3673,65 @@ import com.Cbic_Aaklan_Project.Service.DateCalculate;public class CustomSubParam
     public String QueryFor_cus10b_ZoneWise(String month_date){
         //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
-        String queryCustom10a="";
+        String queryCustom10a="WITH calculated_data AS (\n" +
+                "    SELECT zc.ZONE_NAME,cc.ZONE_CODE,\n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' THEN c14.OPENING_AMT + c14.RECEIPTS_AMT - c14.REALISED_AMT - c14.OTHER_AMT ELSE 0 END), 0) AS col21,\n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' THEN c14.BELOW_YEAR_AMT ELSE 0 END), 0) AS col23\n" +
+                "    FROM mis_gst_commcode AS cc\n" +
+                "    INNER JOIN mis_tar_cus_1d AS c14 ON c14.COMM_CODE = cc.COMM_CODE\n" +
+                "    INNER JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
+                "    WHERE c14.MM_YYYY = '" + month_date + "' AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65')\n" +
+                "    GROUP BY zc.ZONE_CODE, zc.ZONE_NAME, cc.ZONE_CODE\n" +
+                "),\n" +
+                "ranked_data AS (\n" +
+                "    SELECT cd.*, cd.col21 AS col21_1, ROW_NUMBER() OVER (ORDER BY cd.col21 DESC) AS row_num\n" +
+                "    FROM calculated_data AS cd\n" +
+                ")\n" +
+                "SELECT rd.ZONE_NAME,rd.ZONE_CODE,rd.col21,rd.col23\n" +
+                "FROM ranked_data AS rd LIMIT 1000;";
         return queryCustom10a;
     }
     public String QueryFor_cus10b_CommissonaryWise(String month_date, String zone_code){
         //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
-        String queryCustom10a="";
+        String queryCustom10a="WITH calculated_data AS (\n" +
+                "    SELECT zc.ZONE_NAME,cc.ZONE_CODE,cc.COMM_NAME,\n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' THEN c14.OPENING_AMT + c14.RECEIPTS_AMT - c14.REALISED_AMT - c14.OTHER_AMT ELSE 0 END), 0) AS col21,\n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' THEN c14.BELOW_YEAR_AMT ELSE 0 END), 0) AS col23\n" +
+                "    FROM mis_gst_commcode AS cc\n" +
+                "    INNER JOIN mis_tar_cus_1d AS c14 ON c14.COMM_CODE = cc.COMM_CODE\n" +
+                "    INNER JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
+                "    WHERE c14.MM_YYYY = '" + month_date + "' AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65')\n" +
+                "    GROUP BY zc.ZONE_CODE, zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME\n" +
+                "),\n" +
+                "ranked_data AS (\n" +
+                "    SELECT cd.*, cd.col21 AS col21_1, ROW_NUMBER() OVER (ORDER BY cd.col21 DESC) AS row_num\n" +
+                "    FROM calculated_data AS cd\n" +
+                ")\n" +
+                "SELECT rd.ZONE_NAME,rd.ZONE_CODE,rd.COMM_NAME,rd.col21,rd.col23\n" +
+                "FROM ranked_data AS rd\n" +
+                "WHERE rd.ZONE_CODE = '" + zone_code + "' LIMIT 1000;\n";
         return queryCustom10a;
     }
     public String QueryFor_cus10b_AllCommissonaryWise(String month_date){
         //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
-        String queryCustom10a="";
+        String queryCustom10a="WITH calculated_data AS (\n" +
+                "    SELECT zc.ZONE_NAME,cc.ZONE_CODE,cc.COMM_NAME,\n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' THEN c14.OPENING_AMT + c14.RECEIPTS_AMT - c14.REALISED_AMT - c14.OTHER_AMT ELSE 0 END), 0) AS col21,\n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' THEN c14.BELOW_YEAR_AMT ELSE 0 END), 0) AS col23\n" +
+                "    FROM mis_gst_commcode AS cc\n" +
+                "    INNER JOIN mis_tar_cus_1d AS c14 ON c14.COMM_CODE = cc.COMM_CODE\n" +
+                "    INNER JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
+                "    WHERE c14.MM_YYYY = '" + month_date + "' AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65')\n" +
+                "    GROUP BY zc.ZONE_CODE, zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME\n" +
+                "),\n" +
+                "ranked_data AS (\n" +
+                "    SELECT cd.*, cd.col21 AS col21_1, ROW_NUMBER() OVER (ORDER BY cd.col21 DESC) AS row_num\n" +
+                "    FROM calculated_data AS cd\n" +
+                ")\n" +
+                "SELECT rd.ZONE_NAME,rd.ZONE_CODE,rd.COMM_NAME,rd.col21,rd.col23\n" +
+                "FROM ranked_data AS rd LIMIT 1000;\n";
         return queryCustom10a;
     }
     // ********************************************************************************************************************************

@@ -2235,6 +2235,33 @@ public class CustomSubParameterController {
         return (month >= 4) ? (month - 3) : (month + 9); //The ternary operator (condition) ? value_if_true : value_if_false is used here to determine the financial month.
     }
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=cus10B*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+    @ResponseBody
+    @RequestMapping(value = "/cus10b")
+    //  http://localhost:8080/cbicApi/cbic/custom/cus10b?month_date=2024-10-01&type=zone
+    //  http://localhost:8080/cbicApi/cbic/custom/cus10b?month_date=2024-10-01&zone_code=58&type=commissary
+    //  http://localhost:8080/cbicApi/cbic/custom/cus10b?month_date=2024-10-01&type=all_commissary
+    public Object Custom10b(@RequestParam String month_date, @RequestParam String type, @RequestParam(required = false) String zone_code) {
+        List<GST4A> allGstaList = new ArrayList<>();
+        try {
+            if (type.equalsIgnoreCase("zone")) {
+                String queryGst14aa = new CustomSubParameterWiseQuery().QueryFor_cus10b_ZoneWise(month_date);
+                ResultSet rsGst14aa = GetExecutionSQL.getResult(queryGst14aa);
+                allGstaList.addAll(customSubParameterService.cus10bZone(rsGst14aa));
+            } else if (type.equalsIgnoreCase("commissary")) {
+                String queryGst14aa = new CustomSubParameterWiseQuery().QueryFor_cus10b_CommissonaryWise(month_date, zone_code);
+                ResultSet rsGst14aa = GetExecutionSQL.getResult(queryGst14aa);
+                allGstaList.addAll(customSubParameterService.cus10bZoneWiseCommissionary(rsGst14aa));
+            } else if (type.equalsIgnoreCase("all_commissary")) {
+                String queryGst14aa = new CustomSubParameterWiseQuery().QueryFor_cus10b_AllCommissonaryWise(month_date);
+                ResultSet rsGst14aa = GetExecutionSQL.getResult(queryGst14aa);
+                allGstaList.addAll(customSubParameterService.cus10bAllCommissionary(rsGst14aa));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return allGstaList.stream()
+                .sorted(Comparator.comparing(GST4A::getTotal_score)).collect(Collectors.toList());
+    }
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=cus11A*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
     @ResponseBody
     @RequestMapping(value = "/cus11a")
