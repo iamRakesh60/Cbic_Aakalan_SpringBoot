@@ -2204,9 +2204,9 @@ public class CustomSubParameterController {
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=cus11A*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
     @ResponseBody
     @RequestMapping(value = "/cus11A")
-    //  http://localhost:8080/cbicApi/cbic/custom/cus11A?month_date=2024-10-01&type=zone
-    //  http://localhost:8080/cbicApi/cbic/custom/cus11A?month_date=2024-10-01&zone_code=58&type=commissary
-    //  http://localhost:8080/cbicApi/cbic/custom/cus11A?month_date=2024-10-01&type=all_commissary
+    //  http://localhost:8080/cbicApi/cbic/custom/cus11a?month_date=2024-10-01&type=zone
+    //  http://localhost:8080/cbicApi/cbic/custom/cus11a?month_date=2024-10-01&zone_code=58&type=commissary
+    //  http://localhost:8080/cbicApi/cbic/custom/cus11a?month_date=2024-10-01&type=all_commissary
     public Object Custom11a(@RequestParam String month_date, @RequestParam String type, @RequestParam(required = false) String zone_code) {
         List<GST4A> allGstaList = new ArrayList<>();
         try {
