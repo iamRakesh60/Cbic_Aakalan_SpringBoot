@@ -2203,7 +2203,7 @@ public class CustomSubParameterController {
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=cus10B*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=cus11A*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
     @ResponseBody
-    @RequestMapping(value = "/cus11A")
+    @RequestMapping(value = "/cus11a")
     //  http://localhost:8080/cbicApi/cbic/custom/cus11a?month_date=2024-10-01&type=zone
     //  http://localhost:8080/cbicApi/cbic/custom/cus11a?month_date=2024-10-01&zone_code=58&type=commissary
     //  http://localhost:8080/cbicApi/cbic/custom/cus11a?month_date=2024-10-01&type=all_commissary
