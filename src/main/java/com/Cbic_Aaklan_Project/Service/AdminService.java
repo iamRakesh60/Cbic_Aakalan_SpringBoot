@@ -2,6 +2,7 @@ package com.Cbic_Aaklan_Project.Service;
 
 import com.Cbic_Aaklan_Project.entity.User;
 import com.Cbic_Aaklan_Project.entity.UserEmail;
+import com.Cbic_Aaklan_Project.payload.UserDTO;
 import com.Cbic_Aaklan_Project.repository.UserEmailRepository;
 import com.Cbic_Aaklan_Project.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,19 +26,21 @@ public class AdminService {
         this.emailService = emailService;
     }
 
-    public String registerUser(User user) {
+    public String registerUser(UserDTO userDTO) {
         // Check if the user is already registered
-        if (userRepository.findByEmail(user.getEmail()) != null) {
+        if (userRepository.findByEmail(userDTO.getEmail()) != null) {
             return "already_registered";
         }
 
         // Check if the email is allowed for registration
-        if (userEmailRepository.existsByEmail(user.getEmail())) {
+        if (userEmailRepository.existsByEmail(userDTO.getEmail())) {
+            User user = new User();
+            user.setName(userDTO.getName());
+            user.setEmail(userDTO.getEmail());
+            user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
             user.setEmailVerivacation(true);
             user.setRegistrationTime(LocalDateTime.now());
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
             userRepository.save(user);
-            // emailService.sendThankYouEmail(user.getEmail(), user.getName());
             return "success";
         }
 
@@ -116,7 +119,7 @@ public class AdminService {
     }
 
     // Who is register after approval
-    public List<User> registerUser() {
+    public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 }

@@ -4,6 +4,7 @@ import com.Cbic_Aaklan_Project.Service.EmailService;
 import com.Cbic_Aaklan_Project.Service.AdminService;
 import com.Cbic_Aaklan_Project.entity.User;
 import com.Cbic_Aaklan_Project.entity.UserEmail;
+import com.Cbic_Aaklan_Project.payload.UserDTO;
 import com.Cbic_Aaklan_Project.util.JwtUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/cbicApi/api")
@@ -26,9 +28,9 @@ public class AdminController {
 
     @PostMapping("/registration")
     // http://localhost:8080/cbicApi/api/registration
-    public ResponseEntity<Map<String, String>> registerUser(@RequestBody User user) {
+    public ResponseEntity<Map<String, String>> registerUser(@RequestBody UserDTO userDTO) {
         Map<String, String> response = new HashMap<>();
-        String result = adminService.registerUser(user);
+        String result = adminService.registerUser(userDTO);
 
         switch (result) {
             case "success":
@@ -194,8 +196,11 @@ public class AdminController {
     // Who is register after approval
     @GetMapping("/register-user")
     // http://localhost:8080/cbicApi/api/register-user
-    private ResponseEntity <List<User>> registerUser(){
-        List<User> register_Email = adminService.registerUser();
-        return new ResponseEntity<>(register_Email, HttpStatus.FOUND);
+    public ResponseEntity<List<UserDTO>> getRegisteredUsers() {
+        List<User> registeredUsers = adminService.getAllUsers();
+        List<UserDTO> userDTOList = registeredUsers.stream()
+                .map(user -> new UserDTO(user.getName(), user.getEmail(), null)) // Exclude password
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(userDTOList, HttpStatus.FOUND);
     }
 }
