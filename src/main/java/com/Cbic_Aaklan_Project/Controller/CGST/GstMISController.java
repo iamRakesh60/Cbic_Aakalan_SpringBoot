@@ -1,4 +1,4 @@
-package com.Cbic_Aaklan_Project.Controller;
+package com.Cbic_Aaklan_Project.Controller.CGST;
 
 
 import com.Cbic_Aaklan_Project.Service.GstGradeScore;

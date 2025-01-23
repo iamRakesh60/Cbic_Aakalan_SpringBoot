@@ -250,6 +250,7 @@ public class TestingController2 {
 
         for (GST4A gstb : gst5bList) {
             GST4A existing = combinedMap.get(gstb.getZone_code());
+
             if (existing != null) {
                 existing.setSub_parameter_weighted_average(
                         existing.getSub_parameter_weighted_average() + gstb.getSub_parameter_weighted_average()

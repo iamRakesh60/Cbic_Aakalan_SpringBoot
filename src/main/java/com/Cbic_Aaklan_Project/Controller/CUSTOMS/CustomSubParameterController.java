@@ -1,4 +1,4 @@
-package com.Cbic_Aaklan_Project.Controller;
+package com.Cbic_Aaklan_Project.Controller.CUSTOMS;
 
 import com.Cbic_Aaklan_Project.Service.CustomGreadeScore;
 import com.Cbic_Aaklan_Project.Service.CustomRelaventAspect;
@@ -2213,10 +2213,12 @@ public class CustomSubParameterController {
             if (type.equalsIgnoreCase("zone")) {
                 String queryGst14aa = new CustomSubParameterWiseQuery().QueryFor_cus10a_ZoneWise(month_date);
                 ResultSet rsGst14aa = GetExecutionSQL.getResult(queryGst14aa);
+
                 allGstaList.addAll(customSubParameterService.cus10aZone(rsGst14aa, N));
             } else if (type.equalsIgnoreCase("commissary")) {
                 String queryGst14aa = new CustomSubParameterWiseQuery().QueryFor_cus10a_CommissonaryWise(month_date, zone_code);
                 ResultSet rsGst14aa = GetExecutionSQL.getResult(queryGst14aa);
+
                 allGstaList.addAll(customSubParameterService.cus10aZoneWiseCommissionary(rsGst14aa, N));
             } else if (type.equalsIgnoreCase("all_commissary")) {
                 String queryGst14aa = new CustomSubParameterWiseQuery().QueryFor_cus10a_AllCommissonaryWise(month_date);
@@ -2247,10 +2249,12 @@ public class CustomSubParameterController {
                 String queryGst14aa = new CustomSubParameterWiseQuery().QueryFor_cus10b_ZoneWise(month_date);
                 ResultSet rsGst14aa = GetExecutionSQL.getResult(queryGst14aa);
                 allGstaList.addAll(customSubParameterService.cus10bZone(rsGst14aa));
+
             } else if (type.equalsIgnoreCase("commissary")) {
                 String queryGst14aa = new CustomSubParameterWiseQuery().QueryFor_cus10b_CommissonaryWise(month_date, zone_code);
                 ResultSet rsGst14aa = GetExecutionSQL.getResult(queryGst14aa);
                 allGstaList.addAll(customSubParameterService.cus10bZoneWiseCommissionary(rsGst14aa));
+
             } else if (type.equalsIgnoreCase("all_commissary")) {
                 String queryGst14aa = new CustomSubParameterWiseQuery().QueryFor_cus10b_AllCommissonaryWise(month_date);
                 ResultSet rsGst14aa = GetExecutionSQL.getResult(queryGst14aa);
