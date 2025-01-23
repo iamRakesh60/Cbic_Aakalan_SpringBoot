@@ -2,7 +2,7 @@ package com.Cbic_Aaklan_Project.entity;
 
 import java.io.Serializable;
 
-public class GST4A implements Serializable {
+public class GSTCUS implements Serializable {
 
 	private String zone_name;
 	private String commissionerate_name;
@@ -16,9 +16,9 @@ public class GST4A implements Serializable {
 	private Integer insentavization;
 	private double sub_parameter_weighted_average;
 
-	public GST4A(String zone_name, String commissionerate_name, Double total_score, String absolutevale,
-				 String zone_code, String relevant_aspect, Integer zonal_rank, String gst, Integer way_to_grade,
-				 Integer insentavization, double sub_parameter_weighted_average) {
+	public GSTCUS(String zone_name, String commissionerate_name, Double total_score, String absolutevale,
+				  String zone_code, String relevant_aspect, Integer zonal_rank, String gst, Integer way_to_grade,
+				  Integer insentavization, double sub_parameter_weighted_average) {
 		this.zone_name = zone_name;
 		this.commissionerate_name = commissionerate_name;
 		this.total_score = total_score;

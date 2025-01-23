@@ -1,6 +1,6 @@
 package com.Cbic_Aaklan_Project.Service;
 
-import com.Cbic_Aaklan_Project.entity.GST4A;
+import com.Cbic_Aaklan_Project.entity.GSTCUS;
 import org.springframework.stereotype.Service;
 
 import java.sql.ResultSet;
@@ -12,7 +12,7 @@ import java.util.List;
 public class CustomSubParameterService {
     CustomGreadeScore score = new CustomGreadeScore();
     Double total;
-    GST4A gsta = null;
+    GSTCUS gsta = null;
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=cus1 zone wise *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
 
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=cus2A zone wise *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
@@ -22,9 +22,9 @@ public class CustomSubParameterService {
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=cus2c zone wise *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
 
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CUS3A All Zone=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-    public List<GST4A> cus3aZone(ResultSet rs) throws SQLException {
+    public List<GSTCUS> cus3aZone(ResultSet rs) throws SQLException {
         Double median = 0.0;
-        List<GST4A> allGstaList = new ArrayList<>();
+        List<GSTCUS> allGstaList = new ArrayList<>();
         while (rs.next()) {
             String ra = CustomRelaventAspect.cus3a_RA;
             String commname = "ALL";
@@ -54,7 +54,7 @@ public class CustomSubParameterService {
             }
             double sub_parameter_weighted_average = insentavization * 0.3 ;
             sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
-            gsta=new GST4A(zoneName,commname,totalScore,absval,zoneCode,ra,
+            gsta=new GSTCUS(zoneName,commname,totalScore,absval,zoneCode,ra,
                     Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
             allGstaList.add(gsta);
         }
@@ -64,9 +64,9 @@ public class CustomSubParameterService {
 
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CUS3A Particular Zone=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
 
-    public List<GST4A> cus3aZoneWiseCommissionary(ResultSet rs) throws SQLException {
+    public List<GSTCUS> cus3aZoneWiseCommissionary(ResultSet rs) throws SQLException {
         Double median = 0.0;
-        List<GST4A> allGstaList = new ArrayList<>();
+        List<GSTCUS> allGstaList = new ArrayList<>();
         while (rs.next()) {
             String ra = CustomRelaventAspect.cus3a_RA;
             String commname= rs.getString("COMM_NAME");
@@ -96,7 +96,7 @@ public class CustomSubParameterService {
             }
             double sub_parameter_weighted_average = insentavization * 0.3 ;
             sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
-            gsta=new GST4A(zoneName,commname,totalScore,absval,zoneCode,ra,
+            gsta=new GSTCUS(zoneName,commname,totalScore,absval,zoneCode,ra,
                     Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
             allGstaList.add(gsta);
         }
@@ -105,9 +105,9 @@ public class CustomSubParameterService {
     }
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CUS3A All Commissionary=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
 
-    public List<GST4A> cus3aAllCommissionary(ResultSet rs) throws SQLException {
+    public List<GSTCUS> cus3aAllCommissionary(ResultSet rs) throws SQLException {
         Double median = 0.0;
-        List<GST4A> allGstaList = new ArrayList<>();
+        List<GSTCUS> allGstaList = new ArrayList<>();
         while (rs.next()) {
             String ra = CustomRelaventAspect.cus3a_RA;
             String commname= rs.getString("COMM_NAME");
@@ -137,7 +137,7 @@ public class CustomSubParameterService {
             }
             double sub_parameter_weighted_average = insentavization * 0.3 ;
             sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
-            gsta=new GST4A(zoneName,commname,totalScore,absval,zoneCode,ra,
+            gsta=new GSTCUS(zoneName,commname,totalScore,absval,zoneCode,ra,
                     Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
             allGstaList.add(gsta);
         }
@@ -145,9 +145,9 @@ public class CustomSubParameterService {
         return allGstaList;
     }
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CUS3B All Zone=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-    public List<GST4A> cus3bZone(ResultSet rs) throws SQLException {
+    public List<GSTCUS> cus3bZone(ResultSet rs) throws SQLException {
         Double median = 0.0;
-        List<GST4A> allGstaList = new ArrayList<>();
+        List<GSTCUS> allGstaList = new ArrayList<>();
         while (rs.next()) {
             String ra = CustomRelaventAspect.cus3b_RA;
             String commname = "ALL";
@@ -178,7 +178,7 @@ public class CustomSubParameterService {
 //            }
             double sub_parameter_weighted_average = way_to_grade * 0.4 ;
             sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
-            gsta=new GST4A(zoneName,commname,totalScore,absval,zoneCode,ra,
+            gsta=new GSTCUS(zoneName,commname,totalScore,absval,zoneCode,ra,
                     Zonal_rank,gst,way_to_grade,0,sub_parameter_weighted_average);
             allGstaList.add(gsta);
         }
@@ -188,9 +188,9 @@ public class CustomSubParameterService {
 
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CUS3B Particular Zone=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
 
-    public List<GST4A> cus3bZoneWiseCommissionary(ResultSet rs) throws SQLException {
+    public List<GSTCUS> cus3bZoneWiseCommissionary(ResultSet rs) throws SQLException {
         Double median = 0.0;
-        List<GST4A> allGstaList = new ArrayList<>();
+        List<GSTCUS> allGstaList = new ArrayList<>();
         while (rs.next()) {
             String ra = CustomRelaventAspect.cus3b_RA;
             //String commname = "ALL";
@@ -221,7 +221,7 @@ public class CustomSubParameterService {
 //            }
             double sub_parameter_weighted_average = way_to_grade * 0.4 ;
             sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
-            gsta=new GST4A(zoneName,commname,totalScore,absval,zoneCode,ra,
+            gsta=new GSTCUS(zoneName,commname,totalScore,absval,zoneCode,ra,
                     Zonal_rank,gst,way_to_grade,0,sub_parameter_weighted_average);
             allGstaList.add(gsta);
         }
@@ -230,9 +230,9 @@ public class CustomSubParameterService {
     }
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CUS3B All Commissionary=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
 
-    public List<GST4A> cus3bAllCommissionary(ResultSet rs) throws SQLException {
+    public List<GSTCUS> cus3bAllCommissionary(ResultSet rs) throws SQLException {
         Double median = 0.0;
-        List<GST4A> allGstaList = new ArrayList<>();
+        List<GSTCUS> allGstaList = new ArrayList<>();
         while (rs.next()) {
             String ra = CustomRelaventAspect.cus3b_RA;
             //String commname = "ALL";
@@ -263,7 +263,7 @@ public class CustomSubParameterService {
 //            }
             double sub_parameter_weighted_average = way_to_grade * 0.4 ;
             sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
-            gsta=new GST4A(zoneName,commname,totalScore,absval,zoneCode,ra,
+            gsta=new GSTCUS(zoneName,commname,totalScore,absval,zoneCode,ra,
                     Zonal_rank,gst,way_to_grade,0,sub_parameter_weighted_average);
             allGstaList.add(gsta);
         }
@@ -273,9 +273,9 @@ public class CustomSubParameterService {
 
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CUS3C All Zone=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
 
-    public List<GST4A> cus3cZone(ResultSet rs) throws SQLException {
+    public List<GSTCUS> cus3cZone(ResultSet rs) throws SQLException {
         Double median = 0.0;
-        List<GST4A> allGstaList = new ArrayList<>();
+        List<GSTCUS> allGstaList = new ArrayList<>();
         while (rs.next()) {
             String ra = CustomRelaventAspect.cus3c_RA;
             String zoneName = rs.getString("ZONE_NAME");
@@ -302,7 +302,7 @@ public class CustomSubParameterService {
             double sub_parameter_weighted_average = insentavization * 0.3;
             sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
 
-            GST4A gsta = new GST4A(zoneName, commname, totalScore, absval, zoneCode, ra, 0, "no", way_to_grade, insentavization, sub_parameter_weighted_average);
+            GSTCUS gsta = new GSTCUS(zoneName, commname, totalScore, absval, zoneCode, ra, 0, "no", way_to_grade, insentavization, sub_parameter_weighted_average);
             allGstaList.add(gsta);
         }
         return allGstaList;
@@ -310,9 +310,9 @@ public class CustomSubParameterService {
 
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CUS3C Particular Zone=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
 
-    public List<GST4A> cus3cZoneWiseCommissionary(ResultSet rs) throws SQLException {
+    public List<GSTCUS> cus3cZoneWiseCommissionary(ResultSet rs) throws SQLException {
         Double median = 0.0;
-        List<GST4A> allGstaList = new ArrayList<>();
+        List<GSTCUS> allGstaList = new ArrayList<>();
         while (rs.next()) {
             String ra = CustomRelaventAspect.cus3c_RA;
             String zoneName = rs.getString("ZONE_NAME");
@@ -338,7 +338,7 @@ public class CustomSubParameterService {
             double sub_parameter_weighted_average = insentavization * 0.3;
             sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
 
-            GST4A gsta = new GST4A(zoneName, commname, totalScore, absval, zoneCode, ra, 0, "no", way_to_grade, insentavization, sub_parameter_weighted_average);
+            GSTCUS gsta = new GSTCUS(zoneName, commname, totalScore, absval, zoneCode, ra, 0, "no", way_to_grade, insentavization, sub_parameter_weighted_average);
             allGstaList.add(gsta);
         }
         // System.out.println("CUS 3C median zone wise :- "+median);
@@ -346,8 +346,8 @@ public class CustomSubParameterService {
     }
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CUS3C All Commissionary=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
 
-    public List<GST4A> cus3cAllCommissionary(ResultSet rs) throws SQLException {
-        List<GST4A> allGstaList = new ArrayList<>();
+    public List<GSTCUS> cus3cAllCommissionary(ResultSet rs) throws SQLException {
+        List<GSTCUS> allGstaList = new ArrayList<>();
         double median = 0;
         while (rs.next()) {
             String ra = CustomRelaventAspect.cus3c_RA;
@@ -374,7 +374,7 @@ public class CustomSubParameterService {
             double sub_parameter_weighted_average = insentavization * 0.3;
             sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
 
-            GST4A gsta = new GST4A(zoneName, commname, totalScore, absval, zoneCode, ra, 0, "no", way_to_grade, insentavization, sub_parameter_weighted_average);
+            GSTCUS gsta = new GSTCUS(zoneName, commname, totalScore, absval, zoneCode, ra, 0, "no", way_to_grade, insentavization, sub_parameter_weighted_average);
             allGstaList.add(gsta);
         }
         System.out.println("CUS 3C median zone wise :- " + median);
@@ -382,8 +382,8 @@ public class CustomSubParameterService {
     }
 
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= cus4A zone wise *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-    public List<GST4A> cus4aZone(ResultSet rs) throws SQLException {
-        List<GST4A> allGstaList = new ArrayList<>();
+    public List<GSTCUS> cus4aZone(ResultSet rs) throws SQLException {
+        List<GSTCUS> allGstaList = new ArrayList<>();
         while (rs.next()) {
             String ra = CustomRelaventAspect.cus4a_RA;
             String commname = "ALL";
@@ -413,7 +413,7 @@ public class CustomSubParameterService {
             int way_to_grade = score.c_marks4a(totalScore);
             double sub_parameter_weighted_average = way_to_grade * 0.3 ;
             sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
-            gsta=new GST4A(zoneName,commname,totalScore,absval,zoneCode,ra,
+            gsta=new GSTCUS(zoneName,commname,totalScore,absval,zoneCode,ra,
                     Zonal_rank,gst,way_to_grade,0,sub_parameter_weighted_average);
             allGstaList.add(gsta);
         }
@@ -421,8 +421,8 @@ public class CustomSubParameterService {
     }
 
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CUS4A Particular Zone=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-    public List<GST4A> cus4aZoneWiseCommissionary(ResultSet rs) throws SQLException {
-        List<GST4A> allGstaList = new ArrayList<>();
+    public List<GSTCUS> cus4aZoneWiseCommissionary(ResultSet rs) throws SQLException {
+        List<GSTCUS> allGstaList = new ArrayList<>();
         while (rs.next()) {
             String ra = CustomRelaventAspect.cus4a_RA;
             //String commname = "ALL";
@@ -452,7 +452,7 @@ public class CustomSubParameterService {
             int way_to_grade = score.c_marks4a(totalScore);
             double sub_parameter_weighted_average = way_to_grade * 0.3 ;
             sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
-            gsta=new GST4A(zoneName,commname,totalScore,absval,zoneCode,ra,
+            gsta=new GSTCUS(zoneName,commname,totalScore,absval,zoneCode,ra,
                     Zonal_rank,gst,way_to_grade,0,sub_parameter_weighted_average);
             allGstaList.add(gsta);
         }
@@ -460,8 +460,8 @@ public class CustomSubParameterService {
     }
 
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CUS4A All Commissionary=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-    public List<GST4A> cus4aAllCommissionary(ResultSet rs) throws SQLException {
-        List<GST4A> allGstaList = new ArrayList<>();
+    public List<GSTCUS> cus4aAllCommissionary(ResultSet rs) throws SQLException {
+        List<GSTCUS> allGstaList = new ArrayList<>();
         while (rs.next()) {
             String ra = CustomRelaventAspect.cus4a_RA;
            // String commname = "ALL";
@@ -491,7 +491,7 @@ public class CustomSubParameterService {
             int way_to_grade = score.c_marks4a(totalScore);
             double sub_parameter_weighted_average = way_to_grade * 0.3 ;
             sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
-            gsta=new GST4A(zoneName,commname,totalScore,absval,zoneCode,ra,
+            gsta=new GSTCUS(zoneName,commname,totalScore,absval,zoneCode,ra,
                     Zonal_rank,gst,way_to_grade,0,sub_parameter_weighted_average);
             allGstaList.add(gsta);
         }
@@ -499,8 +499,8 @@ public class CustomSubParameterService {
     }
 
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=cus4B zone wise *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-    public List<GST4A> cus4bZone(ResultSet rs) throws SQLException {
-        List<GST4A> allGstaList = new ArrayList<>();
+    public List<GSTCUS> cus4bZone(ResultSet rs) throws SQLException {
+        List<GSTCUS> allGstaList = new ArrayList<>();
         while (rs.next()) {
             String ra = CustomRelaventAspect.cus4b_RA;
             String commname = "ALL";
@@ -528,7 +528,7 @@ public class CustomSubParameterService {
             int way_to_grade = score.c_marks4b(totalScore);
             double sub_parameter_weighted_average = way_to_grade * 0.3 ;
             sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
-            gsta=new GST4A(zoneName,commname,totalScore,absval,zoneCode,ra,
+            gsta=new GSTCUS(zoneName,commname,totalScore,absval,zoneCode,ra,
                     Zonal_rank,gst,way_to_grade,0,sub_parameter_weighted_average);
             allGstaList.add(gsta);
         }
@@ -536,8 +536,8 @@ public class CustomSubParameterService {
     }
 
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CUS4B Particular Zone=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-    public List<GST4A> cus4bZoneWiseCommissionary(ResultSet rs) throws SQLException {
-        List<GST4A> allGstaList = new ArrayList<>();
+    public List<GSTCUS> cus4bZoneWiseCommissionary(ResultSet rs) throws SQLException {
+        List<GSTCUS> allGstaList = new ArrayList<>();
         while (rs.next()) {
             String ra = CustomRelaventAspect.cus4b_RA;
             // String commname = "ALL";
@@ -565,7 +565,7 @@ public class CustomSubParameterService {
             int way_to_grade = score.c_marks4b(totalScore);
             double sub_parameter_weighted_average = way_to_grade * 0.3 ;
             sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
-            gsta=new GST4A(zoneName,commname,totalScore,absval,zoneCode,ra,
+            gsta=new GSTCUS(zoneName,commname,totalScore,absval,zoneCode,ra,
                     Zonal_rank,gst,way_to_grade,0,sub_parameter_weighted_average);
             allGstaList.add(gsta);
         }
@@ -573,8 +573,8 @@ public class CustomSubParameterService {
     }
 
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CUS4B All Commissionary=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-    public List<GST4A> cus4bAllCommissionary(ResultSet rs) throws SQLException {
-        List<GST4A> allGstaList = new ArrayList<>();
+    public List<GSTCUS> cus4bAllCommissionary(ResultSet rs) throws SQLException {
+        List<GSTCUS> allGstaList = new ArrayList<>();
         while (rs.next()) {
             String ra = CustomRelaventAspect.cus4b_RA;
             // String commname = "ALL";
@@ -602,7 +602,7 @@ public class CustomSubParameterService {
             int way_to_grade = score.c_marks4b(totalScore);
             double sub_parameter_weighted_average = way_to_grade * 0.3 ;
             sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
-            gsta=new GST4A(zoneName,commname,totalScore,absval,zoneCode,ra,
+            gsta=new GSTCUS(zoneName,commname,totalScore,absval,zoneCode,ra,
                     Zonal_rank,gst,way_to_grade,0,sub_parameter_weighted_average);
             allGstaList.add(gsta);
         }
@@ -610,8 +610,8 @@ public class CustomSubParameterService {
     }
 
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=cus4C zone wise *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-    public List<GST4A> cus4cZone(ResultSet rs) throws SQLException {
-        List<GST4A> allGstaList = new ArrayList<>();
+    public List<GSTCUS> cus4cZone(ResultSet rs) throws SQLException {
+        List<GSTCUS> allGstaList = new ArrayList<>();
         while (rs.next()) {
             String ra = CustomRelaventAspect.cus4c_RA;
             String zoneName = rs.getString("ZONE_NAME");
@@ -635,7 +635,7 @@ public class CustomSubParameterService {
             double sub_parameter_weighted_average = insentavization * 0.3;
             sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
 
-            GST4A gsta = new GST4A(zoneName, commname, totalScore, absval, zoneCode, ra, 0, "no", way_to_grade, insentavization, sub_parameter_weighted_average);
+            GSTCUS gsta = new GSTCUS(zoneName, commname, totalScore, absval, zoneCode, ra, 0, "no", way_to_grade, insentavization, sub_parameter_weighted_average);
             allGstaList.add(gsta);
         }
         return allGstaList;
@@ -643,8 +643,8 @@ public class CustomSubParameterService {
 
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CUS4C Particular Zone=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
 
-    public List<GST4A> cus4cZoneWiseCommissionary(ResultSet rs) throws SQLException {
-        List<GST4A> allGstaList = new ArrayList<>();
+    public List<GSTCUS> cus4cZoneWiseCommissionary(ResultSet rs) throws SQLException {
+        List<GSTCUS> allGstaList = new ArrayList<>();
         double median = 0;
         while (rs.next()) {
             String ra = CustomRelaventAspect.cus4c_RA;
@@ -671,7 +671,7 @@ public class CustomSubParameterService {
             double sub_parameter_weighted_average = insentavization * 0.3;
             sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
 
-            GST4A gsta = new GST4A(zoneName, commname, totalScore, absval, zoneCode, ra, 0, "no", way_to_grade, insentavization, sub_parameter_weighted_average);
+            GSTCUS gsta = new GSTCUS(zoneName, commname, totalScore, absval, zoneCode, ra, 0, "no", way_to_grade, insentavization, sub_parameter_weighted_average);
             allGstaList.add(gsta);
         }
         System.out.println("CUS 4C median zone wise :- " + median);
@@ -679,8 +679,8 @@ public class CustomSubParameterService {
     }
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CUS4C All Commissionary=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
 
-    public List<GST4A> cus4cAllCommissionary(ResultSet rs) throws SQLException {
-        List<GST4A> allGstaList = new ArrayList<>();
+    public List<GSTCUS> cus4cAllCommissionary(ResultSet rs) throws SQLException {
+        List<GSTCUS> allGstaList = new ArrayList<>();
         double median = 0;
         while (rs.next()) {
             String ra = CustomRelaventAspect.cus4c_RA;
@@ -707,7 +707,7 @@ public class CustomSubParameterService {
             double sub_parameter_weighted_average = insentavization * 0.3;
             sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
 
-            GST4A gsta = new GST4A(zoneName, commname, totalScore, absval, zoneCode, ra, 0, "no", way_to_grade, insentavization, sub_parameter_weighted_average);
+            GSTCUS gsta = new GSTCUS(zoneName, commname, totalScore, absval, zoneCode, ra, 0, "no", way_to_grade, insentavization, sub_parameter_weighted_average);
             allGstaList.add(gsta);
         }
         System.out.println("CUS 4C median zone wise :- " + median);
@@ -715,8 +715,8 @@ public class CustomSubParameterService {
     }
 
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=CUS4D zone wise *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-    public List<GST4A> cus4dZone(ResultSet rs) throws SQLException {
-        List<GST4A> allGstaList = new ArrayList<>();
+    public List<GSTCUS> cus4dZone(ResultSet rs) throws SQLException {
+        List<GSTCUS> allGstaList = new ArrayList<>();
         while (rs.next()) {
             String ra = CustomRelaventAspect.cus4d_RA;
             String commname = "ALL";
@@ -742,7 +742,7 @@ public class CustomSubParameterService {
             int way_to_grade = score.c_marks4d(totalScore);
             double sub_parameter_weighted_average = way_to_grade * 0.1 ;
             sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
-            gsta=new GST4A(zoneName,commname,totalScore,absval,zoneCode,ra,
+            gsta=new GSTCUS(zoneName,commname,totalScore,absval,zoneCode,ra,
                     Zonal_rank,gst,way_to_grade,0,sub_parameter_weighted_average);
             allGstaList.add(gsta);
         }
@@ -750,8 +750,8 @@ public class CustomSubParameterService {
     }
 
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CUS4B Particular Zone=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-    public List<GST4A> cus4dZoneWiseCommissionary(ResultSet rs) throws SQLException {
-        List<GST4A> allGstaList = new ArrayList<>();
+    public List<GSTCUS> cus4dZoneWiseCommissionary(ResultSet rs) throws SQLException {
+        List<GSTCUS> allGstaList = new ArrayList<>();
         while (rs.next()) {
             String ra = CustomRelaventAspect.cus4d_RA;
             // String commname = "ALL";
@@ -777,7 +777,7 @@ public class CustomSubParameterService {
             int way_to_grade = score.c_marks4d(totalScore);
             double sub_parameter_weighted_average = way_to_grade * 0.1 ;
             sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
-            gsta=new GST4A(zoneName,commname,totalScore,absval,zoneCode,ra,
+            gsta=new GSTCUS(zoneName,commname,totalScore,absval,zoneCode,ra,
                     Zonal_rank,gst,way_to_grade,0,sub_parameter_weighted_average);
             allGstaList.add(gsta);
         }
@@ -785,8 +785,8 @@ public class CustomSubParameterService {
     }
 
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CUS4B All Commissionary=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-    public List<GST4A> cus4dAllCommissionary(ResultSet rs) throws SQLException {
-        List<GST4A> allGstaList = new ArrayList<>();
+    public List<GSTCUS> cus4dAllCommissionary(ResultSet rs) throws SQLException {
+        List<GSTCUS> allGstaList = new ArrayList<>();
         while (rs.next()) {
             String ra = CustomRelaventAspect.cus4d_RA;
             // String commname = "ALL";
@@ -811,7 +811,7 @@ public class CustomSubParameterService {
             int way_to_grade = score.c_marks4d(totalScore);
             double sub_parameter_weighted_average = way_to_grade * 0.1;
             sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
-            gsta=new GST4A(zoneName,commname,totalScore,absval,zoneCode,ra,
+            gsta=new GSTCUS(zoneName,commname,totalScore,absval,zoneCode,ra,
                     Zonal_rank,gst,way_to_grade,0,sub_parameter_weighted_average);
             allGstaList.add(gsta);
         }
@@ -819,8 +819,8 @@ public class CustomSubParameterService {
     }
 
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=cus6A zone wise *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-    public List<GST4A> cus6aZone(ResultSet rs) throws SQLException {
-        List<GST4A> allGstaList = new ArrayList<>();
+    public List<GSTCUS> cus6aZone(ResultSet rs) throws SQLException {
+        List<GSTCUS> allGstaList = new ArrayList<>();
         double median = 0;
         while (rs.next()) {
             String ra = CustomRelaventAspect.cus6a_RA;
@@ -855,7 +855,7 @@ public class CustomSubParameterService {
             double sub_parameter_weighted_average = insentavization * 0.2;
             sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
             if (!(col9_3a + col9_3b == 0 && col3_3a + col3_3b == 0)) {
-                gsta = new GST4A(zoneName, commname, totalScore, absval, zoneCode, ra,
+                gsta = new GSTCUS(zoneName, commname, totalScore, absval, zoneCode, ra,
                         Zonal_rank, gst, way_to_grade, insentavization, sub_parameter_weighted_average);
                 allGstaList.add(gsta);
             }
@@ -867,8 +867,8 @@ public class CustomSubParameterService {
     }
 
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= cus6B Zone wise *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-    public List<GST4A> cus6BZone(ResultSet rs) throws SQLException {
-        List<GST4A> allGstaList = new ArrayList<>();
+    public List<GSTCUS> cus6BZone(ResultSet rs) throws SQLException {
+        List<GSTCUS> allGstaList = new ArrayList<>();
         while (rs.next()) {
             String ra = CustomRelaventAspect.cus6b_RA;
             String commname = "ALL";
@@ -895,7 +895,7 @@ public class CustomSubParameterService {
             double sub_parameter_weighted_average = way_to_grade * 0.2;
             sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
             if (!(col18_3a+col18_3b == 0 && col12_3a+col12_3b== 0)){
-                gsta=new GST4A(rs.getString("ZONE_NAME"),commname,totalScore,absval,zoneCode,ra,
+                gsta=new GSTCUS(rs.getString("ZONE_NAME"),commname,totalScore,absval,zoneCode,ra,
                         Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                 allGstaList.add(gsta);}
             allGstaList.sort((a, b) -> Double.compare(a.getTotal_score(), b.getTotal_score()));
@@ -903,8 +903,8 @@ public class CustomSubParameterService {
         return allGstaList;
     }
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= cus6C zone wise *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-    public List<GST4A> cus6cZone(ResultSet rsGst14aa) throws SQLException {
-        List<GST4A> allGstaList = new ArrayList<>();
+    public List<GSTCUS> cus6cZone(ResultSet rsGst14aa) throws SQLException {
+        List<GSTCUS> allGstaList = new ArrayList<>();
         double median = 0;
         while (rsGst14aa.next()) {
             String ra = CustomRelaventAspect.cus6c_RA;
@@ -932,7 +932,7 @@ public class CustomSubParameterService {
             }
             double sub_parameter_weighted_average = insentavization * 0.2;
             sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
-            gsta = new GST4A(rsGst14aa.getString("ZONE_NAME"), commname, totalScore, absval, zoneCode, ra,
+            gsta = new GSTCUS(rsGst14aa.getString("ZONE_NAME"), commname, totalScore, absval, zoneCode, ra,
                     Zonal_rank, gst, way_to_grade, insentavization, sub_parameter_weighted_average);
             allGstaList.add(gsta);
             allGstaList.sort((a, b) -> Double.compare(b.getTotal_score(), a.getTotal_score()));
@@ -943,8 +943,8 @@ public class CustomSubParameterService {
     }
 
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= cus6D zone wise *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-    public List<GST4A> cus6dZone(ResultSet rsGst14aa) throws SQLException {
-        List<GST4A> allGstaList = new ArrayList<>();
+    public List<GSTCUS> cus6dZone(ResultSet rsGst14aa) throws SQLException {
+        List<GSTCUS> allGstaList = new ArrayList<>();
         double median = 0;
         while (rsGst14aa.next()) {
             String ra = CustomRelaventAspect.cus6d_RA;
@@ -972,7 +972,7 @@ public class CustomSubParameterService {
             // 2 floating point
             double sub_parameter_weighted_average = insentavization * 0.1;
             sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
-            gsta = new GST4A(rsGst14aa.getString("ZONE_NAME"), commname, totalScore, absval, zoneCode, ra,
+            gsta = new GSTCUS(rsGst14aa.getString("ZONE_NAME"), commname, totalScore, absval, zoneCode, ra,
                     Zonal_rank, gst, way_to_grade, insentavization, sub_parameter_weighted_average);
             allGstaList.add(gsta);
             allGstaList.sort((a, b) -> Double.compare(b.getTotal_score(), a.getTotal_score()));
@@ -982,8 +982,8 @@ public class CustomSubParameterService {
         return allGstaList;
     }
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= cus6E zone wise *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-    public List<GST4A> cus6eZone(ResultSet rsGst14aa) throws SQLException {
-        List<GST4A> allGstaList = new ArrayList<>();
+    public List<GSTCUS> cus6eZone(ResultSet rsGst14aa) throws SQLException {
+        List<GSTCUS> allGstaList = new ArrayList<>();
         double median = 0;
         while (rsGst14aa.next()) {
             String ra = CustomRelaventAspect.cus6e_RA;
@@ -1015,7 +1015,7 @@ public class CustomSubParameterService {
             // 2 floating point
             double sub_parameter_weighted_average = insentavization * 0.1;
             sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
-            gsta = new GST4A(rsGst14aa.getString("ZONE_NAME"), commname, totalScore, absval, zoneCode, ra,
+            gsta = new GSTCUS(rsGst14aa.getString("ZONE_NAME"), commname, totalScore, absval, zoneCode, ra,
                     Zonal_rank, gst, way_to_grade, insentavization, sub_parameter_weighted_average);
             allGstaList.add(gsta);
             allGstaList.sort((a, b) -> Double.compare(b.getTotal_score(), a.getTotal_score()));
@@ -1026,8 +1026,8 @@ public class CustomSubParameterService {
     }
 
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= cus6F zone wise *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-    public List<GST4A> cus6fZone(ResultSet rsGst14aa) throws SQLException {
-        List<GST4A> allGstaList = new ArrayList<>();
+    public List<GSTCUS> cus6fZone(ResultSet rsGst14aa) throws SQLException {
+        List<GSTCUS> allGstaList = new ArrayList<>();
         double median = 0;
         while (rsGst14aa.next()) {
             String ra= CustomRelaventAspect.cus6f_RA;
@@ -1053,7 +1053,7 @@ public class CustomSubParameterService {
             // 2 floating point
             double sub_parameter_weighted_average = insentavization * 0.2 ;
             sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
-            gsta=new GST4A(zoneName,commname,totalScore,absval,zoneCode,ra,
+            gsta=new GSTCUS(zoneName,commname,totalScore,absval,zoneCode,ra,
                     Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
             allGstaList.add(gsta);
         }System.out.println("CUS 6F median zone wise :- "+median);
@@ -1061,8 +1061,8 @@ public class CustomSubParameterService {
     }
 
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= cus7A zone wise *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-    public List<GST4A> cus7aZone(ResultSet rs) throws SQLException {
-        List<GST4A> allGstaList = new ArrayList<>();
+    public List<GSTCUS> cus7aZone(ResultSet rs) throws SQLException {
+        List<GSTCUS> allGstaList = new ArrayList<>();
         while (rs.next()) {
             String ra = CustomRelaventAspect.cus7a_RA;
             String commname = "ALL";
@@ -1086,7 +1086,7 @@ public class CustomSubParameterService {
             int way_to_grade = score.c_marks7a(totalScore);
             double sub_parameter_weighted_average = way_to_grade * 0.6 ;
             sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
-            gsta=new GST4A(zoneName,commname,totalScore,absval,zoneCode,ra,
+            gsta=new GSTCUS(zoneName,commname,totalScore,absval,zoneCode,ra,
                     Zonal_rank,gst,way_to_grade,0,sub_parameter_weighted_average);
             allGstaList.add(gsta);
         }
@@ -1094,8 +1094,8 @@ public class CustomSubParameterService {
     }
 
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CUS7A Particular Zone=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-    public List<GST4A> cus7aZoneWiseCommissionary(ResultSet rs) throws SQLException {
-        List<GST4A> allGstaList = new ArrayList<>();
+    public List<GSTCUS> cus7aZoneWiseCommissionary(ResultSet rs) throws SQLException {
+        List<GSTCUS> allGstaList = new ArrayList<>();
         while (rs.next()) {
             String ra = CustomRelaventAspect.cus7a_RA;
             // String commname = "ALL";
@@ -1119,7 +1119,7 @@ public class CustomSubParameterService {
             int way_to_grade = score.c_marks7a(totalScore);
             double sub_parameter_weighted_average = way_to_grade * 0.6 ;
             sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
-            gsta=new GST4A(zoneName,commname,totalScore,absval,zoneCode,ra,
+            gsta=new GSTCUS(zoneName,commname,totalScore,absval,zoneCode,ra,
                     Zonal_rank,gst,way_to_grade,0,sub_parameter_weighted_average);
             allGstaList.add(gsta);
         }
@@ -1127,8 +1127,8 @@ public class CustomSubParameterService {
     }
 
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CUS7A All Commissionary=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-    public List<GST4A> cus7aAllCommissionary(ResultSet rs) throws SQLException {
-        List<GST4A> allGstaList = new ArrayList<>();
+    public List<GSTCUS> cus7aAllCommissionary(ResultSet rs) throws SQLException {
+        List<GSTCUS> allGstaList = new ArrayList<>();
         while (rs.next()) {
             String ra = CustomRelaventAspect.cus7a_RA;
             // String commname = "ALL";
@@ -1152,7 +1152,7 @@ public class CustomSubParameterService {
             int way_to_grade = score.c_marks7a(totalScore);
             double sub_parameter_weighted_average = way_to_grade * 0.6 ;
             sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
-            gsta=new GST4A(zoneName,commname,totalScore,absval,zoneCode,ra,
+            gsta=new GSTCUS(zoneName,commname,totalScore,absval,zoneCode,ra,
                     Zonal_rank,gst,way_to_grade,0,sub_parameter_weighted_average);
             allGstaList.add(gsta);
         }
@@ -1160,9 +1160,9 @@ public class CustomSubParameterService {
     }
 
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=cus7B*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-    public List<GST4A> cus7bZone(ResultSet rs) throws SQLException {
+    public List<GSTCUS> cus7bZone(ResultSet rs) throws SQLException {
         double median = 0;
-        List<GST4A> allGstaList = new ArrayList<>();
+        List<GSTCUS> allGstaList = new ArrayList<>();
         while (rs.next()) {
             String ra = CustomRelaventAspect.cus7b_RA;
             String zoneName = rs.getString("ZONE_NAME");
@@ -1186,7 +1186,7 @@ public class CustomSubParameterService {
             double sub_parameter_weighted_average = insentavization * 0.4;
             sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
 
-            GST4A gsta = new GST4A(zoneName, commname, totalScore, absval, zoneCode, ra, 0, "no", way_to_grade, insentavization, sub_parameter_weighted_average);
+            GSTCUS gsta = new GSTCUS(zoneName, commname, totalScore, absval, zoneCode, ra, 0, "no", way_to_grade, insentavization, sub_parameter_weighted_average);
             allGstaList.add(gsta);
         }
         System.out.println("CUS 4C median zone wise :- " + median);
@@ -1195,8 +1195,8 @@ public class CustomSubParameterService {
 
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CUS7B Particular Zone=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
 
-    public List<GST4A> cus7bZoneWiseCommissionary(ResultSet rs) throws SQLException {
-        List<GST4A> allGstaList = new ArrayList<>();
+    public List<GSTCUS> cus7bZoneWiseCommissionary(ResultSet rs) throws SQLException {
+        List<GSTCUS> allGstaList = new ArrayList<>();
         double median = 0;
         while (rs.next()) {
             String ra = CustomRelaventAspect.cus7b_RA;
@@ -1221,7 +1221,7 @@ public class CustomSubParameterService {
             double sub_parameter_weighted_average = insentavization * 0.4;
             sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
 
-            GST4A gsta = new GST4A(zoneName, commname, totalScore, absval, zoneCode, ra, 0, "no", way_to_grade, insentavization, sub_parameter_weighted_average);
+            GSTCUS gsta = new GSTCUS(zoneName, commname, totalScore, absval, zoneCode, ra, 0, "no", way_to_grade, insentavization, sub_parameter_weighted_average);
             allGstaList.add(gsta);
         }
         System.out.println("CUS 4C median commi zone wise :- " + median);
@@ -1229,8 +1229,8 @@ public class CustomSubParameterService {
     }
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CUS7B All Commissionary=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
 
-    public List<GST4A> cus7bAllCommissionary(ResultSet rs) throws SQLException {
-        List<GST4A> allGstaList = new ArrayList<>();
+    public List<GSTCUS> cus7bAllCommissionary(ResultSet rs) throws SQLException {
+        List<GSTCUS> allGstaList = new ArrayList<>();
         double median = 0;
         while (rs.next()) {
             String ra = CustomRelaventAspect.cus7b_RA;
@@ -1255,7 +1255,7 @@ public class CustomSubParameterService {
             double sub_parameter_weighted_average = insentavization * 0.4;
             sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
 
-            GST4A gsta = new GST4A(zoneName, commname, totalScore, absval, zoneCode, ra, 0, "no", way_to_grade, insentavization, sub_parameter_weighted_average);
+            GSTCUS gsta = new GSTCUS(zoneName, commname, totalScore, absval, zoneCode, ra, 0, "no", way_to_grade, insentavization, sub_parameter_weighted_average);
             allGstaList.add(gsta);
         }
         System.out.println("CUS 4C median commi wise :- " + median);
@@ -1264,9 +1264,9 @@ public class CustomSubParameterService {
 
 
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=cus8A zone *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-    public List<GST4A> cus8aZone(ResultSet rs) throws SQLException {
+    public List<GSTCUS> cus8aZone(ResultSet rs) throws SQLException {
         double median = 0;
-        List<GST4A> allGstaList = new ArrayList<>();
+        List<GSTCUS> allGstaList = new ArrayList<>();
         while (rs.next()) {
             String ra = CustomRelaventAspect.cus8a_RA;
             String zoneName = rs.getString("ZONE_NAME");
@@ -1290,7 +1290,7 @@ public class CustomSubParameterService {
             double sub_parameter_weighted_average = insentavization * 0.5;
             sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
 
-            GST4A gsta = new GST4A(zoneName, commname, totalScore, absval, zoneCode, ra, 0, "no", way_to_grade, insentavization, sub_parameter_weighted_average);
+            GSTCUS gsta = new GSTCUS(zoneName, commname, totalScore, absval, zoneCode, ra, 0, "no", way_to_grade, insentavization, sub_parameter_weighted_average);
             allGstaList.add(gsta);
         }
         System.out.println("CUS 8A median zone wise :- " + median);
@@ -1298,8 +1298,8 @@ public class CustomSubParameterService {
     }
 
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CUS8A Particular Zone=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-    public List<GST4A> cus8aZoneWiseCommissionary(ResultSet rs) throws SQLException {
-        List<GST4A> allGstaList = new ArrayList<>();
+    public List<GSTCUS> cus8aZoneWiseCommissionary(ResultSet rs) throws SQLException {
+        List<GSTCUS> allGstaList = new ArrayList<>();
         double median = 0;
         while (rs.next()) {
             String ra = CustomRelaventAspect.cus8a_RA;
@@ -1324,7 +1324,7 @@ public class CustomSubParameterService {
             double sub_parameter_weighted_average = insentavization * 0.5;
             sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
 
-            GST4A gsta = new GST4A(zoneName, commname, totalScore, absval, zoneCode, ra, 0, "no", way_to_grade, insentavization, sub_parameter_weighted_average);
+            GSTCUS gsta = new GSTCUS(zoneName, commname, totalScore, absval, zoneCode, ra, 0, "no", way_to_grade, insentavization, sub_parameter_weighted_average);
             allGstaList.add(gsta);
         }
         System.out.println("CUS 8A median commi zone wise :- " + median);
@@ -1332,8 +1332,8 @@ public class CustomSubParameterService {
     }
 
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CUS8A All Commissionary=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-    public List<GST4A> cus8aAllCommissionary(ResultSet rs) throws SQLException {
-        List<GST4A> allGstaList = new ArrayList<>();
+    public List<GSTCUS> cus8aAllCommissionary(ResultSet rs) throws SQLException {
+        List<GSTCUS> allGstaList = new ArrayList<>();
         double median = 0;
         while (rs.next()) {
             String ra = CustomRelaventAspect.cus8a_RA;
@@ -1358,7 +1358,7 @@ public class CustomSubParameterService {
             double sub_parameter_weighted_average = insentavization * 0.5;
             sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
 
-            GST4A gsta = new GST4A(zoneName, commname, totalScore, absval, zoneCode, ra, 0, "no", way_to_grade, insentavization, sub_parameter_weighted_average);
+            GSTCUS gsta = new GSTCUS(zoneName, commname, totalScore, absval, zoneCode, ra, 0, "no", way_to_grade, insentavization, sub_parameter_weighted_average);
             allGstaList.add(gsta);
         }
         System.out.println("CUS 8A median commi wise :- " + median);
@@ -1366,8 +1366,8 @@ public class CustomSubParameterService {
     }
 
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=cus8B*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-    public List<GST4A> cus8bZone(ResultSet rs) throws SQLException {
-        List<GST4A> allGstaList = new ArrayList<>();
+    public List<GSTCUS> cus8bZone(ResultSet rs) throws SQLException {
+        List<GSTCUS> allGstaList = new ArrayList<>();
         while (rs.next()) {
             String ra = CustomRelaventAspect.cus8b_RA;
             String commname = "ALL";
@@ -1391,7 +1391,7 @@ public class CustomSubParameterService {
             int way_to_grade = score.c_marks8b(totalScore);
             double sub_parameter_weighted_average = way_to_grade * 0.5 ;
             sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
-            gsta=new GST4A(zoneName,commname,totalScore,absval,zoneCode,ra,
+            gsta=new GSTCUS(zoneName,commname,totalScore,absval,zoneCode,ra,
                     Zonal_rank,gst,way_to_grade,0,sub_parameter_weighted_average);
             allGstaList.add(gsta);
         }
@@ -1399,8 +1399,8 @@ public class CustomSubParameterService {
     }
 
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CUS7A Particular Zone=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-    public List<GST4A> cus8bZoneWiseCommissionary(ResultSet rs) throws SQLException {
-        List<GST4A> allGstaList = new ArrayList<>();
+    public List<GSTCUS> cus8bZoneWiseCommissionary(ResultSet rs) throws SQLException {
+        List<GSTCUS> allGstaList = new ArrayList<>();
         while (rs.next()) {
             String ra = CustomRelaventAspect.cus8b_RA;
             //String commname = "ALL";
@@ -1424,7 +1424,7 @@ public class CustomSubParameterService {
             int way_to_grade = score.c_marks8b(totalScore);
             double sub_parameter_weighted_average = way_to_grade * 0.5 ;
             sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
-            gsta=new GST4A(zoneName,commname,totalScore,absval,zoneCode,ra,
+            gsta=new GSTCUS(zoneName,commname,totalScore,absval,zoneCode,ra,
                     Zonal_rank,gst,way_to_grade,0,sub_parameter_weighted_average);
             allGstaList.add(gsta);
         }
@@ -1432,8 +1432,8 @@ public class CustomSubParameterService {
     }
 
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CUS7A All Commissionary=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-    public List<GST4A> cus8bAllCommissionary(ResultSet rs) throws SQLException {
-        List<GST4A> allGstaList = new ArrayList<>();
+    public List<GSTCUS> cus8bAllCommissionary(ResultSet rs) throws SQLException {
+        List<GSTCUS> allGstaList = new ArrayList<>();
         while (rs.next()) {
             String ra = CustomRelaventAspect.cus8b_RA;
             //String commname = "ALL";
@@ -1457,7 +1457,7 @@ public class CustomSubParameterService {
             int way_to_grade = score.c_marks8b(totalScore);
             double sub_parameter_weighted_average = way_to_grade * 0.5 ;
             sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
-            gsta=new GST4A(zoneName,commname,totalScore,absval,zoneCode,ra,
+            gsta=new GSTCUS(zoneName,commname,totalScore,absval,zoneCode,ra,
                     Zonal_rank,gst,way_to_grade,0,sub_parameter_weighted_average);
             allGstaList.add(gsta);
         }
@@ -1468,9 +1468,9 @@ public class CustomSubParameterService {
 
 
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=cus10A ZONE *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-    public List<GST4A> cus10aZone(ResultSet rs, int N) throws SQLException {
+    public List<GSTCUS> cus10aZone(ResultSet rs, int N) throws SQLException {
         double median = 0;
-        List<GST4A> allGstaList = new ArrayList<>();
+        List<GSTCUS> allGstaList = new ArrayList<>();
         while (rs.next()) {
             String ra = CustomRelaventAspect.cus10a_RA;
             String zoneName = rs.getString("ZONE_NAME");
@@ -1494,7 +1494,7 @@ public class CustomSubParameterService {
             double sub_parameter_weighted_average = insentavization * 0.5;
             sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
 
-            GST4A gsta = new GST4A(zoneName, commname, totalScore, absval, zoneCode, ra, 0, "no", way_to_grade, insentavization, sub_parameter_weighted_average);
+            GSTCUS gsta = new GSTCUS(zoneName, commname, totalScore, absval, zoneCode, ra, 0, "no", way_to_grade, insentavization, sub_parameter_weighted_average);
             allGstaList.add(gsta);
         }
         System.out.println("CUS 10A median zone wise :- " + median);
@@ -1502,8 +1502,8 @@ public class CustomSubParameterService {
     }
 
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CUS10A Particular Zone=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-    public List<GST4A> cus10aZoneWiseCommissionary(ResultSet rs, int N) throws SQLException {
-        List<GST4A> allGstaList = new ArrayList<>();
+    public List<GSTCUS> cus10aZoneWiseCommissionary(ResultSet rs, int N) throws SQLException {
+        List<GSTCUS> allGstaList = new ArrayList<>();
         double median = 0;
         while (rs.next()) {
             String ra = CustomRelaventAspect.cus10a_RA;
@@ -1528,7 +1528,7 @@ public class CustomSubParameterService {
             double sub_parameter_weighted_average = insentavization * 0.5;
             sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
 
-            GST4A gsta = new GST4A(zoneName, commname, totalScore, absval, zoneCode, ra, 0, "no", way_to_grade, insentavization, sub_parameter_weighted_average);
+            GSTCUS gsta = new GSTCUS(zoneName, commname, totalScore, absval, zoneCode, ra, 0, "no", way_to_grade, insentavization, sub_parameter_weighted_average);
             allGstaList.add(gsta);
         }
         System.out.println("CUS 10A median all commi wise :- " + median);
@@ -1536,8 +1536,8 @@ public class CustomSubParameterService {
     }
 
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CUS10A All Commissionary=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-    public List<GST4A> cus10aAllCommissionary(ResultSet rs, int N) throws SQLException {
-        List<GST4A> allGstaList = new ArrayList<>();
+    public List<GSTCUS> cus10aAllCommissionary(ResultSet rs, int N) throws SQLException {
+        List<GSTCUS> allGstaList = new ArrayList<>();
         double median = 0;
         while (rs.next()) {
             String ra = CustomRelaventAspect.cus10a_RA;
@@ -1562,7 +1562,7 @@ public class CustomSubParameterService {
             double sub_parameter_weighted_average = insentavization * 0.5;
             sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
 
-            GST4A gsta = new GST4A(zoneName, commname, totalScore, absval, zoneCode, ra, 0, "no", way_to_grade, insentavization, sub_parameter_weighted_average);
+            GSTCUS gsta = new GSTCUS(zoneName, commname, totalScore, absval, zoneCode, ra, 0, "no", way_to_grade, insentavization, sub_parameter_weighted_average);
             allGstaList.add(gsta);
         }
         System.out.println("CUS 10A median all commi wise :- " + median);
@@ -1570,9 +1570,9 @@ public class CustomSubParameterService {
     }
 
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=cus10B Zone wise *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-    public List<GST4A> cus10bZone(ResultSet rs) throws SQLException {
+    public List<GSTCUS> cus10bZone(ResultSet rs) throws SQLException {
         double median = 0;
-        List<GST4A> allGstaList = new ArrayList<>();
+        List<GSTCUS> allGstaList = new ArrayList<>();
         while (rs.next()) {
             String ra = CustomRelaventAspect.cus10b_RA;
             String zoneName = rs.getString("ZONE_NAME");
@@ -1590,15 +1590,15 @@ public class CustomSubParameterService {
             int way_to_grade = score.c_marks10b(totalScore);
             double sub_parameter_weighted_average = way_to_grade * 0.5;
             sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
-            GST4A gsta = new GST4A(zoneName, commname, totalScore, absval, zoneCode, ra, 0, "no", way_to_grade, 0, sub_parameter_weighted_average);
+            GSTCUS gsta = new GSTCUS(zoneName, commname, totalScore, absval, zoneCode, ra, 0, "no", way_to_grade, 0, sub_parameter_weighted_average);
             allGstaList.add(gsta);
         }
         return allGstaList;
     }
 
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CUS8A Particular Zone=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-    public List<GST4A> cus10bZoneWiseCommissionary(ResultSet rs) throws SQLException {
-        List<GST4A> allGstaList = new ArrayList<>();
+    public List<GSTCUS> cus10bZoneWiseCommissionary(ResultSet rs) throws SQLException {
+        List<GSTCUS> allGstaList = new ArrayList<>();
         double median = 0;
         while (rs.next()) {
             String ra = CustomRelaventAspect.cus10b_RA;
@@ -1617,15 +1617,15 @@ public class CustomSubParameterService {
             int way_to_grade = score.c_marks10b(totalScore);
             double sub_parameter_weighted_average = way_to_grade * 0.5;
             sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
-            GST4A gsta = new GST4A(zoneName, commname, totalScore, absval, zoneCode, ra, 0, "no", way_to_grade, 0, sub_parameter_weighted_average);
+            GSTCUS gsta = new GSTCUS(zoneName, commname, totalScore, absval, zoneCode, ra, 0, "no", way_to_grade, 0, sub_parameter_weighted_average);
             allGstaList.add(gsta);
         }
         return allGstaList;
     }
 
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CUS8A All Commissionary=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-    public List<GST4A> cus10bAllCommissionary(ResultSet rs) throws SQLException {
-        List<GST4A> allGstaList = new ArrayList<>();
+    public List<GSTCUS> cus10bAllCommissionary(ResultSet rs) throws SQLException {
+        List<GSTCUS> allGstaList = new ArrayList<>();
         double median = 0;
         while (rs.next()) {
             String ra = CustomRelaventAspect.cus10b_RA;
@@ -1644,15 +1644,15 @@ public class CustomSubParameterService {
             int way_to_grade = score.c_marks10b(totalScore);
             double sub_parameter_weighted_average = way_to_grade * 0.5;
             sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
-            GST4A gsta = new GST4A(zoneName, commname, totalScore, absval, zoneCode, ra, 0, "no", way_to_grade, 0, sub_parameter_weighted_average);
+            GSTCUS gsta = new GSTCUS(zoneName, commname, totalScore, absval, zoneCode, ra, 0, "no", way_to_grade, 0, sub_parameter_weighted_average);
             allGstaList.add(gsta);
         }
         return allGstaList;
     }
 
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=cus11A Zone wise *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-    public List<GST4A> cus11aZone(ResultSet rs) throws SQLException {
-        List<GST4A> allGstaList = new ArrayList<>();
+    public List<GSTCUS> cus11aZone(ResultSet rs) throws SQLException {
+        List<GSTCUS> allGstaList = new ArrayList<>();
         while (rs.next()) {
             String ra = CustomRelaventAspect.cus11a_RA;
             String commname = "ALL";
@@ -1678,7 +1678,7 @@ public class CustomSubParameterService {
             int way_to_grade = score.c_marks11a(totalScore);
             double sub_parameter_weighted_average = way_to_grade * 0.5 ;
             sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
-            gsta=new GST4A(zoneName,commname,totalScore,absval,zoneCode,ra,
+            gsta=new GSTCUS(zoneName,commname,totalScore,absval,zoneCode,ra,
                     Zonal_rank,gst,way_to_grade,0,sub_parameter_weighted_average);
             allGstaList.add(gsta);
         }
@@ -1686,8 +1686,8 @@ public class CustomSubParameterService {
     }
 
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CUS11A Particular Zone=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-    public List<GST4A> cus11aZoneWiseCommissionary(ResultSet rs) throws SQLException {
-        List<GST4A> allGstaList = new ArrayList<>();
+    public List<GSTCUS> cus11aZoneWiseCommissionary(ResultSet rs) throws SQLException {
+        List<GSTCUS> allGstaList = new ArrayList<>();
         while (rs.next()) {
             String ra = CustomRelaventAspect.cus11a_RA;
             // String commname = "ALL";
@@ -1713,7 +1713,7 @@ public class CustomSubParameterService {
             int way_to_grade = score.c_marks11a(totalScore);
             double sub_parameter_weighted_average = way_to_grade * 0.5 ;
             sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
-            gsta=new GST4A(zoneName,commname,totalScore,absval,zoneCode,ra,
+            gsta=new GSTCUS(zoneName,commname,totalScore,absval,zoneCode,ra,
                     Zonal_rank,gst,way_to_grade,0,sub_parameter_weighted_average);
             allGstaList.add(gsta);
         }
@@ -1721,8 +1721,8 @@ public class CustomSubParameterService {
     }
 
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CUS11A All Commissionary=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-    public List<GST4A> cus11aAllCommissionary(ResultSet rs) throws SQLException {
-        List<GST4A> allGstaList = new ArrayList<>();
+    public List<GSTCUS> cus11aAllCommissionary(ResultSet rs) throws SQLException {
+        List<GSTCUS> allGstaList = new ArrayList<>();
         while (rs.next()) {
             String ra = CustomRelaventAspect.cus11a_RA;
             // String commname = "ALL";
@@ -1748,7 +1748,7 @@ public class CustomSubParameterService {
             int way_to_grade = score.c_marks11a(totalScore);
             double sub_parameter_weighted_average = way_to_grade * 0.5 ;
             sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
-            gsta=new GST4A(zoneName,commname,totalScore,absval,zoneCode,ra,
+            gsta=new GSTCUS(zoneName,commname,totalScore,absval,zoneCode,ra,
                     Zonal_rank,gst,way_to_grade,0,sub_parameter_weighted_average);
             allGstaList.add(gsta);
         }
@@ -1756,8 +1756,8 @@ public class CustomSubParameterService {
     }
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=cus11B Zone wise *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
 
-    public List<GST4A> cus11bZone(ResultSet rs) throws SQLException {
-        List<GST4A> allGstaList = new ArrayList<>();
+    public List<GSTCUS> cus11bZone(ResultSet rs) throws SQLException {
+        List<GSTCUS> allGstaList = new ArrayList<>();
         double median = 0;
         while (rs.next()) {
             String ra = CustomRelaventAspect.cus11b_RA;
@@ -1789,7 +1789,7 @@ public class CustomSubParameterService {
             }
             double sub_parameter_weighted_average = way_to_grade * 0.5 ;
             sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
-            gsta=new GST4A(zoneName,commname,totalScore,absval,zoneCode,ra,
+            gsta=new GSTCUS(zoneName,commname,totalScore,absval,zoneCode,ra,
                     Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
             allGstaList.add(gsta);
         }
@@ -1797,8 +1797,8 @@ public class CustomSubParameterService {
     }
 
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CUS11B Particular Zone=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-    public List<GST4A> cus11bZoneWiseCommissionary(ResultSet rs) throws SQLException {
-        List<GST4A> allGstaList = new ArrayList<>();
+    public List<GSTCUS> cus11bZoneWiseCommissionary(ResultSet rs) throws SQLException {
+        List<GSTCUS> allGstaList = new ArrayList<>();
         double median = 0;
         while (rs.next()) {
             String ra = CustomRelaventAspect.cus11b_RA;
@@ -1830,7 +1830,7 @@ public class CustomSubParameterService {
             }
             double sub_parameter_weighted_average = way_to_grade * 0.5 ;
             sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
-            gsta=new GST4A(zoneName,commname,totalScore,absval,zoneCode,ra,
+            gsta=new GSTCUS(zoneName,commname,totalScore,absval,zoneCode,ra,
                     Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
             allGstaList.add(gsta);
         }
@@ -1838,8 +1838,8 @@ public class CustomSubParameterService {
     }
 
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CUS11B All Commissionary=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-    public List<GST4A> cus11bAllCommissionary(ResultSet rs) throws SQLException {
-        List<GST4A> allGstaList = new ArrayList<>();
+    public List<GSTCUS> cus11bAllCommissionary(ResultSet rs) throws SQLException {
+        List<GSTCUS> allGstaList = new ArrayList<>();
         double median = 0;
         while (rs.next()) {
             String ra = CustomRelaventAspect.cus11b_RA;
@@ -1871,7 +1871,7 @@ public class CustomSubParameterService {
             }
             double sub_parameter_weighted_average = way_to_grade * 0.5 ;
             sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
-            gsta=new GST4A(zoneName,commname,totalScore,absval,zoneCode,ra,
+            gsta=new GSTCUS(zoneName,commname,totalScore,absval,zoneCode,ra,
                     Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
             allGstaList.add(gsta);
         }

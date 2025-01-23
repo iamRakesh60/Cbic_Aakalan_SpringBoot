@@ -5,7 +5,7 @@ import com.Cbic_Aaklan_Project.Service.GstGradeScore;
 import com.Cbic_Aaklan_Project.Service.RelevantAspect;
 import com.Cbic_Aaklan_Project.dao.Query.GstParameterWiseQuery;
 import com.Cbic_Aaklan_Project.dao.result.GetExecutionSQL;
-import com.Cbic_Aaklan_Project.entity.GST4A;
+import com.Cbic_Aaklan_Project.entity.GSTCUS;
 import com.Cbic_Aaklan_Project.entity.GstParameter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -2542,18 +2542,18 @@ public class GstParameterController {
 	@ResponseBody
 	@RequestMapping(value = "/gst8_combined/url1")
 	// http://localhost:8080/cbicApi/cbic/t_score/gst8_combined/url1?month_date=2024-10-01&type=zone    // 1 no url  correct data
-	public List<GST4A> getGst5Combined_1_noURL(@RequestParam String month_date, @RequestParam String type) {
-		List<GST4A> gst8aList = (List<GST4A>) gstSubParameterController.getGst8a(month_date, type, null);
-		List<GST4A> gst8bList = (List<GST4A>) gstSubParameterController.getGst8b(month_date, type, null);
+	public List<GSTCUS> getGst5Combined_1_noURL(@RequestParam String month_date, @RequestParam String type) {
+		List<GSTCUS> gst8aList = (List<GSTCUS>) gstSubParameterController.getGst8a(month_date, type, null);
+		List<GSTCUS> gst8bList = (List<GSTCUS>) gstSubParameterController.getGst8b(month_date, type, null);
 
-		Map<String, GST4A> combinedMap = new HashMap<>();
+		Map<String, GSTCUS> combinedMap = new HashMap<>();
 
-		for (GST4A gsta : gst8aList) {
+		for (GSTCUS gsta : gst8aList) {
 			combinedMap.put(gsta.getZone_code(), gsta);
 		}
 
-		for (GST4A gstb : gst8bList) {
-			GST4A existing = combinedMap.get(gstb.getZone_code());
+		for (GSTCUS gstb : gst8bList) {
+			GSTCUS existing = combinedMap.get(gstb.getZone_code());
 
 			if (existing != null) {
 				existing.setSub_parameter_weighted_average(
@@ -2565,11 +2565,11 @@ public class GstParameterController {
 			}
 		}
 
-		List<GST4A> combinedList = new ArrayList<>(combinedMap.values());
-		combinedList.sort(Comparator.comparing(GST4A::getSub_parameter_weighted_average).reversed());
+		List<GSTCUS> combinedList = new ArrayList<>(combinedMap.values());
+		combinedList.sort(Comparator.comparing(GSTCUS::getSub_parameter_weighted_average).reversed());
 
 		int rank = 1;
-		for (GST4A gsta : combinedList) {
+		for (GSTCUS gsta : combinedList) {
 			gsta.setZonal_rank(rank++);
 		}
 

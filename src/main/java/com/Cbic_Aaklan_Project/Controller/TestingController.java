@@ -1,11 +1,9 @@
 package com.Cbic_Aaklan_Project.Controller;
 
 
-import com.Cbic_Aaklan_Project.Service.DateCalculate;
 import com.Cbic_Aaklan_Project.Service.GstGradeScore;
 import com.Cbic_Aaklan_Project.dao.result.GetExecutionSQL;
-import com.Cbic_Aaklan_Project.entity.GST4A;
-import com.Cbic_Aaklan_Project.entity.MonthlyYearlyScore;
+import com.Cbic_Aaklan_Project.entity.GSTCUS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -47,8 +45,8 @@ public class TestingController {
     //  http://localhost:8080/cbicApi/cbic/t_score/testing/refundsTesting?month_date=2023-04-01&type=parameter
     public Object refunds(@RequestParam String month_date, @RequestParam String type, @RequestParam(required = false) String zone_code, @RequestParam(required = false) String come_name) {
 
-        List<GST4A> allGstaList = new ArrayList<>();
-        GST4A gsta = null;
+        List<GSTCUS> allGstaList = new ArrayList<>();
+        GSTCUS gsta = null;
         int rank = 0;
         double total = 0.00;
 
@@ -88,7 +86,7 @@ public class TestingController {
                     double totalScore = Double.parseDouble(formattedTotal);
                     int way_to_grade = score.marks7(totalScore);
                     int sub_parameter_weighted_average = way_to_grade;
-                    gsta = new GST4A(rsGst7.getString("ZONE_NAME"), commname, totalScore,absval,zoneCode,ra,
+                    gsta = new GSTCUS(rsGst7.getString("ZONE_NAME"), commname, totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }

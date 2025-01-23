@@ -4,7 +4,7 @@ import com.Cbic_Aaklan_Project.Service.CustomGreadeScore;
 import com.Cbic_Aaklan_Project.Service.GstSubParameterService;
 import com.Cbic_Aaklan_Project.dao.Query.GstSubParameterWiseQuery;
 import com.Cbic_Aaklan_Project.dao.result.GetExecutionSQL;
-import com.Cbic_Aaklan_Project.entity.GST4A;
+import com.Cbic_Aaklan_Project.entity.GSTCUS;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,8 +16,6 @@ import java.sql.SQLException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-// In this controller we will try to fatch data from gst8a, gst8b and try to make parameter
-//    private Logger logger = LoggerFactory.getLogger(TestingController3.class);
 @Controller
 @RequestMapping("/cbicApi/cbic/testing")
 public class TestingController3 {
@@ -30,7 +28,7 @@ public class TestingController3 {
     //  http://localhost:8080/cbicApi/cbic/testing/gst8a?month_date=2023-10-01&zone_code=70&type=commissary
     //	  http://localhost:8080/cbicApi/cbic/testing/gst8a?month_date=2023-10-01&type=all_commissary
     public Object getGst8a(@RequestParam String month_date,@RequestParam String type, @RequestParam(required = false) String zone_code) {
-        List<GST4A> allGstaList=new ArrayList<>();
+        List<GSTCUS> allGstaList=new ArrayList<>();
         try {
             if("zone".equalsIgnoreCase(type)) {
                 String queryGst14aa= new GstSubParameterWiseQuery().QueryFor_gst8a_ZoneWise(month_date);
@@ -52,7 +50,7 @@ public class TestingController3 {
             e.printStackTrace();
         }
         return allGstaList.stream()
-                .sorted(Comparator.comparing(GST4A::getTotal_score).reversed()).collect(Collectors.toList());
+                .sorted(Comparator.comparing(GSTCUS::getTotal_score).reversed()).collect(Collectors.toList());
     }
 
     @ResponseBody
@@ -61,7 +59,7 @@ public class TestingController3 {
     //  http://localhost:8080/cbicApi/cbic/testing/gst8b?month_date=2023-10-01&zone_code=70&type=commissary
     //	http://localhost:8080/cbicApi/cbic/testing/gst8b?month_date=2023-10-01&type=all_commissary
     public Object getGst8b(@RequestParam String month_date,@RequestParam String type, @RequestParam(required = false) String zone_code) {
-        List<GST4A> allGstaList=new ArrayList<>();
+        List<GSTCUS> allGstaList=new ArrayList<>();
         try {
             if("zone".equalsIgnoreCase(type)) {
                 String queryGst14aa= new GstSubParameterWiseQuery().QueryFor_gst8b_ZoneWise(month_date);
@@ -82,6 +80,6 @@ public class TestingController3 {
             e.printStackTrace();
         }
         return allGstaList.stream()
-                .sorted(Comparator.comparing(GST4A::getTotal_score)).collect(Collectors.toList());
+                .sorted(Comparator.comparing(GSTCUS::getTotal_score)).collect(Collectors.toList());
     }
 }

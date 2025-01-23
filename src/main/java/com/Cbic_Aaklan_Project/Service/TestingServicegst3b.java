@@ -1,7 +1,7 @@
 package com.Cbic_Aaklan_Project.Service;
 
 
-import com.Cbic_Aaklan_Project.entity.GST4A;
+import com.Cbic_Aaklan_Project.entity.GSTCUS;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,8 +12,8 @@ public class TestingServicegst3b {
     double median = 0.0;
     TestingGradeScoreGst3b score = new TestingGradeScoreGst3b();
 
-    public List<GST4A> gst3bZone(ResultSet rsGst14aa) throws SQLException {
-        List<GST4A> allGstaList = new ArrayList<>();
+    public List<GSTCUS> gst3bZone(ResultSet rsGst14aa) throws SQLException {
+        List<GSTCUS> allGstaList = new ArrayList<>();
         List<Double> col22Values = new ArrayList<>();
 
         while (rsGst14aa.next()) {
@@ -45,7 +45,7 @@ public class TestingServicegst3b {
             int wayToGrade = score.marks3b(totalScore);
 
             Integer insentavization = 0;
-            GST4A gsta = new GST4A(zoneName, commname, totalScore, absval, zoneCode, ra, 0, "GST 3B", wayToGrade, insentavization, 0.00);
+            GSTCUS gsta = new GSTCUS(zoneName, commname, totalScore, absval, zoneCode, ra, 0, "GST 3B", wayToGrade, insentavization, 0.00);
             allGstaList.add(gsta);
         }
 //

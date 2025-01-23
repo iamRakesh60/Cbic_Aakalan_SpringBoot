@@ -7,7 +7,7 @@ import com.Cbic_Aaklan_Project.Service.RelevantAspect;
 import com.Cbic_Aaklan_Project.dao.Query.GstSubParameterWiseQuery;
 import com.Cbic_Aaklan_Project.dao.pool.JDBCConnection;
 import com.Cbic_Aaklan_Project.dao.result.GetExecutionSQL;
-import com.Cbic_Aaklan_Project.entity.GST4A;
+import com.Cbic_Aaklan_Project.entity.GSTCUS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -65,8 +65,8 @@ public class GstSubParameterController {
 //	  http://localhost:8080/cbicApi/cbic/gst1a?month_date=2023-04-01&type=all_commissary
     public Object getGst1A(@RequestParam String month_date, @RequestParam String type, @RequestParam(required = false) String zone_code) {
 
-        List<GST4A> allGstaList = new ArrayList<>();
-        GST4A gsta = null;
+        List<GSTCUS> allGstaList = new ArrayList<>();
+        GSTCUS gsta = null;
         int rank = 0;
         double total = 0.00;
         Double median = 0.00;
@@ -110,7 +110,7 @@ public class GstSubParameterController {
                     }
                     Double sub_parameter_weighted_average = insentavization * 0.1 ;
                     sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
-                    gsta=new GST4A(rsGst14aa.getString("ZONE_NAME"),"ALL",totalScore,absval,zoneCode,ra,
+                    gsta=new GSTCUS(rsGst14aa.getString("ZONE_NAME"),"ALL",totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -151,7 +151,7 @@ public class GstSubParameterController {
                     }
                     Double sub_parameter_weighted_average = insentavization * 0.1 ;
                     sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
-                    gsta=new GST4A(rsGst14aa.getString("ZONE_NAME"),commname,totalScore,absval,zoneCode,ra,
+                    gsta=new GSTCUS(rsGst14aa.getString("ZONE_NAME"),commname,totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -192,7 +192,7 @@ public class GstSubParameterController {
                     Double sub_parameter_weighted_average = insentavization * 0.1 ;
                     sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
 
-                    gsta=new GST4A(rsGst14aa.getString("ZONE_NAME"),commname,totalScore,absval,zoneCode,ra,
+                    gsta=new GSTCUS(rsGst14aa.getString("ZONE_NAME"),commname,totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
 
@@ -203,7 +203,7 @@ public class GstSubParameterController {
         }
         //return allGstaList;
         return allGstaList.stream()
-                .sorted(Comparator.comparing(GST4A::getTotal_score).reversed()).collect(Collectors.toList());
+                .sorted(Comparator.comparing(GSTCUS::getTotal_score).reversed()).collect(Collectors.toList());
     }
 
     /*
@@ -219,8 +219,8 @@ public class GstSubParameterController {
     //  http://localhost:8080/cbicApi/cbic/gst1b?month_date=2023-04-01&zone_code=70&type=commissary
     public Object getGst1B(@RequestParam String month_date, @RequestParam String type, @RequestParam(required = false) String zone_code) {
 
-        List<GST4A> allGstaList = new ArrayList<>();
-        GST4A gsta = null;
+        List<GSTCUS> allGstaList = new ArrayList<>();
+        GSTCUS gsta = null;
         int rank = 0;
         double total = 0.00;
 
@@ -250,7 +250,7 @@ public class GstSubParameterController {
                     rank = score.marks1b(total);
                     String formattedTotal = String.format("%.2f", total);
                     double totalScore = Double.parseDouble(formattedTotal);
-                    gsta = new GST4A(rsGst14aa.getString("ZONE_NAME"), commname, totalScore,absval,zoneCode,ra,
+                    gsta = new GSTCUS(rsGst14aa.getString("ZONE_NAME"), commname, totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -279,7 +279,7 @@ public class GstSubParameterController {
                     rank = score.marks1b(total);
                     String formattedTotal = String.format("%.2f", total);
                     double totalScore = Double.parseDouble(formattedTotal);
-                    gsta = new GST4A(rsGst14aa.getString("ZONE_NAME"), commname, totalScore,absval,zoneCode,ra,
+                    gsta = new GSTCUS(rsGst14aa.getString("ZONE_NAME"), commname, totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -288,7 +288,7 @@ public class GstSubParameterController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return allGstaList.stream().sorted(Comparator.comparing(GST4A::getTotal_score)
+        return allGstaList.stream().sorted(Comparator.comparing(GSTCUS::getTotal_score)
                 ).collect(Collectors.toList());
     }
 
@@ -306,8 +306,8 @@ public class GstSubParameterController {
     //  http://localhost:8080/cbicApi/cbic/gst1c?month_date=2024-10-01&zone_code=70&type=commissary
 //	  http://localhost:8080/cbicApi/cbic/gst1c?month_date=2024-10-01&type=all_commissary
     public Object getGst1C(@RequestParam String month_date, @RequestParam String type, @RequestParam(required = false) String zone_code) {
-        List<GST4A> allGstaList = new ArrayList<>();
-        GST4A gsta = null;
+        List<GSTCUS> allGstaList = new ArrayList<>();
+        GSTCUS gsta = null;
         int rank = 0;
         double total = 0.00;
         try {
@@ -346,7 +346,7 @@ public class GstSubParameterController {
                     String formattedSubParameterWeightedAverage = String.format("%.2f", sub_parameter_weighted_average_bfore);
                     double sub_parameter_weighted_average = Double.parseDouble(formattedSubParameterWeightedAverage);
 
-                    gsta=new GST4A(rsGst14aa.getString("ZONE_NAME"),commname,totalScore,absval,zoneCode,ra,
+                    gsta=new GSTCUS(rsGst14aa.getString("ZONE_NAME"),commname,totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -382,7 +382,7 @@ public class GstSubParameterController {
                     String formattedSubParameterWeightedAverage = String.format("%.2f", sub_parameter_weighted_average_bfore);
                     double sub_parameter_weighted_average = Double.parseDouble(formattedSubParameterWeightedAverage);
 
-                    gsta=new GST4A(rsGst14aa.getString("ZONE_NAME"),commname,totalScore,absval,zoneCode,ra,
+                    gsta=new GSTCUS(rsGst14aa.getString("ZONE_NAME"),commname,totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -417,7 +417,7 @@ public class GstSubParameterController {
                     double sub_parameter_weighted_average_bfore = way_to_grade * 0.1;
                     String formattedSubParameterWeightedAverage = String.format("%.2f", sub_parameter_weighted_average_bfore);
                     double sub_parameter_weighted_average = Double.parseDouble(formattedSubParameterWeightedAverage);
-                    gsta=new GST4A(rsGst14aa.getString("ZONE_NAME"),commname,totalScore,absval,zoneCode,ra,
+                    gsta=new GSTCUS(rsGst14aa.getString("ZONE_NAME"),commname,totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
 
@@ -427,7 +427,7 @@ public class GstSubParameterController {
             e.printStackTrace();
         }
 //        return allGstaList;
-        return allGstaList.stream().sorted(Comparator.comparing(GST4A::getTotal_score)
+        return allGstaList.stream().sorted(Comparator.comparing(GSTCUS::getTotal_score)
                 .reversed()).collect(Collectors.toList());
 
     }
@@ -440,8 +440,8 @@ public class GstSubParameterController {
 //	  http://localhost:8080/cbicApi/cbic/gst1d?month_date=2023-04-01&type=all_commissary
     public Object getGst1D(@RequestParam String month_date ,@RequestParam String type, @RequestParam(required = false) String zone_code) {
 
-        List<GST4A> allGstaList = new ArrayList<>();
-        GST4A gsta = null;
+        List<GSTCUS> allGstaList = new ArrayList<>();
+        GSTCUS gsta = null;
         int rank = 0;
         double total = 0.00;
 
@@ -477,7 +477,7 @@ public class GstSubParameterController {
                     int way_to_grade = score.marks1d(totalScore);
                     Double sub_parameter_weighted_average = way_to_grade * 0.1;
                     sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
-                    gsta=new GST4A(rsGst14aa.getString("ZONE_NAME"),"ALL",totalScore,absval,zoneCode,ra,
+                    gsta=new GSTCUS(rsGst14aa.getString("ZONE_NAME"),"ALL",totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -512,7 +512,7 @@ public class GstSubParameterController {
                     int way_to_grade =score.marks1d(totalScore);
                     Double sub_parameter_weighted_average = way_to_grade * 0.1;
                     sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
-                    gsta=new GST4A(rsGst14aa.getString("ZONE_NAME"),commname, totalScore,absval,zoneCode,ra,
+                    gsta=new GSTCUS(rsGst14aa.getString("ZONE_NAME"),commname, totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -549,7 +549,7 @@ public class GstSubParameterController {
                     int way_to_grade = score.marks1d(totalScore);
                     Double sub_parameter_weighted_average = way_to_grade * 0.1;
                     sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
-                    gsta=new GST4A(rsGst14aa.getString("ZONE_NAME"),commname, totalScore,absval,zoneCode,ra,
+                    gsta=new GSTCUS(rsGst14aa.getString("ZONE_NAME"),commname, totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
 
@@ -559,7 +559,7 @@ public class GstSubParameterController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return allGstaList.stream().sorted(Comparator.comparing(GST4A::getTotal_score)
+        return allGstaList.stream().sorted(Comparator.comparing(GSTCUS::getTotal_score)
                 ).collect(Collectors.toList());
     }
 
@@ -576,8 +576,8 @@ public class GstSubParameterController {
 //	  http://localhost:8080/cbicApi/cbic/gst1e?month_date=2023-04-01&type=all_commissary
     public Object getGst1E(@RequestParam String month_date,@RequestParam String type, @RequestParam(required = false) String zone_code) {
 
-        List<GST4A> allGstaList = new ArrayList<>();
-        GST4A gsta = null;
+        List<GSTCUS> allGstaList = new ArrayList<>();
+        GSTCUS gsta = null;
         int rank = 0;
         double total = 0.00;
         try {
@@ -609,7 +609,7 @@ public class GstSubParameterController {
                     double totalScore = Double.parseDouble(formattedTotal);
                     int way_to_grade = score.marks1e(totalScore);
                     Double sub_parameter_weighted_average = way_to_grade * 0.3;
-                    gsta=new GST4A(rsGst14aa.getString("ZONE_NAME"),commname,totalScore,absval,zoneCode,ra,
+                    gsta=new GSTCUS(rsGst14aa.getString("ZONE_NAME"),commname,totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -642,7 +642,7 @@ public class GstSubParameterController {
                     double totalScore = Double.parseDouble(formattedTotal);
                     int way_to_grade = score.marks1e(totalScore);
                     Double sub_parameter_weighted_average = way_to_grade * 0.3;
-                    gsta=new GST4A(rsGst14aa.getString("ZONE_NAME"),commname,totalScore,absval,zoneCode,ra,
+                    gsta=new GSTCUS(rsGst14aa.getString("ZONE_NAME"),commname,totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -675,7 +675,7 @@ public class GstSubParameterController {
                     double totalScore = Double.parseDouble(formattedTotal);
                     int way_to_grade = score.marks1e(totalScore);
                     Double sub_parameter_weighted_average = way_to_grade * 0.3;
-                    gsta=new GST4A(rsGst14aa.getString("ZONE_NAME"),commname,totalScore,absval,zoneCode,ra,
+                    gsta=new GSTCUS(rsGst14aa.getString("ZONE_NAME"),commname,totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -683,7 +683,7 @@ public class GstSubParameterController {
         } catch (SQLException e) {
             e.printStackTrace() ;
         }
-        return allGstaList.stream().sorted(Comparator.comparing(GST4A::getTotal_score)
+        return allGstaList.stream().sorted(Comparator.comparing(GSTCUS::getTotal_score)
         ).collect(Collectors.toList());
     }
 
@@ -700,8 +700,8 @@ public class GstSubParameterController {
     //  http://localhost:8080/cbicApi/cbic/gst1f?month_date=2023-04-01&zone_code=51&type=commissary
     //  http://localhost:8080/cbicApi/cbic/gst1f?month_date=2023-04-01&type=all_commissary
     public Object getGst1F(@RequestParam String month_date ,@RequestParam String type, @RequestParam(required = false) String zone_code ) {
-        List<GST4A> allGstaList = new ArrayList<>();
-        GST4A gsta = null;
+        List<GSTCUS> allGstaList = new ArrayList<>();
+        GSTCUS gsta = null;
         int rank = 0;
         double total = 0.00;
         try {
@@ -731,7 +731,7 @@ public class GstSubParameterController {
                     double totalScore = Double.parseDouble(formattedTotal);
                     int way_to_grade = score.marks1f(totalScore);
                     Double sub_parameter_weighted_average = way_to_grade * 0.3;
-                    gsta=new GST4A(rsGst14aa.getString("ZONE_NAME"),"ALL",totalScore,absval,zoneCode,ra,
+                    gsta=new GSTCUS(rsGst14aa.getString("ZONE_NAME"),"ALL",totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -763,7 +763,7 @@ public class GstSubParameterController {
                     double totalScore = Double.parseDouble(formattedTotal);
                     int way_to_grade = score.marks1f(totalScore);
                     Double sub_parameter_weighted_average = way_to_grade * 0.3;
-                    gsta = new GST4A(zonename, commname, totalScore,absval,zoneCode,ra,
+                    gsta = new GSTCUS(zonename, commname, totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -795,7 +795,7 @@ public class GstSubParameterController {
                     double totalScore = Double.parseDouble(formattedTotal);
                     int way_to_grade = score.marks1f(totalScore);
                     Double sub_parameter_weighted_average = way_to_grade * 0.3;
-                    gsta = new GST4A(zonename, commname, totalScore,absval,zoneCode,ra,
+                    gsta = new GSTCUS(zonename, commname, totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -804,7 +804,7 @@ public class GstSubParameterController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return allGstaList.stream().sorted(Comparator.comparing(GST4A::getTotal_score)
+        return allGstaList.stream().sorted(Comparator.comparing(GSTCUS::getTotal_score)
         ).collect(Collectors.toList());
     }
 
@@ -821,8 +821,8 @@ public class GstSubParameterController {
 //	  http://localhost:8080/cbicApi/cbic/gst2?month_date=2023-04-01&type=all_commissary
     public Object getGst2(@RequestParam String month_date,@RequestParam String type, @RequestParam(required = false) String zone_code) {
 
-        List<GST4A> allGstaList = new ArrayList<>();
-        GST4A gsta = null;
+        List<GSTCUS> allGstaList = new ArrayList<>();
+        GSTCUS gsta = null;
         int rank = 0;
         double total = 0.00;
 
@@ -854,7 +854,7 @@ public class GstSubParameterController {
                     double totalScore = Double.parseDouble(formattedTotal);
                     int way_to_grade = score.marks2(totalScore);
                     int sub_parameter_weighted_average = way_to_grade;
-                    gsta=new GST4A(rsGst14aa.getString("ZONE_NAME"),commname,totalScore,absval,zoneCode,ra,
+                    gsta=new GSTCUS(rsGst14aa.getString("ZONE_NAME"),commname,totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -881,7 +881,7 @@ public class GstSubParameterController {
                     int sub_parameter_weighted_average = way_to_grade;
 
                     // rank=score.marks2(total);
-                    gsta=new GST4A(rsGst14aa.getString("ZONE_NAME"),commname,totalScore,absval,zoneCode,ra,
+                    gsta=new GSTCUS(rsGst14aa.getString("ZONE_NAME"),commname,totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -907,7 +907,7 @@ public class GstSubParameterController {
                     int way_to_grade = score.marks2(totalScore);
                     int sub_parameter_weighted_average = way_to_grade;
                     //rank=score.marks2(total);
-                    gsta=new GST4A(rsGst14aa.getString("ZONE_NAME"),commname,totalScore,absval,zoneCode,ra,
+                    gsta=new GSTCUS(rsGst14aa.getString("ZONE_NAME"),commname,totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -917,7 +917,7 @@ public class GstSubParameterController {
             e.printStackTrace();
         }
         return allGstaList.stream()
-                .sorted(Comparator.comparing(GST4A::getTotal_score)).collect(Collectors.toList());
+                .sorted(Comparator.comparing(GSTCUS::getTotal_score)).collect(Collectors.toList());
     }
     /*
      * Date: May 04, 2024
@@ -1062,8 +1062,8 @@ public class GstSubParameterController {
     // http://localhost:8080/cbicApi/cbic/gst3a?month_date=2023-05-01&type=all_commissary
     public Object getGst3A(@RequestParam String month_date,@RequestParam String type, @RequestParam(required = false) String zone_code) {
 
-        List<GST4A> allGstaList = new ArrayList<>();
-        GST4A gsta = null;
+        List<GSTCUS> allGstaList = new ArrayList<>();
+        GSTCUS gsta = null;
         int rank = 0;
         double total = 0.00;
         Double median = 0.00;
@@ -1122,7 +1122,7 @@ public class GstSubParameterController {
 
                     Double sub_parameter_weighted_average = insentavization * 0.5 ;
 
-                    gsta = new GST4A(zoneName, commname, totalScore, absval, zoneCode, ra, Zonal_rank, gst, way_to_grade, insentavization, sub_parameter_weighted_average);
+                    gsta = new GSTCUS(zoneName, commname, totalScore, absval, zoneCode, ra, Zonal_rank, gst, way_to_grade, insentavization, sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
                 System.out.println("gst3a median zone wise :- " + median); //********************************** for testing ************************************
@@ -1154,7 +1154,7 @@ public class GstSubParameterController {
                     String gst = "no";
 
                     Double sub_parameter_weighted_average = insentavization * 0.5 ;
-                    gsta = new GST4A(rsGst14aa.getString("ZONE_NAME"), commname, totalScore,absval,zoneCode,ra,
+                    gsta = new GSTCUS(rsGst14aa.getString("ZONE_NAME"), commname, totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }System.out.println("median gst3a all commi : "+ median);
@@ -1183,7 +1183,7 @@ public class GstSubParameterController {
                     String gst = "no";
 
                     Double sub_parameter_weighted_average = insentavization * 0.5 ;
-                    gsta = new GST4A(rsGst14aa.getString("ZONE_NAME"), commname, totalScore,absval,zoneCode,ra,
+                    gsta = new GSTCUS(rsGst14aa.getString("ZONE_NAME"), commname, totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -1193,7 +1193,7 @@ public class GstSubParameterController {
             e.printStackTrace();
         }
         return allGstaList.stream()
-                .sorted(Comparator.comparing(GST4A::getTotal_score).reversed()).collect(Collectors.toList());
+                .sorted(Comparator.comparing(GSTCUS::getTotal_score).reversed()).collect(Collectors.toList());
     }
 
     /*
@@ -1333,8 +1333,8 @@ public class GstSubParameterController {
     // http://localhost:8080/cbicApi/cbic/gst3b?month_date=2023-05-01&type=all_commissary
     public Object getGst3B(@RequestParam String month_date, @RequestParam String type, @RequestParam(required = false) String zone_code) {
 
-        List<GST4A> allGstaList = new ArrayList<>();
-        GST4A gsta = null;
+        List<GSTCUS> allGstaList = new ArrayList<>();
+        GSTCUS gsta = null;
         Double median = 0.00;
         Connection con = JDBCConnection.getTNConnection();
 
@@ -1365,7 +1365,7 @@ public class GstSubParameterController {
                     String gst = "no";
 
                     Double sub_parameter_weighted_average = insentavization * 0.5;
-                    gsta = new GST4A(zoneName, commname, totalScore, absval, zoneCode, ra,
+                    gsta = new GSTCUS(zoneName, commname, totalScore, absval, zoneCode, ra,
                             Zonal_rank, gst, way_to_grade, insentavization, sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -1399,7 +1399,7 @@ public class GstSubParameterController {
                     String gst = "no";
 
                     Double sub_parameter_weighted_average = insentavization * 0.5 ;
-                    gsta=new GST4A(zoneName, commname,totalScore,absval,zoneCode,ra,
+                    gsta=new GSTCUS(zoneName, commname,totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -1436,7 +1436,7 @@ public class GstSubParameterController {
                     String gst = "no";
 
                     Double sub_parameter_weighted_average = insentavization * 0.5 ;
-                    gsta=new GST4A(zoneName, commname,totalScore,absval,zoneCode,ra,
+                    gsta=new GSTCUS(zoneName, commname,totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -1446,7 +1446,7 @@ public class GstSubParameterController {
             e.printStackTrace();
         }
         return allGstaList.stream()
-                .sorted(Comparator.comparing(GST4A::getTotal_score).reversed()).collect(Collectors.toList());
+                .sorted(Comparator.comparing(GSTCUS::getTotal_score).reversed()).collect(Collectors.toList());
     }
 
 
@@ -1463,8 +1463,8 @@ public class GstSubParameterController {
     //	http://localhost:8080/cbicApi/cbic/gst4a?month_date=2024-04-01&type=all_commissary
     public Object getGst4A(@RequestParam String month_date ,@RequestParam String type, @RequestParam(required = false) String zone_code ) {
 
-        List<GST4A> allGstaList = new ArrayList<>();
-        GST4A gsta = null;
+        List<GSTCUS> allGstaList = new ArrayList<>();
+        GSTCUS gsta = null;
         Double median = 0.00;
         int rank = 0;
         double total = 0.00;
@@ -1514,7 +1514,7 @@ public class GstSubParameterController {
                     double sub_parameter_weighted_average = Double.parseDouble(formattedSubParameterWeightedAverage);
                     //double sub_parameter_weighted_average = 0.00 ;
 
-                    gsta = new GST4A(zoneName, commname, totalScore, absval, zoneCode, ra, Zonal_rank, gst, way_to_grade, insentavization, sub_parameter_weighted_average);
+                    gsta = new GSTCUS(zoneName, commname, totalScore, absval, zoneCode, ra, Zonal_rank, gst, way_to_grade, insentavization, sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
 
@@ -1563,7 +1563,7 @@ public class GstSubParameterController {
                     double sub_parameter_weighted_average = Double.parseDouble(formattedSubParameterWeightedAverage);
                     //double sub_parameter_weighted_average = 0.00 ;
 
-                    gsta = new GST4A(zoneName, commname, totalScore, absval, zoneCode, ra, Zonal_rank, gst, way_to_grade, insentavization, sub_parameter_weighted_average);
+                    gsta = new GSTCUS(zoneName, commname, totalScore, absval, zoneCode, ra, Zonal_rank, gst, way_to_grade, insentavization, sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
             }else if (type.equalsIgnoreCase("all_commissary")) {
@@ -1611,7 +1611,7 @@ public class GstSubParameterController {
                     double sub_parameter_weighted_average = Double.parseDouble(formattedSubParameterWeightedAverage);
                     //double sub_parameter_weighted_average = 0.00 ;
 
-                    gsta = new GST4A(zoneName, commname, totalScore, absval, zoneCode, ra, Zonal_rank, gst, way_to_grade, insentavization, sub_parameter_weighted_average);
+                    gsta = new GSTCUS(zoneName, commname, totalScore, absval, zoneCode, ra, Zonal_rank, gst, way_to_grade, insentavization, sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
             }
@@ -1620,7 +1620,7 @@ public class GstSubParameterController {
             e.printStackTrace();
         }
         return allGstaList.stream()
-                .sorted(Comparator.comparing(GST4A::getTotal_score).reversed()).collect(Collectors.toList());
+                .sorted(Comparator.comparing(GSTCUS::getTotal_score).reversed()).collect(Collectors.toList());
     }
 
     /*
@@ -1637,8 +1637,8 @@ public class GstSubParameterController {
     //	  http://localhost:8080/cbicApi/cbic/gst4b?month_date=2023-04-01&type=all_commissary
     public Object getGst4B(@RequestParam String month_date ,@RequestParam String type, @RequestParam(required = false) String zone_code ) {
 
-        List<GST4A> allGstaList = new ArrayList<>();
-        GST4A gsta = null;
+        List<GSTCUS> allGstaList = new ArrayList<>();
+        GSTCUS gsta = null;
         int rank = 0;
         double total = 0.00;
         Connection con= JDBCConnection.getTNConnection();
@@ -1676,7 +1676,7 @@ public class GstSubParameterController {
                     // String formattedTotal = String.format("%.2f", total);
                     totalScore = Double.parseDouble(formattedTotal);
                     String absval = String.valueOf(col29 + col31) + "/" + String.valueOf(col25);
-                    gsta = new GST4A(rsGst14aa.getString("ZONE_NAME"), "ALL", totalScore, absval, zoneCode, ra,
+                    gsta = new GSTCUS(rsGst14aa.getString("ZONE_NAME"), "ALL", totalScore, absval, zoneCode, ra,
                             Zonal_rank, gst, way_to_grade, insentavization, sub_parameter_weighted_average_bfore);
                     allGstaList.add(gsta);
                 }
@@ -1716,7 +1716,7 @@ public class GstSubParameterController {
                     // String formattedTotal = String.format("%.2f", total);
                     //double totalScore = Double.parseDouble(formattedTotal);
 
-                    gsta=new GST4A(rsGst14aa.getString("ZONE_NAME"),commname,totalScore,absval,zoneCode,ra,
+                    gsta=new GSTCUS(rsGst14aa.getString("ZONE_NAME"),commname,totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
 
                     allGstaList.add(gsta);
@@ -1755,7 +1755,7 @@ public class GstSubParameterController {
                     //  String formattedTotal = String.format("%.2f", total);
                     // double totalScore = Double.parseDouble(formattedTotal);
 
-                    gsta=new GST4A(rsGst14aa.getString("ZONE_NAME"),commname,totalScore,absval,zoneCode,ra,
+                    gsta=new GSTCUS(rsGst14aa.getString("ZONE_NAME"),commname,totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
 
                     allGstaList.add(gsta);
@@ -1767,7 +1767,7 @@ public class GstSubParameterController {
             e.printStackTrace();
         }
         return allGstaList.stream()
-                .sorted(Comparator.comparing(GST4A::getTotal_score)).collect(Collectors.toList());
+                .sorted(Comparator.comparing(GSTCUS::getTotal_score)).collect(Collectors.toList());
 
     }
 
@@ -1784,8 +1784,8 @@ public class GstSubParameterController {
     //	http://localhost:8080/cbicApi/cbic/gst4c?month_date=2024-04-01&type=all_commissary              //  updated
     public Object getGst4AC(@RequestParam String month_date ,@RequestParam String type, @RequestParam(required = false) String zone_code) {
 
-        List<GST4A> allGstaList=new ArrayList<>();
-        GST4A gsta=null;
+        List<GSTCUS> allGstaList=new ArrayList<>();
+        GSTCUS gsta=null;
         int rank = 0;
         double total = 0.00;
         double median = 0.00;
@@ -1838,7 +1838,7 @@ public class GstSubParameterController {
                     double sub_parameter_weighted_average = Double.parseDouble(formattedSubParameterWeightedAverage);
                     //double sub_parameter_weighted_average = 0.00 ;
 
-                    gsta = new GST4A(zoneName, commname, totalScore, absval, zoneCode, ra, Zonal_rank, gst, way_to_grade, insentavization, sub_parameter_weighted_average);
+                    gsta = new GSTCUS(zoneName, commname, totalScore, absval, zoneCode, ra, Zonal_rank, gst, way_to_grade, insentavization, sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }System.out.println("gst4c zone wise median :" + median);
 
@@ -1879,7 +1879,7 @@ public class GstSubParameterController {
                     sub_parameter_weighted_average = Double.parseDouble(String.format("%.2f", sub_parameter_weighted_average));
                     // rank = score.marks6a(total);
                     rank = 0;
-                    gsta = new GST4A(zoneName, commname, totalScore,absval,zoneCode,ra,
+                    gsta = new GSTCUS(zoneName, commname, totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -1915,7 +1915,7 @@ public class GstSubParameterController {
                     sub_parameter_weighted_average = Double.parseDouble(String.format("%.2f", sub_parameter_weighted_average));
                     // rank = score.marks6a(total);
                     rank = 0;
-                    gsta = new GST4A(zoneName, commname, totalScore,absval,zoneCode,ra,
+                    gsta = new GSTCUS(zoneName, commname, totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -1926,7 +1926,7 @@ public class GstSubParameterController {
             e.printStackTrace();
         }
         return allGstaList.stream()
-                .sorted(Comparator.comparing(GST4A::getTotal_score).reversed()).collect(Collectors.toList());
+                .sorted(Comparator.comparing(GSTCUS::getTotal_score).reversed()).collect(Collectors.toList());
     }
 
     /*
@@ -1941,8 +1941,8 @@ public class GstSubParameterController {
     //  http://localhost:8080/cbicApi/cbic/gst4d?month_date=2023-05-01&zone_code=70&type=commissary         // not updated
     //	http://localhost:8080/cbicApi/cbic/gst4d?month_date=2023-05-01&type=all_commissary					// updated
     public Object getGst4d(@RequestParam String month_date ,@RequestParam String type, @RequestParam(required = false) String zone_code) {
-        List<GST4A> allGstaList=new ArrayList<>();
-        GST4A gsta=null;
+        List<GSTCUS> allGstaList=new ArrayList<>();
+        GSTCUS gsta=null;
         int rank = 0;
         double total = 0.00;
         try {
@@ -1991,7 +1991,7 @@ public class GstSubParameterController {
                     double sub_parameter_weighted_average = Double.parseDouble(formattedSubParameterWeightedAverage);
                     //double sub_parameter_weighted_average = 0.00 ;
 
-                    gsta = new GST4A(zoneName, commname, totalScore, absval, zoneCode, ra, Zonal_rank, gst, way_to_grade, insentavization, sub_parameter_weighted_average);
+                    gsta = new GSTCUS(zoneName, commname, totalScore, absval, zoneCode, ra, Zonal_rank, gst, way_to_grade, insentavization, sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
             } else if (type.equalsIgnoreCase("commissary")) {
@@ -2100,7 +2100,7 @@ public class GstSubParameterController {
                     double sub_parameter_weighted_average = Double.parseDouble(formattedSubParameterWeightedAverage);
                     //double sub_parameter_weighted_average = 0.00 ;
 
-                    gsta = new GST4A(zoneName, commname, totalScore, absval, zoneCode, ra, Zonal_rank, gst, way_to_grade, insentavization, sub_parameter_weighted_average);
+                    gsta = new GSTCUS(zoneName, commname, totalScore, absval, zoneCode, ra, Zonal_rank, gst, way_to_grade, insentavization, sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
             }else if (type.equalsIgnoreCase("all_commissary")) {
@@ -2150,7 +2150,7 @@ public class GstSubParameterController {
                     double sub_parameter_weighted_average = Double.parseDouble(formattedSubParameterWeightedAverage);
                     //double sub_parameter_weighted_average = 0.00 ;
 
-                    gsta = new GST4A(zoneName, commname, totalScore, absval, zoneCode, ra, Zonal_rank, gst, way_to_grade, insentavization, sub_parameter_weighted_average);
+                    gsta = new GSTCUS(zoneName, commname, totalScore, absval, zoneCode, ra, Zonal_rank, gst, way_to_grade, insentavization, sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
             }
@@ -2159,7 +2159,7 @@ public class GstSubParameterController {
             e.printStackTrace();
         }
         return allGstaList.stream()
-                .sorted(Comparator.comparing(GST4A::getTotal_score).reversed()).collect(Collectors.toList());
+                .sorted(Comparator.comparing(GSTCUS::getTotal_score).reversed()).collect(Collectors.toList());
     }
     /*
      * Date: May 04, 2024
@@ -2175,8 +2175,8 @@ public class GstSubParameterController {
     //	http://localhost:8080/cbicApi/cbic/gst5a?month_date=2024-04-01&type=all_commissary
     public Object getGst5A(@RequestParam String month_date,@RequestParam String type, @RequestParam(required = false) String zone_code) {
 
-        List<GST4A> allGstaList = new ArrayList<>();
-        GST4A gsta = null;
+        List<GSTCUS> allGstaList = new ArrayList<>();
+        GSTCUS gsta = null;
         int rank = 0;
         double total = 0.00;
         Double median = 0.00;
@@ -2215,7 +2215,7 @@ public class GstSubParameterController {
 
                     double sub_parameter_weighted_average = insentavization * 0.5 ;
 
-                    gsta = new GST4A(zoneName, commname, totalScore,absval,zoneCode,ra,
+                    gsta = new GSTCUS(zoneName, commname, totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -2257,7 +2257,7 @@ public class GstSubParameterController {
 
                     double sub_parameter_weighted_average = insentavization * 0.5 ;
 
-                    gsta = new GST4A(zoneName, commname, totalScore,absval,zoneCode,ra,
+                    gsta = new GSTCUS(zoneName, commname, totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -2297,7 +2297,7 @@ public class GstSubParameterController {
 
                     double sub_parameter_weighted_average = insentavization * 0.5 ;
 
-                    gsta = new GST4A(zoneName, commname, totalScore,absval,zoneCode,ra,
+                    gsta = new GSTCUS(zoneName, commname, totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }System.out.println("GST5A median commissonary wise:- "+ median);
@@ -2306,7 +2306,7 @@ public class GstSubParameterController {
             e.printStackTrace();
         }
         return allGstaList.stream()
-                .sorted(Comparator.comparing(GST4A::getTotal_score).reversed()).collect(Collectors.toList());
+                .sorted(Comparator.comparing(GSTCUS::getTotal_score).reversed()).collect(Collectors.toList());
     }
     /*
      * Date: May 04, 2024
@@ -2320,8 +2320,8 @@ public class GstSubParameterController {
     //  http://localhost:8080/cbicApi/cbic/gst5b?month_date=2023-05-01&zone_code=70&type=commissary
     //	http://localhost:8080/cbicApi/cbic/gst5b?month_date=2023-05-01&type=all_commissary
     public Object getGst5B(@RequestParam String month_date,@RequestParam String type, @RequestParam(required = false) String zone_code) {
-        List<GST4A> allGstaList = new ArrayList<>();
-        GST4A gsta = null;
+        List<GSTCUS> allGstaList = new ArrayList<>();
+        GSTCUS gsta = null;
         int rank = 0;
         double total = 0.00;
         try {
@@ -2345,7 +2345,7 @@ public class GstSubParameterController {
                     int way_to_grade = score.marks5b(totalScore);
                     double sub_parameter_weighted_average = way_to_grade * 0.5 ;
                     String absval = String.valueOf(col22 + col23) + "/" + String.valueOf(col16);
-                    gsta = new GST4A(rsGst14aa.getString("ZONE_NAME"), commname, totalScore,absval,zoneCode,ra,
+                    gsta = new GSTCUS(rsGst14aa.getString("ZONE_NAME"), commname, totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -2375,7 +2375,7 @@ public class GstSubParameterController {
                     int way_to_grade = score.marks5b(totalScore);
                     Double sub_parameter_weighted_average = way_to_grade * 0.5;
                     String absval = String.valueOf(col22+col23) + "/" + String.valueOf(col16);
-                    gsta = new GST4A(zoneName, commname, totalScore,absval,zoneCode,ra,
+                    gsta = new GSTCUS(zoneName, commname, totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -2404,7 +2404,7 @@ public class GstSubParameterController {
                     int way_to_grade = score.marks5b(totalScore);
                     Double sub_parameter_weighted_average = way_to_grade * 0.5;
                     String absval = String.valueOf(col22+col23) + "/" + String.valueOf(col16);
-                    gsta = new GST4A(zoneName, commname, totalScore,absval,zoneCode,ra,
+                    gsta = new GSTCUS(zoneName, commname, totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -2414,7 +2414,7 @@ public class GstSubParameterController {
             e.printStackTrace();
         }
         return allGstaList.stream()
-                .sorted(Comparator.comparing(GST4A::getSub_parameter_weighted_average).reversed()).collect(Collectors.toList());
+                .sorted(Comparator.comparing(GSTCUS::getSub_parameter_weighted_average).reversed()).collect(Collectors.toList());
     }
     /*
      * Date: May 04, 2024
@@ -2429,8 +2429,8 @@ public class GstSubParameterController {
     //	http://localhost:8080/cbicApi/cbic/gst6a?month_date=2024-04-01&type=all_commissary
     public Object getGst6A(@RequestParam String month_date,@RequestParam String type, @RequestParam(required = false) String zone_code) {
 
-        List<GST4A> allGstaList = new ArrayList<>();
-        GST4A gsta = null;
+        List<GSTCUS> allGstaList = new ArrayList<>();
+        GSTCUS gsta = null;
         int rank = 0;
         double total = 0.00;
         double median = 0.00;
@@ -2479,7 +2479,7 @@ public class GstSubParameterController {
                     double sub_parameter_weighted_average = insentavization * 0.25;
                     rank = rsGst14aa.getInt("z_rank");
                     String absval = String.valueOf(col9) + "/" + String.valueOf(col3);
-                    gsta = new GST4A(zoneName, commname, totalScore,absval,zoneCode,ra,
+                    gsta = new GSTCUS(zoneName, commname, totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -2514,7 +2514,7 @@ public class GstSubParameterController {
                     // rank = score.marks6a(total);
                     rank = rsGst14aa.getInt("z_rank");
                     String absval = String.valueOf(col9) + "/" + String.valueOf(col3);
-                    gsta = new GST4A(zoneName, commname, totalScore,absval,zoneCode,ra,
+                    gsta = new GSTCUS(zoneName, commname, totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -2545,7 +2545,7 @@ public class GstSubParameterController {
                     double sub_parameter_weighted_average = insentavization * 0.25;
                     rank = rsGst14aa.getInt("z_rank");
                     String absval = String.valueOf(col9) + "/" + String.valueOf(col3);
-                    gsta = new GST4A(zoneName, commname, totalScore,absval,zoneCode,ra,
+                    gsta = new GSTCUS(zoneName, commname, totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }System.out.println("gst6a all commi wise median :- " + median);
@@ -2554,7 +2554,7 @@ public class GstSubParameterController {
             e.printStackTrace();
         }
         return allGstaList.stream()
-                .sorted(Comparator.comparing(GST4A::getTotal_score).reversed()).collect(Collectors.toList());
+                .sorted(Comparator.comparing(GSTCUS::getTotal_score).reversed()).collect(Collectors.toList());
     }
 
     /*
@@ -2570,8 +2570,8 @@ public class GstSubParameterController {
     //	  http://localhost:8080/cbicApi/cbic/gst6b?month_date=2023-04-01&type=all_commissary
     public Object getGst6BC(@RequestParam String month_date,@RequestParam String type, @RequestParam(required = false) String zone_code) {
 
-        List<GST4A> allGstaList = new ArrayList<>();
-        GST4A gsta = null;
+        List<GSTCUS> allGstaList = new ArrayList<>();
+        GSTCUS gsta = null;
         int rank = 0;
         double total = 0.00;
         //Connection done
@@ -2612,7 +2612,7 @@ public class GstSubParameterController {
                     int way_to_grade = score.marks6b(totalScore);
                     Double sub_parameter_weighted_average = way_to_grade * 0.25;
 
-                    gsta = new GST4A(rsGst14aa.getString("ZONE_NAME"), commname, totalScore,absval,zoneCode,ra,
+                    gsta = new GSTCUS(rsGst14aa.getString("ZONE_NAME"), commname, totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -2646,7 +2646,7 @@ public class GstSubParameterController {
                     int way_to_grade = score.marks6b(totalScore);
                     Double sub_parameter_weighted_average = way_to_grade * 0.25;
                     String absval = String.valueOf(col18) + "/" + String.valueOf(col13);
-                    gsta = new GST4A(zoneName, commname, totalScore,absval,zoneCode,ra,
+                    gsta = new GSTCUS(zoneName, commname, totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -2683,7 +2683,7 @@ public class GstSubParameterController {
                     int way_to_grade = score.marks6b(totalScore);
                     Double sub_parameter_weighted_average = way_to_grade * 0.25;
                     String absval = String.valueOf(col18) + "/" + String.valueOf(col13);
-                    gsta = new GST4A(zoneName, commname, totalScore,absval,zoneCode,ra,
+                    gsta = new GSTCUS(zoneName, commname, totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -2693,7 +2693,7 @@ public class GstSubParameterController {
             e.printStackTrace();
         }
         return allGstaList.stream()
-                .sorted(Comparator.comparing(GST4A::getTotal_score)).collect(Collectors.toList());
+                .sorted(Comparator.comparing(GSTCUS::getTotal_score)).collect(Collectors.toList());
     }
     /*
      * Date: May 04, 2024
@@ -2708,8 +2708,8 @@ public class GstSubParameterController {
     //	http://localhost:8080/cbicApi/cbic/gst6c?month_date=2024-04-01&type=all_commissary
     public Object getGst6C(@RequestParam String month_date,@RequestParam String type, @RequestParam(required = false) String zone_code) {
 
-        List<GST4A> allGstaList = new ArrayList<>();
-        GST4A gsta = null;
+        List<GSTCUS> allGstaList = new ArrayList<>();
+        GSTCUS gsta = null;
         int rank = 0;
         double total = 0.00;
         double median = 0.00;
@@ -2758,7 +2758,7 @@ public class GstSubParameterController {
                     // rank = score.marks6a(total);
                     rank = 0;
                     //String absval = String.valueOf(col9) + "/" + String.valueOf(col3);
-                    gsta = new GST4A(zoneName, commname, totalScore,absval,zoneCode,ra,
+                    gsta = new GSTCUS(zoneName, commname, totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -2791,7 +2791,7 @@ public class GstSubParameterController {
                     // rank = score.marks6a(total);
                     rank = 0;
                     String absval = String.valueOf(col9) + "/" + String.valueOf(col3);
-                    gsta = new GST4A(zoneName, commname, totalScore,absval,zoneCode,ra,
+                    gsta = new GSTCUS(zoneName, commname, totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }System.out.println("gst6c commmi(2no url) wise median " + median);
@@ -2823,7 +2823,7 @@ public class GstSubParameterController {
                     // rank = score.marks6a(total);
                     rank = 0;
                     String absval = String.valueOf(col9) + "/" + String.valueOf(col3);
-                    gsta = new GST4A(zoneName, commname, totalScore,absval,zoneCode,ra,
+                    gsta = new GSTCUS(zoneName, commname, totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -2833,7 +2833,7 @@ public class GstSubParameterController {
             e.printStackTrace();
         }
         return allGstaList.stream()
-                .sorted(Comparator.comparing(GST4A::getTotal_score).reversed()).collect(Collectors.toList());
+                .sorted(Comparator.comparing(GSTCUS::getTotal_score).reversed()).collect(Collectors.toList());
     }
     /*
      * Date: May 04, 2024
@@ -2848,8 +2848,8 @@ public class GstSubParameterController {
     //	  http://localhost:8080/cbicApi/cbic/gst6d?month_date=2023-04-01&type=all_commissary
     public Object getGst6D(@RequestParam String month_date,@RequestParam String type, @RequestParam(required = false) String zone_code) {
 
-        List<GST4A> allGstaList = new ArrayList<>();
-        GST4A gsta = null;
+        List<GSTCUS> allGstaList = new ArrayList<>();
+        GSTCUS gsta = null;
         int rank = 0;
         double total = 0.00;
         Connection con= JDBCConnection.getTNConnection();
@@ -2881,7 +2881,7 @@ public class GstSubParameterController {
                     String absval = String.valueOf(col18) + "/" + String.valueOf(col13);
                     int way_to_grade = score.marks6d(totalScore);
                     double sub_parameter_weighted_average = way_to_grade * 0.25;
-                    gsta = new GST4A(rsGst14aa.getString("ZONE_NAME"), commname, totalScore,absval,zoneCode,ra,
+                    gsta = new GSTCUS(rsGst14aa.getString("ZONE_NAME"), commname, totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -2912,7 +2912,7 @@ public class GstSubParameterController {
                     Double sub_parameter_weighted_average = way_to_grade * 0.25;
 
                     String absval=String.valueOf(col18)+"/"+String.valueOf(col13);
-                    gsta=new GST4A(zoneName, commname, totalScore,absval,zoneCode,ra,
+                    gsta=new GSTCUS(zoneName, commname, totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -2944,7 +2944,7 @@ public class GstSubParameterController {
                     Double sub_parameter_weighted_average = way_to_grade * 0.25;
 
                     String absval=String.valueOf(col18)+"/"+String.valueOf(col13);
-                    gsta=new GST4A(zoneName, commname, totalScore,absval,zoneCode,ra,
+                    gsta=new GSTCUS(zoneName, commname, totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -2954,7 +2954,7 @@ public class GstSubParameterController {
             e.printStackTrace();
         }
         return allGstaList.stream()
-                .sorted(Comparator.comparing(GST4A::getTotal_score)).collect(Collectors.toList());
+                .sorted(Comparator.comparing(GSTCUS::getTotal_score)).collect(Collectors.toList());
     }
     /*
      * Date: May 04, 2024
@@ -2968,8 +2968,8 @@ public class GstSubParameterController {
     //  http://localhost:8080/cbicApi/cbic/gst7?month_date=2023-04-01&zone_code=70&type=commissary
     //  http://localhost:8080/cbicApi/cbic/gst7?month_date=2023-04-01&type=all_commissary
     public Object getGst7(@RequestParam String month_date,@RequestParam String type, @RequestParam(required = false) String zone_code) {
-        List<GST4A> allGstaList = new ArrayList<>();
-        GST4A gsta = null;
+        List<GSTCUS> allGstaList = new ArrayList<>();
+        GSTCUS gsta = null;
         int rank = 0;
         double total = 0.00;
 
@@ -3000,7 +3000,7 @@ public class GstSubParameterController {
                     double totalScore = Double.parseDouble(formattedTotal);
                     int way_to_grade = score.marks7(totalScore);
                     int sub_parameter_weighted_average = way_to_grade;
-                    gsta = new GST4A(rsGst7.getString("ZONE_NAME"), commname, totalScore,absval,zoneCode,ra,
+                    gsta = new GSTCUS(rsGst7.getString("ZONE_NAME"), commname, totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -3027,7 +3027,7 @@ public class GstSubParameterController {
                     double totalScore = Double.parseDouble(formattedTotal);
                     int way_to_grade = score.marks7(totalScore);
                     int sub_parameter_weighted_average = way_to_grade;
-                    gsta=new GST4A(rsGst14aa.getString("ZONE_NAME"),commname,totalScore,absval,zoneCode,ra,
+                    gsta=new GSTCUS(rsGst14aa.getString("ZONE_NAME"),commname,totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
 
@@ -3059,7 +3059,7 @@ public class GstSubParameterController {
                     double totalScore = Double.parseDouble(formattedTotal);
                     int way_to_grade = score.marks7(totalScore);
                     int sub_parameter_weighted_average = way_to_grade;
-                    gsta=new GST4A(rsGst14aa.getString("ZONE_NAME"),commname,totalScore,absval,zoneCode,ra,
+                    gsta=new GSTCUS(rsGst14aa.getString("ZONE_NAME"),commname,totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
 
@@ -3070,7 +3070,7 @@ public class GstSubParameterController {
             e.printStackTrace();
         }
         return allGstaList.stream()
-                .sorted(Comparator.comparing(GST4A::getTotal_score)).collect(Collectors.toList());
+                .sorted(Comparator.comparing(GSTCUS::getTotal_score)).collect(Collectors.toList());
     }
 
     /*
@@ -3085,7 +3085,7 @@ public class GstSubParameterController {
     //  http://localhost:8080/cbicApi/cbic/testing/gst8a?month_date=2024-10-01&zone_code=70&type=commissary
     //	http://localhost:8080/cbicApi/cbic/testing/gst8a?month_date=2024-10-01&type=all_commissary
     public Object getGst8a(@RequestParam String month_date,@RequestParam String type, @RequestParam(required = false) String zone_code) {
-        List<GST4A> allGstaList=new ArrayList<>();
+        List<GSTCUS> allGstaList=new ArrayList<>();
         try {
             if("zone".equalsIgnoreCase(type)) {
                 String queryGst14aa= new GstSubParameterWiseQuery().QueryFor_gst8a_ZoneWise(month_date);
@@ -3107,7 +3107,7 @@ public class GstSubParameterController {
             e.printStackTrace();
         }
         return allGstaList.stream()
-                .sorted(Comparator.comparing(GST4A::getTotal_score).reversed()).collect(Collectors.toList());
+                .sorted(Comparator.comparing(GSTCUS::getTotal_score).reversed()).collect(Collectors.toList());
     }
 
     @ResponseBody
@@ -3116,7 +3116,7 @@ public class GstSubParameterController {
     //  http://localhost:8080/cbicApi/cbic/testing/gst8b?month_date=2024-10-01&zone_code=70&type=commissary
     //	http://localhost:8080/cbicApi/cbic/testing/gst8b?month_date=2024-10-01&type=all_commissary
     public Object getGst8b(@RequestParam String month_date,@RequestParam String type, @RequestParam(required = false) String zone_code) {
-        List<GST4A> allGstaList=new ArrayList<>();
+        List<GSTCUS> allGstaList=new ArrayList<>();
         try {
             if("zone".equalsIgnoreCase(type)) {
                 String queryGst14aa= new GstSubParameterWiseQuery().QueryFor_gst8b_ZoneWise(month_date);
@@ -3137,7 +3137,7 @@ public class GstSubParameterController {
             e.printStackTrace();
         }
         return allGstaList.stream()
-                .sorted(Comparator.comparing(GST4A::getTotal_score)).collect(Collectors.toList());
+                .sorted(Comparator.comparing(GSTCUS::getTotal_score)).collect(Collectors.toList());
     }
 
 
@@ -3156,8 +3156,8 @@ public class GstSubParameterController {
     //	http://localhost:8080/cbicApi/cbic/gst9a?month_date=2023-04-01&type=all_commissary
     public Object getGst9a(@RequestParam String month_date,@RequestParam String type, @RequestParam(required = false) String zone_code) {
 
-        List<GST4A> allGstaList = new ArrayList<>();
-        GST4A gsta = null;
+        List<GSTCUS> allGstaList = new ArrayList<>();
+        GSTCUS gsta = null;
         int rank = 0;
         double total = 0.00;
         String prev_month_new =DateCalculate.getPreviousMonth(month_date);
@@ -3189,7 +3189,7 @@ public class GstSubParameterController {
                     double totalScore = Double.parseDouble(formattedTotal);
                     int way_to_grade = score.marks9a(totalScore);
                     Double sub_parameter_weighted_average = way_to_grade * 0.5;
-                    gsta=new GST4A(rsGst14aa.getString("ZONE_NAME"),commname,totalScore,absval,zoneCode,ra,
+                    gsta=new GSTCUS(rsGst14aa.getString("ZONE_NAME"),commname,totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -3218,7 +3218,7 @@ public class GstSubParameterController {
                     double totalScore = Double.parseDouble(formattedTotal);
                     int way_to_grade = score.marks9a(totalScore);
                     Double sub_parameter_weighted_average = way_to_grade * 0.5;
-                    gsta=new GST4A(rsGst14aa.getString("ZONE_NAME"),commname,totalScore,absval,zoneCode,ra,
+                    gsta=new GSTCUS(rsGst14aa.getString("ZONE_NAME"),commname,totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -3246,7 +3246,7 @@ public class GstSubParameterController {
                     double totalScore = Double.parseDouble(formattedTotal);
                     int way_to_grade = score.marks9a(totalScore);
                     Double sub_parameter_weighted_average = way_to_grade * 0.5;
-                    gsta=new GST4A(rsGst14aa.getString("ZONE_NAME"),commname,totalScore,absval,zoneCode,ra,
+                    gsta=new GSTCUS(rsGst14aa.getString("ZONE_NAME"),commname,totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -3255,7 +3255,7 @@ public class GstSubParameterController {
             e.printStackTrace();
         }
         return allGstaList.stream()
-                .sorted(Comparator.comparing(GST4A::getTotal_score)).collect(Collectors.toList());
+                .sorted(Comparator.comparing(GSTCUS::getTotal_score)).collect(Collectors.toList());
     }
 
     /*
@@ -3271,8 +3271,8 @@ public class GstSubParameterController {
     //	  http://localhost:8080/cbicApi/cbic/gst9b?month_date=2024-04-01&type=all_commissary
     public Object getGst9b(@RequestParam String month_date,@RequestParam String type, @RequestParam(required = false) String zone_code) {
 
-        List<GST4A> allGstaList = new ArrayList<>();
-        GST4A gsta = null;
+        List<GSTCUS> allGstaList = new ArrayList<>();
+        GSTCUS gsta = null;
         int rank = 0;
         double total = 0.00;
         try {
@@ -3310,7 +3310,7 @@ public class GstSubParameterController {
                     // rank = score.marks6a(total);
                     // rank = rsGst14aa.getInt("z_rank");
                     String absval = String.valueOf(col4) + "/" + String.valueOf(col4_1);
-                    gsta = new GST4A(zone_name, commname, totalScore,absval,zoneCode,ra,
+                    gsta = new GSTCUS(zone_name, commname, totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -3352,7 +3352,7 @@ public class GstSubParameterController {
                     // rank = score.marks6a(total);
                     // rank = rsGst14aa.getInt("z_rank");
                     String absval = String.valueOf(col4_4) + "/" + String.valueOf(col1_4);
-                    gsta = new GST4A(zone_name, commname, totalScore,absval,zoneCode,ra,
+                    gsta = new GSTCUS(zone_name, commname, totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -3390,7 +3390,7 @@ public class GstSubParameterController {
                     // rank = score.marks6a(total);
                     // rank = rsGst14aa.getInt("z_rank");
                     String absval = String.valueOf(col4_4) + "/" + String.valueOf(col1_4);
-                    gsta = new GST4A(zone_name, commname, totalScore,absval,zoneCode,ra,
+                    gsta = new GSTCUS(zone_name, commname, totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -3400,7 +3400,7 @@ public class GstSubParameterController {
             e.printStackTrace();
         }
         return allGstaList.stream()
-                .sorted(Comparator.comparing(GST4A::getTotal_score).reversed()).collect(Collectors.toList());
+                .sorted(Comparator.comparing(GSTCUS::getTotal_score).reversed()).collect(Collectors.toList());
     }
 
 
@@ -3418,8 +3418,8 @@ public class GstSubParameterController {
     //	  http://localhost:8080/cbicApi/cbic/gst10a?month_date=2024-10-01&type=all_commissary
     public Object getGst10A(@RequestParam String month_date, @RequestParam String type, @RequestParam(required = false) String zone_code) {
 
-        List<GST4A> allGstaList = new ArrayList<>();
-        GST4A gsta;
+        List<GSTCUS> allGstaList = new ArrayList<>();
+        GSTCUS gsta;
         int rank;
         double total;
         double X;
@@ -3460,7 +3460,7 @@ public class GstSubParameterController {
                     Double sub_parameter_weighted_average_bfore = insentavization * 0.4 ;
                     String formattedSubParameterWeightedAverage = String.format("%.2f", sub_parameter_weighted_average_bfore);
                     double sub_parameter_weighted_average = Double.parseDouble(formattedSubParameterWeightedAverage);
-                    gsta = new GST4A(rsGst14aa.getString("ZONE_NAME"), "ALL", totalScore,absval,zoneCode,ra,
+                    gsta = new GSTCUS(rsGst14aa.getString("ZONE_NAME"), "ALL", totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -3497,7 +3497,7 @@ public class GstSubParameterController {
                     Double sub_parameter_weighted_average_bfore = insentavization * 0.4 ;
                     String formattedSubParameterWeightedAverage = String.format("%.2f", sub_parameter_weighted_average_bfore);
                     double sub_parameter_weighted_average = Double.parseDouble(formattedSubParameterWeightedAverage);
-                    gsta = new GST4A(rsGst14aa.getString("ZONE_NAME"), commname, totalScore,absval,zoneCode,ra,
+                    gsta = new GSTCUS(rsGst14aa.getString("ZONE_NAME"), commname, totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -3536,7 +3536,7 @@ public class GstSubParameterController {
                     Double sub_parameter_weighted_average_bfore = insentavization * 0.4 ;
                     String formattedSubParameterWeightedAverage = String.format("%.2f", sub_parameter_weighted_average_bfore);
                     double sub_parameter_weighted_average = Double.parseDouble(formattedSubParameterWeightedAverage);
-                    gsta = new GST4A(rsGst14aa.getString("ZONE_NAME"), commname, totalScore,absval,zoneCode,ra,
+                    gsta = new GSTCUS(rsGst14aa.getString("ZONE_NAME"), commname, totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -3545,7 +3545,7 @@ public class GstSubParameterController {
             e.printStackTrace();
         }
         return allGstaList.stream()
-                .sorted(Comparator.comparing(GST4A::getTotal_score).reversed()).collect(Collectors.toList());
+                .sorted(Comparator.comparing(GSTCUS::getTotal_score).reversed()).collect(Collectors.toList());
     }
 
     private int convertMonthToFinancialMonth(String month_date) {
@@ -3568,8 +3568,8 @@ public class GstSubParameterController {
     // http://localhost:8080/cbicApi/cbic/gst10b?month_date=2023-04-01&type=all_commissary
     public Object getGst10b(@RequestParam String month_date,@RequestParam String type, @RequestParam(required = false) String zone_code) {
 
-        List<GST4A> allGstaList = new ArrayList<>();
-        GST4A gsta = null;
+        List<GSTCUS> allGstaList = new ArrayList<>();
+        GSTCUS gsta = null;
         int rank = 0;
         double total = 0.00;
 
@@ -3597,7 +3597,7 @@ public class GstSubParameterController {
                     Double sub_parameter_weighted_average_before = way_to_grade * 0.3;
                     String formattedSubParameterWeightedAverage = String.format("%.2f", sub_parameter_weighted_average_before);
                     double sub_parameter_weighted_average = Double.parseDouble(formattedSubParameterWeightedAverage);
-                    gsta = new GST4A(rsGst14aa.getString("ZONE_NAME"), "ALL", totalScore,absval,zoneCode,ra,
+                    gsta = new GSTCUS(rsGst14aa.getString("ZONE_NAME"), "ALL", totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -3624,7 +3624,7 @@ public class GstSubParameterController {
                     Double sub_parameter_weighted_average_before = way_to_grade * 0.3;
                     String formattedSubParameterWeightedAverage = String.format("%.2f", sub_parameter_weighted_average_before);
                     double sub_parameter_weighted_average = Double.parseDouble(formattedSubParameterWeightedAverage);
-                    gsta=new GST4A(rsGst14aa.getString("ZONE_NAME"),commname,totalScore,absval,zoneCode,ra,
+                    gsta=new GSTCUS(rsGst14aa.getString("ZONE_NAME"),commname,totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -3650,7 +3650,7 @@ public class GstSubParameterController {
                     Double sub_parameter_weighted_average_before = way_to_grade * 0.3;
                     String formattedSubParameterWeightedAverage = String.format("%.2f", sub_parameter_weighted_average_before);
                     double sub_parameter_weighted_average = Double.parseDouble(formattedSubParameterWeightedAverage);
-                    gsta=new GST4A(rsGst14aa.getString("ZONE_NAME"),commname,totalScore,absval,zoneCode,ra,
+                    gsta=new GSTCUS(rsGst14aa.getString("ZONE_NAME"),commname,totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -3661,7 +3661,7 @@ public class GstSubParameterController {
             e.printStackTrace();
         }
         return allGstaList.stream()
-                .sorted(Comparator.comparing(GST4A::getTotal_score)).collect(Collectors.toList());
+                .sorted(Comparator.comparing(GSTCUS::getTotal_score)).collect(Collectors.toList());
     }
 
     @ResponseBody
@@ -3671,8 +3671,8 @@ public class GstSubParameterController {
     //	  http://localhost:8080/cbicApi/cbic/gst10c?month_date=2024-10-01&type=all_commissary
     public Object getGst10c(@RequestParam String month_date,@RequestParam String type, @RequestParam(required = false) String zone_code) {
 
-        List<GST4A> allGstaList = new ArrayList<>();
-        GST4A gsta = null;
+        List<GSTCUS> allGstaList = new ArrayList<>();
+        GSTCUS gsta = null;
         int rank = 0;
         double total = 0.00;
         double median10c = 0;
@@ -3713,7 +3713,7 @@ public class GstSubParameterController {
                     String formattedAverage = String.format("%.2f", un_formattedSubParameterWeightedAverage);
                     double sub_parameter_weighted_average = Double.parseDouble(formattedAverage);
 
-                    gsta = new GST4A(zone_name, commname, totalScore,absval,zoneCode,ra,
+                    gsta = new GSTCUS(zone_name, commname, totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -3752,7 +3752,7 @@ public class GstSubParameterController {
                     String formattedAverage = String.format("%.2f", un_formattedSubParameterWeightedAverage);
                     double sub_parameter_weighted_average = Double.parseDouble(formattedAverage);
 
-                    gsta = new GST4A(zone_name, commname, totalScore,absval,zoneCode,ra,
+                    gsta = new GSTCUS(zone_name, commname, totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -3789,7 +3789,7 @@ public class GstSubParameterController {
                     double un_formattedSubParameterWeightedAverage = insentavization * 0.3;
                     String formattedAverage = String.format("%.2f", un_formattedSubParameterWeightedAverage);
                     double sub_parameter_weighted_average = Double.parseDouble(formattedAverage);
-                    gsta = new GST4A(zone_name, commname, totalScore,absval,zoneCode,ra,
+                    gsta = new GSTCUS(zone_name, commname, totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -3799,7 +3799,7 @@ public class GstSubParameterController {
             e.printStackTrace();
         }
         return allGstaList.stream()
-                .sorted(Comparator.comparing(GST4A::getTotal_score).reversed())
+                .sorted(Comparator.comparing(GSTCUS::getTotal_score).reversed())
                 .collect(Collectors.toList());
 
     }
@@ -3817,8 +3817,8 @@ public class GstSubParameterController {
     //  http://localhost:8080/cbicApi/cbic/gst11a?month_date=2024-04-01&zone_code=70&type=commissary
     //	http://localhost:8080/cbicApi/cbic/gst11a?month_date=2024-04-01&type=all_commissary
     public Object getGst11A(@RequestParam String month_date,@RequestParam String type, @RequestParam(required = false) String zone_code) {
-        List<GST4A> allGstaList = new ArrayList<>();
-        GST4A gsta = null;
+        List<GSTCUS> allGstaList = new ArrayList<>();
+        GSTCUS gsta = null;
         int rank = 0;
         double total = 0.00;
 
@@ -3854,7 +3854,7 @@ public class GstSubParameterController {
                     // rank = score.marks6a(total);
                     //rank = rsGst14aa.getInt("z_rank");
                     String absval = String.valueOf(col_10) + "/" + String.valueOf(col_4);
-                    gsta = new GST4A(zoneName, commname, totalScore,absval,zoneCode,ra,
+                    gsta = new GSTCUS(zoneName, commname, totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -3891,7 +3891,7 @@ public class GstSubParameterController {
                     // rank = score.marks6a(total);
                     //rank = rsGst14aa.getInt("z_rank");
                     String absval = String.valueOf(col_10) + "/" + String.valueOf(col_4);
-                    gsta = new GST4A(zoneName, commname, totalScore,absval,zoneCode,ra,
+                    gsta = new GSTCUS(zoneName, commname, totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
 
@@ -3928,7 +3928,7 @@ public class GstSubParameterController {
                     // rank = score.marks6a(total);
                     //rank = rsGst14aa.getInt("z_rank");
                     String absval = String.valueOf(col_10) + "/" + String.valueOf(col_4);
-                    gsta = new GST4A(zoneName, commname, totalScore,absval,zoneCode,ra,
+                    gsta = new GSTCUS(zoneName, commname, totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -3937,7 +3937,7 @@ public class GstSubParameterController {
             e.printStackTrace();
         }
         return allGstaList.stream()
-                .sorted(Comparator.comparing(GST4A::getTotal_score).reversed()).collect(Collectors.toList());
+                .sorted(Comparator.comparing(GSTCUS::getTotal_score).reversed()).collect(Collectors.toList());
     }
 
     /*
@@ -3952,8 +3952,8 @@ public class GstSubParameterController {
     //  http://localhost:8080/cbicApi/cbic/gst11b?month_date=2023-04-01&zone_code=70&type=commissary
     //	  http://localhost:8080/cbicApi/cbic/gst11b?month_date=2023-04-01&type=all_commissary
     public Object getGst11B(@RequestParam String month_date,@RequestParam String type, @RequestParam(required = false) String zone_code) {
-        List<GST4A> allGstaList = new ArrayList<>();
-        GST4A gsta = null;
+        List<GSTCUS> allGstaList = new ArrayList<>();
+        GSTCUS gsta = null;
         int rank = 0;
         double total = 0.00;
 
@@ -3999,7 +3999,7 @@ public class GstSubParameterController {
                     String formattedSubParameterWeightedAverage = String.format("%.2f", sub_parameter_weighted_average_before);
                     double sub_parameter_weighted_average = Double.parseDouble(formattedSubParameterWeightedAverage);
 
-                    gsta=new GST4A(rsGst46b.getString("ZONE_NAME"),commname,totalScore,absval,zoneCode,ra,
+                    gsta=new GSTCUS(rsGst46b.getString("ZONE_NAME"),commname,totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -4043,7 +4043,7 @@ public class GstSubParameterController {
                     Double sub_parameter_weighted_average_before = way_to_grade * 0.25;
                     String formattedSubParameterWeightedAverage = String.format("%.2f", sub_parameter_weighted_average_before);
                     double sub_parameter_weighted_average = Double.parseDouble(formattedSubParameterWeightedAverage);
-                    gsta=new GST4A(rsGst46b.getString("ZONE_NAME"),commname,totalScore,absval,zoneCode,ra,
+                    gsta=new GSTCUS(rsGst46b.getString("ZONE_NAME"),commname,totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -4088,7 +4088,7 @@ public class GstSubParameterController {
                     Double sub_parameter_weighted_average_before = way_to_grade * 0.25;
                     String formattedSubParameterWeightedAverage = String.format("%.2f", sub_parameter_weighted_average_before);
                     double sub_parameter_weighted_average = Double.parseDouble(formattedSubParameterWeightedAverage);
-                    gsta=new GST4A(rsGst46b.getString("ZONE_NAME"),commname,totalScore,absval,zoneCode,ra,
+                    gsta=new GSTCUS(rsGst46b.getString("ZONE_NAME"),commname,totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -4097,7 +4097,7 @@ public class GstSubParameterController {
             e.printStackTrace();
         }
         return allGstaList.stream()
-                .sorted(Comparator.comparing(GST4A::getTotal_score)).collect(Collectors.toList());
+                .sorted(Comparator.comparing(GSTCUS::getTotal_score)).collect(Collectors.toList());
     }
     /*
      * Date: May 04, 2024
@@ -4112,8 +4112,8 @@ public class GstSubParameterController {
     // http://localhost:8080/cbicApi/cbic/gst11c?month_date=2024-04-01&type=all_commissary
     public Object getGst11C(@RequestParam String month_date,@RequestParam String type, @RequestParam(required = false) String zone_code) {
 
-        List<GST4A> allGstaList = new ArrayList<>();
-        GST4A gsta = null;
+        List<GSTCUS> allGstaList = new ArrayList<>();
+        GSTCUS gsta = null;
         int rank = 0;
         double total = 0.00;
 
@@ -4151,7 +4151,7 @@ public class GstSubParameterController {
                     // rank = score.marks6a(total);
                     //rank = rsGst14aa.getInt("z_rank");
                     String absval = String.valueOf(col_10) + "/" + String.valueOf(col_4);
-                    gsta = new GST4A(zoneName, commname, totalScore,absval,zoneCode,ra,
+                    gsta = new GSTCUS(zoneName, commname, totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -4190,7 +4190,7 @@ public class GstSubParameterController {
                     // rank = score.marks6a(total);
                     //rank = rsGst14aa.getInt("z_rank");
                     String absval = String.valueOf(col_10) + "/" + String.valueOf(col_4);
-                    gsta = new GST4A(zoneName, commname, totalScore,absval,zoneCode,ra,
+                    gsta = new GSTCUS(zoneName, commname, totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -4229,7 +4229,7 @@ public class GstSubParameterController {
                     // rank = score.marks6a(total);
                     //rank = rsGst14aa.getInt("z_rank");
                     String absval = String.valueOf(col_10) + "/" + String.valueOf(col_4);
-                    gsta = new GST4A(zoneName, commname, totalScore,absval,zoneCode,ra,
+                    gsta = new GSTCUS(zoneName, commname, totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -4238,7 +4238,7 @@ public class GstSubParameterController {
             e.printStackTrace();
         }
         return allGstaList.stream()
-                .sorted(Comparator.comparing(GST4A::getTotal_score).reversed()).collect(Collectors.toList());
+                .sorted(Comparator.comparing(GSTCUS::getTotal_score).reversed()).collect(Collectors.toList());
     }
 
     /*
@@ -4252,8 +4252,8 @@ public class GstSubParameterController {
     //  http://localhost:8080/cbicApi/cbic/gst11d?month_date=2023-04-01&type=zone
     //  http://localhost:8080/cbicApi/cbic/gst11d?month_date=2023-04-01&zone_code=70&type=commissary
     public Object getGst11D(@RequestParam String month_date,@RequestParam String type, @RequestParam(required = false) String zone_code) {
-        List<GST4A> allGstaList = new ArrayList<>();
-        GST4A gsta = null;
+        List<GSTCUS> allGstaList = new ArrayList<>();
+        GSTCUS gsta = null;
         int rank = 0;
         double total = 0.00;
 
@@ -4301,7 +4301,7 @@ public class GstSubParameterController {
                     Double sub_parameter_weighted_average_before = way_to_grade * 0.25;
                     String formattedSubParameterWeightedAverage = String.format("%.2f", sub_parameter_weighted_average_before);
                     double sub_parameter_weighted_average = Double.parseDouble(formattedSubParameterWeightedAverage);
-                    gsta=new GST4A(rsGst46b.getString("ZONE_NAME"),"All",totalScore,absval,zoneCode,ra,
+                    gsta=new GSTCUS(rsGst46b.getString("ZONE_NAME"),"All",totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -4350,7 +4350,7 @@ public class GstSubParameterController {
                     Double sub_parameter_weighted_average_before = way_to_grade * 0.25;
                     String formattedSubParameterWeightedAverage = String.format("%.2f", sub_parameter_weighted_average_before);
                     double sub_parameter_weighted_average = Double.parseDouble(formattedSubParameterWeightedAverage);
-                    gsta=new GST4A(rsGst46b.getString("ZONE_NAME"),commname,totalScore,absval,zoneCode,ra,
+                    gsta=new GSTCUS(rsGst46b.getString("ZONE_NAME"),commname,totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -4396,7 +4396,7 @@ public class GstSubParameterController {
                     Double sub_parameter_weighted_average_before = way_to_grade * 0.25;
                     String formattedSubParameterWeightedAverage = String.format("%.2f", sub_parameter_weighted_average_before);
                     double sub_parameter_weighted_average = Double.parseDouble(formattedSubParameterWeightedAverage);
-                    gsta=new GST4A(rsGst46b.getString("ZONE_NAME"),commname,totalScore,absval,zoneCode,ra,
+                    gsta=new GSTCUS(rsGst46b.getString("ZONE_NAME"),commname,totalScore,absval,zoneCode,ra,
                             Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                     allGstaList.add(gsta);
                 }
@@ -4405,6 +4405,6 @@ public class GstSubParameterController {
             e.printStackTrace();
         }
         return allGstaList.stream()
-                .sorted(Comparator.comparing(GST4A::getTotal_score)).collect(Collectors.toList());
+                .sorted(Comparator.comparing(GSTCUS::getTotal_score)).collect(Collectors.toList());
     }
 }
