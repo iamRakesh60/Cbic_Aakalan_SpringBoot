@@ -2542,7 +2542,7 @@ public class GstParameterController {
 	@ResponseBody
 	@RequestMapping(value = "/gst8_combined/url1")
 	// http://localhost:8080/cbicApi/cbic/t_score/gst8_combined/url1?month_date=2024-10-01&type=zone    // 1 no url  correct data
-	public List<GSTCUS> getGst5Combined_1_noURL(@RequestParam String month_date, @RequestParam String type) {
+	public List<GSTCUS> getGst8Combined_1_noURL(@RequestParam String month_date, @RequestParam String type) {
 		List<GSTCUS> gst8aList = (List<GSTCUS>) gstSubParameterController.getGst8a(month_date, type, null);
 		List<GSTCUS> gst8bList = (List<GSTCUS>) gstSubParameterController.getGst8b(month_date, type, null);
 
@@ -2581,220 +2581,44 @@ public class GstParameterController {
 	 * updated:
 	 * Purpose: This methods have core function in arrest/prosecution.
 	 */
+	// *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=* arrest and prosecution(GST 9) *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+
 	@ResponseBody
-	@RequestMapping(value = "/arrest and prosecution") //9
-	//  http://localhost:8080/cbicApi/cbic/t_score/arrest and prosecution?month_date=2023-05-01&type=parameter							// for scrutiny/assessment button
-	//  http://localhost:8080/cbicApi/cbic/t_score/arrest and prosecution?month_date=2023-05-01&type=zone&zone_code=59 				// for all button
-	//  http://localhost:8080/cbicApi/cbic/t_score/arrest and prosecution?month_date=2023-05-01&type=commissary&zone_code=59			// for show button, zone wise
-	//  http://localhost:8080/cbicApi/cbic/t_score/arrest and prosecution?month_date=2023-05-01&type=all_commissary					// for all commissary
-	//  http://localhost:8080/cbicApi/cbic/t_score/arrest and prosecution?month_date=2023-05-01&type=come_name&zone_code=64&come_name=Rajkot			// for only commissary wise, show button
-	public Object arrestProsecution(@RequestParam String month_date, @RequestParam String type, @RequestParam(required = false) String zone_code, @RequestParam(required = false) String come_name) {
-		List<GstParameter> allGstaList = new ArrayList<>();
-		GstParameter totalScore = null;
-		Connection con = null;
-		ResultSet rsGst14aa = null;
-		double Parameter_wise_weighted_average = 0.00;
-		try {
+	@RequestMapping(value = "/gst9_combined/url1")
+	// http://localhost:8080/cbicApi/cbic/t_score/gst9_combined/url1?month_date=2024-10-01&type=zone    // 1 no url  correct data
+	public List<GSTCUS> getGst9Combined_1_noURL(@RequestParam String month_date, @RequestParam String type) {
+		List<GSTCUS> gst9aList = (List<GSTCUS>) gstSubParameterController.getGst9a(month_date, type, null);
+		List<GSTCUS> gst9bList = (List<GSTCUS>) gstSubParameterController.getGst9b(month_date, type, null);
 
-			if (type.equalsIgnoreCase("parameter")) { // arrest/prosecution all zone name 1
-				//                  '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "'
-				String prev_month_new = DateCalculate.getPreviousMonth(month_date);
+		Map<String, GSTCUS> combinedMap = new HashMap<>();
 
-				String query_assessment = "SELECT zc.ZONE_NAME,cc.ZONE_CODE,\n"
-						+ "    SUM(14c.PROSECUTION_LAUNCHED) AS col4,SUM(14c.ARRESTS_MADE) AS col4_1,SUM(14c.PROSECUTION_LAUNCHED) / SUM(14c.ARRESTS_MADE) AS total_score,\n"
-						+ "    ROW_NUMBER() OVER (ORDER BY SUM(14c.PROSECUTION_LAUNCHED) / SUM(14c.ARRESTS_MADE) DESC) AS z_rank\n"
-						+ "FROM mis_gst_commcode AS cc\n"
-						+ "RIGHT JOIN mis_gi_gst_1a AS 14c ON cc.COMM_CODE = 14c.COMM_CODE\n"
-						+ "LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n"
-						+ "WHERE 14c.MM_YYYY <= '" + month_date + "' GROUP BY cc.ZONE_CODE, zc.ZONE_NAME\n"
-						+ "ORDER BY total_score DESC, z_rank;";
+		for (GSTCUS gsta : gst9aList) {
+			combinedMap.put(gsta.getZone_code(), gsta);
+		}
 
-				rsGst14aa = GetExecutionSQL.getResult(query_assessment);
+		for (GSTCUS gstb : gst9bList) {
+			GSTCUS existing = combinedMap.get(gstb.getZone_code());
 
-				while (rsGst14aa.next()) {
-					double tScore = rsGst14aa.getDouble("total_score");
-					zone_code = rsGst14aa.getString("ZONE_CODE");
-					Integer way_to_grade = 0;
-					Integer insentavization = 0;
-					double sub_parameter_weighted_average = 0.00;
-					Integer Zonal_rank = rsGst14aa.getInt("z_rank");
-					String zoneName = rsGst14aa.getString("ZONE_NAME");
-					String commName = "ALL";
-					String gst = "ALL";
-					String absval = "null";
-					String ra ="ARREST AND PROSECUTION";
-
-
-					String formattedTotal = String.format("%.2f", tScore);
-					double total_score = Double.parseDouble(formattedTotal);
-					totalScore = new GstParameter(zoneName, commName,zone_code, total_score, absval, Zonal_rank, gst,ra,way_to_grade,insentavization,Parameter_wise_weighted_average,sub_parameter_weighted_average);
-					allGstaList.add(totalScore);
-				}
-			}else if (type.equalsIgnoreCase("zone")) { // for parameter zone all button 2
-				//                  '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "'
-				String prev_month_new = DateCalculate.getPreviousMonth(month_date);
-
-				String query_assessment = "";
-
-				rsGst14aa = GetExecutionSQL.getResult(query_assessment);
-
-				while (rsGst14aa.next()) {
-					double tScore = rsGst14aa.getDouble("total_score");
-					zone_code = rsGst14aa.getString("ZONE_CODE");
-					Integer way_to_grade = 0;
-					Integer insentavization = 0;
-					double sub_parameter_weighted_average = 0.00;
-					Integer Zonal_rank = rsGst14aa.getInt("z_rank");
-					String zoneName = rsGst14aa.getString("ZONE_NAME");
-					String commName = rsGst14aa.getString("COMM_NAME");
-					String gst = "null";
-					String absval = "null";
-					String ra ="ARREST AND PROSECUTION";
-
-
-					String formattedTotal = String.format("%.2f", tScore);
-					double total_score = Double.parseDouble(formattedTotal);
-					totalScore = new GstParameter(zoneName, commName, zone_code, total_score, absval, Zonal_rank, gst,ra,way_to_grade,insentavization,Parameter_wise_weighted_average,sub_parameter_weighted_average);
-					allGstaList.add(totalScore);
-				}
-			}else if (type.equalsIgnoreCase("commissary")) {   // for show button, zone wise 3
-				//                  '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "'
-				String prev_month_new = DateCalculate.getPreviousMonth(month_date);
-
-				String query_assessment = "SELECT zc.ZONE_NAME,\n"
-						+ "       cc.ZONE_CODE,\n"
-						+ "       SUM(c.PROSECUTION_LAUNCHED) AS col4,\n"
-						+ "       SUM(c.ARRESTS_MADE) AS col4_1,\n"
-						+ "       CONCAT(SUM(c.PROSECUTION_LAUNCHED), '/', SUM(c.ARRESTS_MADE)) AS score_of_subParameter,\n"
-						+ "       'GST9B' AS gst,\n"
-						+ "       'Number of Prosecution launched upto the month vis-à-vis number of arrests made upto the month' AS ra,\n"
-						+ "       CONCAT(ROW_NUMBER() OVER (ORDER BY SUM(c.PROSECUTION_LAUNCHED) / NULLIF(SUM(c.ARRESTS_MADE), 0) DESC), '') AS z_rank,\n"
-						+ "       CONCAT(SUM(c.PROSECUTION_LAUNCHED), '/', SUM(c.ARRESTS_MADE)) AS absolute_value\n"
-						+ "FROM mis_gst_commcode AS cc\n"
-						+ "RIGHT JOIN mis_gi_gst_1a AS c ON cc.COMM_CODE = c.COMM_CODE\n"
-						+ "LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n"
-						+ "WHERE c.MM_YYYY <=  '" + month_date + "' AND cc.ZONE_CODE = '69'\n"
-						+ "GROUP BY cc.ZONE_CODE, zc.ZONE_NAME\n"
-						+ "ORDER BY SUM(c.PROSECUTION_LAUNCHED) / NULLIF(SUM(c.ARRESTS_MADE), 0) DESC;\n"
-						+ "";
-
-				rsGst14aa = GetExecutionSQL.getResult(query_assessment);
-
-				while (rsGst14aa.next()) {
-					zone_code = rsGst14aa.getString("ZONE_CODE");
-					Integer way_to_grade = 0;
-					Integer insentavization = 0;
-					double sub_parameter_weighted_average = 0.00;
-					String zoneName = rsGst14aa.getString("ZONE_NAME");
-					String gst =rsGst14aa.getString("gst");
-					String absval = rsGst14aa.getString("absolute_value");
-					double tScore = rsGst14aa.getDouble("score_of_subParameter");
-					String ra = rsGst14aa.getString("ra");
-					Integer Zonal_rank = null;
-					String commName = "null";
-
-
-					String formattedTotal = String.format("%.2f", tScore);
-					double total_score = Double.parseDouble(formattedTotal);
-					totalScore = new GstParameter(zoneName, commName, zone_code, total_score, absval, Zonal_rank, gst,ra,way_to_grade,insentavization,Parameter_wise_weighted_average,sub_parameter_weighted_average);
-					allGstaList.add(totalScore);
-				}
-			}else if (type.equalsIgnoreCase("all_commissary")) { // for all commissary 4
-				//                  '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "'
-				String prev_month_new = DateCalculate.getPreviousMonth(month_date);
-
-				String query_assessment = "WITH ranked_data AS (\n"
-						+ "    SELECT zc.ZONE_NAME,cc.ZONE_CODE,cc.COMM_NAME,gst.PROSECUTION_LAUNCHED AS col4, gst.ARRESTS_MADE AS col4_1,\n"
-						+ "        CASE WHEN gst.ARRESTS_MADE <> 0 THEN gst.PROSECUTION_LAUNCHED / gst.ARRESTS_MADE ELSE NULL\n"
-						+ "	END AS total_score\n"
-						+ "    FROM mis_gst_commcode AS cc\n"
-						+ "    RIGHT JOIN mis_gi_gst_1a AS gst ON cc.COMM_CODE = gst.COMM_CODE\n"
-						+ "    LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n"
-						+ "    WHERE gst.MM_YYYY < '" + month_date + "'\n"
-						+ ")\n"
-						+ "SELECT ranked_data.*,\n"
-						+ "    ROW_NUMBER() OVER (ORDER BY total_score DESC) AS z_rank\n"
-						+ "FROM ranked_data;";
-
-				rsGst14aa = GetExecutionSQL.getResult(query_assessment);
-
-				while (rsGst14aa.next()) {
-					zone_code = rsGst14aa.getString("ZONE_CODE");
-					Integer way_to_grade = 0;
-					Integer insentavization = 0;
-					double sub_parameter_weighted_average = 0.00;
-					String commName = rsGst14aa.getString("COMM_NAME");
-					String zoneName = rsGst14aa.getString("ZONE_NAME");
-					double tScore = rsGst14aa.getDouble("total_score");
-					Integer Zonal_rank = rsGst14aa.getInt("z_rank");
-					String gst ="null";
-					String absval = "null";
-					String ra ="ARREST AND PROSECUTION";
-
-
-					String formattedTotal = String.format("%.2f", tScore);
-					double total_score = Double.parseDouble(formattedTotal);
-					totalScore = new GstParameter(zoneName, commName, zone_code, total_score, absval, Zonal_rank, gst,ra,way_to_grade,insentavization,Parameter_wise_weighted_average,sub_parameter_weighted_average);
-					allGstaList.add(totalScore);
-				}
-			}else if (type.equalsIgnoreCase("come_name")) { // for particular commissary wise, show button 5
-				//                  '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "'
-				String prev_month_new = DateCalculate.getPreviousMonth(month_date);
-
-				String query_assessment = "WITH ranked_data AS (\n"
-						+ "    SELECT zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME, gst.PROSECUTION_LAUNCHED AS col4, gst.ARRESTS_MADE AS col4_1,\n"
-						+ "        CASE\n"
-						+ "            WHEN gst.ARRESTS_MADE <> 0 THEN gst.PROSECUTION_LAUNCHED / gst.ARRESTS_MADE\n"
-						+ "            ELSE NULL\n"
-						+ "        END AS score_of_subParameter,\n"
-						+ "        'GST9B' AS gst, 'Number of Prosecution launched upto the month vis-à-vis  number of arrests made upto the month ' as ra\n"
-						+ "    FROM mis_gst_commcode AS cc\n"
-						+ "    RIGHT JOIN mis_gi_gst_1a AS gst ON cc.COMM_CODE = gst.COMM_CODE\n"
-						+ "    LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n"
-						+ "    WHERE gst.MM_YYYY < '" + month_date + "' AND zc.ZONE_CODE = '" + zone_code + "' AND cc.COMM_NAME = '" + come_name + "'\n"
-						+ ")\n"
-						+ "SELECT ranked_data.*,\n"
-						+ "    ROW_NUMBER() OVER (ORDER BY score_of_subParameter DESC) AS z_rank,\n"
-						+ "    CASE\n"
-						+ "        WHEN col4_1 <> 0 THEN CONCAT(ABS(col4), '/', ABS(col4_1))\n"
-						+ "        ELSE NULL END AS absolute_value FROM ranked_data;";
-
-				rsGst14aa = GetExecutionSQL.getResult(query_assessment);
-
-				while (rsGst14aa.next()) {
-					zone_code = rsGst14aa.getString("ZONE_CODE");
-					Integer way_to_grade = 0;
-					Integer insentavization = 0;
-					double sub_parameter_weighted_average = 0.00;
-					String zoneName = rsGst14aa.getString("ZONE_NAME");
-					String commName = rsGst14aa.getString("COMM_NAME");
-					double tScore = rsGst14aa.getDouble("score_of_subParameter");
-					String gst =rsGst14aa.getString("gst");
-					String absval = rsGst14aa.getString("absolute_value");
-					String ra = rsGst14aa.getString("ra");
-					Integer Zonal_rank = null;
-
-
-					String formattedTotal = String.format("%.2f", tScore);
-					double total_score = Double.parseDouble(formattedTotal);
-					totalScore = new GstParameter(zoneName, commName, zone_code, total_score, absval, Zonal_rank, gst,ra,way_to_grade,insentavization,Parameter_wise_weighted_average,sub_parameter_weighted_average);
-					allGstaList.add(totalScore);
-				}
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (rsGst14aa != null) rsGst14aa.close();
-				if (con != null) con.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
+			if (existing != null) {
+				existing.setSub_parameter_weighted_average(
+						existing.getSub_parameter_weighted_average() + gstb.getSub_parameter_weighted_average()
+				);
+				existing.setTotal_score(existing.getTotal_score() + gstb.getTotal_score());
+			} else {
+				combinedMap.put(gstb.getZone_code(), gstb);
 			}
 		}
-		return allGstaList;
 
+		List<GSTCUS> combinedList = new ArrayList<>(combinedMap.values());
+		combinedList.sort(Comparator.comparing(GSTCUS::getSub_parameter_weighted_average).reversed());
+
+		int rank = 1;
+		for (GSTCUS gsta : combinedList) {
+			gsta.setZonal_rank(rank++);
+		}
+
+		return combinedList;
 	}
-
 	/*
 	 * Date: june 09, 2024
 	 * created: RKS
