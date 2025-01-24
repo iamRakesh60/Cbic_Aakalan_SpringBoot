@@ -18,7 +18,7 @@ public class EmailService {
         this.javaMailSender = javaMailSender;
     }
 
-    private static final int OTP_EXPIRATION_MINUTES = 30;
+    private static final int OTP_EXPIRATION_MINUTES = 10;
 
     // Store OTP and its generation time
     private final Map<String, OtpDetails> otpStore = new HashMap<>();
