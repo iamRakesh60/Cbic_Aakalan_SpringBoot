@@ -1,10 +1,10 @@
 package com.Cbic_Aaklan_Project.Controller.CGST;
 
 import com.Cbic_Aaklan_Project.Service.DateCalculate;
-import com.Cbic_Aaklan_Project.Service.GstGradeScore;
-import com.Cbic_Aaklan_Project.Service.GstSubParameterService;
+import com.Cbic_Aaklan_Project.Service.CGST.GstGradeScore;
+import com.Cbic_Aaklan_Project.Service.CGST.GstSubParameterService;
 import com.Cbic_Aaklan_Project.Service.RelevantAspect;
-import com.Cbic_Aaklan_Project.dao.Query.GstSubParameterWiseQuery;
+import com.Cbic_Aaklan_Project.dao.Query.CGST.GstSubParameterWiseQuery;
 import com.Cbic_Aaklan_Project.dao.pool.JDBCConnection;
 import com.Cbic_Aaklan_Project.dao.result.GetExecutionSQL;
 import com.Cbic_Aaklan_Project.entity.GSTCUS;
@@ -40,6 +40,7 @@ public class GstSubParameterController {
      * updated: RKS, may 17, 2024
      * Purpose: This methods have core function in Return Filing .
      */
+
     @ResponseBody
     @RequestMapping(value = "/gst1a")
     //  http://localhost:8080/cbicApi/cbic/gst1a?month_date=2023-04-01&type=zone
@@ -56,9 +57,7 @@ public class GstSubParameterController {
 
         try {
             if (type.equalsIgnoreCase("zone")) {
-                // Query string
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst1a_ZoneWise(month_date);
-                //Result Set
                 ResultSet rsGst14aa = GetExecutionSQL.getResult(queryGst14aa);
                 while (rsGst14aa.next()) {
                     String ra = RelevantAspect.GST1A_RA;

@@ -1,8 +1,8 @@
-package com.Cbic_Aaklan_Project.Controller;
+package com.Cbic_Aaklan_Project.Controller.Testing;
 
-import com.Cbic_Aaklan_Project.Service.CustomGreadeScore;
-import com.Cbic_Aaklan_Project.Service.GstSubParameterService;
-import com.Cbic_Aaklan_Project.dao.Query.GstSubParameterWiseQuery;
+import com.Cbic_Aaklan_Project.Service.CUSTOMS.CustomGreadeScore;
+import com.Cbic_Aaklan_Project.Service.CGST.GstSubParameterService;
+import com.Cbic_Aaklan_Project.dao.Query.CGST.GstSubParameterWiseQuery;
 import com.Cbic_Aaklan_Project.dao.result.GetExecutionSQL;
 import com.Cbic_Aaklan_Project.entity.GSTCUS;
 import org.springframework.stereotype.Controller;

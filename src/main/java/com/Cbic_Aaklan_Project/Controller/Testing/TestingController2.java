@@ -1,8 +1,8 @@
-package com.Cbic_Aaklan_Project.Controller;
+package com.Cbic_Aaklan_Project.Controller.Testing;
 
-import com.Cbic_Aaklan_Project.Service.GstGradeScore;
+import com.Cbic_Aaklan_Project.Service.CGST.GstGradeScore;
 import com.Cbic_Aaklan_Project.Service.RelevantAspect;
-import com.Cbic_Aaklan_Project.dao.Query.GstSubParameterWiseQuery;
+import com.Cbic_Aaklan_Project.dao.Query.CGST.GstSubParameterWiseQuery;
 import com.Cbic_Aaklan_Project.dao.result.GetExecutionSQL;
 import com.Cbic_Aaklan_Project.entity.GSTCUS;
 import org.slf4j.Logger;
@@ -11,10 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import com.Cbic_Aaklan_Project.dao.pool.JDBCConnection;
 
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;

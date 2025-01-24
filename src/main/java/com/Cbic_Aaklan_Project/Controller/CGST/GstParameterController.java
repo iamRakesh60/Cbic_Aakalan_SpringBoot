@@ -1,9 +1,9 @@
 package com.Cbic_Aaklan_Project.Controller.CGST;
 
 import com.Cbic_Aaklan_Project.Service.DateCalculate;
-import com.Cbic_Aaklan_Project.Service.GstGradeScore;
+import com.Cbic_Aaklan_Project.Service.CGST.GstGradeScore;
 import com.Cbic_Aaklan_Project.Service.RelevantAspect;
-import com.Cbic_Aaklan_Project.dao.Query.GstParameterWiseQuery;
+import com.Cbic_Aaklan_Project.dao.Query.CGST.GstParameterWiseQuery;
 import com.Cbic_Aaklan_Project.dao.result.GetExecutionSQL;
 import com.Cbic_Aaklan_Project.entity.GSTCUS;
 import com.Cbic_Aaklan_Project.entity.GstParameter;
@@ -13,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import com.Cbic_Aaklan_Project.dao.pool.JDBCConnection;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

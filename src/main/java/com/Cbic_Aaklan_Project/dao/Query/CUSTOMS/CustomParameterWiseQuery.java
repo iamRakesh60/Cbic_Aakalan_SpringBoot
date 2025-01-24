@@ -1,4 +1,4 @@
-package com.Cbic_Aaklan_Project.dao.Query;
+package com.Cbic_Aaklan_Project.dao.Query.CUSTOMS;
 import com.Cbic_Aaklan_Project.Service.DateCalculate;
 public class CustomParameterWiseQuery {
     // ***********************************CUS 1 parameter wise(Timely payment of Refund) *****************************************************************

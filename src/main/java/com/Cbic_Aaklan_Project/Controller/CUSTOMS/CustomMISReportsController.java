@@ -1,7 +1,7 @@
 package com.Cbic_Aaklan_Project.Controller.CUSTOMS;
 
-import com.Cbic_Aaklan_Project.Service.CustomMISReportsService;
-import com.Cbic_Aaklan_Project.dao.Query.CustomMISReportsQuery;
+import com.Cbic_Aaklan_Project.Service.CUSTOMS.CustomMISReportsService;
+import com.Cbic_Aaklan_Project.dao.Query.CUSTOMS.CustomMISReportsQuery;
 import com.Cbic_Aaklan_Project.dao.result.GetExecutionSQL;
 import com.Cbic_Aaklan_Project.entity.CustomMISReports;
 import org.slf4j.Logger;
@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import com.Cbic_Aaklan_Project.dao.pool.JDBCConnection;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

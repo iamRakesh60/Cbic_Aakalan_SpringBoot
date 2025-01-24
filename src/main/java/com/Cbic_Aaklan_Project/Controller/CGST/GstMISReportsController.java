@@ -1,9 +1,8 @@
 package com.Cbic_Aaklan_Project.Controller.CGST;
 
-import com.Cbic_Aaklan_Project.Service.GstGradeScore;
-import com.Cbic_Aaklan_Project.Service.GstMISReportsService;
-import com.Cbic_Aaklan_Project.dao.Query.GstMISReportsQuery;
-import com.Cbic_Aaklan_Project.dao.pool.JDBCConnection;
+import com.Cbic_Aaklan_Project.Service.CGST.GstGradeScore;
+import com.Cbic_Aaklan_Project.Service.CGST.GstMISReportsService;
+import com.Cbic_Aaklan_Project.dao.Query.CGST.GstMISReportsQuery;
 import com.Cbic_Aaklan_Project.dao.result.GetExecutionSQL;
 import com.Cbic_Aaklan_Project.entity.GstMISReports;
 import org.slf4j.Logger;

@@ -1,4 +1,4 @@
-package com.Cbic_Aaklan_Project.dao.Query;
+package com.Cbic_Aaklan_Project.dao.Query.CGST;
 
 import com.Cbic_Aaklan_Project.Service.DateCalculate;
 public class GstParameterWiseQuery {

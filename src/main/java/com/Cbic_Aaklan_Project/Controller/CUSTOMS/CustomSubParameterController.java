@@ -1,10 +1,9 @@
 package com.Cbic_Aaklan_Project.Controller.CUSTOMS;
 
-import com.Cbic_Aaklan_Project.Service.CustomGreadeScore;
-import com.Cbic_Aaklan_Project.Service.CustomRelaventAspect;
-import com.Cbic_Aaklan_Project.Service.CustomSubParameterService;
-import com.Cbic_Aaklan_Project.dao.Query.CustomSubParameterWiseQuery;
-import com.Cbic_Aaklan_Project.dao.pool.JDBCConnection;
+import com.Cbic_Aaklan_Project.Service.CUSTOMS.CustomGreadeScore;
+import com.Cbic_Aaklan_Project.Service.CUSTOMS.CustomRelaventAspect;
+import com.Cbic_Aaklan_Project.Service.CUSTOMS.CustomSubParameterService;
+import com.Cbic_Aaklan_Project.dao.Query.CUSTOMS.CustomSubParameterWiseQuery;
 import com.Cbic_Aaklan_Project.dao.result.GetExecutionSQL;
 import com.Cbic_Aaklan_Project.entity.GSTCUS;
 import org.slf4j.Logger;

@@ -1,10 +1,9 @@
 package com.Cbic_Aaklan_Project.Controller.CUSTOMS;
 
 
-import com.Cbic_Aaklan_Project.Service.CustomGreadeScore;
+import com.Cbic_Aaklan_Project.Service.CUSTOMS.CustomGreadeScore;
 import com.Cbic_Aaklan_Project.Service.DateCalculate;
-import com.Cbic_Aaklan_Project.dao.Query.CustomParameterWiseQuery;
-import com.Cbic_Aaklan_Project.dao.pool.JDBCConnection;
+import com.Cbic_Aaklan_Project.dao.Query.CUSTOMS.CustomParameterWiseQuery;
 import com.Cbic_Aaklan_Project.dao.result.GetExecutionSQL;
 import com.Cbic_Aaklan_Project.entity.CustomParameter;
 import org.slf4j.Logger;

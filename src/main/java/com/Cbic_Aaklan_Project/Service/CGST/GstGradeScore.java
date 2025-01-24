@@ -1,4 +1,4 @@
-package com.Cbic_Aaklan_Project.Service;
+package com.Cbic_Aaklan_Project.Service.CGST;
 
 public class GstGradeScore {
 

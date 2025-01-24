@@ -1,4 +1,4 @@
-package com.Cbic_Aaklan_Project.dao.Query;
+package com.Cbic_Aaklan_Project.dao.Query.CUSTOMS;
 import com.Cbic_Aaklan_Project.Service.DateCalculate;public class CustomSubParameterWiseQuery {
 
     public String QueryFor_cus1a_ZoneWise(String month_date){
