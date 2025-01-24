@@ -19,7 +19,7 @@ public class GstSubParameterWiseQuery {
 				+ "        INNER JOIN mis_dpm_gst_14a AS 14c ON cc.COMM_CODE = 14c.COMM_CODE\n"
 				+ "        INNER JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n"
 				+ "    WHERE \n"
-				+ "        14c.MM_YYYY ='" + month_date + "'\n"
+				+ "        14c.MM_YYYY =?\n" // ----------------------------------------------------------------
 				+ "    GROUP BY \n"
 				+ "        cc.ZONE_CODE, zc.ZONE_NAME\n"
 				+ "),\n"
@@ -72,7 +72,7 @@ public class GstSubParameterWiseQuery {
 				+ "        INNER JOIN mis_dpm_gst_14a AS 14c ON cc.COMM_CODE = 14c.COMM_CODE\n"
 				+ "        INNER JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n"
 				+ "    WHERE \n"
-				+ "        14c.MM_YYYY = '" + month_date + "'\n"
+				+ "        14c.MM_YYYY = ? \n" //----------------------------------------------------------------
 				+ "    GROUP BY \n"
 				+ "        cc.ZONE_CODE, zc.ZONE_NAME, cc.COMM_NAME\n"
 				+ "),\n"
@@ -108,7 +108,7 @@ public class GstSubParameterWiseQuery {
 				+ "FROM \n"
 				+ "    Ordered_Col6 o\n"
 				+ "WHERE \n"
-				+ "    o.ZONE_CODE = '" + zone_code + "'\n"
+				+ "    o.ZONE_CODE = ? \n"// ----------------------------------------------------------------
 				+ "ORDER BY \n"
 				+ "    o.ZONE_CODE;\n"
 				+ ";";
@@ -130,7 +130,7 @@ public class GstSubParameterWiseQuery {
 				+ "        INNER JOIN mis_dpm_gst_14a AS 14c ON cc.COMM_CODE = 14c.COMM_CODE\n"
 				+ "        INNER JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n"
 				+ "    WHERE \n"
-				+ "        14c.MM_YYYY = '" + month_date + "'\n"
+				+ "        14c.MM_YYYY = ? \n"
 				+ "    GROUP BY \n"
 				+ "        cc.ZONE_CODE, zc.ZONE_NAME, cc.COMM_NAME\n"
 				+ "),\n"
@@ -178,7 +178,7 @@ public class GstSubParameterWiseQuery {
 				+ " sum(14c.DISPOSAL_OF_ARN_PV_RECOMMENDED) as col7 "
 				+ "FROM mis_gst_commcode as cc right join mis_dpm_gst_14a as 14c on cc.COMM_CODE=14c.COMM_CODE"
 				+ " left join mis_gst_zonecode as zc on zc.ZONE_CODE=cc.ZONE_CODE"
-				+ " where  14c.MM_YYYY='" + month_date + "'  group by ZONE_CODE;";
+				+ " where  14c.MM_YYYY= ?  group by ZONE_CODE;";
 		return queryGst14aa;
 	}
 	public String QueryFor_gst1b_CommissonaryWise(String month_date, String zone_code){
@@ -189,7 +189,7 @@ public class GstSubParameterWiseQuery {
 				"(14c.DISPOSAL_OF_ARN_PV_RECOMMENDED) as col7 FROM mis_gst_commcode as cc " +
 				"right join mis_dpm_gst_14a as 14c on cc.COMM_CODE=14c.COMM_CODE " +
 				"left join mis_gst_zonecode as zc on zc.ZONE_CODE=cc.ZONE_CODE " +
-				"where  14c.MM_YYYY='" + month_date + "'  and cc.ZONE_CODE = '" + zone_code + "';";
+				"where  14c.MM_YYYY= ? and cc.ZONE_CODE = ? ;";
 		return queryGst14aa;
 	}
 	public String QueryFor_gst1b_AllCommissonaryWise(String month_date){
