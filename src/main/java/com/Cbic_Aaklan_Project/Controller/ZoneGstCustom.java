@@ -17,25 +17,6 @@ import java.util.List;
 public class ZoneGstCustom {
     private Logger logger = LoggerFactory.getLogger(ZoneGstCustom.class);
 
-    @ResponseBody
-    @RequestMapping(value = "/")
-    public String home() {
-        return "its working api";
-    }
-
-    /*
-     * Date: nov 16, 2024
-     * Purpose: This method checks the database connection.
-     */
-    @ResponseBody
-    @RequestMapping(value = "/db_check")
-    public String bdTest() {
-        // Connection done
-        Connection con = JDBCConnection.getTNConnection();
-        System.out.println("Connection :" + con);
-        return "its working api";
-    }
-
 
     @ResponseBody
     @RequestMapping(value = "/gstZone")

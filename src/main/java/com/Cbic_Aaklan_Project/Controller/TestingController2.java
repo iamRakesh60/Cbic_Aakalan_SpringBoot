@@ -27,19 +27,6 @@ public class TestingController2 {
 
     private final GstGradeScore score = new GstGradeScore();
 
-    @ResponseBody
-    @RequestMapping(value = "/")
-    public String home() {
-        return "its working api";
-    }
-
-    @ResponseBody
-    @RequestMapping(value = "/db_check")
-    public String bdTest() {
-        Connection con = JDBCConnection.getTNConnection();
-        System.out.println("Connection :"+con);
-        return "its working api";
-    }
 
     @ResponseBody
     @RequestMapping(value = "/test/gst5a")

@@ -28,25 +28,6 @@ public class CustomMISReportsController {
     private Logger logger = LoggerFactory.getLogger(CustomMISReportsController.class);
     CustomMISReportsService customMISReportsService = new CustomMISReportsService();
 
-    @ResponseBody
-    @RequestMapping(value = "/")
-    public String home() {
-        return "its working api";
-    }
-
-    /*
-     * Date: nov 16, 2024
-     * Purpose: This methods for performing check the database  .
-     */
-    @ResponseBody
-    @RequestMapping(value = "/db_check")
-    public String bdTest() {
-
-        //Connection done
-        Connection con = JDBCConnection.getTNConnection();
-        System.out.println("Connection :"+con);
-        return "its working api";
-    }
 
     // =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=Timely payment of  Refunds__1__=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=
     @ResponseBody

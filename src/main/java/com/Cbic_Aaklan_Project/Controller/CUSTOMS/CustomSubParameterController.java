@@ -32,25 +32,7 @@ public class CustomSubParameterController {
     private Logger logger = LoggerFactory.getLogger(CustomSubParameterController.class);
     CustomGreadeScore score = new CustomGreadeScore();
     CustomSubParameterService customSubParameterService = new CustomSubParameterService();
-    @ResponseBody
-    @RequestMapping(value = "/")
-    public String home() {
-        return "its working api";
-    }
 
-    /*
-     * Date: may 30, 2024
-     * Purpose: This methods for performing check the database  .
-     */
-    @ResponseBody
-    @RequestMapping(value = "/db_check")
-    public String bdTest() {
-
-        //Connection done
-        Connection con = JDBCConnection.getTNConnection();
-        System.out.println("Connection :"+con);
-        return "its working api";
-    }
     // conpleted codes are - 1, 2a, 4d, 5a, 5b,5c, 6a,6b,6c,6d,6e,6f,9a,9b,12A,12B
 
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=cus1*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*

@@ -31,26 +31,6 @@ import java.util.stream.Collectors;
 public class CustomParameterController {
     private Logger logger = LoggerFactory.getLogger(CustomParameterController.class);
     CustomGreadeScore score = new CustomGreadeScore();
-    @ResponseBody
-    @RequestMapping(value = "/")
-    public String home() {
-        return "its working api";
-    }
-
-    /*
-     * Date: may 30, 2024
-     * Purpose: This methods for performing check the database  .
-     */
-    @ResponseBody
-    @RequestMapping(value = "/db_check")
-    public String bdTest() {
-
-        //Connection done
-        Connection con = JDBCConnection.getTNConnection();
-        System.out.println("Connection :"+con);
-        return "its working api";
-    }
-
 
     // ***********************************CUS 1 parameter wise(Timely Payment Of Refunds) *****************************************************************
     @ResponseBody

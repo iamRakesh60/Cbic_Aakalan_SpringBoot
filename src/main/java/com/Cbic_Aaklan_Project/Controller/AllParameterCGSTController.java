@@ -23,25 +23,7 @@ import java.util.List;
 @Controller
 public class AllParameterCGSTController {
     private Logger logger = LoggerFactory.getLogger(AllParameterCGSTController.class);
-    @ResponseBody
-    @RequestMapping(value = "/")
-    public String home() {
-        return "its working api";
-    }
 
-    /*
-     * Date: july 2, 2024
-     * Purpose: This methods for performing check the database.
-     */
-    @ResponseBody
-    @RequestMapping(value = "/db_check")
-    public String bdTest() {
-
-        //Connection done
-        Connection con = JDBCConnection.getTNConnection();
-        System.out.println("Connection :"+con);
-        return "its working api";
-    }
 
     @ResponseBody
     @RequestMapping(value = "/total/parameter") // for front page graph

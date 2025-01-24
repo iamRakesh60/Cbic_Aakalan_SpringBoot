@@ -31,25 +31,7 @@ public class GstMISReportsController {
     GstGradeScore score=new GstGradeScore();
     GstMISReportsService gstMISReportsService =new GstMISReportsService();
 
-    @ResponseBody
-    @RequestMapping(value = "/")
-    public String home() {
-        return "its working api";
-    }
 
-    /*
-     * Date: nov 12, 2024
-     * Purpose: This methods for performing check the database  .
-     */
-    @ResponseBody
-    @RequestMapping(value = "/db_check")
-    public String bdTest() {
-
-        //Connection done
-        Connection con = JDBCConnection.getTNConnection();
-        System.out.println("Connection :"+con);
-        return "its working api";
-    }
 
     // =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=Registration__1__=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=
     @ResponseBody

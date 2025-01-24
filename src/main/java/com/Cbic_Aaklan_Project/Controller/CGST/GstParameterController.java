@@ -29,26 +29,7 @@ public class GstParameterController {
 	GstSubParameterController gstSubParameterController = new GstSubParameterController();
 	private Logger logger = LoggerFactory.getLogger(GstParameterController.class);
 	GstGradeScore score=new GstGradeScore();
-	@ResponseBody
-	@RequestMapping(value = "/")
-	public String home() {
-		return "its working api";
-	}
 
-	/*
-	 * Date: june 4, 2024
-	 * Purpose: This methods for performing check the database  .
-	 */
-	@ResponseBody
-	@RequestMapping(value = "/db_check")
-	public String bdTest() {
-
-		//Connection done
-		Connection con = JDBCConnection.getTNConnection();
-		System.out.println("Connection :"+con);
-		return "its working api";
-	}
-//
 
 	@ResponseBody
 	@RequestMapping(value = "/registration")// cgst 1
