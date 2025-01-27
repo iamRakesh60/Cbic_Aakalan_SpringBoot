@@ -1086,127 +1086,36 @@ public class GstSubParameterController {
     //  http://localhost:8080/cbicApi/cbic/gst6b?month_date=2023-04-01&type=zone
     //  http://localhost:8080/cbicApi/cbic/gst6b?month_date=2023-04-01&zone_code=70&type=commissary
     //	  http://localhost:8080/cbicApi/cbic/gst6b?month_date=2023-04-01&type=all_commissary
-    public Object getGst6BC(@RequestParam String month_date,@RequestParam String type, @RequestParam(required = false) String zone_code) {
+    public Object getGst6B(@RequestParam String month_date,@RequestParam String type, @RequestParam(required = false) String zone_code) {
 
         List<GSTCUS> allGstaList = new ArrayList<>();
-        GSTCUS gsta = null;
-        int rank = 0;
-        double total = 0.00;
-        //Connection done
-        Connection con= JDBCConnection.getTNConnection();
-        try {
+
+        try (Connection con = JDBCConnection.getTNConnection()){
             if (type.equalsIgnoreCase("zone")) {
-                // Query string
-//                String queryGst14aa = "SELECT zc.ZONE_NAME,cc.ZONE_CODE, sum(14c.COMM_MORE_YEAR_AMT+14c.JC_MORE_YEAR_AMT+14c.AC_MORE_YEAR_AMT+14c.SUP_MORE_YEAR_AMT) AS col18, " +
-//                        "sum(14c.COMM_CLOSING_NO+14c.JC_CLOSING_NO+14c.AC_CLOSING_NO+14c.SUP_CLOSING_NO) AS col13 " +
-//                        "FROM mis_gst_commcode AS cc " +
-//                        "RIGHT JOIN mis_dgi_st_1a AS 14c ON cc.COMM_CODE = 14c.COMM_CODE " +
-//                        "LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE " +
-//                        "WHERE 14c.MM_YYYY = '" + month_date + "' GROUP BY cc.ZONE_CODE;";
-
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst6b_ZoneWise(month_date);
-                PreparedStatement psGst14aa = con.prepareStatement(queryGst14aa);
-                ResultSet rsGst14aa = psGst14aa.executeQuery();
-                while (rsGst14aa.next()) {
-                    String ra = RelevantAspect.Gst6B_RA;
-                    String zoneCode = rsGst14aa.getString("ZONE_CODE");
-                    String commname = "ALL";
-                    int col18 = rsGst14aa.getInt("col18");
-                    int col13 = rsGst14aa.getInt("col13");
-                    int Zonal_rank = 0;
-                    String gst = "GST6B";
-                    int insentavization = 0;
-
-
-                    total = rsGst14aa.getDouble("total_score");
-
-//                    if ((col13) != 0) {
-//                        total = (((double) (col18)) / (col13));
-//                    }
-                    //rank = score.marks6b(total);
-                    String formattedTotal = String.format("%.2f", total);
-                    double totalScore = Double.parseDouble(formattedTotal);
-                    String absval = String.valueOf(col18) + "/" + String.valueOf(col13);
-                    int way_to_grade = score.marks6b(totalScore);
-                    Double sub_parameter_weighted_average = way_to_grade * 0.25;
-
-                    gsta = new GSTCUS(rsGst14aa.getString("ZONE_NAME"), commname, totalScore,absval,zoneCode,ra,
-                            Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
-                    allGstaList.add(gsta);
+                try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
+                    pstmt.setString(1, month_date);
+                    ResultSet rsGst14aa = pstmt.executeQuery();
+                    allGstaList.addAll(gstSubParameterService.gst6bZone(rsGst14aa));
                 }
+
             }else if (type.equalsIgnoreCase("commissary")) {
-                // Query string
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst6b_CommissonaryWise(month_date,zone_code);
-                //Prepared Statement
-                PreparedStatement psGst14aa = con.prepareStatement(queryGst14aa);
-                //Result Set
-                ResultSet rsGst14aa = psGst14aa.executeQuery();
-
-                while (rsGst14aa.next()) {
-                    String commname = rsGst14aa.getString("COMM_NAME");
-                    String ra = RelevantAspect.Gst6B_RA;
-                    String zoneName = rsGst14aa.getString("ZONE_NAME");
-                    String zoneCode = rsGst14aa.getString("ZONE_CODE");
-
-                    int col18 = rsGst14aa.getInt("col18");
-                    int col13 = rsGst14aa.getInt("col13");
-                    int Zonal_rank = 0;
-                    String gst = "GST6B";
-                    //int way_to_grade = 0;
-                    int insentavization = 0;
-                    //  int sub_parameter_weighted_average = 0;
-
-                    if ((col13) != 0) {
-                        total = (((double) (col18) * 100) / (col13));
-                    }
-                    String formattedTotal = String.format("%.2f", total);
-                    double totalScore = Double.parseDouble(formattedTotal);
-                    int way_to_grade = score.marks6b(totalScore);
-                    Double sub_parameter_weighted_average = way_to_grade * 0.25;
-                    String absval = String.valueOf(col18) + "/" + String.valueOf(col13);
-                    gsta = new GSTCUS(zoneName, commname, totalScore,absval,zoneCode,ra,
-                            Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
-                    allGstaList.add(gsta);
+                try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
+                    pstmt.setString(1, month_date);
+                    pstmt.setString(2, zone_code);
+                    ResultSet rsGst14aa = pstmt.executeQuery();
+                    allGstaList.addAll(gstSubParameterService.gst6bZoneWiseCommissionary(rsGst14aa));
                 }
-            }else if (type.equalsIgnoreCase("all_commissary")) { //6b
+
+            } else if (type.equalsIgnoreCase("all_commissary")) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst6b_AllCommissonaryWise(month_date);
-
-
-
-                //Prepared Statement
-                PreparedStatement psGst14aa = con.prepareStatement(queryGst14aa);
-
-                //Result Set
-                ResultSet rsGst14aa = psGst14aa.executeQuery();
-
-                while (rsGst14aa.next()) {
-                    String ra = RelevantAspect.Gst6B_RA;
-                    String commname = rsGst14aa.getString("COMM_NAME");
-                    String zoneName = rsGst14aa.getString("ZONE_NAME");
-                    String zoneCode = rsGst14aa.getString("ZONE_CODE");
-
-                    int col18 = rsGst14aa.getInt("col18");
-                    int col13 = rsGst14aa.getInt("col13");
-                    int Zonal_rank = 0;
-                    String gst = "GST6B";
-                    // int way_to_grade = 0;
-                    int insentavization = 0;
-                    // int sub_parameter_weighted_average = 0;
-
-                    if ((col13) != 0) {
-                        total = (((double) (col18) * 100) / (col13));
-                    }
-                    String formattedTotal = String.format("%.2f", total);
-                    double totalScore = Double.parseDouble(formattedTotal);
-                    int way_to_grade = score.marks6b(totalScore);
-                    Double sub_parameter_weighted_average = way_to_grade * 0.25;
-                    String absval = String.valueOf(col18) + "/" + String.valueOf(col13);
-                    gsta = new GSTCUS(zoneName, commname, totalScore,absval,zoneCode,ra,
-                            Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
-                    allGstaList.add(gsta);
+                try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
+                    pstmt.setString(1, month_date);
+                    ResultSet rsGst14aa = pstmt.executeQuery();
+                    allGstaList.addAll(gstSubParameterService.gst6bAllCommissionary(rsGst14aa));
                 }
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }

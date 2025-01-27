@@ -2140,7 +2140,7 @@ public class GstSubParameterWiseQuery {
 				+ "    FROM mis_gst_commcode AS cc\n"
 				+ "    RIGHT JOIN mis_dgi_st_1a AS 14c ON cc.COMM_CODE = 14c.COMM_CODE\n"
 				+ "    LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n"
-				+ "    WHERE 14c.MM_YYYY = '" + month_date + "' GROUP BY cc.ZONE_CODE,zc.ZONE_NAME\n"
+				+ "    WHERE 14c.MM_YYYY = ? GROUP BY cc.ZONE_CODE,zc.ZONE_NAME\n"
 				+ "),\n"
 				+ "RankedDataWithRank AS (\n"
 				+ "    SELECT *,\n"
@@ -2169,8 +2169,8 @@ public class GstSubParameterWiseQuery {
 				"LEFT JOIN \n" +
 				"    mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
 				"WHERE \n" +
-				"    14c.MM_YYYY = '" + month_date + "' AND \n" +
-				"    zc.ZONE_CODE = '"+zone_code+"'\n" +
+				"    14c.MM_YYYY = ? AND \n" +
+				"    zc.ZONE_CODE = ? \n" +
 				"ORDER BY \n" +
 				"    total_score ASC;\n";
 
@@ -2195,7 +2195,7 @@ public class GstSubParameterWiseQuery {
 				"    RIGHT JOIN mis_dgi_st_1a AS 14c ON cc.COMM_CODE = 14c.COMM_CODE \n" +
 				"    LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE \n" +
 				"WHERE \n" +
-				"    14c.MM_YYYY =  '" + month_date + "'\n" +
+				"    14c.MM_YYYY =  ? \n" +
 				"ORDER BY \n" +
 				"    total_score ASC;\n";
 		return queryGst14aa;
