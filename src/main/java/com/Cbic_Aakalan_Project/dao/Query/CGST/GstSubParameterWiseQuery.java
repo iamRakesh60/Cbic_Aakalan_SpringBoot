@@ -1102,7 +1102,7 @@ public class GstSubParameterWiseQuery {
 				"((SUM(14c.SCN_NO + 14c.VOLUNTARY_NO + 14c.MERIT_NO + 14c.TRANSFER_NO) * 100) / SUM(14c.OPENING_BALANCE_NO)) AS total_score\n" +
 				"FROM mis_gst_commcode cc RIGHT JOIN mis_gi_gst_2 14c ON cc.COMM_CODE = 14c.COMM_CODE\n" +
 				"LEFT JOIN mis_gst_zonecode zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
-				"WHERE 14c.MM_YYYY = '" + month_date + "' GROUP BY cc.ZONE_CODE\n" +
+				"WHERE 14c.MM_YYYY = ? GROUP BY cc.ZONE_CODE\n" +
 				"),\n" +
 				"CTE_ranked AS (\n" +
 				"SELECT CTE.*, \n" +
@@ -1137,7 +1137,7 @@ public class GstSubParameterWiseQuery {
 				"FROM mis_gst_commcode AS cc\n" +
 				"RIGHT JOIN mis_gi_gst_2 AS 14c ON cc.COMM_CODE = 14c.COMM_CODE\n" +
 				"LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
-				"WHERE 14c.MM_YYYY = '" + month_date + "'),\n" +
+				"WHERE 14c.MM_YYYY = ? ),\n" +
 				"MedianData AS (\n" +
 				"SELECT ZONE_NAME, ZONE_CODE, COMM_NAME, col13, col1, score_of_parameter4a,\n" +
 				"(SELECT AVG(col13) FROM (SELECT col13\n" +
@@ -1148,7 +1148,7 @@ public class GstSubParameterWiseQuery {
 				"FROM RankedData\n" +
 				")\n" +
 				"SELECT ZONE_NAME, ZONE_CODE, COMM_NAME, col13, col1, score_of_parameter4a, median_4a\n" +
-				"FROM MedianData WHERE ZONE_CODE = '" + zone_code + "'\n" +
+				"FROM MedianData WHERE ZONE_CODE = ? \n" +
 				"ORDER BY score_of_parameter4a DESC;";
 //        String queryGst14aa="SELECT zc.ZONE_NAME,cc.ZONE_CODE,cc.COMM_NAME,\n" +
 //                "                            (14c.SCN_NO + 14c.VOLUNTARY_NO + 14c.MERIT_NO + 14c.TRANSFER_NO) AS col13,\n" +
@@ -1171,7 +1171,7 @@ public class GstSubParameterWiseQuery {
 				"FROM mis_gst_commcode AS cc\n" +
 				"RIGHT JOIN mis_gi_gst_2 AS 14c ON cc.COMM_CODE = 14c.COMM_CODE\n" +
 				"LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
-				"WHERE 14c.MM_YYYY = '" + month_date + "'),\n" +
+				"WHERE 14c.MM_YYYY = ? ),\n" +
 				"MedianData AS (\n" +
 				"SELECT ZONE_NAME, ZONE_CODE, COMM_NAME, col13,col1,score_of_parameter4a,\n" +
 				"(SELECT AVG(col13)\n" +
