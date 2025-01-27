@@ -1794,7 +1794,7 @@ public class GstSubParameterWiseQuery {
 				+ "        ) AS col23\n"
 				+ "    FROM mis_gst_commcode AS cc\n"
 				+ "    RIGHT JOIN mis_dpm_gst_adj_1 AS 14c ON cc.COMM_CODE = 14c.COMM_CODE LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n"
-				+ "    WHERE 14c.MM_YYYY = '" + month_date + "'  GROUP BY cc.ZONE_CODE, zc.ZONE_NAME\n"
+				+ "    WHERE 14c.MM_YYYY = ?  GROUP BY cc.ZONE_CODE, zc.ZONE_NAME\n"
 				+ "),\n"
 				+ "Query2 AS (\n"
 				+ "    SELECT zc.ZONE_NAME, cc.ZONE_CODE,\n"
@@ -1804,7 +1804,7 @@ public class GstSubParameterWiseQuery {
 				+ "        ) AS col16\n"
 				+ "    FROM mis_gst_commcode AS cc\n"
 				+ "    RIGHT JOIN mis_dpm_gst_adj_1 AS 14c ON cc.COMM_CODE = 14c.COMM_CODE LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n"
-				+ "    WHERE 14c.MM_YYYY = '" + next_month_new + "' GROUP BY cc.ZONE_CODE, zc.ZONE_NAME\n"
+				+ "    WHERE 14c.MM_YYYY = ? GROUP BY cc.ZONE_CODE, zc.ZONE_NAME\n"
 				+ "),\n"
 				+ "RankedData AS (\n"
 				+ "    SELECT q1.ZONE_NAME, q1.ZONE_CODE,\n"
@@ -1822,7 +1822,7 @@ public class GstSubParameterWiseQuery {
 		return queryGst14aa;
 	}
 	public String QueryFor_gst5b_CommissonaryWise(String month_date, String zone_code){
-		//              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
+		//              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'     total 4 ? in perticuller commi, zone_code ? 2
 		String prev_month_new = DateCalculate.getPreviousMonth(month_date);
 		String next_month_new = DateCalculate.getNextMonth(month_date);
 		String queryGst14aa="WITH CTE1 AS (\n" +
@@ -1836,14 +1836,14 @@ public class GstSubParameterWiseQuery {
 				"        NULL AS col16\n" +
 				"    FROM mis_gst_commcode AS cc \n" +
 				"    RIGHT JOIN mis_dpm_gst_adj_1 AS 14c ON cc.COMM_CODE = 14c.COMM_CODE \n" +
-				"    LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE WHERE 14c.MM_YYYY = '" +  month_date  + "' and cc.ZONE_CODE = '" + zone_code + "'),\n" +
+				"    LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE WHERE 14c.MM_YYYY = ? and cc.ZONE_CODE = ?),\n" +
 				"CTE2 AS (\n" +
 				"    SELECT zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME,NULL AS col22, NULL AS col23,\n" +
 				"    (14c.ADC_COMMISSIONERATE_OPENING_NO +14c.ADC_AUDIT_OPENING_NO +14c.ADC_INVESTIGATION_OPENING_NO +14c.ADC_CALLBOOK_OPENING_NO +14c.DC_COMMISSIONERATE_OPENING_NO +14c.DC_AUDIT_OPENING_NO +\n" +
 				"\t14c.DC_INVESTIGATION_OPENING_NO +14c.DC_CALLBOOK_OPENING_NO +14c.SUPERINTENDENT_COMMISSIONERATE_OPENING_NO +14c.SUPERINTENDENT_AUDIT_OPENING_NO +14c.SUPERINTENDENT_INVESTIGATION_OPENING_NO +14c.SUPERINTENDENT_CALLBOOK_OPENING_NO) AS col16\n" +
 				"    FROM mis_gst_commcode AS cc \n" +
 				"    RIGHT JOIN mis_dpm_gst_adj_1 AS 14c ON cc.COMM_CODE = 14c.COMM_CODE \n" +
-				"    LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE WHERE 14c.MM_YYYY = '" + next_month_new + "' and cc.ZONE_CODE = '" + zone_code + "')\n" +
+				"    LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE WHERE 14c.MM_YYYY = ? and cc.ZONE_CODE = ? )\n" +
 				"    SELECT ZONE_NAME, ZONE_CODE, COMM_NAME, SUM(col22) AS col22, SUM(col23) AS col23, SUM(col16) AS col16,\n" +
 				"    (( SUM(col22) + SUM(col23) ) * 100 / SUM(col16)) as score_of_parameter\n" +
 				"    FROM (SELECT * FROM CTE1\n" +
@@ -1867,14 +1867,14 @@ public class GstSubParameterWiseQuery {
 				"        NULL AS col16\n" +
 				"    FROM mis_gst_commcode AS cc \n" +
 				"    RIGHT JOIN mis_dpm_gst_adj_1 AS 14c ON cc.COMM_CODE = 14c.COMM_CODE \n" +
-				"    LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE WHERE 14c.MM_YYYY = '" +  month_date  + "'),\n" +
+				"    LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE WHERE 14c.MM_YYYY = ? ),\n" +
 				"CTE2 AS (\n" +
 				"    SELECT zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME,NULL AS col22, NULL AS col23,\n" +
 				"    (14c.ADC_COMMISSIONERATE_OPENING_NO +14c.ADC_AUDIT_OPENING_NO +14c.ADC_INVESTIGATION_OPENING_NO +14c.ADC_CALLBOOK_OPENING_NO +14c.DC_COMMISSIONERATE_OPENING_NO +14c.DC_AUDIT_OPENING_NO +\n" +
 				"\t14c.DC_INVESTIGATION_OPENING_NO +14c.DC_CALLBOOK_OPENING_NO +14c.SUPERINTENDENT_COMMISSIONERATE_OPENING_NO +14c.SUPERINTENDENT_AUDIT_OPENING_NO +14c.SUPERINTENDENT_INVESTIGATION_OPENING_NO +14c.SUPERINTENDENT_CALLBOOK_OPENING_NO) AS col16\n" +
 				"    FROM mis_gst_commcode AS cc \n" +
 				"    RIGHT JOIN mis_dpm_gst_adj_1 AS 14c ON cc.COMM_CODE = 14c.COMM_CODE \n" +
-				"    LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE WHERE 14c.MM_YYYY = '" + next_month_new + "')\n" +
+				"    LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE WHERE 14c.MM_YYYY = ? )\n" +
 				"    SELECT ZONE_NAME, ZONE_CODE, COMM_NAME, SUM(col22) AS col22, SUM(col23) AS col23, SUM(col16) AS col16,\n" +
 				"    (( SUM(col22) + SUM(col23) ) * 100 / SUM(col16)) as score_of_parameter\n" +
 				"    FROM (SELECT * FROM CTE1\n" +
