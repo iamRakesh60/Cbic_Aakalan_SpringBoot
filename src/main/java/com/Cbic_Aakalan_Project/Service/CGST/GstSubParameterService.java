@@ -1292,62 +1292,54 @@ public class GstSubParameterService {
     }
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= GST 4D zone wise *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
 
-    public List<GSTCUS> gst4dZone(ResultSet rsGst14aa) throws SQLException {
+    public  List<GSTCUS> gst4dZone(ResultSet rsGst14aa) throws SQLException {
+        double median = 0;
         List<GSTCUS> allGstaList = new ArrayList<>();
-        List<Double> s2col7Values = new ArrayList<>();  // List to store all s2col7 values
-
-        // First, collect all the s2col7 values
         while(rsGst14aa.next()) {
-            double s2col7 = rsGst14aa.getInt("s2col7");
-            s2col7Values.add(s2col7);
-        }
-
-        // Sort the list of s2col7 values to calculate median
-        Collections.sort(s2col7Values);
-
-        // Calculate the median
-        double median = 0.00;
-        int size = s2col7Values.size();
-        if (size > 0) {
-            if (size % 2 == 0) {
-                // Even number of elements, average the two middle elements
-                median = (s2col7Values.get(size / 2 - 1) + s2col7Values.get(size / 2)) / 2.0;
-            } else {
-                // Odd number of elements, pick the middle element
-                median = s2col7Values.get(size / 2);
-            }
-        }
-
-        // Now iterate through the ResultSet again to create GST4A objects
-        rsGst14aa.beforeFirst();  // Reset the cursor to the beginning
-        while(rsGst14aa.next()) {
-            String ra = RelevantAspect.GST4D_RA;
+            String ra=RelevantAspect.GST4D_RA;
             String zoneCode = rsGst14aa.getString("ZONE_CODE");
             String zoneName = rsGst14aa.getString("ZONE_NAME");
-            String commname = "ALL";
-            double s2col7 = rsGst14aa.getInt("s2col7");
-            double s1col7 = rsGst14aa.getInt("s1col7");
-            double totalScore = (s1col7 != 0) ? (s2col7 / s1col7) * 100 : 0.00;
-            String formattedTotal = String.format("%.2f", totalScore);
-            totalScore = Double.parseDouble(formattedTotal);
-            String absval = String.valueOf(s2col7) + "/" + String.valueOf(s1col7);
-            int way_to_grade = score.marks4d(totalScore);
+            String commname="ALL";
+            Double t_score = rsGst14aa.getDouble("total_score");
+            String absval = rsGst14aa.getString("absval");
+            double col6_1=rsGst14aa.getInt("col6_1");
+            double col6_3=rsGst14aa.getInt("col6_3");
+            String formattedTotal = String.format("%.2f", t_score);
+            double totalScore = Double.parseDouble(formattedTotal);
             int Zonal_rank = 0;
-            String gst = "GST 4D";
+            String gst = "no";
 
+            // int insentavization = 0;
+            // int sub_parameter_weighted_average = 0;
+//                    String absval=String.valueOf(col6_1)+"/"+String.valueOf(col6_3);
+
+            //Double t_score = rsGst14aa.getDouble("score_of_parameter");
+             median = rsGst14aa.getDouble("median_4d");
+            Double numerator_3b = rsGst14aa.getDouble("col6_1");
+
+
+            int way_to_grade = score.marks4d(totalScore);
             int insentavization = score.marks4d(totalScore);
+            // System.out.println("insentavization3b :-" + insentavization);
 
-            if (s2col7 > median && way_to_grade < 10) {
+            if (numerator_3b > median && way_to_grade < 10) {
                 insentavization += 1;
             }
+
+            //System.out.println("insentavization3b after :-" + insentavization);
+
+            // int Zonal_rank = 0;
+            // String gst = "no";
 
             double sub_parameter_weighted_average_bfore = insentavization * 0.2 ;
             String formattedSubParameterWeightedAverage = String.format("%.2f", sub_parameter_weighted_average_bfore);
             double sub_parameter_weighted_average = Double.parseDouble(formattedSubParameterWeightedAverage);
+            //double sub_parameter_weighted_average = 0.00 ;
 
-            GSTCUS gsta = new GSTCUS(zoneName, commname, totalScore, absval, zoneCode, ra, Zonal_rank, gst, way_to_grade, insentavization, sub_parameter_weighted_average);
+            gsta = new GSTCUS(zoneName, commname, totalScore, absval, zoneCode, ra, Zonal_rank, gst, way_to_grade, insentavization, sub_parameter_weighted_average);
             allGstaList.add(gsta);
         }
+        System.out.println("gst4d zone wise median :" + median);
         return allGstaList;
     }
 
@@ -1356,7 +1348,49 @@ public class GstSubParameterService {
         double median = 0;
         List<GSTCUS> allGstaList = new ArrayList<>();
         while(rsGst14aa.next()) {
+            String commname=rsGst14aa.getString("COMM_NAME");
+            String ra=RelevantAspect.GST4D_RA;
+            String zoneCode = rsGst14aa.getString("ZONE_CODE");
+            String zoneName = rsGst14aa.getString("ZONE_NAME");
+            Double t_score = rsGst14aa.getDouble("total_score");
+            String absval = rsGst14aa.getString("absvl");
+            double col6_1=rsGst14aa.getInt("col6_1");
+            double col6_3=rsGst14aa.getInt("col6_3");
+            String formattedTotal = String.format("%.2f", t_score);
+            double totalScore = Double.parseDouble(formattedTotal);
+            int Zonal_rank = 0;
+            String gst = "no";
 
+            // int insentavization = 0;
+            // int sub_parameter_weighted_average = 0;
+            //String absval=String.valueOf(col13)+"/"+String.valueOf(col1);
+
+            //Double t_score = rsGst14aa.getDouble("score_of_parameter");
+             median = rsGst14aa.getDouble("median_4d");
+            Double numerator_3b = rsGst14aa.getDouble("col6_1");
+//                    String absval=String.valueOf(col6_1)+"/"+String.valueOf(col6_3);
+
+
+            int way_to_grade = score.marks4d(totalScore);
+            int insentavization = score.marks4d(totalScore);
+            // System.out.println("insentavization3b :-" + insentavization);
+
+            if (numerator_3b > median && way_to_grade < 10) {
+                insentavization += 1;
+            }
+
+            //System.out.println("insentavization3b after :-" + insentavization);
+
+            // int Zonal_rank = 0;
+            // String gst = "no";
+
+            double sub_parameter_weighted_average_bfore = insentavization * 0.2 ;
+            String formattedSubParameterWeightedAverage = String.format("%.2f", sub_parameter_weighted_average_bfore);
+            double sub_parameter_weighted_average = Double.parseDouble(formattedSubParameterWeightedAverage);
+            //double sub_parameter_weighted_average = 0.00 ;
+
+            gsta = new GSTCUS(zoneName, commname, totalScore, absval, zoneCode, ra, Zonal_rank, gst, way_to_grade, insentavization, sub_parameter_weighted_average);
+            allGstaList.add(gsta);
         }
         System.out.println("gst4d all_cmsnry_median wise median :" + median);
         return allGstaList;
@@ -1366,7 +1400,49 @@ public class GstSubParameterService {
         double median = 0;
         List<GSTCUS> allGstaList = new ArrayList<>();
         while(rsGst14aa.next()) {
+            String commname=rsGst14aa.getString("COMM_NAME");
+            String ra=RelevantAspect.GST4D_RA;
+            String zoneCode = rsGst14aa.getString("ZONE_CODE");
+            String zoneName = rsGst14aa.getString("ZONE_NAME");
+            Double t_score = rsGst14aa.getDouble("total_score");
+            String absval = rsGst14aa.getString("absvl");
+            double col6_1=rsGst14aa.getInt("col6_1");
+            double col6_3=rsGst14aa.getInt("col6_3");
+            String formattedTotal = String.format("%.2f", t_score);
+            double totalScore = Double.parseDouble(formattedTotal);
+            int Zonal_rank = 0;
+            String gst = "no";
 
+            // int insentavization = 0;
+            // int sub_parameter_weighted_average = 0;
+            //String absval=String.valueOf(col13)+"/"+String.valueOf(col1);
+
+            //Double t_score = rsGst14aa.getDouble("score_of_parameter");
+             median = rsGst14aa.getDouble("median_4d");
+            Double numerator_3b = rsGst14aa.getDouble("col6_1");
+//                    String absval=String.valueOf(col6_1)+"/"+String.valueOf(col6_3);
+
+
+            int way_to_grade = score.marks4d(totalScore);
+            int insentavization = score.marks4d(totalScore);
+            // System.out.println("insentavization3b :-" + insentavization);
+
+            if (numerator_3b > median && way_to_grade < 10) {
+                insentavization += 1;
+            }
+
+            //System.out.println("insentavization3b after :-" + insentavization);
+
+            // int Zonal_rank = 0;
+            // String gst = "no";
+
+            double sub_parameter_weighted_average_bfore = insentavization * 0.2 ;
+            String formattedSubParameterWeightedAverage = String.format("%.2f", sub_parameter_weighted_average_bfore);
+            double sub_parameter_weighted_average = Double.parseDouble(formattedSubParameterWeightedAverage);
+            //double sub_parameter_weighted_average = 0.00 ;
+
+            gsta = new GSTCUS(zoneName, commname, totalScore, absval, zoneCode, ra, Zonal_rank, gst, way_to_grade, insentavization, sub_parameter_weighted_average);
+            allGstaList.add(gsta);
         }
         System.out.println("gst4d all_cmsnry_median :" + median);
         return allGstaList;
