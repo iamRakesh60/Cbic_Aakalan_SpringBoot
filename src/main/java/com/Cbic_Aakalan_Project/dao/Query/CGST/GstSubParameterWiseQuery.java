@@ -574,7 +574,7 @@ public class GstSubParameterWiseQuery {
 				"LEFT JOIN \n" +
 				"    mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
 				"WHERE \n" +
-				"    MM_YYYY = '" + month_date + "'\n" +
+				"    MM_YYYY = ? \n" +
 				"GROUP BY \n" +
 				"    zc.ZONE_NAME, \n" +
 				"    cc.ZONE_CODE\n" +
@@ -601,8 +601,8 @@ public class GstSubParameterWiseQuery {
 				"LEFT JOIN \n" +
 				"    mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
 				"WHERE \n" +
-				"    MM_YYYY = '" + month_date + "'\n" +
-				"    AND cc.ZONE_CODE = '" + zone_code + "'\n" +
+				"    MM_YYYY = ? \n" +
+				"    AND cc.ZONE_CODE = ? \n" +
 				"ORDER BY \n" +
 				"    total_score ASC;\n";
 		return queryGst14aa;
@@ -626,7 +626,7 @@ public class GstSubParameterWiseQuery {
 				"LEFT JOIN \n" +
 				"    mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
 				"WHERE \n" +
-				"    MM_YYYY = '" + month_date + "'\n" +
+				"    MM_YYYY = ? \n" +
 				"ORDER BY \n" +
 				"    total_score ASC;\n";
 		return queryGst14aa;
@@ -646,7 +646,7 @@ public class GstSubParameterWiseQuery {
 				+ "FROM mis_gst_commcode AS cc \n"
 				+ "RIGHT JOIN mis_gst_gst_2 AS 14c ON cc.COMM_CODE = 14c.COMM_CODE \n"
 				+ "LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE \n"
-				+ "WHERE 14c.MM_YYYY = '"+ month_date+"' \n"
+				+ "WHERE 14c.MM_YYYY = ? \n"
 				+ "GROUP BY zc.ZONE_NAME,cc.ZONE_CODE\n"
 				+ "ORDER BY total_score ;";
 		return queryGst14aa;
@@ -657,7 +657,7 @@ public class GstSubParameterWiseQuery {
 		String queryGst14aa=  "SELECT zc.ZONE_NAME, cc.COMM_NAME, cc.ZONE_CODE,(14c.GSTR_3BM_F-14c.GSTR_3BM_D) AS col21,14c.GSTR_3BM_F as col3 "
 				+ "FROM  mis_gst_commcode as cc right join mis_gst_gst_2 as 14c on cc.COMM_CODE=14c.COMM_CODE "
 				+ "left join mis_gst_zonecode as zc on zc.ZONE_CODE=cc.ZONE_CODE "
-				+ "where  14c.MM_YYYY='"+ month_date+"' and zc.ZONE_CODE='"+zone_code+"';";
+				+ "where  14c.MM_YYYY= ? and zc.ZONE_CODE= ? ;";
 		return queryGst14aa;
 	}
 	public String QueryFor_gst2_AllCommissonaryWise(String month_date){
@@ -666,7 +666,7 @@ public class GstSubParameterWiseQuery {
 		String queryGst14aa="SELECT zc.ZONE_NAME, cc.COMM_NAME, cc.ZONE_CODE,(14c.GSTR_3BM_F-14c.GSTR_3BM_D) AS col21,14c.GSTR_3BM_F as col3 \n" +
 				"FROM  mis_gst_commcode as cc right join mis_gst_gst_2 as 14c on cc.COMM_CODE=14c.COMM_CODE \n" +
 				"left join mis_gst_zonecode as zc on zc.ZONE_CODE=cc.ZONE_CODE \n" +
-				"where  14c.MM_YYYY='"+ month_date+"';";
+				"where  14c.MM_YYYY= ? ;";
 		return queryGst14aa;
 	}
 	// ********************************************************************************************************************************
@@ -680,20 +680,20 @@ public class GstSubParameterWiseQuery {
 				+ "        cc.ZONE_CODE,\n"
 				+ "        -- Calculate col1 for the previous month\n"
 				+ "        SUM(CASE\n"
-				+ "                WHEN 14c.MM_YYYY = DATE_FORMAT(DATE_SUB('"+ month_date+"', INTERVAL 1 MONTH), '%Y-%m-%d')\n"
+				+ "                WHEN 14c.MM_YYYY = DATE_FORMAT(DATE_SUB( ? , INTERVAL 1 MONTH), '%Y-%m-%d')\n"
 				+ "                THEN COALESCE(14c.CLOSING_NO, 0)\n"
 				+ "                ELSE 0\n"
 				+ "            END) AS col1,\n"
 				+ "        -- Other columns for the specified month only\n"
-				+ "        SUM(CASE WHEN 14c.MM_YYYY = '"+ month_date+"' THEN COALESCE(14c.RETURN_SCRUTINY, 0) ELSE 0 END) AS col2,\n"
-				+ "        SUM(CASE WHEN 14c.MM_YYYY = '"+ month_date+"' THEN COALESCE(14c.SCRUTINIZED_DISCRIPANCY_FOUND, 0) ELSE 0 END) AS col4,\n"
-				+ "        SUM(CASE WHEN 14c.MM_YYYY = '"+ month_date+"' THEN COALESCE(14c.OUTCOME_ASMT_12_ISSUED, 0) ELSE 0 END) AS col8,\n"
-				+ "        SUM(CASE WHEN 14c.MM_YYYY = '"+ month_date+"' THEN COALESCE(14c.OUTCOME_SECTION_61_ACTION_65_66, 0) ELSE 0 END) AS col9,\n"
-				+ "        SUM(CASE WHEN 14c.MM_YYYY = '"+ month_date+"' THEN COALESCE(14c.OUTCOME_SECTION_61_ACTION_67, 0) ELSE 0 END) AS col10,\n"
-				+ "        SUM(CASE WHEN 14c.MM_YYYY = '"+ month_date+"' THEN COALESCE(14c.OUTCOME_SCN_SECTION_73_74, 0) ELSE 0 END) AS col11,\n"
+				+ "        SUM(CASE WHEN 14c.MM_YYYY =  ?  THEN COALESCE(14c.RETURN_SCRUTINY, 0) ELSE 0 END) AS col2,\n"
+				+ "        SUM(CASE WHEN 14c.MM_YYYY =  ?  THEN COALESCE(14c.SCRUTINIZED_DISCRIPANCY_FOUND, 0) ELSE 0 END) AS col4,\n"
+				+ "        SUM(CASE WHEN 14c.MM_YYYY =  ?  THEN COALESCE(14c.OUTCOME_ASMT_12_ISSUED, 0) ELSE 0 END) AS col8,\n"
+				+ "        SUM(CASE WHEN 14c.MM_YYYY =  ?  THEN COALESCE(14c.OUTCOME_SECTION_61_ACTION_65_66, 0) ELSE 0 END) AS col9,\n"
+				+ "        SUM(CASE WHEN 14c.MM_YYYY =  ?  THEN COALESCE(14c.OUTCOME_SECTION_61_ACTION_67, 0) ELSE 0 END) AS col10,\n"
+				+ "        SUM(CASE WHEN 14c.MM_YYYY =  ?  THEN COALESCE(14c.OUTCOME_SCN_SECTION_73_74, 0) ELSE 0 END) AS col11,\n"
 				+ "        -- Calculate col3a as (col4 + col8 + col9 + col10 + col11)\n"
 				+ "        SUM(CASE\n"
-				+ "                WHEN 14c.MM_YYYY = '"+ month_date+"' THEN\n"
+				+ "                WHEN 14c.MM_YYYY =  ?  THEN\n"
 				+ "                    COALESCE(14c.SCRUTINIZED_DISCRIPANCY_FOUND, 0)\n"
 				+ "                    + COALESCE(14c.OUTCOME_ASMT_12_ISSUED, 0)\n"
 				+ "                    + COALESCE(14c.OUTCOME_SECTION_61_ACTION_65_66, 0)\n"
@@ -706,7 +706,7 @@ public class GstSubParameterWiseQuery {
 				+ "        LEFT JOIN mis_gst_commcode AS cc ON zc.ZONE_CODE = cc.ZONE_CODE\n"
 				+ "        LEFT JOIN mis_dggst_gst_scr_1 AS 14c ON cc.COMM_CODE = 14c.COMM_CODE\n"
 				+ "    WHERE\n"
-				+ "        14c.MM_YYYY IN ('"+ month_date+"', DATE_FORMAT(DATE_SUB('"+ month_date+"', INTERVAL 1 MONTH), '%Y-%m-%d'))\n"
+				+ "        14c.MM_YYYY IN ( ? , DATE_FORMAT(DATE_SUB( ? , INTERVAL 1 MONTH), '%Y-%m-%d'))\n"
 				+ "    GROUP BY\n"
 				+ "        zc.ZONE_NAME,\n"
 				+ "        cc.ZONE_CODE\n"
@@ -756,20 +756,20 @@ public class GstSubParameterWiseQuery {
 				+ "        cc.COMM_NAME, -- Added COMM_NAME\n"
 				+ "        -- Calculate col1 for the previous month\n"
 				+ "        SUM(CASE\n"
-				+ "                WHEN 14c.MM_YYYY = DATE_FORMAT(DATE_SUB('"+ month_date+"', INTERVAL 1 MONTH), '%Y-%m-%d')\n"
+				+ "                WHEN 14c.MM_YYYY = DATE_FORMAT(DATE_SUB( ? , INTERVAL 1 MONTH), '%Y-%m-%d')\n"
 				+ "                THEN COALESCE(14c.CLOSING_NO, 0)\n"
 				+ "                ELSE 0\n"
 				+ "            END) AS col1,\n"
 				+ "        -- Other columns for the specified month only\n"
-				+ "        SUM(CASE WHEN 14c.MM_YYYY = '"+ month_date+"' THEN COALESCE(14c.RETURN_SCRUTINY, 0) ELSE 0 END) AS col2,\n"
-				+ "        SUM(CASE WHEN 14c.MM_YYYY = '"+ month_date+"' THEN COALESCE(14c.SCRUTINIZED_DISCRIPANCY_FOUND, 0) ELSE 0 END) AS col4,\n"
-				+ "        SUM(CASE WHEN 14c.MM_YYYY = '"+ month_date+"' THEN COALESCE(14c.OUTCOME_ASMT_12_ISSUED, 0) ELSE 0 END) AS col8,\n"
-				+ "        SUM(CASE WHEN 14c.MM_YYYY = '"+ month_date+"' THEN COALESCE(14c.OUTCOME_SECTION_61_ACTION_65_66, 0) ELSE 0 END) AS col9,\n"
-				+ "        SUM(CASE WHEN 14c.MM_YYYY = '"+ month_date+"' THEN COALESCE(14c.OUTCOME_SECTION_61_ACTION_67, 0) ELSE 0 END) AS col10,\n"
-				+ "        SUM(CASE WHEN 14c.MM_YYYY = '"+ month_date+"' THEN COALESCE(14c.OUTCOME_SCN_SECTION_73_74, 0) ELSE 0 END) AS col11,\n"
+				+ "        SUM(CASE WHEN 14c.MM_YYYY =  ?  THEN COALESCE(14c.RETURN_SCRUTINY, 0) ELSE 0 END) AS col2,\n"
+				+ "        SUM(CASE WHEN 14c.MM_YYYY =  ?  THEN COALESCE(14c.SCRUTINIZED_DISCRIPANCY_FOUND, 0) ELSE 0 END) AS col4,\n"
+				+ "        SUM(CASE WHEN 14c.MM_YYYY =  ?  THEN COALESCE(14c.OUTCOME_ASMT_12_ISSUED, 0) ELSE 0 END) AS col8,\n"
+				+ "        SUM(CASE WHEN 14c.MM_YYYY =  ?  THEN COALESCE(14c.OUTCOME_SECTION_61_ACTION_65_66, 0) ELSE 0 END) AS col9,\n"
+				+ "        SUM(CASE WHEN 14c.MM_YYYY =  ?  THEN COALESCE(14c.OUTCOME_SECTION_61_ACTION_67, 0) ELSE 0 END) AS col10,\n"
+				+ "        SUM(CASE WHEN 14c.MM_YYYY =  ?  THEN COALESCE(14c.OUTCOME_SCN_SECTION_73_74, 0) ELSE 0 END) AS col11,\n"
 				+ "        -- Calculate col3a as (col4 + col8 + col9 + col10 + col11)\n"
 				+ "        SUM(CASE\n"
-				+ "                WHEN 14c.MM_YYYY = '"+ month_date+"' THEN\n"
+				+ "                WHEN 14c.MM_YYYY =  ?  THEN\n"
 				+ "                    COALESCE(14c.SCRUTINIZED_DISCRIPANCY_FOUND, 0)\n"
 				+ "                    + COALESCE(14c.OUTCOME_ASMT_12_ISSUED, 0)\n"
 				+ "                    + COALESCE(14c.OUTCOME_SECTION_61_ACTION_65_66, 0)\n"
@@ -782,7 +782,7 @@ public class GstSubParameterWiseQuery {
 				+ "        LEFT JOIN mis_gst_commcode AS cc ON zc.ZONE_CODE = cc.ZONE_CODE\n"
 				+ "        LEFT JOIN mis_dggst_gst_scr_1 AS 14c ON cc.COMM_CODE = 14c.COMM_CODE\n"
 				+ "    WHERE\n"
-				+ "        14c.MM_YYYY IN ('"+ month_date+"', DATE_FORMAT(DATE_SUB('"+ month_date+"', INTERVAL 1 MONTH), '%Y-%m-%d'))\n"
+				+ "        14c.MM_YYYY IN ( ? , DATE_FORMAT(DATE_SUB( ? , INTERVAL 1 MONTH), '%Y-%m-%d'))\n"
 				+ "    GROUP BY\n"
 				+ "        zc.ZONE_NAME,\n"
 				+ "        cc.ZONE_CODE,\n"
@@ -817,7 +817,7 @@ public class GstSubParameterWiseQuery {
 				+ "    COALESCE((SELECT median_3a FROM MedianResult), 0) AS median_3a,\n"
 				+ "    COALESCE(((col3a / NULLIF((col1 + col2), 0)) * 100), 0) AS total_score -- Added total_score column\n"
 				+ "FROM CTE\n"
-				+ "WHERE ZONE_CODE = '" + zone_code + "' -- Added filter for ZONE_CODE\n"
+				+ "WHERE ZONE_CODE = ? \n"
 				+ "ORDER BY\n"
 				+ "    total_score DESC, -- Keep total_score in descending order\n"
 				+ "    ZONE_NAME,\n"
@@ -835,20 +835,20 @@ public class GstSubParameterWiseQuery {
 				+ "        cc.COMM_NAME, -- Added COMM_NAME\n"
 				+ "        -- Calculate col1 for the previous month\n"
 				+ "        SUM(CASE\n"
-				+ "                WHEN 14c.MM_YYYY = DATE_FORMAT(DATE_SUB('" + month_date + "', INTERVAL 1 MONTH), '%Y-%m-%d')\n"
+				+ "                WHEN 14c.MM_YYYY = DATE_FORMAT(DATE_SUB( ? , INTERVAL 1 MONTH), '%Y-%m-%d')\n"
 				+ "                THEN COALESCE(14c.CLOSING_NO, 0)\n"
 				+ "                ELSE 0\n"
 				+ "            END) AS col1,\n"
 				+ "        -- Other columns for the specified month only\n"
-				+ "        SUM(CASE WHEN 14c.MM_YYYY = '" + month_date + "' THEN COALESCE(14c.RETURN_SCRUTINY, 0) ELSE 0 END) AS col2,\n"
-				+ "        SUM(CASE WHEN 14c.MM_YYYY = '" + month_date + "' THEN COALESCE(14c.SCRUTINIZED_DISCRIPANCY_FOUND, 0) ELSE 0 END) AS col4,\n"
-				+ "        SUM(CASE WHEN 14c.MM_YYYY = '" + month_date + "' THEN COALESCE(14c.OUTCOME_ASMT_12_ISSUED, 0) ELSE 0 END) AS col8,\n"
-				+ "        SUM(CASE WHEN 14c.MM_YYYY = '" + month_date + "'THEN COALESCE(14c.OUTCOME_SECTION_61_ACTION_65_66, 0) ELSE 0 END) AS col9,\n"
-				+ "        SUM(CASE WHEN 14c.MM_YYYY = '" + month_date + "'THEN COALESCE(14c.OUTCOME_SECTION_61_ACTION_67, 0) ELSE 0 END) AS col10,\n"
-				+ "        SUM(CASE WHEN 14c.MM_YYYY = '" + month_date + "'THEN COALESCE(14c.OUTCOME_SCN_SECTION_73_74, 0) ELSE 0 END) AS col11,\n"
+				+ "        SUM(CASE WHEN 14c.MM_YYYY =  ?  THEN COALESCE(14c.RETURN_SCRUTINY, 0) ELSE 0 END) AS col2,\n"
+				+ "        SUM(CASE WHEN 14c.MM_YYYY =  ?  THEN COALESCE(14c.SCRUTINIZED_DISCRIPANCY_FOUND, 0) ELSE 0 END) AS col4,\n"
+				+ "        SUM(CASE WHEN 14c.MM_YYYY =  ?  THEN COALESCE(14c.OUTCOME_ASMT_12_ISSUED, 0) ELSE 0 END) AS col8,\n"
+				+ "        SUM(CASE WHEN 14c.MM_YYYY =  ? THEN COALESCE(14c.OUTCOME_SECTION_61_ACTION_65_66, 0) ELSE 0 END) AS col9,\n"
+				+ "        SUM(CASE WHEN 14c.MM_YYYY =  ? THEN COALESCE(14c.OUTCOME_SECTION_61_ACTION_67, 0) ELSE 0 END) AS col10,\n"
+				+ "        SUM(CASE WHEN 14c.MM_YYYY =  ? THEN COALESCE(14c.OUTCOME_SCN_SECTION_73_74, 0) ELSE 0 END) AS col11,\n"
 				+ "        -- Calculate col3a as (col4 + col8 + col9 + col10 + col11)\n"
 				+ "        SUM(CASE\n"
-				+ "                WHEN 14c.MM_YYYY = '" + month_date + "' THEN\n"
+				+ "                WHEN 14c.MM_YYYY =  ?  THEN\n"
 				+ "                    COALESCE(14c.SCRUTINIZED_DISCRIPANCY_FOUND, 0)\n"
 				+ "                    + COALESCE(14c.OUTCOME_ASMT_12_ISSUED, 0)\n"
 				+ "                    + COALESCE(14c.OUTCOME_SECTION_61_ACTION_65_66, 0)\n"
@@ -859,9 +859,10 @@ public class GstSubParameterWiseQuery {
 				+ "    FROM\n"
 				+ "        mis_gst_zonecode AS zc\n"
 				+ "        LEFT JOIN mis_gst_commcode AS cc ON zc.ZONE_CODE = cc.ZONE_CODE\n"
-				+ "        LEFT JOIN mis_dggst_gst_scr_1 AS 14c ON cc.COMM_CODE = 14c.COMM_CODE\n"
+				+ "        LEFT JOIN mis_dggst_gst_scr_1 AS 14c ON cc.COMM_CODE = 14c.COMM"
+				+ "_CODE\n"
 				+ "    WHERE\n"
-				+ "        14c.MM_YYYY IN ('" + month_date + "', DATE_FORMAT(DATE_SUB('" + month_date + "', INTERVAL 1 MONTH), '%Y-%m-%d'))\n"
+				+ "        14c.MM_YYYY IN ( ? , DATE_FORMAT(DATE_SUB( ? , INTERVAL 1 MONTH), '%Y-%m-%d'))\n"
 				+ "    GROUP BY\n"
 				+ "        zc.ZONE_NAME,\n"
 				+ "        cc.ZONE_CODE,\n"
