@@ -82,10 +82,7 @@ public class GstSubParameterController {
                 .sorted(Comparator.comparing(GSTCUS::getTotal_score).reversed()).collect(Collectors.toList());
     }
 
-    /* Date: May 04, 2024
-     * created: RKS, may 18, 2024
-     * updated: RKS, jan 24, 2025
-     */
+    // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= gst1b =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
     @ResponseBody
     @RequestMapping(value = "/gst1b")
     //  http://localhost:8080/cbicApi/cbic/gst1b?month_date=2024-10-01&type=zone
@@ -128,13 +125,7 @@ public class GstSubParameterController {
                 .collect(Collectors.toList());
     }
 
-
-    /*
-     * Date: May 04, 2024
-     * created:
-     * updated: RKS, may 18, 2024
-     */
-
+    // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= gst1c =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
     @ResponseBody
     @RequestMapping(value = "/gst1c")
     //  http://localhost:8080/cbicApi/cbic/gst1c?month_date=2024-10-01&type=zone
@@ -177,7 +168,7 @@ public class GstSubParameterController {
 
     }
 
-
+    // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= gst1c =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
     @ResponseBody
     @RequestMapping(value = "/gst1d")
     //  http://localhost:8080/cbicApi/cbic/gst1d?month_date=2023-04-01&type=zone
@@ -219,12 +210,8 @@ public class GstSubParameterController {
         ).collect(Collectors.toList());
     }
 
-    /*
-     * Date: May 04, 2024
-     * created:
-     * updated: RKS & Nishant, may 18,31, 2024
-     * Purpose: This methods have core function in Return Filing .
-     */
+
+    // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= gst1e =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
     @ResponseBody
     @RequestMapping(value = "/gst1e")
     //  http://localhost:8080/cbicApi/cbic/gst1e?month_date=2024-10-01&type=zone
@@ -267,12 +254,8 @@ public class GstSubParameterController {
     }
 
 
-    /*
-     * Date: May 04, 2024
-     * created:
-     * updated: RKS & Nishant, may 24,31, 2024
-     * Purpose: This methods have core function in Return Filing .
-     */
+
+    // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= gst1f =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
     @ResponseBody
     @RequestMapping(value = "/gst1f")
     //  http://localhost:8080/cbicApi/cbic/gst1f?month_date=2023-04-01&type=zone
@@ -314,12 +297,8 @@ public class GstSubParameterController {
         ).collect(Collectors.toList());
     }
 
-    /*
-     * Date: May 04, 2024
-     * created:
-     * updated: Nishant, may 28, 2024
-     * Purpose: This methods have core function in Return Filing .
-     */
+
+    // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= gst2 =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
     @ResponseBody
     @RequestMapping(value = "/gst2")
 //	  http://localhost:8080/cbicApi/cbic/gst2?month_date=2023-04-01&type=zone
@@ -361,12 +340,8 @@ public class GstSubParameterController {
         return allGstaList.stream()
                 .sorted(Comparator.comparing(GSTCUS::getTotal_score)).collect(Collectors.toList());
     }
-    /*
-     * Date: May 04, 2024
-     * created:
-     * updated: Nishant, may 18, 2024
-     * Purpose: This methods have core function in Return Filing .
-     */
+
+    // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= gst3a =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
 //    @ResponseBody
 //    @RequestMapping(value = "/gst3a")
 //    // http://localhost:8080/cbicApi/cbic/gst3a?month_date=2023-04-01&type=zone
@@ -546,12 +521,8 @@ public class GstSubParameterController {
                 .sorted(Comparator.comparing(GSTCUS::getTotal_score).reversed()).collect(Collectors.toList());
     }
 
-    /*
-     * Date: May 04, 2024
-     * created:
-     * updated: Nishant, may 18, 2024
-     * Purpose: This methods have core function in Return Filing .
-     */
+
+    // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= gst3b =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
 
 //    @ResponseBody
 //    @RequestMapping(value = "/gst3b")
@@ -727,13 +698,7 @@ public class GstSubParameterController {
                 .sorted(Comparator.comparing(GSTCUS::getTotal_score).reversed()).collect(Collectors.toList());
     }
 
-
-    /*
-     * Date: May 04, 2024
-     * created:
-     * updated: Nishant, may 18, 2024
-     * Purpose: This methods have core function in Return Filing .
-     */
+    // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= gst4a =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
     @ResponseBody
     @RequestMapping(value = "/gst4a")
     //  http://localhost:8080/cbicApi/cbic/gst4a?month_date=2024-04-01&type=zone
@@ -776,13 +741,8 @@ public class GstSubParameterController {
                 .sorted(Comparator.comparing(GSTCUS::getTotal_score).reversed()).collect(Collectors.toList());
     }
 
-    /*
-     * Date: May 04, 2024
-     * created:
-     * updated: Nishant, may 18, 2024
-     * Purpose: This methods have core function in Return Filing .
-     */
 
+    // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= gst4b =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
     @ResponseBody
     @RequestMapping(value = "/gst4b")
     //  http://localhost:8080/cbicApi/cbic/gst4b?month_date=2023-04-01&type=zone
@@ -826,12 +786,8 @@ public class GstSubParameterController {
 
     }
 
-    /*
-     * Date: May 04, 2024
-     * created:
-     * updated: RKS , july 9. 2024
-     * Purpose: This methods have core function in Return Filing .
-     */
+
+    // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= gst4c =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
     @ResponseBody
     @RequestMapping(value = "/gst4c")
     //  http://localhost:8080/cbicApi/cbic/gst4c?month_date=2024-04-01&type=zone                        // updated
@@ -878,12 +834,8 @@ public class GstSubParameterController {
                 .sorted(Comparator.comparing(GSTCUS::getTotal_score).reversed()).collect(Collectors.toList());
     }
 
-    /*
-     * Date: May 04, 2024
-     * created:
-     * updated: Nishant, may 18, 2024
-     * Purpose: This methods have core function in Return Filing .
-     */
+
+    // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= gst4d =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
     @ResponseBody
     @RequestMapping(value = "/gst4d")
     //  http://localhost:8080/cbicApi/cbic/gst4d?month_date=2023-05-01&type=zone
@@ -924,13 +876,8 @@ public class GstSubParameterController {
         return allGstaList.stream()
                 .sorted(Comparator.comparing(GSTCUS::getTotal_score).reversed()).collect(Collectors.toList());
     }
-    /*
-     * Date: May 04, 2024
-     * created:
-     * updated: RKS & Nishant, june 11, 2024
-     * Purpose: This methods have core function in Return Filing .
-     */
 
+    // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= gst5a =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
     @ResponseBody
     @RequestMapping(value = "/gst5a")
     //  http://localhost:8080/cbicApi/cbic/gst5a?month_date=2023-04-01&type=zone
@@ -972,12 +919,8 @@ public class GstSubParameterController {
         return allGstaList.stream()
                 .sorted(Comparator.comparing(GSTCUS::getTotal_score).reversed()).collect(Collectors.toList());
     }
-    /*
-     * Date: May 04, 2024
-     * created:
-     * updated: Nishant, may 18, 2024
-     * Purpose: This methods have core function in Return Filing .
-     */
+
+    // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= gst5b =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
     @ResponseBody
     @RequestMapping(value = "/gst5b")
     //  http://localhost:8080/cbicApi/cbic/gst5b?month_date=2023-05-01&type=zone
@@ -1023,12 +966,8 @@ public class GstSubParameterController {
         return allGstaList.stream()
                 .sorted(Comparator.comparing(GSTCUS::getSub_parameter_weighted_average).reversed()).collect(Collectors.toList());
     }
-    /*
-     * Date: May 04, 2024
-     * created:
-     * updated: Nishant, may 18, 2024
-     * Purpose: This methods have core function in Return Filing .
-     */
+
+    // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= gst6a =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
     @ResponseBody
     @RequestMapping(value = "/gst6a")
     //  http://localhost:8080/cbicApi/cbic/gst6a?month_date=2024-04-01&type=zone
@@ -1075,12 +1014,8 @@ public class GstSubParameterController {
                 .sorted(Comparator.comparing(GSTCUS::getTotal_score).reversed()).collect(Collectors.toList());
     }
 
-    /*
-     * Date: May 04, 2024
-     * created:
-     * updated: Nishant, may 18, 2024
-     * Purpose: This methods have core function in Return Filing .
-     */
+
+    // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= gst6b =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
     @ResponseBody
     @RequestMapping(value = "/gst6b")
     //  http://localhost:8080/cbicApi/cbic/gst6b?month_date=2023-04-01&type=zone
@@ -1122,12 +1057,8 @@ public class GstSubParameterController {
         return allGstaList.stream()
                 .sorted(Comparator.comparing(GSTCUS::getTotal_score)).collect(Collectors.toList());
     }
-    /*
-     * Date: May 04, 2024
-     * created:
-     * updated: Nishant, may 18, 2024
-     * Purpose: This methods have core function in Return Filing .
-     */
+
+    // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= gst6c =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
     @ResponseBody
     @RequestMapping(value = "/gst6c")
     //  http://localhost:8080/cbicApi/cbic/gst6c?month_date=2024-04-01&type=zone
@@ -1172,12 +1103,8 @@ public class GstSubParameterController {
         return allGstaList.stream()
                 .sorted(Comparator.comparing(GSTCUS::getTotal_score).reversed()).collect(Collectors.toList());
     }
-    /*
-     * Date: May 04, 2024
-     * created:
-     * updated:Nishant, may 18, 2024
-     * Purpose: This methods have core function in Return Filing .
-     */
+
+    // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= gst6d =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
     @ResponseBody
     @RequestMapping(value = "/gst6d")
     //  http://localhost:8080/cbicApi/cbic/gst6d?month_date=2024-04-01&type=zone
@@ -1219,12 +1146,8 @@ public class GstSubParameterController {
         return allGstaList.stream()
                 .sorted(Comparator.comparing(GSTCUS::getTotal_score)).collect(Collectors.toList());
     }
-    /*
-     * Date: May 04, 2024
-     * created:
-     * updated: RKS & Nishant may 24, 2024
-     * Purpose: This methods have core function in Return Filing .
-     */
+
+    // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= gst7 =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
     @ResponseBody
     @RequestMapping(value = "/gst7")
     //  http://localhost:8080/cbicApi/cbic/gst7?month_date=2023-04-01&type=zone
@@ -1266,12 +1189,8 @@ public class GstSubParameterController {
                 .sorted(Comparator.comparing(GSTCUS::getTotal_score)).collect(Collectors.toList());
     }
 
-    /*
-     * Date: May 04, 2024
-     * created:
-     * updated: Nishant, may 23, 2024
-     * Purpose: This methods have core function in Return Filing .
-     */
+
+    // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= gst8a =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
     @ResponseBody
     @RequestMapping(value = "/gst8a")  // only zone wise working
     //  http://localhost:8080/cbicApi/cbic/gst8a?month_date=2024-10-01&type=zone
@@ -1312,6 +1231,7 @@ public class GstSubParameterController {
                 .sorted(Comparator.comparing(GSTCUS::getTotal_score).reversed()).collect(Collectors.toList());
     }
 
+    // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= gst8b =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
     @ResponseBody
     @RequestMapping(value = "/gst8b")
     //  http://localhost:8080/cbicApi/cbic/gst8b?month_date=2024-10-01&type=zone
@@ -1353,13 +1273,8 @@ public class GstSubParameterController {
     }
 
 
-    /*
-     * Date: May 17, 2024
-     * created : RKS
-     * queries : Nishant
-     * updated: RKS, may 28, 2024
-     * Purpose: This methods have core function in Return Filing .
-     */
+
+    // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= gst9a =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
 
     @ResponseBody
     @RequestMapping(value = "/gst9a")
@@ -1405,12 +1320,8 @@ public class GstSubParameterController {
                 .sorted(Comparator.comparing(GSTCUS::getTotal_score)).collect(Collectors.toList());
     }
 
-    /*
-     * Date: May 04, 2024
-     * created: RKS
-     * updated: Nishant & RKS, may 27, 2024
-     * Purpose: This methods have core function in Return Filing .
-     */
+
+    // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= gst9b =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
     @ResponseBody
     @RequestMapping(value = "/gst9b")
     //  http://localhost:8080/cbicApi/cbic/gst9b?month_date=2024-04-01&type=zone
@@ -1453,13 +1364,8 @@ public class GstSubParameterController {
                 .sorted(Comparator.comparing(GSTCUS::getTotal_score)).collect(Collectors.toList());
     }
 
-    /*
-     * Date: May 04, 2024
-     * created:
-     * updated: RKS, may 23, 2024
-     * Purpose: This methods have core function in Return Filing .
-     */
 
+    // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= gst10a =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
     @ResponseBody
     @RequestMapping(value = "/gst10a")
     //  http://localhost:8080/cbicApi/cbic/gst10a?month_date=2024-10-01&type=zone
@@ -1513,14 +1419,7 @@ public class GstSubParameterController {
         return (month >= 4) ? (month - 3) : (month + 9); //The ternary operator (condition) ? value_if_true : value_if_false is used here to determine the financial month.
     }
 
-
-
-    /*
-     * Date: May 04, 2024
-     * created: RKS
-     * updated: Nishant & RKS, may 27, 2024
-     * Purpose: This methods have core function in Return Filing .
-     */
+    // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= gst10b =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
     @ResponseBody
     @RequestMapping(value = "/gst10b")
     //  http://localhost:8080/cbicApi/cbic/gst10b?month_date=2023-04-01&type=zone
@@ -1624,6 +1523,7 @@ public class GstSubParameterController {
                 .sorted(Comparator.comparing(GSTCUS::getTotal_score)).collect(Collectors.toList());
     }
 
+    // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= gst10c =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
     @ResponseBody
     @RequestMapping(value = "/gst10c")
     //  http://localhost:8080/cbicApi/cbic/gst10c?month_date=2024-10-01&type=zone
@@ -1765,12 +1665,8 @@ public class GstSubParameterController {
     }
 
 
-    /*
-     * Date: May 04, 2024
-     * created: RKS
-     * updated: RKS, may 18, 2024
-     * Purpose: This methods have core function in Return Filing .
-     */
+
+    // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= gst11a =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
     @ResponseBody
     @RequestMapping(value = "/gst11a")
     //  http://localhost:8080/cbicApi/cbic/gst11a?month_date=2024-04-01&type=zone
@@ -1900,12 +1796,8 @@ public class GstSubParameterController {
                 .sorted(Comparator.comparing(GSTCUS::getTotal_score).reversed()).collect(Collectors.toList());
     }
 
-    /*
-     * Date: May 23, 2024
-     * @Kinshuk_Maity
-     * Purpose: This methods have core function in Registration.
-     */
 
+    // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= gst11b =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
     @ResponseBody
     @RequestMapping(value = "/gst11b")
     //  http://localhost:8080/cbicApi/cbic/gst11b?month_date=2023-04-01&type=zone
@@ -2059,12 +1951,8 @@ public class GstSubParameterController {
         return allGstaList.stream()
                 .sorted(Comparator.comparing(GSTCUS::getTotal_score)).collect(Collectors.toList());
     }
-    /*
-     * Date: May 04, 2024
-     * created:
-     * updated: RKS, may 24, 2024
-     * Purpose: This methods have core function in Return Filing .
-     */
+
+    // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= gst11c =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
     @ResponseBody
     @RequestMapping(value = "/gst11c")
     //  http://localhost:8080/cbicApi/cbic/gst11c?month_date=2023-04-01&type=zone
@@ -2201,12 +2089,8 @@ public class GstSubParameterController {
                 .sorted(Comparator.comparing(GSTCUS::getTotal_score).reversed()).collect(Collectors.toList());
     }
 
-    /*
-     * Date: May 23, 2024
-     * @Kinshuk_Maity
-     * Purpose: This methods have core function in Registration.
-     */
 
+    // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= gst11d =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
     @ResponseBody // incomplete code lack of resources
     @RequestMapping(value = "/gst11d")
     //  http://localhost:8080/cbicApi/cbic/gst11d?month_date=2023-04-01&type=zone
