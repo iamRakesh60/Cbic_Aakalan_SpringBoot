@@ -467,7 +467,7 @@ public class GstSubParameterWiseQuery {
 				"LEFT JOIN \n" +
 				"    mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
 				"WHERE \n" +
-				"    14c.MM_YYYY = '" + month_date + "'\n" +
+				"    14c.MM_YYYY = ? \n" +
 				"GROUP BY \n" +
 				"    cc.ZONE_CODE, zc.ZONE_NAME\n" +
 				"ORDER BY \n" +
@@ -508,8 +508,8 @@ public class GstSubParameterWiseQuery {
 				"LEFT JOIN \n" +
 				"    mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
 				"WHERE \n" +
-				"    MM_YYYY = '" + month_date + "' \n" +
-				"    AND cc.ZONE_CODE = '" + zone_code + "'\n" +
+				"    MM_YYYY = ? \n" +
+				"    AND cc.ZONE_CODE = ? \n" +
 				"ORDER BY \n" +
 				"    total_score ASC\n" +
 				"LIMIT 0, 1000;\n";
@@ -550,7 +550,7 @@ public class GstSubParameterWiseQuery {
 				"LEFT JOIN \n" +
 				"    mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
 				"WHERE \n" +
-				"    tbl14c.MM_YYYY ='" + month_date + "'\n" +
+				"    tbl14c.MM_YYYY = ? \n" +
 				"ORDER BY \n" +
 				"    total_score ASC;\n";
 		return queryGst14aa;
