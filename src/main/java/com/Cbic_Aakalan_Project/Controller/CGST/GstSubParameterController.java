@@ -1431,7 +1431,8 @@ public class GstSubParameterController {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst9b_CommissonaryWise(month_date,zone_code);
                 try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
                     pstmt.setString(1, month_date);
-                    pstmt.setString(2, zone_code);
+                    pstmt.setString(2, month_date);
+                    pstmt.setString(3, zone_code);
                     ResultSet rsGst14aa = pstmt.executeQuery();
                     allGstaList.addAll(gstSubParameterService.gst9bZoneWiseCommissionary(rsGst14aa));
                 }
@@ -1440,6 +1441,7 @@ public class GstSubParameterController {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst9b_AllCommissonaryWise(month_date);
                 try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
                     pstmt.setString(1, month_date);
+                    pstmt.setString(2, month_date);
                     ResultSet rsGst14aa = pstmt.executeQuery();
                     allGstaList.addAll(gstSubParameterService.gst9bAllCommissionary(rsGst14aa));
                 }
