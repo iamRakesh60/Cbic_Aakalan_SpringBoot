@@ -1678,7 +1678,7 @@ public class GstSubParameterWiseQuery {
 				"    FROM mis_gst_commcode AS cc\n" +
 				"    RIGHT JOIN mis_dpm_gst_adj_1 AS 14c ON cc.COMM_CODE = 14c.COMM_CODE\n" +
 				"    LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
-				"    WHERE 14c.MM_YYYY = '" + month_date + "'\n" +
+				"    WHERE 14c.MM_YYYY = ? \n" +
 				"    GROUP BY cc.ZONE_CODE, zc.ZONE_NAME\n" +
 				"),\n" +
 				"ranked_col10 AS (\n" +
@@ -1718,7 +1718,7 @@ public class GstSubParameterWiseQuery {
 				"    FROM mis_gst_commcode as cc\n" +
 				"    RIGHT JOIN mis_dpm_gst_adj_1 as 14c ON cc.COMM_CODE = 14c.COMM_CODE\n" +
 				"    LEFT JOIN mis_gst_zonecode as zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
-				"    WHERE 14c.MM_YYYY = '" + month_date + "'\n" +
+				"    WHERE 14c.MM_YYYY = ? \n" +
 				"),\n" +
 				"median_cte AS (\n" +
 				"    SELECT numerator_5a, ROW_NUMBER() OVER (ORDER BY numerator_5a) as rn,\n" +
@@ -1735,7 +1735,7 @@ public class GstSubParameterWiseQuery {
 				"    (SELECT median_5a FROM median_value) as median_5a,\n" +
 				"    CONCAT(numerator_5a, '/', col4) as absvl_5a\n" +
 				"FROM cte\n" +
-				"WHERE ZONE_CODE = '" + zone_code + "';";
+				"WHERE ZONE_CODE = ? ;";
 		return queryGst14aa;
 	}
 	public String QueryFor_gst5a_AllCommissonaryWise(String month_date){
@@ -1756,7 +1756,7 @@ public class GstSubParameterWiseQuery {
 				"    FROM mis_gst_commcode as cc\n" +
 				"    RIGHT JOIN mis_dpm_gst_adj_1 as 14c ON cc.COMM_CODE = 14c.COMM_CODE\n" +
 				"    LEFT JOIN mis_gst_zonecode as zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
-				"    WHERE 14c.MM_YYYY = '" + month_date + "'\n" +
+				"    WHERE 14c.MM_YYYY = ? \n" +
 				"),\n" +
 				"median_cte AS (\n" +
 				"    SELECT col10,ROW_NUMBER() OVER (ORDER BY col10) as rn,\n" +
