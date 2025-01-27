@@ -1892,7 +1892,7 @@ public class GstSubParameterWiseQuery {
 				"    FROM mis_gst_commcode AS cc\n" +
 				"    RIGHT JOIN mis_dgi_st_1a AS 14c ON cc.COMM_CODE = 14c.COMM_CODE\n" +
 				"    LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
-				"    WHERE 14c.MM_YYYY = '" + month_date + "'\n" +
+				"    WHERE 14c.MM_YYYY = ? \n" +
 				"    GROUP BY cc.ZONE_CODE, zc.ZONE_NAME\n" +
 				"),\n" +
 				"col3_data AS (\n" +
@@ -1900,7 +1900,7 @@ public class GstSubParameterWiseQuery {
 				"    FROM mis_gst_commcode AS cc\n" +
 				"    RIGHT JOIN mis_dgi_st_1a AS 14c ON cc.COMM_CODE = 14c.COMM_CODE\n" +
 				"    LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
-				"    WHERE 14c.MM_YYYY = '" + prev_month_new + "'\n" +
+				"    WHERE 14c.MM_YYYY = ? \n" +
 				"    GROUP BY cc.ZONE_CODE, zc.ZONE_NAME\n" +
 				"),\n" +
 				"ranked_data AS (\n" +
@@ -1937,7 +1937,7 @@ public class GstSubParameterWiseQuery {
 				"FROM mis_gst_commcode AS cc \n" +
 				"RIGHT JOIN mis_dgi_st_1a AS 14c ON cc.COMM_CODE = 14c.COMM_CODE \n" +
 				"LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE \n" +
-				"WHERE 14c.MM_YYYY = '" + month_date + "' AND zc.ZONE_NAME NOT IN ('DG East', 'CEI DG')\n" +
+				"WHERE 14c.MM_YYYY = ? AND zc.ZONE_NAME NOT IN ('DG East', 'CEI DG')\n" +
 				"), \n" +
 				"cte2 AS (\n" +
 				"SELECT zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME, (14c.COMM_CLOSING_NO + 14c.JC_CLOSING_NO + 14c.AC_CLOSING_NO + 14c.SUP_CLOSING_NO) AS col3\n" +
@@ -1946,7 +1946,7 @@ public class GstSubParameterWiseQuery {
 				"ON cc.COMM_CODE = 14c.COMM_CODE \n" +
 				"LEFT JOIN mis_gst_zonecode AS zc \n" +
 				"ON zc.ZONE_CODE = cc.ZONE_CODE \n" +
-				"WHERE 14c.MM_YYYY = '" + prev_month_new + "' AND zc.ZONE_NAME NOT IN ('DG East', 'CEI DG')\n" +
+				"WHERE 14c.MM_YYYY = ? AND zc.ZONE_NAME NOT IN ('DG East', 'CEI DG')\n" +
 				"), \n" +
 				"final_data AS (\n" +
 				"SELECT cte1.ZONE_NAME, cte1.ZONE_CODE, cte1.COMM_NAME, cte1.col9, cte2.col3, cte1.col9 AS numerator_6a, \n" +
@@ -1968,7 +1968,7 @@ public class GstSubParameterWiseQuery {
 				"END AS median_numerator_6a, \n" +
 				"DENSE_RANK() OVER (ORDER BY total_score DESC) AS z_rank \n" +
 				"FROM ranked_data\n" +
-				"WHERE ranked_data.ZONE_CODE = '" + zone_code + "';";
+				"WHERE ranked_data.ZONE_CODE = ? ;";
 //        String queryGst14aa="WITH cte1 AS (\n" +
 //                "    SELECT zc.ZONE_NAME, cc.COMM_NAME, cc.ZONE_CODE, \n" +
 //                "           (14c.COMM_DISPOSAL_NO + 14c.JC_DISPOSAL_NO + 14c.AC_DISPOSAL_NO + 14c.SUP_DISPOSAL_NO) AS col9\n" +
@@ -2011,14 +2011,14 @@ public class GstSubParameterWiseQuery {
 				"(14c.COMM_DISPOSAL_NO + 14c.JC_DISPOSAL_NO + 14c.AC_DISPOSAL_NO + 14c.SUP_DISPOSAL_NO) AS col9 \n" +
 				"FROM mis_gst_commcode AS cc RIGHT JOIN mis_dgi_st_1a AS 14c ON cc.COMM_CODE = 14c.COMM_CODE\n" +
 				"LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE \n" +
-				"WHERE 14c.MM_YYYY = '" + month_date + "' AND zc.ZONE_NAME NOT IN ('DG East', 'CEI DG')\n" +
+				"WHERE 14c.MM_YYYY = ? AND zc.ZONE_NAME NOT IN ('DG East', 'CEI DG')\n" +
 				"), \n" +
 				"cte2 AS (\n" +
 				"SELECT zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME,(14c.COMM_CLOSING_NO + 14c.JC_CLOSING_NO + 14c.AC_CLOSING_NO + 14c.SUP_CLOSING_NO) AS col3 \n" +
 				"FROM mis_gst_commcode AS cc RIGHT JOIN mis_dgi_st_1a AS 14c \n" +
 				"ON cc.COMM_CODE = 14c.COMM_CODE LEFT JOIN mis_gst_zonecode AS zc \n" +
 				"ON zc.ZONE_CODE = cc.ZONE_CODE \n" +
-				"WHERE 14c.MM_YYYY = '" + prev_month_new + "' AND zc.ZONE_NAME NOT IN ('DG East', 'CEI DG')\n" +
+				"WHERE 14c.MM_YYYY = ? AND zc.ZONE_NAME NOT IN ('DG East', 'CEI DG')\n" +
 				"), \n" +
 				"final_data AS (\n" +
 				"SELECT cte1.ZONE_NAME, cte1.ZONE_CODE, cte1.COMM_NAME, cte1.col9, cte2.col3, cte1.col9 AS numerator_6a, \n" +
