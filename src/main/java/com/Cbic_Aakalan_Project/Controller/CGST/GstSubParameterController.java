@@ -50,7 +50,7 @@ public class GstSubParameterController {
         List<GSTCUS> allGstaList = new ArrayList<>();
         try (Connection con = JDBCConnection.getTNConnection()) {
 
-            if (type.equalsIgnoreCase("zone")) {
+            if("zone".equalsIgnoreCase(type)) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst1a_ZoneWise(month_date);
                 try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
                     pstmt.setString(1, month_date);
@@ -58,7 +58,7 @@ public class GstSubParameterController {
                     allGstaList.addAll(gstSubParameterService.gst1aZone(rsGst14aa));
                 }
 
-            }else if (type.equalsIgnoreCase("commissary")) {
+            }else if ("commissary".equalsIgnoreCase(type)) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst1a_CommissonaryWise(month_date,zone_code);
                 try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
                     pstmt.setString(1, month_date);
@@ -67,7 +67,7 @@ public class GstSubParameterController {
                     allGstaList.addAll(gstSubParameterService.gst1aZoneWiseCommissionary(rsGst14aa));
                 }
 
-            } else if (type.equalsIgnoreCase("all_commissary")) {
+            }else if ("all_commissary".equalsIgnoreCase(type)) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst1a_AllCommissonaryWise(month_date);
                 try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
                     pstmt.setString(1, month_date);
@@ -82,7 +82,7 @@ public class GstSubParameterController {
                 .sorted(Comparator.comparing(GSTCUS::getTotal_score).reversed()).collect(Collectors.toList());
     }
 
-     /* Date: May 04, 2024
+    /* Date: May 04, 2024
      * created: RKS, may 18, 2024
      * updated: RKS, jan 24, 2025
      */
@@ -95,7 +95,7 @@ public class GstSubParameterController {
         List<GSTCUS> allGstaList = new ArrayList<>();
 
         try (Connection con = JDBCConnection.getTNConnection()){
-            if (type.equalsIgnoreCase("zone")) {
+            if("zone".equalsIgnoreCase(type)) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst1b_ZoneWise(month_date);
                 try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
                     pstmt.setString(1, month_date);
@@ -103,7 +103,7 @@ public class GstSubParameterController {
                     allGstaList.addAll(gstSubParameterService.gst1bZone(rsGst14aa));
                 }
 
-            }else if (type.equalsIgnoreCase("commissary")) {
+            }else if ("commissary".equalsIgnoreCase(type)) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst1b_CommissonaryWise(month_date,zone_code);
                 try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
                     pstmt.setString(1, month_date);
@@ -112,7 +112,7 @@ public class GstSubParameterController {
                     allGstaList.addAll(gstSubParameterService.gst1bZoneWiseCommissionary(rsGst14aa));
                 }
 
-            } else if (type.equalsIgnoreCase("all_commissary")) {
+            }else if ("all_commissary".equalsIgnoreCase(type)) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst1b_AllCommissonaryWise(month_date);
                 try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
                     pstmt.setString(1, month_date);
@@ -144,7 +144,7 @@ public class GstSubParameterController {
         List<GSTCUS> allGstaList = new ArrayList<>();
 
         try (Connection con = JDBCConnection.getTNConnection()){
-            if (type.equalsIgnoreCase("zone")) {
+            if("zone".equalsIgnoreCase(type)) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst1c_ZoneWise(month_date);
                 try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
                     pstmt.setString(1, month_date);
@@ -152,7 +152,7 @@ public class GstSubParameterController {
                     allGstaList.addAll(gstSubParameterService.gst1cZone(rsGst14aa));
                 }
 
-            }else if (type.equalsIgnoreCase("commissary")) {
+            }else if ("commissary".equalsIgnoreCase(type)) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst1c_CommissonaryWise(month_date,zone_code);
                 try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
                     pstmt.setString(1, month_date);
@@ -161,7 +161,7 @@ public class GstSubParameterController {
                     allGstaList.addAll(gstSubParameterService.gst1cZoneWiseCommissionary(rsGst14aa));
                 }
 
-            } else if (type.equalsIgnoreCase("all_commissary")) {
+            }else if ("all_commissary".equalsIgnoreCase(type)) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst1c_AllCommissonaryWise(month_date);
                 try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
                     pstmt.setString(1, month_date);
@@ -182,12 +182,12 @@ public class GstSubParameterController {
     @RequestMapping(value = "/gst1d")
     //  http://localhost:8080/cbicApi/cbic/gst1d?month_date=2023-04-01&type=zone
     //  http://localhost:8080/cbicApi/cbic/gst1d?month_date=2023-04-01&zone_code=70&type=commissary
-   //	http://localhost:8080/cbicApi/cbic/gst1d?month_date=2023-04-01&type=all_commissary
+    //	http://localhost:8080/cbicApi/cbic/gst1d?month_date=2023-04-01&type=all_commissary
     public Object getGst1D(@RequestParam String month_date ,@RequestParam String type, @RequestParam(required = false) String zone_code) {
         List<GSTCUS> allGstaList = new ArrayList<>();
 
         try (Connection con = JDBCConnection.getTNConnection()){
-            if (type.equalsIgnoreCase("zone")) {
+            if("zone".equalsIgnoreCase(type)) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst1d_ZoneWise(month_date);
                 try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
                     pstmt.setString(1, month_date);
@@ -195,7 +195,7 @@ public class GstSubParameterController {
                     allGstaList.addAll(gstSubParameterService.gst1dZone(rsGst14aa));
                 }
 
-            }else if (type.equalsIgnoreCase("commissary")) {
+            }else if ("commissary".equalsIgnoreCase(type)) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst1d_CommissonaryWise(month_date,zone_code);
                 try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
                     pstmt.setString(1, month_date);
@@ -204,7 +204,7 @@ public class GstSubParameterController {
                     allGstaList.addAll(gstSubParameterService.gst1dZoneWiseCommissionary(rsGst14aa));
                 }
 
-            } else if (type.equalsIgnoreCase("all_commissary")) {
+            }else if ("all_commissary".equalsIgnoreCase(type)) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst1d_AllCommissonaryWise(month_date);
                 try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
                     pstmt.setString(1, month_date);
@@ -216,7 +216,7 @@ public class GstSubParameterController {
             e.printStackTrace();
         }
         return allGstaList.stream().sorted(Comparator.comparing(GSTCUS::getTotal_score)
-                ).collect(Collectors.toList());
+        ).collect(Collectors.toList());
     }
 
     /*
@@ -234,7 +234,7 @@ public class GstSubParameterController {
         List<GSTCUS> allGstaList = new ArrayList<>();
 
         try (Connection con = JDBCConnection.getTNConnection()){
-            if (type.equalsIgnoreCase("zone")) {
+            if("zone".equalsIgnoreCase(type)) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst1e_ZoneWise(month_date);
                 try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
                     pstmt.setString(1, month_date);
@@ -242,7 +242,7 @@ public class GstSubParameterController {
                     allGstaList.addAll(gstSubParameterService.gst1eZone(rsGst14aa));
                 }
 
-            }else if (type.equalsIgnoreCase("commissary")) {
+            }else if ("commissary".equalsIgnoreCase(type)) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst1e_CommissonaryWise(month_date,zone_code);
                 try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
                     pstmt.setString(1, month_date);
@@ -251,7 +251,7 @@ public class GstSubParameterController {
                     allGstaList.addAll(gstSubParameterService.gst1eZoneWiseCommissionary(rsGst14aa));
                 }
 
-            } else if (type.equalsIgnoreCase("all_commissary")) {
+            }else if ("all_commissary".equalsIgnoreCase(type)) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst1e_AllCommissonaryWise(month_date);
                 try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
                     pstmt.setString(1, month_date);
@@ -282,7 +282,7 @@ public class GstSubParameterController {
         List<GSTCUS> allGstaList = new ArrayList<>();
 
         try (Connection con = JDBCConnection.getTNConnection()){
-            if (type.equalsIgnoreCase("zone")) {
+            if("zone".equalsIgnoreCase(type)) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst1f_ZoneWise(month_date);
                 try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
                     pstmt.setString(1, month_date);
@@ -290,7 +290,7 @@ public class GstSubParameterController {
                     allGstaList.addAll(gstSubParameterService.gst1fZone(rsGst14aa));
                 }
 
-            }else if (type.equalsIgnoreCase("commissary")) {
+            }else if ("commissary".equalsIgnoreCase(type)) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst1f_CommissonaryWise(month_date,zone_code);
                 try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
                     pstmt.setString(1, month_date);
@@ -299,7 +299,7 @@ public class GstSubParameterController {
                     allGstaList.addAll(gstSubParameterService.gst1fZoneWiseCommissionary(rsGst14aa));
                 }
 
-            } else if (type.equalsIgnoreCase("all_commissary")) {
+            }else if ("all_commissary".equalsIgnoreCase(type)) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst1f_AllCommissonaryWise(month_date);
                 try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
                     pstmt.setString(1, month_date);
@@ -330,7 +330,7 @@ public class GstSubParameterController {
         List<GSTCUS> allGstaList = new ArrayList<>();
 
         try (Connection con = JDBCConnection.getTNConnection()){
-            if (type.equalsIgnoreCase("zone")) {
+            if("zone".equalsIgnoreCase(type)) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst2_ZoneWise(month_date);
                 try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
                     pstmt.setString(1, month_date);
@@ -338,7 +338,7 @@ public class GstSubParameterController {
                     allGstaList.addAll(gstSubParameterService.gst2Zone(rsGst14aa));
                 }
 
-            }else if (type.equalsIgnoreCase("commissary")) {
+            }else if ("commissary".equalsIgnoreCase(type)) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst2_CommissonaryWise(month_date,zone_code);
                 try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
                     pstmt.setString(1, month_date);
@@ -347,7 +347,7 @@ public class GstSubParameterController {
                     allGstaList.addAll(gstSubParameterService.gst2ZoneWiseCommissionary(rsGst14aa));
                 }
 
-            } else if (type.equalsIgnoreCase("all_commissary")) {
+            }else if ("all_commissary".equalsIgnoreCase(type)) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst2_AllCommissonaryWise(month_date);
                 try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
                     pstmt.setString(1, month_date);
@@ -379,7 +379,7 @@ public class GstSubParameterController {
 //        double total = 0.00;
 //
 //        try {
-//            if (type.equalsIgnoreCase("zone")) {
+//            if("zone".equalsIgnoreCase(type)) {
 //                String prev_month_new =DateCalculate.getPreviousMonth(month_date);
 //                // Query string
 //                String queryGst14aa= "WITH current_month_data AS (\n" +
@@ -442,7 +442,7 @@ public class GstSubParameterController {
 //                    gsta = new GST4A(rsGst14aa.getString("ZONE_NAME"), "ALL", totalScore, rank, absval, zoneCode, ra);
 //                    allGstaList.add(gsta);
 //                }
-//            }else if (type.equalsIgnoreCase("commissary")) {
+//            }else if ("commissary".equalsIgnoreCase(type)) {
 //                String prev_month_new =DateCalculate.getPreviousMonth(month_date);
 //                // Query string
 //                String queryGst14aa="WITH SecondQuery AS (\n" +
@@ -509,11 +509,11 @@ public class GstSubParameterController {
         try (Connection con = JDBCConnection.getTNConnection()) {
             String queryGst14aa;
 
-            if (type.equalsIgnoreCase("zone")) {
+            if("zone".equalsIgnoreCase(type)) {
                 queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst3a_ZoneWise(month_date);
             } else if (type.equalsIgnoreCase("commissary")) {
                 queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst3a_CommissonaryWise(month_date, zone_code);
-            } else if (type.equalsIgnoreCase("all_commissary")) {
+            }else if ("all_commissary".equalsIgnoreCase(type)) {
                 queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst3a_AllCommissonaryWise(month_date);
             } else {
                 throw new IllegalArgumentException("Invalid type: " + type);
@@ -531,11 +531,11 @@ public class GstSubParameterController {
                 ResultSet rsGst14aa = pstmt.executeQuery();
 
                 // Add result processing logic
-                if (type.equalsIgnoreCase("zone")) {
+                if("zone".equalsIgnoreCase(type)) {
                     allGstaList.addAll(gstSubParameterService.gst3aZone(rsGst14aa));
                 } else if (type.equalsIgnoreCase("commissary")) {
                     allGstaList.addAll(gstSubParameterService.gst3aZoneWiseCommissionary(rsGst14aa));
-                } else if (type.equalsIgnoreCase("all_commissary")) {
+                }else if ("all_commissary".equalsIgnoreCase(type)) {
                     allGstaList.addAll(gstSubParameterService.gst3aAllCommissionary(rsGst14aa));
                 }
             }
@@ -567,7 +567,7 @@ public class GstSubParameterController {
 //        Connection con= JDBCConnection.getTNConnection();
 //
 //        try {
-//            if (type.equalsIgnoreCase("zone")) {
+//            if("zone".equalsIgnoreCase(type)) {
 //                String prev_month_new =DateCalculate.getPreviousMonth(month_date);
 //                // Query string
 //                String queryGst14aa = "WITH current_month_data AS (\n" +
@@ -634,7 +634,7 @@ public class GstSubParameterController {
 //                    gsta = new GST4A(rsGst14aa.getString("ZONE_NAME"), "ALL", (Double) totalScore, rank, absval, zoneCode, ra);
 //                    allGstaList.add(gsta);
 //                }
-//            }else if (type.equalsIgnoreCase("commissary")) {
+//            }else if ("commissary".equalsIgnoreCase(type)) {
 //
 //                // Query string
 //                String queryGst14aa="SELECT zc.ZONE_NAME, cc.COMM_NAME, cc.ZONE_CODE, 14c.amount_recovered_penalty AS col22, "
@@ -686,7 +686,7 @@ public class GstSubParameterController {
         List<GSTCUS> allGstaList = new ArrayList<>();
 
         try (Connection con = JDBCConnection.getTNConnection()){
-            if (type.equalsIgnoreCase("zone")) {
+            if("zone".equalsIgnoreCase(type)) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst3b_ZoneWise(month_date);
                 try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
                     pstmt.setString(1, start_date);
@@ -697,7 +697,7 @@ public class GstSubParameterController {
                     allGstaList.addAll(gstSubParameterService.gst3bZone(rsGst14aa));
                 }
 
-            }else if (type.equalsIgnoreCase("commissary")) {
+            }else if ("commissary".equalsIgnoreCase(type)) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst3b_CommissonaryWise(month_date,zone_code);
                 try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
                     pstmt.setString(1, start_date);
@@ -709,7 +709,7 @@ public class GstSubParameterController {
                     allGstaList.addAll(gstSubParameterService.gst3bZoneWiseCommissionary(rsGst14aa));
                 }
 
-            } else if (type.equalsIgnoreCase("all_commissary")) {
+            }else if ("all_commissary".equalsIgnoreCase(type)) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst3b_AllCommissonaryWise(month_date);
                 try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
                     pstmt.setString(1, start_date);
@@ -744,7 +744,7 @@ public class GstSubParameterController {
         List<GSTCUS> allGstaList = new ArrayList<>();
 
         try (Connection con = JDBCConnection.getTNConnection()){
-            if (type.equalsIgnoreCase("zone")) {
+            if("zone".equalsIgnoreCase(type)) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst4a_ZoneWise(month_date);
                 try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
                     pstmt.setString(1, month_date);
@@ -752,7 +752,7 @@ public class GstSubParameterController {
                     allGstaList.addAll(gstSubParameterService.gst4aZone(rsGst14aa));
                 }
 
-            }else if (type.equalsIgnoreCase("commissary")) {
+            }else if ("commissary".equalsIgnoreCase(type)) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst4a_CommissonaryWise(month_date,zone_code);
                 try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
                     pstmt.setString(1, month_date);
@@ -761,7 +761,7 @@ public class GstSubParameterController {
                     allGstaList.addAll(gstSubParameterService.gst4aZoneWiseCommissionary(rsGst14aa));
                 }
 
-            } else if (type.equalsIgnoreCase("all_commissary")) {
+            }else if ("all_commissary".equalsIgnoreCase(type)) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst4a_AllCommissonaryWise(month_date);
                 try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
                     pstmt.setString(1, month_date);
@@ -793,7 +793,7 @@ public class GstSubParameterController {
         List<GSTCUS> allGstaList = new ArrayList<>();
 
         try (Connection con = JDBCConnection.getTNConnection()){
-            if (type.equalsIgnoreCase("zone")) {
+            if("zone".equalsIgnoreCase(type)) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst4b_ZoneWise(month_date);
                 try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
                     pstmt.setString(1, month_date);
@@ -801,7 +801,7 @@ public class GstSubParameterController {
                     allGstaList.addAll(gstSubParameterService.gst4bZone(rsGst14aa));
                 }
 
-            }else if (type.equalsIgnoreCase("commissary")) {
+            }else if ("commissary".equalsIgnoreCase(type)) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst4b_CommissonaryWise(month_date,zone_code);
                 try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
                     pstmt.setString(1, month_date);
@@ -810,7 +810,7 @@ public class GstSubParameterController {
                     allGstaList.addAll(gstSubParameterService.gst4bZoneWiseCommissionary(rsGst14aa));
                 }
 
-            } else if (type.equalsIgnoreCase("all_commissary")) {
+            }else if ("all_commissary".equalsIgnoreCase(type)) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst4b_AllCommissonaryWise(month_date);
                 try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
                     pstmt.setString(1, month_date);
@@ -843,7 +843,7 @@ public class GstSubParameterController {
 
 
         try (Connection con = JDBCConnection.getTNConnection()){
-            if (type.equalsIgnoreCase("zone")) {
+            if("zone".equalsIgnoreCase(type)) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst4c_ZoneWise(month_date);
                 try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
                     pstmt.setString(1, month_date);
@@ -852,7 +852,7 @@ public class GstSubParameterController {
                     allGstaList.addAll(gstSubParameterService.gst4cZone(rsGst14aa));
                 }
 
-            }else if (type.equalsIgnoreCase("commissary")) {
+            }else if ("commissary".equalsIgnoreCase(type)) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst4c_CommissonaryWise(month_date,zone_code);
                 try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
                     pstmt.setString(1, month_date);
@@ -862,7 +862,7 @@ public class GstSubParameterController {
                     allGstaList.addAll(gstSubParameterService.gst4cZoneWiseCommissionary(rsGst14aa));
                 }
 
-            } else if (type.equalsIgnoreCase("all_commissary")) {
+            }else if ("all_commissary".equalsIgnoreCase(type)) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst4c_AllCommissonaryWise(month_date);
                 try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
                     pstmt.setString(1, month_date);
@@ -893,7 +893,7 @@ public class GstSubParameterController {
         List<GSTCUS> allGstaList=new ArrayList<>();
 
         try (Connection con = JDBCConnection.getTNConnection()){
-            if (type.equalsIgnoreCase("zone")) {
+            if("zone".equalsIgnoreCase(type)) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst4d_ZoneWise(month_date);
                 try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
                     pstmt.setString(1, month_date);
@@ -901,7 +901,7 @@ public class GstSubParameterController {
                     allGstaList.addAll(gstSubParameterService.gst4dZone(rsGst14aa));
                 }
 
-            }else if (type.equalsIgnoreCase("commissary")) {
+            }else if ("commissary".equalsIgnoreCase(type)) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst4d_CommissonaryWise(month_date,zone_code);
                 try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
                     pstmt.setString(1, month_date);
@@ -910,7 +910,7 @@ public class GstSubParameterController {
                     allGstaList.addAll(gstSubParameterService.gst4dZoneWiseCommissionary(rsGst14aa));
                 }
 
-            } else if (type.equalsIgnoreCase("all_commissary")) {
+            }else if ("all_commissary".equalsIgnoreCase(type)) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst4d_AllCommissonaryWise(month_date);
                 try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
                     pstmt.setString(1, month_date);
@@ -941,7 +941,7 @@ public class GstSubParameterController {
         List<GSTCUS> allGstaList = new ArrayList<>();
 
         try (Connection con = JDBCConnection.getTNConnection()){
-            if (type.equalsIgnoreCase("zone")) {
+            if("zone".equalsIgnoreCase(type)) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst5a_ZoneWise(month_date);
                 try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
                     pstmt.setString(1, month_date);
@@ -949,7 +949,7 @@ public class GstSubParameterController {
                     allGstaList.addAll(gstSubParameterService.gst5aZone(rsGst14aa));
                 }
 
-            }else if (type.equalsIgnoreCase("commissary")) {
+            }else if ("commissary".equalsIgnoreCase(type)) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst5a_CommissonaryWise(month_date,zone_code);
                 try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
                     pstmt.setString(1, month_date);
@@ -958,7 +958,7 @@ public class GstSubParameterController {
                     allGstaList.addAll(gstSubParameterService.gst5aZoneWiseCommissionary(rsGst14aa));
                 }
 
-            } else if (type.equalsIgnoreCase("all_commissary")) {
+            }else if ("all_commissary".equalsIgnoreCase(type)) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst5a_AllCommissonaryWise(month_date);
                 try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
                     pstmt.setString(1, month_date);
@@ -988,7 +988,7 @@ public class GstSubParameterController {
         List<GSTCUS> allGstaList = new ArrayList<>();
 
         try (Connection con = JDBCConnection.getTNConnection()){
-            if (type.equalsIgnoreCase("zone")) {
+            if("zone".equalsIgnoreCase(type)) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst5b_ZoneWise(month_date);
                 try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
                     pstmt.setString(1, month_date);
@@ -997,7 +997,7 @@ public class GstSubParameterController {
                     allGstaList.addAll(gstSubParameterService.gst5bZone(rsGst14aa));
                 }
 
-            }else if (type.equalsIgnoreCase("commissary")) {
+            }else if ("commissary".equalsIgnoreCase(type)) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst5b_CommissonaryWise(month_date,zone_code);
                 try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
                     pstmt.setString(1, month_date);
@@ -1008,7 +1008,7 @@ public class GstSubParameterController {
                     allGstaList.addAll(gstSubParameterService.gst5bZoneWiseCommissionary(rsGst14aa));
                 }
 
-            } else if (type.equalsIgnoreCase("all_commissary")) {
+            }else if ("all_commissary".equalsIgnoreCase(type)) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst5b_AllCommissonaryWise(month_date);
                 try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
                     pstmt.setString(1, month_date);
@@ -1040,7 +1040,7 @@ public class GstSubParameterController {
 
 
         try (Connection con = JDBCConnection.getTNConnection()){
-            if (type.equalsIgnoreCase("zone")) {
+            if("zone".equalsIgnoreCase(type)) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst6a_ZoneWise(month_date);
                 try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
                     pstmt.setString(1, month_date);
@@ -1049,7 +1049,7 @@ public class GstSubParameterController {
                     allGstaList.addAll(gstSubParameterService.gst6aZone(rsGst14aa));
                 }
 
-            }else if (type.equalsIgnoreCase("commissary")) {
+            }else if ("commissary".equalsIgnoreCase(type)) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst6a_CommissonaryWise(month_date,zone_code);
                 try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
                     pstmt.setString(1, month_date);
@@ -1059,7 +1059,7 @@ public class GstSubParameterController {
                     allGstaList.addAll(gstSubParameterService.gst6aZoneWiseCommissionary(rsGst14aa));
                 }
 
-            } else if (type.equalsIgnoreCase("all_commissary")) {
+            }else if ("all_commissary".equalsIgnoreCase(type)) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst6a_AllCommissonaryWise(month_date);
                 try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
                     pstmt.setString(1, month_date);
@@ -1091,7 +1091,7 @@ public class GstSubParameterController {
         List<GSTCUS> allGstaList = new ArrayList<>();
 
         try (Connection con = JDBCConnection.getTNConnection()){
-            if (type.equalsIgnoreCase("zone")) {
+            if("zone".equalsIgnoreCase(type)) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst6b_ZoneWise(month_date);
                 try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
                     pstmt.setString(1, month_date);
@@ -1099,7 +1099,7 @@ public class GstSubParameterController {
                     allGstaList.addAll(gstSubParameterService.gst6bZone(rsGst14aa));
                 }
 
-            }else if (type.equalsIgnoreCase("commissary")) {
+            }else if ("commissary".equalsIgnoreCase(type)) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst6b_CommissonaryWise(month_date,zone_code);
                 try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
                     pstmt.setString(1, month_date);
@@ -1108,7 +1108,7 @@ public class GstSubParameterController {
                     allGstaList.addAll(gstSubParameterService.gst6bZoneWiseCommissionary(rsGst14aa));
                 }
 
-            } else if (type.equalsIgnoreCase("all_commissary")) {
+            }else if ("all_commissary".equalsIgnoreCase(type)) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst6b_AllCommissonaryWise(month_date);
                 try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
                     pstmt.setString(1, month_date);
@@ -1138,7 +1138,7 @@ public class GstSubParameterController {
         List<GSTCUS> allGstaList = new ArrayList<>();
 
         try (Connection con = JDBCConnection.getTNConnection()){
-            if (type.equalsIgnoreCase("zone")) {
+            if("zone".equalsIgnoreCase(type)) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst6c_ZoneWise(month_date);
                 try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
                     pstmt.setString(1, month_date);
@@ -1147,7 +1147,7 @@ public class GstSubParameterController {
                     allGstaList.addAll(gstSubParameterService.gst6cZone(rsGst14aa));
                 }
 
-            }else if (type.equalsIgnoreCase("commissary")) {
+            }else if ("commissary".equalsIgnoreCase(type)) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst6c_CommissonaryWise(month_date,zone_code);
                 try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
                     pstmt.setString(1, month_date);
@@ -1157,7 +1157,7 @@ public class GstSubParameterController {
                     allGstaList.addAll(gstSubParameterService.gst6cZoneWiseCommissionary(rsGst14aa));
                 }
 
-            } else if (type.equalsIgnoreCase("all_commissary")) {
+            }else if ("all_commissary".equalsIgnoreCase(type)) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst6c_AllCommissonaryWise(month_date);
                 try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
                     pstmt.setString(1, month_date);
@@ -1188,7 +1188,7 @@ public class GstSubParameterController {
         List<GSTCUS> allGstaList = new ArrayList<>();
 
         try (Connection con = JDBCConnection.getTNConnection()){
-            if (type.equalsIgnoreCase("zone")) {
+            if("zone".equalsIgnoreCase(type)) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst6d_ZoneWise(month_date);
                 try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
                     pstmt.setString(1, month_date);
@@ -1196,7 +1196,7 @@ public class GstSubParameterController {
                     allGstaList.addAll(gstSubParameterService.gst6dZone(rsGst14aa));
                 }
 
-            }else if (type.equalsIgnoreCase("commissary")) {
+            }else if ("commissary".equalsIgnoreCase(type)) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst6d_CommissonaryWise(month_date,zone_code);
                 try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
                     pstmt.setString(1, month_date);
@@ -1205,7 +1205,7 @@ public class GstSubParameterController {
                     allGstaList.addAll(gstSubParameterService.gst6dZoneWiseCommissionary(rsGst14aa));
                 }
 
-            } else if (type.equalsIgnoreCase("all_commissary")) {
+            }else if ("all_commissary".equalsIgnoreCase(type)) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst6d_AllCommissonaryWise(month_date);
                 try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
                     pstmt.setString(1, month_date);
@@ -1234,7 +1234,7 @@ public class GstSubParameterController {
         List<GSTCUS> allGstaList = new ArrayList<>();
 
         try (Connection con = JDBCConnection.getTNConnection()){
-            if (type.equalsIgnoreCase("zone")) {
+            if("zone".equalsIgnoreCase(type)) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst7_ZoneWise(month_date);
                 try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
                     pstmt.setString(1, month_date);
@@ -1242,7 +1242,7 @@ public class GstSubParameterController {
                     allGstaList.addAll(gstSubParameterService.gst7Zone(rsGst14aa));
                 }
 
-            }else if (type.equalsIgnoreCase("commissary")) {
+            }else if ("commissary".equalsIgnoreCase(type)) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst7_CommissonaryWise(month_date,zone_code);
                 try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
                     pstmt.setString(1, month_date);
@@ -1251,7 +1251,7 @@ public class GstSubParameterController {
                     allGstaList.addAll(gstSubParameterService.gst7ZoneWiseCommissionary(rsGst14aa));
                 }
 
-            } else if (type.equalsIgnoreCase("all_commissary")) {
+            }else if ("all_commissary".equalsIgnoreCase(type)) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst7_AllCommissonaryWise(month_date);
                 try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
                     pstmt.setString(1, month_date);
@@ -1274,28 +1274,37 @@ public class GstSubParameterController {
      */
     @ResponseBody
     @RequestMapping(value = "/gst8a")  // only zone wise working
-    //  http://localhost:8080/cbicApi/cbic/testing/gst8a?month_date=2024-10-01&type=zone
-    //  http://localhost:8080/cbicApi/cbic/testing/gst8a?month_date=2024-10-01&zone_code=70&type=commissary
-    //	http://localhost:8080/cbicApi/cbic/testing/gst8a?month_date=2024-10-01&type=all_commissary
+    //  http://localhost:8080/cbicApi/cbic/gst8a?month_date=2024-10-01&type=zone
+    //  http://localhost:8080/cbicApi/cbic/gst8a?month_date=2024-10-01&zone_code=70&type=commissary
+    //	http://localhost:8080/cbicApi/cbic/gst8a?month_date=2024-10-01&type=all_commissary
     public Object getGst8a(@RequestParam String month_date,@RequestParam String type, @RequestParam(required = false) String zone_code) {
         List<GSTCUS> allGstaList=new ArrayList<>();
-        try {
+        try (Connection con = JDBCConnection.getTNConnection()){
             if("zone".equalsIgnoreCase(type)) {
-                String queryGst14aa= new GstSubParameterWiseQuery().QueryFor_gst8a_ZoneWise(month_date);
-                ResultSet rsGst14aa= GetExecutionSQL.getResult(queryGst14aa);
-                allGstaList.addAll(gstSubParameterService.gst8aZone(rsGst14aa));
+                String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst8a_ZoneWise(month_date);
+                try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
+                    pstmt.setString(1, month_date);
+                    ResultSet rsGst14aa = pstmt.executeQuery();
+                    allGstaList.addAll(gstSubParameterService.gst8aZone(rsGst14aa));
+                }
 
             }else if ("commissary".equalsIgnoreCase(type)) {
-                String queryGst14aa= new GstSubParameterWiseQuery().QueryFor_gst8a_CommissonaryWise(month_date,zone_code);
-                ResultSet rsGst14aa= GetExecutionSQL.getResult(queryGst14aa);
-                allGstaList.addAll(gstSubParameterService.gst8aZoneWiseCommissionary(rsGst14aa));
+                String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst8a_CommissonaryWise(month_date,zone_code);
+                try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
+                    pstmt.setString(1, month_date);
+                    pstmt.setString(2, zone_code);
+                    ResultSet rsGst14aa = pstmt.executeQuery();
+                    allGstaList.addAll(gstSubParameterService.gst8aZoneWiseCommissionary(rsGst14aa));
+                }
 
             }else if ("all_commissary".equalsIgnoreCase(type)) {
-                String queryGst14aa=  new GstSubParameterWiseQuery().QueryFor_gst8a_AllCommissonaryWise(month_date);
-                ResultSet rsGst14aa= GetExecutionSQL.getResult(queryGst14aa);
-                allGstaList.addAll(gstSubParameterService.gst8aAllCommissionary(rsGst14aa));
+                String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst8a_AllCommissonaryWise(month_date);
+                try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
+                    pstmt.setString(1, month_date);
+                    ResultSet rsGst14aa = pstmt.executeQuery();
+                    allGstaList.addAll(gstSubParameterService.gst8aAllCommissionary(rsGst14aa));
+                }
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -1305,26 +1314,36 @@ public class GstSubParameterController {
 
     @ResponseBody
     @RequestMapping(value = "/gst8b")
-    //  http://localhost:8080/cbicApi/cbic/testing/gst8b?month_date=2024-10-01&type=zone
-    //  http://localhost:8080/cbicApi/cbic/testing/gst8b?month_date=2024-10-01&zone_code=70&type=commissary
-    //	http://localhost:8080/cbicApi/cbic/testing/gst8b?month_date=2024-10-01&type=all_commissary
+    //  http://localhost:8080/cbicApi/cbic/gst8b?month_date=2024-10-01&type=zone
+    //  http://localhost:8080/cbicApi/cbic/gst8b?month_date=2024-10-01&zone_code=70&type=commissary
+    //	http://localhost:8080/cbicApi/cbic/gst8b?month_date=2024-10-01&type=all_commissary
     public Object getGst8b(@RequestParam String month_date,@RequestParam String type, @RequestParam(required = false) String zone_code) {
         List<GSTCUS> allGstaList=new ArrayList<>();
-        try {
+        try (Connection con = JDBCConnection.getTNConnection()){
             if("zone".equalsIgnoreCase(type)) {
-                String queryGst14aa= new GstSubParameterWiseQuery().QueryFor_gst8b_ZoneWise(month_date);
-                ResultSet rsGst14aa= GetExecutionSQL.getResult(queryGst14aa);
-                allGstaList.addAll(gstSubParameterService.gst8bZone(rsGst14aa));
+                String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst8b_ZoneWise(month_date);
+                try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
+                    pstmt.setString(1, month_date);
+                    ResultSet rsGst14aa = pstmt.executeQuery();
+                    allGstaList.addAll(gstSubParameterService.gst8bZone(rsGst14aa));
+                }
 
             }else if ("commissary".equalsIgnoreCase(type)) {
-                String queryGst14aa= new GstSubParameterWiseQuery().QueryFor_gst8b_CommissonaryWise(month_date,zone_code);
-                ResultSet rsGst14aa= GetExecutionSQL.getResult(queryGst14aa);
-                allGstaList.addAll(gstSubParameterService.gst8bZoneWiseCommissionary(rsGst14aa));
+                String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst8b_CommissonaryWise(month_date,zone_code);
+                try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
+                    pstmt.setString(1, month_date);
+                    pstmt.setString(2, zone_code);
+                    ResultSet rsGst14aa = pstmt.executeQuery();
+                    allGstaList.addAll(gstSubParameterService.gst8bZoneWiseCommissionary(rsGst14aa));
+                }
 
             }else if ("all_commissary".equalsIgnoreCase(type)) {
-                String queryGst14aa=  new GstSubParameterWiseQuery().QueryFor_gst8b_AllCommissonaryWise(month_date);
-                ResultSet rsGst14aa= GetExecutionSQL.getResult(queryGst14aa);
-                allGstaList.addAll(gstSubParameterService.gst8bAllCommissionary(rsGst14aa));
+                String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst8b_AllCommissonaryWise(month_date);
+                try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
+                    pstmt.setString(1, month_date);
+                    ResultSet rsGst14aa = pstmt.executeQuery();
+                    allGstaList.addAll(gstSubParameterService.gst8bAllCommissionary(rsGst14aa));
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -1349,21 +1368,31 @@ public class GstSubParameterController {
     //	http://localhost:8080/cbicApi/cbic/gst9a?month_date=2023-04-01&type=all_commissary
     public Object getGst9a(@RequestParam String month_date,@RequestParam String type, @RequestParam(required = false) String zone_code) {
         List<GSTCUS> allGstaList = new ArrayList<>();
-        try {
-            if (type.equalsIgnoreCase("zone")) {
-                String queryGst14aa =new GstSubParameterWiseQuery().QueryFor_gst9a_ZoneWise(month_date);
-                ResultSet rsGst14aa =GetExecutionSQL.getResult(queryGst14aa);
-                allGstaList.addAll(gstSubParameterService.gst9aZone(rsGst14aa));
+        try (Connection con = JDBCConnection.getTNConnection()){
+            if("zone".equalsIgnoreCase(type)) {
+                String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst9a_ZoneWise(month_date);
+                try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
+                    pstmt.setString(1, month_date);
+                    ResultSet rsGst14aa = pstmt.executeQuery();
+                    allGstaList.addAll(gstSubParameterService.gst9aZone(rsGst14aa));
+                }
 
-            } else if (type.equalsIgnoreCase("commissary")) {
-                String queryGst14aa=new GstSubParameterWiseQuery().QueryFor_gst9a_CommissonaryWise(month_date,zone_code);
-                ResultSet rsGst14aa =GetExecutionSQL.getResult(queryGst14aa);
-                allGstaList.addAll(gstSubParameterService.gst9aZoneWiseCommissionary(rsGst14aa));
+            }else if ("commissary".equalsIgnoreCase(type)) {
+                String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst9a_CommissonaryWise(month_date,zone_code);
+                try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
+                    pstmt.setString(1, month_date);
+                    pstmt.setString(2, zone_code);
+                    ResultSet rsGst14aa = pstmt.executeQuery();
+                    allGstaList.addAll(gstSubParameterService.gst9aZoneWiseCommissionary(rsGst14aa));
+                }
 
-            }else if (type.equalsIgnoreCase("all_commissary")) {
-                String queryGst14aa=new GstSubParameterWiseQuery().QueryFor_gst9a_AllCommissonaryWise(month_date);
-                ResultSet rsGst14aa =GetExecutionSQL.getResult(queryGst14aa);
-                allGstaList.addAll(gstSubParameterService.gst9aAllCommissionary(rsGst14aa));
+            }else if ("all_commissary".equalsIgnoreCase(type)) {
+                String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst9a_AllCommissonaryWise(month_date);
+                try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
+                    pstmt.setString(1, month_date);
+                    ResultSet rsGst14aa = pstmt.executeQuery();
+                    allGstaList.addAll(gstSubParameterService.gst9aAllCommissionary(rsGst14aa));
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -1385,21 +1414,31 @@ public class GstSubParameterController {
     //	http://localhost:8080/cbicApi/cbic/gst9b?month_date=2024-04-01&type=all_commissary
     public Object getGst9b(@RequestParam String month_date,@RequestParam String type, @RequestParam(required = false) String zone_code) {
         List<GSTCUS> allGstaList = new ArrayList<>();
-        try {
-            if (type.equalsIgnoreCase("zone")) {
-                String queryGst14aa =new GstSubParameterWiseQuery().QueryFor_gst9b_ZoneWise(month_date);
-                ResultSet rsGst14aa =GetExecutionSQL.getResult(queryGst14aa);
-                allGstaList.addAll(gstSubParameterService.gst9bZone(rsGst14aa));
+        try (Connection con = JDBCConnection.getTNConnection()){
+            if("zone".equalsIgnoreCase(type)) {
+                String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst9b_ZoneWise(month_date);
+                try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
+                    pstmt.setString(1, month_date);
+                    ResultSet rsGst14aa = pstmt.executeQuery();
+                    allGstaList.addAll(gstSubParameterService.gst9bZone(rsGst14aa));
+                }
 
-            } else if (type.equalsIgnoreCase("commissary")) {
-                String queryGst14aa=new GstSubParameterWiseQuery().QueryFor_gst9b_CommissonaryWise(month_date,zone_code);
-                ResultSet rsGst14aa =GetExecutionSQL.getResult(queryGst14aa);
-                allGstaList.addAll(gstSubParameterService.gst9bZoneWiseCommissionary(rsGst14aa));
+            }else if ("commissary".equalsIgnoreCase(type)) {
+                String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst9b_CommissonaryWise(month_date,zone_code);
+                try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
+                    pstmt.setString(1, month_date);
+                    pstmt.setString(2, zone_code);
+                    ResultSet rsGst14aa = pstmt.executeQuery();
+                    allGstaList.addAll(gstSubParameterService.gst9bZoneWiseCommissionary(rsGst14aa));
+                }
 
-            }else if (type.equalsIgnoreCase("all_commissary")) {
-                String queryGst14aa=new GstSubParameterWiseQuery().QueryFor_gst9b_AllCommissonaryWise(month_date);
-                ResultSet rsGst14aa =GetExecutionSQL.getResult(queryGst14aa);
-                allGstaList.addAll(gstSubParameterService.gst9bAllCommissionary(rsGst14aa));
+            }else if ("all_commissary".equalsIgnoreCase(type)) {
+                String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst9b_AllCommissonaryWise(month_date);
+                try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
+                    pstmt.setString(1, month_date);
+                    ResultSet rsGst14aa = pstmt.executeQuery();
+                    allGstaList.addAll(gstSubParameterService.gst9bAllCommissionary(rsGst14aa));
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
