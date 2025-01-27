@@ -2436,7 +2436,7 @@ public class GstSubParameterWiseQuery {
 				"ON cc.COMM_CODE = 14c.COMM_CODE " +
 				"LEFT JOIN mis_gst_zonecode AS zc " +
 				"ON zc.ZONE_CODE = cc.ZONE_CODE " +
-				"WHERE 14c.MM_YYYY = '" + month_date + "' " +
+				"WHERE 14c.MM_YYYY = ? " +
 				"GROUP BY cc.ZONE_CODE;";
 		return queryGst14aa;
 	}
@@ -2454,7 +2454,7 @@ public class GstSubParameterWiseQuery {
 				+ "    ON cc.COMM_CODE = dpm.COMM_CODE\r\n"
 				+ "LEFT JOIN mis_gst_zonecode AS zc\r\n"
 				+ "    ON zc.ZONE_CODE = cc.ZONE_CODE\r\n"
-				+ "WHERE dpm.MM_YYYY = '" + month_date + "' AND zc.ZONE_CODE = '"+zone_code+"'\r\n"
+				+ "WHERE dpm.MM_YYYY = ? AND zc.ZONE_CODE = ? \r\n"
 				+ "GROUP BY \r\n"
 				+ "    cc.ZONE_CODE, \r\n"
 				+ "    zc.ZONE_NAME,\r\n"
@@ -2476,7 +2476,7 @@ public class GstSubParameterWiseQuery {
 				+ "    ON cc.COMM_CODE = dpm.COMM_CODE\r\n"
 				+ "LEFT JOIN mis_gst_zonecode AS zc\r\n"
 				+ "    ON zc.ZONE_CODE = cc.ZONE_CODE\r\n"
-				+ "WHERE dpm.MM_YYYY = '" + month_date + "' \r\n"
+				+ "WHERE dpm.MM_YYYY = ? \r\n"
 				+ "GROUP BY \r\n"
 				+ "    cc.ZONE_CODE, \r\n"
 				+ "    zc.ZONE_NAME,\r\n"
