@@ -2789,7 +2789,7 @@ public class GstSubParameterWiseQuery {
 				"LEFT JOIN\n" +
 				"    mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
 				"WHERE\n" +
-				"    tc.MM_YYYY BETWEEN '" + start_date + "' AND '" + month_date + "' -- Adjust this to your desired range for financial year\n" +
+				"    tc.MM_YYYY BETWEEN ? AND ? -- Adjust this to your desired range for financial year\n" +
 				"GROUP BY\n" +
 				"    cc.ZONE_CODE, zc.ZONE_NAME\n" +
 				"ORDER BY\n" +
@@ -2816,8 +2816,8 @@ public class GstSubParameterWiseQuery {
 				"LEFT JOIN\n" +
 				"    mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
 				"WHERE\n" +
-				"    zc.ZONE_CODE = 65-- Add condition for ZONE_CODE = '" + zone_code + "'\n" +
-				"    AND tc.MM_YYYY BETWEEN '" + start_date + "' AND '"+month_date+"'  -- Adjust this to your desired range for financial year\n" +
+				"    zc.ZONE_CODE = ? \n" +
+				"    AND tc.MM_YYYY BETWEEN ? AND ?  -- Adjust this to your desired range for financial year\n" +
 				"GROUP BY\n" +
 				"    cc.ZONE_CODE, zc.ZONE_NAME, cc.COMM_NAME -- Add COMM_NAME in GROUP BY clause\n" +
 				"ORDER BY\n" +
@@ -2844,7 +2844,7 @@ public class GstSubParameterWiseQuery {
 				"LEFT JOIN\n" +
 				"    mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
 				"WHERE\n" +
-				"    tc.MM_YYYY BETWEEN '" + start_date + "' AND '"+month_date+"'  -- Adjust this to your desired range for financial year\n" +
+				"    tc.MM_YYYY BETWEEN ? AND ?  -- Adjust this to your desired range for financial year\n" +
 				"GROUP BY\n" +
 				"    cc.ZONE_CODE, zc.ZONE_NAME, cc.COMM_NAME -- Add COMM_NAME in GROUP BY clause\n" +
 				"ORDER BY\n" +

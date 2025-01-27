@@ -1367,12 +1367,14 @@ public class GstSubParameterController {
     //  http://localhost:8080/cbicApi/cbic/gst9a?month_date=2023-04-01&zone_code=70&type=commissary
     //	http://localhost:8080/cbicApi/cbic/gst9a?month_date=2023-04-01&type=all_commissary
     public Object getGst9a(@RequestParam String month_date,@RequestParam String type, @RequestParam(required = false) String zone_code) {
+        String start_date=DateCalculate.getFinancialYearStart(month_date);
         List<GSTCUS> allGstaList = new ArrayList<>();
         try (Connection con = JDBCConnection.getTNConnection()){
             if("zone".equalsIgnoreCase(type)) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst9a_ZoneWise(month_date);
                 try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
-                    pstmt.setString(1, month_date);
+                    pstmt.setString(1, start_date);
+                    pstmt.setString(2, month_date);
                     ResultSet rsGst14aa = pstmt.executeQuery();
                     allGstaList.addAll(gstSubParameterService.gst9aZone(rsGst14aa));
                 }
@@ -1380,8 +1382,9 @@ public class GstSubParameterController {
             }else if ("commissary".equalsIgnoreCase(type)) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst9a_CommissonaryWise(month_date,zone_code);
                 try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
-                    pstmt.setString(1, month_date);
-                    pstmt.setString(2, zone_code);
+                    pstmt.setString(1, zone_code);
+                    pstmt.setString(2, start_date);
+                    pstmt.setString(3, month_date);
                     ResultSet rsGst14aa = pstmt.executeQuery();
                     allGstaList.addAll(gstSubParameterService.gst9aZoneWiseCommissionary(rsGst14aa));
                 }
@@ -1389,7 +1392,8 @@ public class GstSubParameterController {
             }else if ("all_commissary".equalsIgnoreCase(type)) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst9a_AllCommissonaryWise(month_date);
                 try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
-                    pstmt.setString(1, month_date);
+                    pstmt.setString(1, start_date);
+                    pstmt.setString(2, month_date);
                     ResultSet rsGst14aa = pstmt.executeQuery();
                     allGstaList.addAll(gstSubParameterService.gst9aAllCommissionary(rsGst14aa));
                 }
