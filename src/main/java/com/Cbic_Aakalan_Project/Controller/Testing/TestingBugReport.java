@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.Cbic_Aakalan_Project.dao.pool.JDBCConnection;
@@ -24,9 +25,13 @@ public class TestingBugReport {
     GstGradeScore score = new GstGradeScore();
 
     @ResponseBody
-    @RequestMapping(value = "/refundsTesting")
-    // http://localhost:8080/cbicApi/cbic/testingbug/refundsTesting?month_date=2023-04-01&zone_code=65&type=parameter
-    public Object refunds(@RequestParam String month_date, @RequestParam String type, @RequestParam(required = false) String zone_code, @RequestParam(required = false) String come_name) {
+    @RequestMapping(value = "/refundsTesting", method = RequestMethod.GET)
+    // http://localhost:8080/cbicApi/cbic/testingbug/refundsTesting?month_date=2024-10-01&zone_code=65&type=parameter
+    public Object refunds(
+            @RequestParam String month_date,
+            @RequestParam String type,
+            @RequestParam(required = false) String zone_code,
+            @RequestParam(required = false) String come_name) {
         List<GSTCUS> allGstaList = new ArrayList<>();
         GSTCUS gsta = null;
         int rank = 0;
@@ -89,7 +94,6 @@ public class TestingBugReport {
         } catch (SQLException e) {
             logger.error("SQL Exception", e);
         }
-
         return allGstaList;
     }
 }

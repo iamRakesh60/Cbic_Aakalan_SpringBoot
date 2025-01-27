@@ -182,125 +182,36 @@ public class GstSubParameterController {
     @RequestMapping(value = "/gst1d")
     //  http://localhost:8080/cbicApi/cbic/gst1d?month_date=2023-04-01&type=zone
     //  http://localhost:8080/cbicApi/cbic/gst1d?month_date=2023-04-01&zone_code=70&type=commissary
-//	  http://localhost:8080/cbicApi/cbic/gst1d?month_date=2023-04-01&type=all_commissary
+   //	http://localhost:8080/cbicApi/cbic/gst1d?month_date=2023-04-01&type=all_commissary
     public Object getGst1D(@RequestParam String month_date ,@RequestParam String type, @RequestParam(required = false) String zone_code) {
-
         List<GSTCUS> allGstaList = new ArrayList<>();
-        GSTCUS gsta = null;
-        int rank = 0;
-        double total = 0.00;
 
-        try {
+        try (Connection con = JDBCConnection.getTNConnection()){
             if (type.equalsIgnoreCase("zone")) {
-                // Query string
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst1d_ZoneWise(month_date);
-
-                //Result Set
-                ResultSet rsGst14aa = GetExecutionSQL.getResult(queryGst14aa);
-                while (rsGst14aa.next()) {
-                    String ra= RelevantAspect.GST1D_RA;
-                    String zoneCode = rsGst14aa.getString("ZONE_CODE");
-                    int col17 = rsGst14aa.getInt("col17");
-                    int col1 = rsGst14aa.getInt("col1");
-                    int col2 = rsGst14aa.getInt("col2");
-                    int col3 = rsGst14aa.getInt("col3");
-                    int col4 = rsGst14aa.getInt("col4");
-                    int col5 = rsGst14aa.getInt("col5");
-                    Double t_score = rsGst14aa.getDouble("total_score");
-                    int Zonal_rank = 0;
-                    String gst = "no";
-                    int insentavization = 0;
-                    String absval=String.valueOf(col17)+"/"+String.valueOf((col1 + col2 + col3+col4+col5));
-//                    if((col1 + col2 + col3+col4+col5) != 0) {
-//                        total = ((double) col17 * 100 / (col1 + col2 + col3));
-//                    }else{
-//                        total = 0.00;
-//                    }
-                    rank = score.marks1d(total);
-                    String formattedTotal = String.format("%.2f", t_score);
-                    double totalScore = Double.parseDouble(formattedTotal);
-                    int way_to_grade = score.marks1d(totalScore);
-                    Double sub_parameter_weighted_average = way_to_grade * 0.1;
-                    sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
-                    gsta=new GSTCUS(rsGst14aa.getString("ZONE_NAME"),"ALL",totalScore,absval,zoneCode,ra,
-                            Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
-                    allGstaList.add(gsta);
+                try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
+                    pstmt.setString(1, month_date);
+                    ResultSet rsGst14aa = pstmt.executeQuery();
+                    allGstaList.addAll(gstSubParameterService.gst1dZone(rsGst14aa));
                 }
+
             }else if (type.equalsIgnoreCase("commissary")) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst1d_CommissonaryWise(month_date,zone_code);
-
-                //Result Set
-                ResultSet rsGst14aa = GetExecutionSQL.getResult(queryGst14aa);
-                while (rsGst14aa.next()) {
-                    String ra= RelevantAspect.GST1D_RA;
-                    String zoneCode = rsGst14aa.getString("ZONE_CODE");
-                    String commname=rsGst14aa.getString("COMM_NAME");
-                    int col17 = rsGst14aa.getInt("col17");
-                    int col1 = rsGst14aa.getInt("col1");
-                    int col2 = rsGst14aa.getInt("col2");
-                    int col3 = rsGst14aa.getInt("col3");
-                    int col4 = rsGst14aa.getInt("col4");
-                    int col5 = rsGst14aa.getInt("col5");
-                    Double t_score = rsGst14aa.getDouble("total_score");
-                    int Zonal_rank = 0;
-                    String gst = "no";
-                    int insentavization = 0;
-                    String absval=String.valueOf(col17)+"/"+String.valueOf((col1 + col2 + col3));
-//                    if((col1 + col2 + col3) != 0) {
-//                        total = ((double) col14 * 100 / (col1 + col2 + col3));
-//                    }else{
-//                        total = 0.00;
-//                    }
-                    //rank = score.marks1d(total);
-                    String formattedTotal = String.format("%.2f", t_score);
-                    double totalScore = Double.parseDouble(formattedTotal);
-                    int way_to_grade =score.marks1d(totalScore);
-                    Double sub_parameter_weighted_average = way_to_grade * 0.1;
-                    sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
-                    gsta=new GSTCUS(rsGst14aa.getString("ZONE_NAME"),commname, totalScore,absval,zoneCode,ra,
-                            Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
-                    allGstaList.add(gsta);
+                try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
+                    pstmt.setString(1, month_date);
+                    pstmt.setString(2, zone_code);
+                    ResultSet rsGst14aa = pstmt.executeQuery();
+                    allGstaList.addAll(gstSubParameterService.gst1dZoneWiseCommissionary(rsGst14aa));
                 }
-            }else if (type.equalsIgnoreCase("all_commissary")) {
+
+            } else if (type.equalsIgnoreCase("all_commissary")) {
                 String queryGst14aa = new GstSubParameterWiseQuery().QueryFor_gst1d_AllCommissonaryWise(month_date);
-
-                //Result Set
-                ResultSet rsGst14aa = GetExecutionSQL.getResult(queryGst14aa);
-                while (rsGst14aa.next()) {
-                    String ra= RelevantAspect.GST1D_RA;
-                    String zoneCode = rsGst14aa.getString("ZONE_CODE");
-                    String commname=rsGst14aa.getString("COMM_NAME");
-                    int col17 = rsGst14aa.getInt("col17");
-                    int col1 = rsGst14aa.getInt("col1");
-                    int col2 = rsGst14aa.getInt("col2");
-                    int col3 = rsGst14aa.getInt("col3");
-                    int col4 = rsGst14aa.getInt("col4");
-                    int col5 = rsGst14aa.getInt("col5");
-                    Double t_score = rsGst14aa.getDouble("total_score");
-                    int Zonal_rank = 0;
-                    String gst = "no";
-                    int insentavization = 0;
-                    String absval=String.valueOf(col17)+"/"+String.valueOf((col1 + col2 + col3+col4+col5));
-
-
-//                    if((col1 + col2 + col3) != 0) {
-//                        total = ((double) col14 * 100/ (col1 + col2 + col3));
-//                    }else{
-//                        total = 0.00;
-//                    }
-                    rank = score.marks1d(total);
-                    String formattedTotal = String.format("%.2f", t_score);
-                    double totalScore = Double.parseDouble(formattedTotal);
-                    int way_to_grade = score.marks1d(totalScore);
-                    Double sub_parameter_weighted_average = way_to_grade * 0.1;
-                    sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
-                    gsta=new GSTCUS(rsGst14aa.getString("ZONE_NAME"),commname, totalScore,absval,zoneCode,ra,
-                            Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
-                    allGstaList.add(gsta);
-
+                try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
+                    pstmt.setString(1, month_date);
+                    ResultSet rsGst14aa = pstmt.executeQuery();
+                    allGstaList.addAll(gstSubParameterService.gst1dAllCommissionary(rsGst14aa));
                 }
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }

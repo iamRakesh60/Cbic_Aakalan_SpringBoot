@@ -348,7 +348,7 @@ public class GstSubParameterWiseQuery {
 				+ "LEFT JOIN\n"
 				+ "    mis_gst_zonecode zc ON zc.ZONE_CODE = cc.ZONE_CODE\n"
 				+ "WHERE\n"
-				+ "    MM_YYYY = '" + month_date + "'\n"
+				+ "    MM_YYYY = ? \n"
 				+ "GROUP BY\n"
 				+ "    cc.ZONE_CODE, zc.ZONE_NAME\n"
 				+ "ORDER BY\n"
@@ -388,8 +388,8 @@ public class GstSubParameterWiseQuery {
 				+ "LEFT JOIN\n"
 				+ "    mis_gst_zonecode zc ON zc.ZONE_CODE = cc.ZONE_CODE\n"
 				+ "WHERE\n"
-				+ "    MM_YYYY = '" + month_date + "'\n"
-				+ "    AND cc.ZONE_CODE = '" + zone_code + "' -- Added the condition for ZONE_CODE\n"
+				+ "    MM_YYYY = ? \n" // ------
+				+ "    AND cc.ZONE_CODE = ?  \n" //----------
 				+ "GROUP BY\n"
 				+ "    cc.ZONE_CODE, zc.ZONE_NAME, cc.COMM_NAME  -- Added COMM_NAME to GROUP BY\n"
 				+ "ORDER BY\n"
@@ -429,7 +429,7 @@ public class GstSubParameterWiseQuery {
 				+ "LEFT JOIN\n"
 				+ "    mis_gst_zonecode zc ON zc.ZONE_CODE = cc.ZONE_CODE\n"
 				+ "WHERE\n"
-				+ "    MM_YYYY = '" + month_date + "'\n"
+				+ "    MM_YYYY = ? \n"
 				+ "GROUP BY\n"
 				+ "    cc.ZONE_CODE, zc.ZONE_NAME, cc.COMM_NAME  -- Added COMM_NAME to GROUP BY\n"
 				+ "ORDER BY\n"
