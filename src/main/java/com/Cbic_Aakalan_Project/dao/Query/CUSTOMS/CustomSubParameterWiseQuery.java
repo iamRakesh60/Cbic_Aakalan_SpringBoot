@@ -832,19 +832,19 @@ public class CustomSubParameterWiseQuery {
     }
     // ********************************************************************************************************************************
     public String QueryFor_cus4b_ZoneWise(String month_date){
-        //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
+        //              ?	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
         String queryCustom4b="WITH calculated_data AS (\n" +
                 "    SELECT zc.ZONE_NAME,cc.ZONE_CODE,\n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' THEN c14.PD_BOND_NON_SVB_MONTHS_6TO12_NO ELSE 0 END), 0) AS col14,\n" +
-                "        IFNULL(SUM(CASE  WHEN c14.MM_YYYY = '" + month_date + "' THEN c14.PD_BOND_NON_SVB_YEAR_1TO2_NO ELSE 0 END), 0) AS col15,\n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' THEN c14.PD_BOND_NON_SVB_YEAR_2TO3_NO ELSE 0 END), 0) AS col16,\n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' THEN c14.PD_BOND_NON_SVB_YEAR_3_NO ELSE 0 END), 0) AS col17,\n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' THEN c14.PD_BOND_NON_SVB_CLOSING_NO ELSE 0 END), 0) AS col9\n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = ? THEN c14.PD_BOND_NON_SVB_MONTHS_6TO12_NO ELSE 0 END), 0) AS col14,\n" +
+                "        IFNULL(SUM(CASE  WHEN c14.MM_YYYY = ? THEN c14.PD_BOND_NON_SVB_YEAR_1TO2_NO ELSE 0 END), 0) AS col15,\n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = ? THEN c14.PD_BOND_NON_SVB_YEAR_2TO3_NO ELSE 0 END), 0) AS col16,\n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = ? THEN c14.PD_BOND_NON_SVB_YEAR_3_NO ELSE 0 END), 0) AS col17,\n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = ? THEN c14.PD_BOND_NON_SVB_CLOSING_NO ELSE 0 END), 0) AS col9\n" +
                 "    FROM mis_gst_commcode AS cc\n" +
                 "    INNER JOIN mis_dgi_cus_7a_new AS c14 ON c14.COMM_CODE = cc.COMM_CODE\n" +
                 "    INNER JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
-                "    WHERE c14.MM_YYYY = '" + month_date + "' AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65')\n" +
+                "    WHERE c14.MM_YYYY = ? AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65')\n" +
                 "    GROUP BY zc.ZONE_CODE, zc.ZONE_NAME, cc.ZONE_CODE\n" +
                 "),\n" +
                 "ranked_data AS (\n" +
@@ -859,19 +859,19 @@ public class CustomSubParameterWiseQuery {
         return queryCustom4b;
     }
     public String QueryFor_cus4b_CommissonaryWise(String month_date, String zone_code){
-        //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
+        //              ?	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
         String queryCustom4b="WITH calculated_data AS (\n" +
                 "    SELECT zc.ZONE_NAME, cc.ZONE_CODE,cc.COMM_NAME,\n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' THEN c14.PD_BOND_NON_SVB_MONTHS_6TO12_NO ELSE 0 END), 0) AS col14,\n" +
-                "        IFNULL(SUM(CASE  WHEN c14.MM_YYYY = '" + month_date + "' THEN c14.PD_BOND_NON_SVB_YEAR_1TO2_NO ELSE 0 END), 0) AS col15,\n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' THEN c14.PD_BOND_NON_SVB_YEAR_2TO3_NO ELSE 0 END), 0) AS col16,\n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' THEN c14.PD_BOND_NON_SVB_YEAR_3_NO ELSE 0 END), 0) AS col17,\n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' THEN c14.PD_BOND_NON_SVB_CLOSING_NO ELSE 0 END), 0) AS col9\n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = ? THEN c14.PD_BOND_NON_SVB_MONTHS_6TO12_NO ELSE 0 END), 0) AS col14,\n" +
+                "        IFNULL(SUM(CASE  WHEN c14.MM_YYYY = ? THEN c14.PD_BOND_NON_SVB_YEAR_1TO2_NO ELSE 0 END), 0) AS col15,\n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = ? THEN c14.PD_BOND_NON_SVB_YEAR_2TO3_NO ELSE 0 END), 0) AS col16,\n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = ? THEN c14.PD_BOND_NON_SVB_YEAR_3_NO ELSE 0 END), 0) AS col17,\n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = ? THEN c14.PD_BOND_NON_SVB_CLOSING_NO ELSE 0 END), 0) AS col9\n" +
                 "    FROM mis_gst_commcode AS cc\n" +
                 "    INNER JOIN mis_dgi_cus_7a_new AS c14 ON c14.COMM_CODE = cc.COMM_CODE\n" +
                 "    INNER JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
-                "    WHERE c14.MM_YYYY = '" + month_date + "' AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65')\n" +
+                "    WHERE c14.MM_YYYY = ? AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65')\n" +
                 "    GROUP BY zc.ZONE_CODE, zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME\n" +
                 "),\n" +
                 "ranked_data AS (\n" +
@@ -884,23 +884,23 @@ public class CustomSubParameterWiseQuery {
                 ")\n" +
                 "SELECT sd.ZONE_NAME,sd.ZONE_CODE,sd.COMM_NAME,sd.col14,sd.col15,sd.col16,sd.col17,sd.col9\n" +
                 "FROM sorted_data AS sd\n" +
-                "WHERE sd.ZONE_CODE = '" + zone_code + "' LIMIT 0, 1000;";
+                "WHERE sd.ZONE_CODE = ? LIMIT 0, 1000;";
         return queryCustom4b;
     }
     public String QueryFor_cus4b_AllCommissonaryWise(String month_date){
-        //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
+        //              ?	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
         String queryCustom4b="WITH calculated_data AS (\n" +
                 "    SELECT zc.ZONE_NAME,cc.ZONE_CODE,cc.COMM_NAME,\n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' THEN c14.PD_BOND_NON_SVB_MONTHS_6TO12_NO ELSE 0 END), 0) AS col14,\n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' THEN c14.PD_BOND_NON_SVB_YEAR_1TO2_NO ELSE 0 END), 0) AS col15,\n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' THEN c14.PD_BOND_NON_SVB_YEAR_2TO3_NO ELSE 0 END), 0) AS col16,\n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' THEN c14.PD_BOND_NON_SVB_YEAR_3_NO ELSE 0 END), 0) AS col17,\n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' THEN c14.PD_BOND_NON_SVB_CLOSING_NO ELSE 0 END), 0) AS col9\n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = ? THEN c14.PD_BOND_NON_SVB_MONTHS_6TO12_NO ELSE 0 END), 0) AS col14,\n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = ? THEN c14.PD_BOND_NON_SVB_YEAR_1TO2_NO ELSE 0 END), 0) AS col15,\n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = ? THEN c14.PD_BOND_NON_SVB_YEAR_2TO3_NO ELSE 0 END), 0) AS col16,\n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = ? THEN c14.PD_BOND_NON_SVB_YEAR_3_NO ELSE 0 END), 0) AS col17,\n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = ? THEN c14.PD_BOND_NON_SVB_CLOSING_NO ELSE 0 END), 0) AS col9\n" +
                 "    FROM mis_gst_commcode AS cc\n" +
                 "    INNER JOIN mis_dgi_cus_7a_new AS c14 ON c14.COMM_CODE = cc.COMM_CODE\n" +
                 "    INNER JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
-                "    WHERE c14.MM_YYYY = '" + month_date + "' AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65')\n" +
+                "    WHERE c14.MM_YYYY = ? AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65')\n" +
                 "    GROUP BY zc.ZONE_CODE, zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME\n" +
                 "),\n" +
                 "ranked_data AS (\n" +
@@ -918,16 +918,16 @@ public class CustomSubParameterWiseQuery {
     }
     // ********************************************************************************************************************************
     public String QueryFor_cus4c_ZoneWise(String month_date){
-        //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
+        //              ?	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
         String queryCustom4c="WITH calculated_data AS (\n" +
                 "    SELECT zc.ZONE_NAME, cc.ZONE_CODE, \n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' THEN c14.SVB_BE_FINALIZED_NO ELSE 0 END), 0) AS col7, \n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = DATE_FORMAT(DATE_SUB('" + month_date + "', INTERVAL 1 MONTH), '%Y-%m-%d') THEN c14.SVB_BE_CLOSING_NO ELSE 0 END), 0) AS col3\n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = ? THEN c14.SVB_BE_FINALIZED_NO ELSE 0 END), 0) AS col7, \n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = DATE_FORMAT(DATE_SUB(?, INTERVAL 1 MONTH), '%Y-%m-%d') THEN c14.SVB_BE_CLOSING_NO ELSE 0 END), 0) AS col3\n" +
                 "    FROM mis_gst_commcode AS cc\n" +
                 "    INNER JOIN mis_dpm_cus_5b AS c14 ON c14.COMM_CODE = cc.COMM_CODE\n" +
                 "    INNER JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
-                "    WHERE  c14.MM_YYYY IN ('" + month_date + "', DATE_FORMAT(DATE_SUB('" + month_date + "', INTERVAL 1 MONTH), '%Y-%m-%d')) \n" +
+                "    WHERE  c14.MM_YYYY IN (?, DATE_FORMAT(DATE_SUB(?, INTERVAL 1 MONTH), '%Y-%m-%d')) \n" +
                 "    AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65') \n" +
                 "    GROUP BY zc.ZONE_CODE, zc.ZONE_NAME, cc.ZONE_CODE\n" +
                 "),\n" +
@@ -950,16 +950,16 @@ public class CustomSubParameterWiseQuery {
         return queryCustom4c;
     }
     public String QueryFor_cus4c_CommissonaryWise(String month_date, String zone_code){
-        //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
+        //              ?	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
         String queryCustom4c="WITH calculated_data AS (\n" +
                 "    SELECT zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME, \n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' THEN c14.SVB_BE_FINALIZED_NO ELSE 0 END), 0) AS col7, \n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = DATE_FORMAT(DATE_SUB('" + month_date + "', INTERVAL 1 MONTH), '%Y-%m-%d') THEN c14.SVB_BE_CLOSING_NO ELSE 0 END), 0) AS col3 \n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = ? THEN c14.SVB_BE_FINALIZED_NO ELSE 0 END), 0) AS col7, \n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = DATE_FORMAT(DATE_SUB(?, INTERVAL 1 MONTH), '%Y-%m-%d') THEN c14.SVB_BE_CLOSING_NO ELSE 0 END), 0) AS col3 \n" +
                 "    FROM mis_gst_commcode AS cc\n" +
                 "    INNER JOIN mis_dpm_cus_5b AS c14 ON c14.COMM_CODE = cc.COMM_CODE\n" +
                 "    INNER JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
-                "    WHERE  c14.MM_YYYY IN ('" + month_date + "', DATE_FORMAT(DATE_SUB('" + month_date + "', INTERVAL 1 MONTH), '%Y-%m-%d')) AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65') \n" +
+                "    WHERE  c14.MM_YYYY IN (?, DATE_FORMAT(DATE_SUB(?, INTERVAL 1 MONTH), '%Y-%m-%d')) AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65') \n" +
                 "    GROUP BY zc.ZONE_CODE, zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME \n" +
                 "),\n" +
                 "ranked_data AS (\n" +
@@ -976,21 +976,21 @@ public class CustomSubParameterWiseQuery {
                 "SELECT rd.ZONE_NAME,rd.ZONE_CODE,rd.COMM_NAME, rd.col7,rd.col3,mc.median_4c \n" +
                 "FROM ranked_data AS rd\n" +
                 "CROSS JOIN median_calc AS mc\n" +
-                "WHERE rd.ZONE_CODE = '" + zone_code + "'	 LIMIT 1000;\n" +
+                "WHERE rd.ZONE_CODE = ?	 LIMIT 1000;\n" +
                 "\n";
         return queryCustom4c;
     }
     public String QueryFor_cus4c_AllCommissonaryWise(String month_date){
-        //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
+        //              ?	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
         String queryCustom4c="WITH calculated_data AS (\n" +
                 "    SELECT zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME, \n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' THEN c14.SVB_BE_FINALIZED_NO ELSE 0 END), 0) AS col7,\n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = DATE_FORMAT(DATE_SUB('" + month_date + "', INTERVAL 1 MONTH), '%Y-%m-%d') THEN c14.SVB_BE_CLOSING_NO ELSE 0 END), 0) AS col3\n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = ? THEN c14.SVB_BE_FINALIZED_NO ELSE 0 END), 0) AS col7,\n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = DATE_FORMAT(DATE_SUB(?, INTERVAL 1 MONTH), '%Y-%m-%d') THEN c14.SVB_BE_CLOSING_NO ELSE 0 END), 0) AS col3\n" +
                 "    FROM mis_gst_commcode AS cc\n" +
                 "    INNER JOIN mis_dpm_cus_5b AS c14 ON c14.COMM_CODE = cc.COMM_CODE\n" +
                 "    INNER JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
-                "    WHERE  c14.MM_YYYY IN ('" + month_date + "', DATE_FORMAT(DATE_SUB('" + month_date + "', INTERVAL 1 MONTH), '%Y-%m-%d')) \n" +
+                "    WHERE  c14.MM_YYYY IN (?, DATE_FORMAT(DATE_SUB(?, INTERVAL 1 MONTH), '%Y-%m-%d')) \n" +
                 "        AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65') \n" +
                 "    GROUP BY zc.ZONE_CODE, zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME\n" +
                 "),\n" +
