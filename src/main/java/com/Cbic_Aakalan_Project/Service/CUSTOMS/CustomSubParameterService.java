@@ -242,7 +242,6 @@ public class CustomSubParameterService {
     }
 
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CUS3A Particular Zone=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-
     public List<GSTCUS> cus3aZoneWiseCommissionary(ResultSet rs) throws SQLException {
         Double median = 0.0;
         List<GSTCUS> allGstaList = new ArrayList<>();

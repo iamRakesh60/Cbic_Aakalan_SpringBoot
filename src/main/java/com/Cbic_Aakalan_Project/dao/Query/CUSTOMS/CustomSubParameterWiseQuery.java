@@ -2,7 +2,7 @@ package com.Cbic_Aakalan_Project.dao.Query.CUSTOMS;
 import com.Cbic_Aakalan_Project.Service.DateCalculate;
 public class CustomSubParameterWiseQuery {
 
-    public String QueryFor_cus1a_ZoneWise(String month_date){
+    public String QueryFor_cus1_ZoneWise(String month_date){
         //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
         String queryCustom1="SELECT \n"
@@ -385,20 +385,20 @@ public class CustomSubParameterWiseQuery {
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
         String queryCustom3a ="WITH calculated_data AS (\n" +
                 "    SELECT zc.ZONE_NAME, cc.ZONE_CODE, \n" +
-                "        (SUM(CASE WHEN c14.MM_YYYY <= '" + month_date + "' THEN c14.CASES_PENDING ELSE 0 END) + SUM(c14.CASES_REMAINING)) AS col17f, -- Formula for col17f\n" +
-                "        (SUM(CASE WHEN c14.MM_YYYY <= '" + month_date + "' THEN c14.CASES_NOT_ACTION ELSE 0 END) + \n" +
-                "         SUM(CASE WHEN c14.MM_YYYY <= '" + month_date + "' THEN c14.CASES_ADJUDICATION ELSE 0 END) + \n" +
-                "         (SUM(CASE WHEN c14.MM_YYYY <= '" + month_date + "' THEN c14.CASES_PENDING ELSE 0 END) + SUM(c14.CASES_REMAINING))) AS col11 -- Formula for col11\n" +
+                "        (SUM(CASE WHEN c14.MM_YYYY <= ? THEN c14.CASES_PENDING ELSE 0 END) + SUM(c14.CASES_REMAINING)) AS col17f, -- Formula for col17f\n" +
+                "        (SUM(CASE WHEN c14.MM_YYYY <= ? THEN c14.CASES_NOT_ACTION ELSE 0 END) + \n" +
+                "         SUM(CASE WHEN c14.MM_YYYY <= ? THEN c14.CASES_ADJUDICATION ELSE 0 END) + \n" +
+                "         (SUM(CASE WHEN c14.MM_YYYY <= ? THEN c14.CASES_PENDING ELSE 0 END) + SUM(c14.CASES_REMAINING))) AS col11 -- Formula for col11\n" +
                 "    FROM mis_gst_commcode AS cc\n" +
                 "    LEFT JOIN mis_dgi_cus_12 AS c14 ON c14.COMM_CODE = cc.COMM_CODE\n" +
                 "    LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
-                "    WHERE  c14.MM_YYYY <= '" + month_date + "' AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65', '57','67','69')\n" +
+                "    WHERE  c14.MM_YYYY <= ? AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65', '57','67','69')\n" +
                 "    GROUP BY zc.ZONE_CODE, zc.ZONE_NAME, cc.ZONE_CODE\n" +
                 "    HAVING \n" +
-                "        (SUM(CASE WHEN c14.MM_YYYY <= '" + month_date + "' THEN c14.CASES_PENDING ELSE 0 END) > 0 \n" +
+                "        (SUM(CASE WHEN c14.MM_YYYY <= ? THEN c14.CASES_PENDING ELSE 0 END) > 0 \n" +
                 "         OR SUM(c14.CASES_REMAINING) > 0 \n" +
-                "         OR SUM(CASE WHEN c14.MM_YYYY <= '" + month_date + "' THEN c14.CASES_NOT_ACTION ELSE 0 END) > 0 \n" +
-                "         OR SUM(CASE WHEN c14.MM_YYYY <= '" + month_date + "' THEN c14.CASES_ADJUDICATION ELSE 0 END) > 0)\n" +
+                "         OR SUM(CASE WHEN c14.MM_YYYY <= ? THEN c14.CASES_NOT_ACTION ELSE 0 END) > 0 \n" +
+                "         OR SUM(CASE WHEN c14.MM_YYYY <= ? THEN c14.CASES_ADJUDICATION ELSE 0 END) > 0)\n" +
                 "),\n" +
                 "ranked_data AS (\n" +
                 "    SELECT cd.*,ROW_NUMBER() OVER (ORDER BY col17f) AS row_num,COUNT(*) OVER () AS total_rows\n" +
@@ -418,20 +418,20 @@ public class CustomSubParameterWiseQuery {
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
         String queryCustom3a="WITH calculated_data AS (\n" +
                 "    SELECT zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME, \n" +
-                "        (SUM(CASE WHEN c14.MM_YYYY <= '" + month_date + "' THEN c14.CASES_PENDING ELSE 0 END) + SUM(c14.CASES_REMAINING)) AS col17f, -- Formula for col17f\n" +
-                "        (SUM(CASE WHEN c14.MM_YYYY <= '" + month_date + "' THEN c14.CASES_NOT_ACTION ELSE 0 END) + \n" +
-                "         SUM(CASE WHEN c14.MM_YYYY <= '" + month_date + "' THEN c14.CASES_ADJUDICATION ELSE 0 END) + \n" +
-                "         (SUM(CASE WHEN c14.MM_YYYY <= '" + month_date + "' THEN c14.CASES_PENDING ELSE 0 END) + SUM(c14.CASES_REMAINING))) AS col11 -- Formula for col11\n" +
+                "        (SUM(CASE WHEN c14.MM_YYYY <= ? THEN c14.CASES_PENDING ELSE 0 END) + SUM(c14.CASES_REMAINING)) AS col17f, -- Formula for col17f\n" +
+                "        (SUM(CASE WHEN c14.MM_YYYY <= ? THEN c14.CASES_NOT_ACTION ELSE 0 END) + \n" +
+                "         SUM(CASE WHEN c14.MM_YYYY <= ? THEN c14.CASES_ADJUDICATION ELSE 0 END) + \n" +
+                "         (SUM(CASE WHEN c14.MM_YYYY <= ? THEN c14.CASES_PENDING ELSE 0 END) + SUM(c14.CASES_REMAINING))) AS col11 -- Formula for col11\n" +
                 "    FROM mis_gst_commcode AS cc\n" +
                 "    LEFT JOIN mis_dgi_cus_12 AS c14 ON c14.COMM_CODE = cc.COMM_CODE\n" +
                 "    LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
-                "    WHERE  c14.MM_YYYY <= '" + month_date + "'  AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65', '57', '67', '69') \n" +
+                "    WHERE  c14.MM_YYYY <= ?  AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65', '57', '67', '69') \n" +
                 "    GROUP BY zc.ZONE_CODE, zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME\n" +
                 "    HAVING \n" +
-                "        (SUM(CASE WHEN c14.MM_YYYY <= '" + month_date + "' THEN c14.CASES_PENDING ELSE 0 END) > 0 \n" +
+                "        (SUM(CASE WHEN c14.MM_YYYY <= ? THEN c14.CASES_PENDING ELSE 0 END) > 0 \n" +
                 "         OR SUM(c14.CASES_REMAINING) > 0 \n" +
-                "         OR SUM(CASE WHEN c14.MM_YYYY <= '" + month_date + "' THEN c14.CASES_NOT_ACTION ELSE 0 END) > 0 \n" +
-                "         OR SUM(CASE WHEN c14.MM_YYYY <= '" + month_date + "' THEN c14.CASES_ADJUDICATION ELSE 0 END) > 0)\n" +
+                "         OR SUM(CASE WHEN c14.MM_YYYY <= ? THEN c14.CASES_NOT_ACTION ELSE 0 END) > 0 \n" +
+                "         OR SUM(CASE WHEN c14.MM_YYYY <= ? THEN c14.CASES_ADJUDICATION ELSE 0 END) > 0)\n" +
                 "),\n" +
                 "ranked_data AS (\n" +
                 "    SELECT cd.*,ROW_NUMBER() OVER (ORDER BY col17f) AS row_num,COUNT(*) OVER () AS total_rows\n" +
@@ -443,7 +443,7 @@ public class CustomSubParameterWiseQuery {
                 "        ELSE (SELECT AVG(col17f) FROM ranked_data WHERE row_num IN (total_rows / 2, (total_rows / 2) + 1))\n" +
                 "    END AS median_3a\n" +
                 "FROM ranked_data AS rd\n" +
-                "WHERE rd.ZONE_CODE = '" + zone_code + "' LIMIT 0, 1000;\n";
+                "WHERE rd.ZONE_CODE = ? LIMIT 0, 1000;\n";
         return queryCustom3a;
     }
     public String QueryFor_cus3a_AllCommissonaryWise(String month_date){
@@ -451,20 +451,20 @@ public class CustomSubParameterWiseQuery {
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
         String queryCustom3a="WITH calculated_data AS (\n" +
                 "    SELECT zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME, \n" +
-                "        (SUM(CASE WHEN c14.MM_YYYY <= '" + month_date + "' THEN c14.CASES_PENDING ELSE 0 END) + SUM(c14.CASES_REMAINING)) AS col17f, \n" +
-                "        (SUM(CASE WHEN c14.MM_YYYY <= '" + month_date + "' THEN c14.CASES_NOT_ACTION ELSE 0 END) + \n" +
-                "         SUM(CASE WHEN c14.MM_YYYY <= '" + month_date + "' THEN c14.CASES_ADJUDICATION ELSE 0 END) + \n" +
-                "         (SUM(CASE WHEN c14.MM_YYYY <= '" + month_date + "' THEN c14.CASES_PENDING ELSE 0 END) + SUM(c14.CASES_REMAINING))) AS col11 \n" +
+                "        (SUM(CASE WHEN c14.MM_YYYY <= ? THEN c14.CASES_PENDING ELSE 0 END) + SUM(c14.CASES_REMAINING)) AS col17f, \n" +
+                "        (SUM(CASE WHEN c14.MM_YYYY <= ? THEN c14.CASES_NOT_ACTION ELSE 0 END) + \n" +
+                "         SUM(CASE WHEN c14.MM_YYYY <= ? THEN c14.CASES_ADJUDICATION ELSE 0 END) + \n" +
+                "         (SUM(CASE WHEN c14.MM_YYYY <= ? THEN c14.CASES_PENDING ELSE 0 END) + SUM(c14.CASES_REMAINING))) AS col11 \n" +
                 "    FROM mis_gst_commcode AS cc\n" +
                 "    LEFT JOIN mis_dgi_cus_12 AS c14 ON c14.COMM_CODE = cc.COMM_CODE\n" +
                 "    LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
-                "    WHERE  c14.MM_YYYY <= '" + month_date + "'  \n" +
+                "    WHERE  c14.MM_YYYY <= ?  \n" +
                 "    GROUP BY zc.ZONE_CODE, zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME\n" +
                 "    HAVING \n" +
-                "        (SUM(CASE WHEN c14.MM_YYYY <= '" + month_date + "' THEN c14.CASES_PENDING ELSE 0 END) > 0 \n" +
+                "        (SUM(CASE WHEN c14.MM_YYYY <= ? THEN c14.CASES_PENDING ELSE 0 END) > 0 \n" +
                 "         OR SUM(c14.CASES_REMAINING) > 0 \n" +
-                "         OR SUM(CASE WHEN c14.MM_YYYY <= '" + month_date + "' THEN c14.CASES_NOT_ACTION ELSE 0 END) > 0 \n" +
-                "         OR SUM(CASE WHEN c14.MM_YYYY <= '" + month_date + "' THEN c14.CASES_ADJUDICATION ELSE 0 END) > 0)\n" +
+                "         OR SUM(CASE WHEN c14.MM_YYYY <= ? THEN c14.CASES_NOT_ACTION ELSE 0 END) > 0 \n" +
+                "         OR SUM(CASE WHEN c14.MM_YYYY <= ? THEN c14.CASES_ADJUDICATION ELSE 0 END) > 0)\n" +
                 "),\n" +
                 "ranked_data AS (\n" +
                 "    SELECT cd.*,ROW_NUMBER() OVER (ORDER BY col17f) AS row_num,COUNT(*) OVER () AS total_rows\n" +
