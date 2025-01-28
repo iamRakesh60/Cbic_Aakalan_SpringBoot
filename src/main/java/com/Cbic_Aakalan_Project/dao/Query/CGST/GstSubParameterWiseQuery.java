@@ -3606,25 +3606,6 @@ public class GstSubParameterWiseQuery {
 		return queryGst14aa;
 	}
 	// ********************************************************************************************************************************
-	public String QueryFor_gst10d_ZoneWise(String month_date){
-		//              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
-		String prev_month_new = DateCalculate.getPreviousMonth(month_date);
-		String queryGst14aa="";
-		return queryGst14aa;
-	}
-	public String QueryFor_gst10d_CommissonaryWise(String month_date, String zone_code){
-		//              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
-		String prev_month_new = DateCalculate.getPreviousMonth(month_date);
-		String queryGst14aa="";
-		return queryGst14aa;
-	}
-	public String QueryFor_gst10d_AllCommissonaryWise(String month_date){
-		//              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
-		String prev_month_new = DateCalculate.getPreviousMonth(month_date);
-		String queryGst14aa="";
-		return queryGst14aa;
-	}
-	// ********************************************************************************************************************************
 	public String QueryFor_gst11a_ZoneWise(String month_date){
 		//              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
 		String prev_month_new = DateCalculate.getPreviousMonth(month_date);
