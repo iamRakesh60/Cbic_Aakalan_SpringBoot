@@ -1,5 +1,6 @@
 package com.Cbic_Aakalan_Project.dao.Query.CUSTOMS;
-import com.Cbic_Aakalan_Project.Service.DateCalculate;public class CustomSubParameterWiseQuery {
+import com.Cbic_Aakalan_Project.Service.DateCalculate;
+public class CustomSubParameterWiseQuery {
 
     public String QueryFor_cus1a_ZoneWise(String month_date){
         //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
@@ -18,7 +19,7 @@ import com.Cbic_Aakalan_Project.Service.DateCalculate;public class CustomSubPara
                 + "LEFT JOIN \n"
                 + "    mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE \n"
                 + "WHERE  \n"
-                + "    c14.MM_YYYY = '" + month_date + "'  \n"
+                + "    c14.MM_YYYY = ?  \n"
                 + "GROUP BY \n"
                 + "    zc.ZONE_CODE, zc.ZONE_NAME, cc.ZONE_CODE \n"
                 + "ORDER BY \n"
@@ -45,8 +46,8 @@ import com.Cbic_Aakalan_Project.Service.DateCalculate;public class CustomSubPara
                 + "LEFT JOIN \n"
                 + "    mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE \n"
                 + "WHERE  \n"
-                + "    c14.MM_YYYY = '" + month_date + "'  \n"
-                + "    AND cc.ZONE_CODE = '" + zone_code + "'\n"
+                + "    c14.MM_YYYY = ?  \n"
+                + "    AND cc.ZONE_CODE = ?\n"
                 + "ORDER BY \n"
                 + "    total_score ASC \n"
                 + "LIMIT 0, 1000;\n"
@@ -71,7 +72,7 @@ import com.Cbic_Aakalan_Project.Service.DateCalculate;public class CustomSubPara
                 + "LEFT JOIN \n"
                 + "    mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE \n"
                 + "WHERE  \n"
-                + "    c14.MM_YYYY = '" + month_date + "'  \n"
+                + "    c14.MM_YYYY = ?  \n"
                 + "   \n"
                 + "ORDER BY \n"
                 + "    total_score ASC \n"
