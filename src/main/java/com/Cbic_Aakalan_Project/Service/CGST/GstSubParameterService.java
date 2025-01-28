@@ -2844,36 +2844,7 @@ public class GstSubParameterService {
         return allGstaList;
     }
 
-    // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= gst10d zone wise *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-    public  List<GSTCUS> gst10dZone(ResultSet rsGst14aa) throws SQLException {
-        double median = 0;
-        List<GSTCUS> allGstaList = new ArrayList<>();
-        while(rsGst14aa.next()) {
 
-        }
-        System.out.println("gst10d zone wise median :" + median);
-        return allGstaList;
-    }
-    // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= gst10d COMMI wise *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-    public  List<GSTCUS> gst10dZoneWiseCommissionary(ResultSet rsGst14aa) throws SQLException {
-        double median = 0;
-        List<GSTCUS> allGstaList = new ArrayList<>();
-        while(rsGst14aa.next()) {
-
-        }
-        System.out.println("gst10d all_cmsnry_median wise median :" + median);
-        return allGstaList;
-    }
-    // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= gst10d ALL COMMI wise *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-    public  List<GSTCUS> gst10dAllCommissionary(ResultSet rsGst14aa) throws SQLException {
-        double median = 0;
-        List<GSTCUS> allGstaList = new ArrayList<>();
-        while(rsGst14aa.next()) {
-
-        }
-        System.out.println("gst10d all_cmsnry_median :" + median);
-        return allGstaList;
-    }
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= gst11a zone wise *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
     public  List<GSTCUS> gst11aZone(ResultSet rsGst14aa) throws SQLException {
         double median = 0;
