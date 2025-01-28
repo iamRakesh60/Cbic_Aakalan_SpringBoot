@@ -674,38 +674,38 @@ public class CustomSubParameterWiseQuery {
     }
     // ********************************************************************************************************************************
     public String QueryFor_cus4a_ZoneWise(String month_date){
-        //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
+        //              ?	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
         String queryCustom4a="WITH calculated_data AS (\n" +
                 "    SELECT zc.ZONE_NAME,cc.ZONE_CODE,\n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' \n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = ? \n" +
                 "            THEN c14.NON_SVB_REQUEST_PENDING_MONTHS_6TO12_NO + c14.NON_SVB_CHEMICAL_PENDING_MONTHS_6TO12_NO + c14.NON_SVB_DOCUMENT_PENDING_MONTHS_6TO12_NO + \n" +
                 "                 c14.NON_SVB_P_IMPORT_PENDING_MONTHS_6TO12_NO + c14.NON_SVB_VERIFICATION_O_PENDING_MONTHS_6TO12_NO + c14.NON_SVB_INVESTIGATION_PENDING_MONTHS_6TO12_NO + \n" +
                 "                 c14.NON_SVB_LETIGATION_PENDING_MONTHS_6TO12_NO + c14.NON_SVB_OTHERS_PENDING_MONTHS_6TO12_NO ELSE 0 END), 0) AS col13,\n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' \n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = ? \n" +
                 "            THEN c14.NON_SVB_REQUEST_PENDING_YEAR_1TO2_NO + c14.NON_SVB_CHEMICAL_PENDING_YEAR_1TO2_NO + c14.NON_SVB_DOCUMENT_PENDING_YEAR_1TO2_NO + \n" +
                 "                 c14.NON_SVB_P_IMPORT_PENDING_YEAR_1TO2_NO + c14.NON_SVB_VERIFICATION_O_PENDING_YEAR_1TO2_NO + c14.NON_SVB_INVESTIGATION_PENDING_YEAR_1TO2_NO + \n" +
                 "                 c14.NON_SVB_LETIGATION_PENDING_YEAR_1TO2_NO + c14.NON_SVB_OTHERS_PENDING_YEAR_1TO2_NO ELSE 0 END), 0) AS col15,\n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' \n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = ? \n" +
                 "            THEN c14.NON_SVB_REQUEST_PENDING_MORE_2YEAR_NO + c14.NON_SVB_CHEMICAL_PENDING_MORE_2YEAR_NO + c14.NON_SVB_DOCUMENT_PENDING_MORE_2YEAR_NO + \n" +
                 "                 c14.NON_SVB_P_IMPORT_PENDING_MORE_2YEAR_NO + c14.NON_SVB_VERIFICATION_O_PENDING_MORE_2YEAR_NO + c14.NON_SVB_INVESTIGATION_PENDING_MORE_2YEAR_NO + \n" +
                 "                 c14.NON_SVB_LETIGATION_PENDING_MORE_2YEAR_NO + c14.NON_SVB_OTHERS_PENDING_MORE_2YEAR_NO ELSE 0 END), 0) AS col17,\n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' \n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = ? \n" +
                 "            THEN c14.NON_SVB_REQUEST_BE_CLOSING_NO + c14.NON_SVB_CHEMICAL_BE_CLOSING_NO + c14.NON_SVB_DOCUMENT_BE_CLOSING_NO + c14.NON_SVB_P_IMPORT_BE_CLOSING_NO + \n" +
                 "                 c14.NON_SVB_VERIFICATION_O_CLOSING_NO + c14.NON_SVB_INVESTIGATION_BE_CLOSING_NO + c14.NON_SVB_LETIGATION_BE_CLOSING_NO + \n" +
                 "                 c14.NON_SVB_OTHERS_BE_CLOSING_NO ELSE 0 END), 0) AS col3,\n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' \n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = ? \n" +
                 "            THEN c14.NON_SVB_REQUEST_BE_ASSESS_NO + c14.NON_SVB_CHEMICAL_BE_ASSESS_NO + c14.NON_SVB_DOCUMENT_BE_ASSESS_NO + c14.NON_SVB_P_IMPORT_BE_ASSESS_NO + \n" +
                 "                 c14.NON_SVB_VERIFICATION_O_BE_ASSESS_NO + c14.NON_SVB_INVESTIGATION_BE_ASSESS_NO + c14.NON_SVB_LETIGATION_BE_ASSESS_NO + \n" +
                 "                 c14.NON_SVB_OTHERS_BE_ASSESS_NO ELSE 0 END), 0) AS col5,\n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' \n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = ? \n" +
                 "            THEN c14.NON_SVB_REQUEST_BE_FINALIZED_NO + c14.NON_SVB_CHEMICAL_BE_FINALIZED_NO + c14.NON_SVB_DOCUMENT_BE_FINALIZED_NO + c14.NON_SVB_P_IMPORT_BE_FINALIZED_NO + \n" +
                 "                 c14.NON_SVB_VERIFICATION_O_BE_FINALIZED_NO + c14.NON_SVB_INVESTIGATION_BE_FINALIZED_NO + c14.NON_SVB_LETIGATION_BE_FINALIZED_NO + \n" +
                 "                 c14.NON_SVB_OTHERS_BE_FINALIZED_NO ELSE 0 END), 0) AS col7\n" +
                 "    FROM mis_gst_commcode AS cc\n" +
                 "    INNER JOIN mis_dpm_cus_5b AS c14 ON c14.COMM_CODE = cc.COMM_CODE\n" +
                 "    INNER JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
-                "    WHERE c14.MM_YYYY = '" + month_date + "' AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65')\n" +
+                "    WHERE c14.MM_YYYY = ? AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65')\n" +
                 "    GROUP BY zc.ZONE_CODE, zc.ZONE_NAME, cc.ZONE_CODE\n" +
                 "),\n" +
                 "ranked_data AS (\n" +
@@ -727,36 +727,36 @@ public class CustomSubParameterWiseQuery {
         return queryCustom4a;
     }
     public String QueryFor_cus4a_CommissonaryWise(String month_date, String zone_code){
-        //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
+        //              ?	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
         String queryCustom4a="WITH calculated_data AS (\n" +
                 "    SELECT zc.ZONE_NAME,cc.ZONE_CODE,cc.COMM_NAME,\n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' \n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = ? \n" +
                 "            THEN c14.NON_SVB_REQUEST_PENDING_MONTHS_6TO12_NO + c14.NON_SVB_CHEMICAL_PENDING_MONTHS_6TO12_NO + c14.NON_SVB_DOCUMENT_PENDING_MONTHS_6TO12_NO + c14.NON_SVB_P_IMPORT_PENDING_MONTHS_6TO12_NO + \n" +
                 "                 c14.NON_SVB_VERIFICATION_O_PENDING_MONTHS_6TO12_NO + c14.NON_SVB_INVESTIGATION_PENDING_MONTHS_6TO12_NO + c14.NON_SVB_LETIGATION_PENDING_MONTHS_6TO12_NO + c14.NON_SVB_OTHERS_PENDING_MONTHS_6TO12_NO\n" +
                 "            ELSE 0 END), 0) AS col13,\n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' \n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = ? \n" +
                 "            THEN c14.NON_SVB_REQUEST_PENDING_YEAR_1TO2_NO + c14.NON_SVB_CHEMICAL_PENDING_YEAR_1TO2_NO + c14.NON_SVB_DOCUMENT_PENDING_YEAR_1TO2_NO + c14.NON_SVB_P_IMPORT_PENDING_YEAR_1TO2_NO + \n" +
                 "                 c14.NON_SVB_VERIFICATION_O_PENDING_YEAR_1TO2_NO + c14.NON_SVB_INVESTIGATION_PENDING_YEAR_1TO2_NO + c14.NON_SVB_LETIGATION_PENDING_YEAR_1TO2_NO + c14.NON_SVB_OTHERS_PENDING_YEAR_1TO2_NO\n" +
                 "            ELSE 0 END), 0) AS col15,\n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' \n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = ? \n" +
                 "            THEN c14.NON_SVB_REQUEST_PENDING_MORE_2YEAR_NO + c14.NON_SVB_CHEMICAL_PENDING_MORE_2YEAR_NO + c14.NON_SVB_DOCUMENT_PENDING_MORE_2YEAR_NO + c14.NON_SVB_P_IMPORT_PENDING_MORE_2YEAR_NO + \n" +
                 "                 c14.NON_SVB_VERIFICATION_O_PENDING_MORE_2YEAR_NO + c14.NON_SVB_INVESTIGATION_PENDING_MORE_2YEAR_NO + c14.NON_SVB_LETIGATION_PENDING_MORE_2YEAR_NO + c14.NON_SVB_OTHERS_PENDING_MORE_2YEAR_NO\n" +
                 "            ELSE 0 END), 0) AS col17,\n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' \n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = ? \n" +
                 "            THEN c14.NON_SVB_REQUEST_BE_CLOSING_NO + c14.NON_SVB_CHEMICAL_BE_CLOSING_NO + c14.NON_SVB_DOCUMENT_BE_CLOSING_NO + c14.NON_SVB_P_IMPORT_BE_CLOSING_NO + c14.NON_SVB_VERIFICATION_O_CLOSING_NO + \n" +
                 "                 c14.NON_SVB_INVESTIGATION_BE_CLOSING_NO + c14.NON_SVB_LETIGATION_BE_CLOSING_NO + c14.NON_SVB_OTHERS_BE_CLOSING_NO\n" +
                 "            ELSE 0 END), 0) AS col3,\n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' \n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = ? \n" +
                 "            THEN c14.NON_SVB_REQUEST_BE_ASSESS_NO + c14.NON_SVB_CHEMICAL_BE_ASSESS_NO + c14.NON_SVB_DOCUMENT_BE_ASSESS_NO + c14.NON_SVB_P_IMPORT_BE_ASSESS_NO + c14.NON_SVB_VERIFICATION_O_BE_ASSESS_NO + \n" +
                 "                 c14.NON_SVB_INVESTIGATION_BE_ASSESS_NO + c14.NON_SVB_LETIGATION_BE_ASSESS_NO + c14.NON_SVB_OTHERS_BE_ASSESS_NO ELSE 0 END), 0) AS col5,\n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' \n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = ? \n" +
                 "            THEN c14.NON_SVB_REQUEST_BE_FINALIZED_NO + c14.NON_SVB_CHEMICAL_BE_FINALIZED_NO + c14.NON_SVB_DOCUMENT_BE_FINALIZED_NO + c14.NON_SVB_P_IMPORT_BE_FINALIZED_NO + c14.NON_SVB_VERIFICATION_O_BE_FINALIZED_NO + \n" +
                 "                 c14.NON_SVB_INVESTIGATION_BE_FINALIZED_NO + c14.NON_SVB_LETIGATION_BE_FINALIZED_NO + c14.NON_SVB_OTHERS_BE_FINALIZED_NO ELSE 0 END), 0) AS col7\n" +
                 "    FROM mis_gst_commcode AS cc\n" +
                 "    INNER JOIN mis_dpm_cus_5b AS c14 ON c14.COMM_CODE = cc.COMM_CODE\n" +
                 "    INNER JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
-                "    WHERE c14.MM_YYYY = '" + month_date + "' AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65')\n" +
+                "    WHERE c14.MM_YYYY = ? AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65')\n" +
                 "    GROUP BY zc.ZONE_CODE, zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME\n" +
                 "),\n" +
                 "ranked_data AS (\n" +
@@ -776,40 +776,40 @@ public class CustomSubParameterWiseQuery {
                 "    rd.ZONE_NAME,rd.ZONE_CODE,rd.COMM_NAME,rd.col5,rd.col7,rd.col3,rd.col9,rd.col13,rd.col15,rd.col17,rd.col_4a,mc.median_4a\n" +
                 "FROM ranked_data AS rd\n" +
                 "CROSS JOIN median_calc AS mc\n" +
-                "WHERE rd.ZONE_CODE = '" + zone_code + "' LIMIT 0, 1000;\n";
+                "WHERE rd.ZONE_CODE = ? LIMIT 0, 1000;\n";
         return queryCustom4a;
     }
     public String QueryFor_cus4a_AllCommissonaryWise(String month_date){
-        //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
+        //              ?	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
         String queryCustom4a="WITH calculated_data AS (\n" +
                 "    SELECT zc.ZONE_NAME,cc.ZONE_CODE,cc.COMM_NAME, \n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' \n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = ? \n" +
                 "            THEN c14.NON_SVB_REQUEST_PENDING_MONTHS_6TO12_NO + c14.NON_SVB_CHEMICAL_PENDING_MONTHS_6TO12_NO + c14.NON_SVB_DOCUMENT_PENDING_MONTHS_6TO12_NO + c14.NON_SVB_P_IMPORT_PENDING_MONTHS_6TO12_NO + \n" +
                 "                 c14.NON_SVB_VERIFICATION_O_PENDING_MONTHS_6TO12_NO + c14.NON_SVB_INVESTIGATION_PENDING_MONTHS_6TO12_NO + c14.NON_SVB_LETIGATION_PENDING_MONTHS_6TO12_NO + c14.NON_SVB_OTHERS_PENDING_MONTHS_6TO12_NO\n" +
                 "            ELSE 0 END), 0) AS col13,\n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' \n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = ? \n" +
                 "            THEN c14.NON_SVB_REQUEST_PENDING_YEAR_1TO2_NO + c14.NON_SVB_CHEMICAL_PENDING_YEAR_1TO2_NO + c14.NON_SVB_DOCUMENT_PENDING_YEAR_1TO2_NO + c14.NON_SVB_P_IMPORT_PENDING_YEAR_1TO2_NO + \n" +
                 "                 c14.NON_SVB_VERIFICATION_O_PENDING_YEAR_1TO2_NO + c14.NON_SVB_INVESTIGATION_PENDING_YEAR_1TO2_NO + c14.NON_SVB_LETIGATION_PENDING_YEAR_1TO2_NO + c14.NON_SVB_OTHERS_PENDING_YEAR_1TO2_NO\n" +
                 "            ELSE 0 END), 0) AS col15,\n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' \n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = ? \n" +
                 "            THEN c14.NON_SVB_REQUEST_PENDING_MORE_2YEAR_NO + c14.NON_SVB_CHEMICAL_PENDING_MORE_2YEAR_NO + c14.NON_SVB_DOCUMENT_PENDING_MORE_2YEAR_NO + c14.NON_SVB_P_IMPORT_PENDING_MORE_2YEAR_NO + \n" +
                 "                 c14.NON_SVB_VERIFICATION_O_PENDING_MORE_2YEAR_NO + c14.NON_SVB_INVESTIGATION_PENDING_MORE_2YEAR_NO + c14.NON_SVB_LETIGATION_PENDING_MORE_2YEAR_NO + c14.NON_SVB_OTHERS_PENDING_MORE_2YEAR_NO\n" +
                 "            ELSE 0 END), 0) AS col17,\n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' \n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = ? \n" +
                 "            THEN c14.NON_SVB_REQUEST_BE_CLOSING_NO + c14.NON_SVB_CHEMICAL_BE_CLOSING_NO + c14.NON_SVB_DOCUMENT_BE_CLOSING_NO + c14.NON_SVB_P_IMPORT_BE_CLOSING_NO + c14.NON_SVB_VERIFICATION_O_CLOSING_NO + \n" +
                 "                 c14.NON_SVB_INVESTIGATION_BE_CLOSING_NO + c14.NON_SVB_LETIGATION_BE_CLOSING_NO + c14.NON_SVB_OTHERS_BE_CLOSING_NO\n" +
                 "            ELSE 0 END), 0) AS col3,\n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' \n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = ? \n" +
                 "            THEN c14.NON_SVB_REQUEST_BE_ASSESS_NO + c14.NON_SVB_CHEMICAL_BE_ASSESS_NO + c14.NON_SVB_DOCUMENT_BE_ASSESS_NO + c14.NON_SVB_P_IMPORT_BE_ASSESS_NO + c14.NON_SVB_VERIFICATION_O_BE_ASSESS_NO + \n" +
                 "                 c14.NON_SVB_INVESTIGATION_BE_ASSESS_NO + c14.NON_SVB_LETIGATION_BE_ASSESS_NO + c14.NON_SVB_OTHERS_BE_ASSESS_NO ELSE 0 END), 0) AS col5,\n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' \n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = ? \n" +
                 "            THEN c14.NON_SVB_REQUEST_BE_FINALIZED_NO + c14.NON_SVB_CHEMICAL_BE_FINALIZED_NO + c14.NON_SVB_DOCUMENT_BE_FINALIZED_NO + c14.NON_SVB_P_IMPORT_BE_FINALIZED_NO + c14.NON_SVB_VERIFICATION_O_BE_FINALIZED_NO + \n" +
                 "                 c14.NON_SVB_INVESTIGATION_BE_FINALIZED_NO + c14.NON_SVB_LETIGATION_BE_FINALIZED_NO + c14.NON_SVB_OTHERS_BE_FINALIZED_NO ELSE 0 END), 0) AS col7\n" +
                 "    FROM mis_gst_commcode AS cc\n" +
                 "    INNER JOIN mis_dpm_cus_5b AS c14 ON c14.COMM_CODE = cc.COMM_CODE\n" +
                 "    INNER JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
-                "    WHERE c14.MM_YYYY = '" + month_date + "' AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65')\n" +
+                "    WHERE c14.MM_YYYY = ? AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65')\n" +
                 "    GROUP BY zc.ZONE_CODE, zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME\n" +
                 "),\n" +
                 "ranked_data AS (\n" +
