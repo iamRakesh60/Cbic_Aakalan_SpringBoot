@@ -3785,7 +3785,7 @@ public class GstSubParameterWiseQuery {
 				"    FROM mis_dla_gst_lgl_1a AS 11a\n" +
 				"    LEFT JOIN mis_gst_commcode AS cc ON 11a.COMM_CODE = cc.COMM_CODE\n" +
 				"    LEFT JOIN mis_gst_zonecode AS zc ON cc.ZONE_CODE = zc.ZONE_CODE\n" +
-				"    WHERE 11a.MM_YYYY = '" + month_date + "' AND FORUM_CODE = 6\n" +
+				"    WHERE 11a.MM_YYYY = ? AND FORUM_CODE = 6\n" +
 				"    GROUP BY zc.ZONE_CODE\n" +
 				"),\n" +
 				"cte1 AS (\n" +
@@ -3796,7 +3796,7 @@ public class GstSubParameterWiseQuery {
 				"    FROM mis_dla_gst_lgl_1b AS 11b\n" +
 				"    LEFT JOIN mis_gst_commcode AS cc ON 11b.COMM_CODE = cc.COMM_CODE\n" +
 				"    LEFT JOIN mis_gst_zonecode AS zc ON cc.ZONE_CODE = zc.ZONE_CODE\n" +
-				"    WHERE 11b.MM_YYYY = '" + month_date + "' AND FORUM_CODE = 6\n" +
+				"    WHERE 11b.MM_YYYY = ? AND FORUM_CODE = 6\n" +
 				"    GROUP BY zc.ZONE_CODE\n" +
 				")\n" +
 				"SELECT cte.ZONE_NAME,\n" +
@@ -3834,9 +3834,9 @@ public class GstSubParameterWiseQuery {
 				"    LEFT JOIN \n" +
 				"        mis_gst_zonecode AS zc ON cc.ZONE_CODE = zc.ZONE_CODE\n" +
 				"    WHERE \n" +
-				"        11a.MM_YYYY = '" + month_date + "'\n" +
+				"        11a.MM_YYYY = ? \n" +
 				"        AND FORUM_CODE = 6 \n" +
-				"        AND cc.ZONE_CODE = '" + zone_code + "'\n" +
+				"        AND cc.ZONE_CODE = ? \n" +
 				"), \n" +
 				"cte1 AS (\n" +
 				"    SELECT \n" +
@@ -3853,9 +3853,9 @@ public class GstSubParameterWiseQuery {
 				"    LEFT JOIN \n" +
 				"        mis_gst_zonecode AS zc ON cc.ZONE_CODE = zc.ZONE_CODE\n" +
 				"    WHERE \n" +
-				"        11b.MM_YYYY = '" + month_date + "'\n" +
+				"        11b.MM_YYYY = ? \n" +
 				"        AND FORUM_CODE = 6 \n" +
-				"        AND cc.ZONE_CODE = '" + zone_code + "'\n" +
+				"        AND cc.ZONE_CODE = ? \n" +
 				") \n" +
 				"SELECT \n" +
 				"    cte.ZONE_NAME, \n" +
@@ -3886,7 +3886,7 @@ public class GstSubParameterWiseQuery {
 				"    FROM mis_dla_gst_lgl_1a AS 11a\n" +
 				"    LEFT JOIN mis_gst_commcode AS cc ON 11a.COMM_CODE = cc.COMM_CODE\n" +
 				"    LEFT JOIN mis_gst_zonecode AS zc ON cc.ZONE_CODE = zc.ZONE_CODE\n" +
-				"    WHERE 11a.MM_YYYY = '" + month_date + "' AND FORUM_CODE = 6\n" +
+				"    WHERE 11a.MM_YYYY = ? AND FORUM_CODE = 6\n" +
 				"),\n" +
 				"cte1 AS (\n" +
 				"    SELECT zc.ZONE_NAME, zc.ZONE_CODE, cc.COMM_NAME, cc.COMM_CODE,\n" +
@@ -3895,7 +3895,7 @@ public class GstSubParameterWiseQuery {
 				"    FROM mis_dla_gst_lgl_1b AS 11b\n" +
 				"    LEFT JOIN mis_gst_commcode AS cc ON 11b.COMM_CODE = cc.COMM_CODE\n" +
 				"    LEFT JOIN mis_gst_zonecode AS zc ON cc.ZONE_CODE = zc.ZONE_CODE\n" +
-				"    WHERE 11b.MM_YYYY = '" + month_date + "' AND FORUM_CODE = 6\n" +
+				"    WHERE 11b.MM_YYYY = ? AND FORUM_CODE = 6\n" +
 				")\n" +
 				"SELECT cte.ZONE_NAME, cte.ZONE_CODE, cte.COMM_NAME, cte.COMM_CODE, \n" +
 				"       cte.col10A, cte.col12A, cte1.col10B, cte1.col12B,\n" +
