@@ -3606,7 +3606,7 @@ public class GstSubParameterWiseQuery {
 		return queryGst14aa;
 	}
 	// ********************************************************************************************************************************
-	public String QueryFor_gst1od_ZoneWise(String month_date){
+	public String QueryFor_gst10d_ZoneWise(String month_date){
 		//              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
 		String prev_month_new = DateCalculate.getPreviousMonth(month_date);
 		String queryGst14aa="";
@@ -3625,7 +3625,7 @@ public class GstSubParameterWiseQuery {
 		return queryGst14aa;
 	}
 	// ********************************************************************************************************************************
-	public String QueryFor_gs11a_ZoneWise(String month_date){
+	public String QueryFor_gst11a_ZoneWise(String month_date){
 		//              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
 		String prev_month_new = DateCalculate.getPreviousMonth(month_date);
 		String queryGst14aa="WITH cte AS (\n"
@@ -3638,7 +3638,7 @@ public class GstSubParameterWiseQuery {
 				+ "        ON 11a.COMM_CODE = cc.COMM_CODE \n"
 				+ "    LEFT JOIN mis_gst_zonecode zc \n"
 				+ "        ON cc.ZONE_CODE = zc.ZONE_CODE \n"
-				+ "    WHERE 11a.MM_YYYY = '"+ month_date+"' AND FORUM_CODE = 6 \n"
+				+ "    WHERE 11a.MM_YYYY = ? AND FORUM_CODE = 6 \n"
 				+ "    GROUP BY zc.ZONE_CODE, zc.ZONE_NAME\n"
 				+ "), \n"
 				+ "cte1 AS (\n"
@@ -3651,7 +3651,7 @@ public class GstSubParameterWiseQuery {
 				+ "        ON 11a.COMM_CODE = cc.COMM_CODE \n"
 				+ "    LEFT JOIN mis_gst_zonecode zc \n"
 				+ "        ON cc.ZONE_CODE = zc.ZONE_CODE \n"
-				+ "    WHERE 11a.MM_YYYY = '"+ prev_month_new+"' AND FORUM_CODE = 6 \n"
+				+ "    WHERE 11a.MM_YYYY = ? AND FORUM_CODE = 6 \n"
 				+ "    GROUP BY zc.ZONE_CODE, zc.ZONE_NAME\n"
 				+ "), \n"
 				+ "median_cte AS (\n"
@@ -3680,7 +3680,7 @@ public class GstSubParameterWiseQuery {
 				+ "";
 		return queryGst14aa;
 	}
-	public String QueryFor_gs11a_CommissonaryWise(String month_date, String zone_code){
+	public String QueryFor_gst11a_CommissonaryWise(String month_date, String zone_code){
 		//              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
 		String prev_month_new = DateCalculate.getPreviousMonth(month_date);
 		String queryGst14aa= "WITH cte AS (\n"
@@ -3693,9 +3693,9 @@ public class GstSubParameterWiseQuery {
 				+ "    FROM mis_dla_gst_lgl_1 AS 11a\n"
 				+ "    LEFT JOIN mis_gst_commcode AS cc ON 11a.COMM_CODE = cc.COMM_CODE \n"
 				+ "    LEFT JOIN mis_gst_zonecode AS zc ON cc.ZONE_CODE = zc.ZONE_CODE \n"
-				+ "    WHERE 11a.MM_YYYY = '" + month_date + "' \n"
+				+ "    WHERE 11a.MM_YYYY = ? \n"
 				+ "      AND FORUM_CODE = 6\n"
-				+ "      AND zc.ZONE_CODE = '" + zone_code + "' -- Apply condition here\n"
+				+ "      AND zc.ZONE_CODE = ? -- Apply condition here\n"
 				+ "), \n"
 				+ "cte1 AS (\n"
 				+ "    SELECT \n"
@@ -3707,9 +3707,9 @@ public class GstSubParameterWiseQuery {
 				+ "    FROM mis_dla_gst_lgl_1 AS 11a\n"
 				+ "    LEFT JOIN mis_gst_commcode AS cc ON 11a.COMM_CODE = cc.COMM_CODE \n"
 				+ "    LEFT JOIN mis_gst_zonecode AS zc ON cc.ZONE_CODE = zc.ZONE_CODE \n"
-				+ "    WHERE 11a.MM_YYYY = '"+ prev_month_new+"' \n"
+				+ "    WHERE 11a.MM_YYYY = ? \n"
 				+ "      AND FORUM_CODE = 6\n"
-				+ "      AND zc.ZONE_CODE ='" + zone_code + "' -- Apply condition here\n"
+				+ "      AND zc.ZONE_CODE = ? -- Apply condition here\n"
 				+ "),\n"
 				+ "median_cte AS (\n"
 				+ "    SELECT \n"
@@ -3738,7 +3738,7 @@ public class GstSubParameterWiseQuery {
 				+ "";
 		return queryGst14aa;
 	}
-	public String QueryFor_gs11a_AllCommissonaryWise(String month_date){
+	public String QueryFor_gst11a_AllCommissonaryWise(String month_date){
 		//              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
 		String prev_month_new = DateCalculate.getPreviousMonth(month_date);
 		String queryGst14aa="WITH cte AS (\n"
@@ -3751,7 +3751,7 @@ public class GstSubParameterWiseQuery {
 				+ "    FROM mis_dla_gst_lgl_1 AS 11a\n"
 				+ "    LEFT JOIN mis_gst_commcode AS cc ON 11a.COMM_CODE = cc.COMM_CODE \n"
 				+ "    LEFT JOIN mis_gst_zonecode AS zc ON cc.ZONE_CODE = zc.ZONE_CODE \n"
-				+ "    WHERE 11a.MM_YYYY = '"+ month_date+"' AND FORUM_CODE = 6\n"
+				+ "    WHERE 11a.MM_YYYY = ? AND FORUM_CODE = 6\n"
 				+ "), \n"
 				+ "cte1 AS (\n"
 				+ "    SELECT \n"
@@ -3763,7 +3763,7 @@ public class GstSubParameterWiseQuery {
 				+ "    FROM mis_dla_gst_lgl_1 AS 11a\n"
 				+ "    LEFT JOIN mis_gst_commcode AS cc ON 11a.COMM_CODE = cc.COMM_CODE \n"
 				+ "    LEFT JOIN mis_gst_zonecode AS zc ON cc.ZONE_CODE = zc.ZONE_CODE \n"
-				+ "    WHERE 11a.MM_YYYY = '"+ prev_month_new+"' AND FORUM_CODE = 6\n"
+				+ "    WHERE 11a.MM_YYYY = ? AND FORUM_CODE = 6\n"
 				+ "),\n"
 				+ "median_cte AS (\n"
 				+ "    SELECT \n"
