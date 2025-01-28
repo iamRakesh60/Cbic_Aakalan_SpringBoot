@@ -3507,13 +3507,13 @@ public class GstSubParameterWiseQuery {
 				"    FROM mis_gst_commcode AS cc\n" +
 				"    RIGHT JOIN mis_dga_gst_adt_3 AS scr ON cc.COMM_CODE = scr.COMM_CODE\n" +
 				"    LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
-				"    WHERE scr.MM_YYYY BETWEEN '" + start_date + "' AND '" + month_date + "'\n" +
+				"    WHERE scr.MM_YYYY BETWEEN ? AND ? \n" + // '" + start_date + "', '" + month_date + "'
 				"),\n" +
 				"AggregatedData AS (\n" +
 				"    SELECT ZONE_CODE,ZONE_NAME,MM_YYYY,\n" +
 				"        (MAX(col22) + MAX(col23) + MAX(col24) + MAX(col26)) AS col27,(MAX(col13) + MAX(col14)) AS col15,\n" +
 				"        CONCAT((MAX(col22) + MAX(col23) + MAX(col24) + MAX(col26)), '/', MAX(col13) + MAX(col14)) AS absvl\n" +
-				"    FROM CumulativeData WHERE MM_YYYY = '" + month_date + "' GROUP BY ZONE_CODE, ZONE_NAME, MM_YYYY\n" +
+				"    FROM CumulativeData WHERE MM_YYYY = ? GROUP BY ZONE_CODE, ZONE_NAME, MM_YYYY\n" + // '" + month_date + "'
 				"),\n" +
 				"RankedData AS (\n" +
 				"    SELECT *, ROW_NUMBER() OVER (ORDER BY col27) AS row_num, COUNT(*) OVER () AS total_rows\n" +
@@ -3541,7 +3541,7 @@ public class GstSubParameterWiseQuery {
 				"    FROM mis_gst_commcode AS cc\n" +
 				"    RIGHT JOIN mis_dga_gst_adt_3 AS tc ON cc.COMM_CODE = tc.COMM_CODE\n" +
 				"    LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
-				"    WHERE tc.MM_YYYY BETWEEN '" + start_date + "' AND '" + month_date + "'\n" +
+				"    WHERE tc.MM_YYYY BETWEEN ? AND ?\n" +
 				"    GROUP BY cc.ZONE_CODE, zc.ZONE_NAME, cc.COMM_NAME\n" +
 				"),\n" +
 				"RankedData AS (\n" +
@@ -3565,7 +3565,7 @@ public class GstSubParameterWiseQuery {
 				"SELECT r.ZONE_CODE,r.ZONE_NAME,r.COMM_NAME,r.col27,r.col15,r.totalScore,r.absvl,m.median10c\n" +
 				"FROM RankedData r\n" +
 				"CROSS JOIN MedianCalc m\n" +
-				"WHERE r.ZONE_CODE = '" + zone_code + "';";
+				"WHERE r.ZONE_CODE = ? ;";
 		return queryGst14aa;
 	}
 	public String QueryFor_gst10c_AllCommissonaryWise(String month_date){
@@ -3583,7 +3583,7 @@ public class GstSubParameterWiseQuery {
 				"    FROM mis_gst_commcode AS cc\n" +
 				"    RIGHT JOIN mis_dga_gst_adt_3 AS tc ON cc.COMM_CODE = tc.COMM_CODE\n" +
 				"    LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
-				"    WHERE tc.MM_YYYY BETWEEN '" + start_date + "' AND '" + month_date + "' \n" +
+				"    WHERE tc.MM_YYYY BETWEEN ? AND ? \n" +
 				"    GROUP BY cc.ZONE_CODE, zc.ZONE_NAME, cc.COMM_NAME\n" +
 				"),\n" +
 				"RankedData AS (\n" +

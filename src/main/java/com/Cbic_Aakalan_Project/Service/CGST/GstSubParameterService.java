@@ -2728,7 +2728,38 @@ public class GstSubParameterService {
         double median = 0;
         List<GSTCUS> allGstaList = new ArrayList<>();
         while(rsGst14aa.next()) {
+            String ra= RelevantAspect.Gst10C_RA;
+            String zoneCode = rsGst14aa.getString("ZONE_CODE");
+            String zone_name = rsGst14aa.getString("ZONE_NAME");
+            String commname= "ALL";
+            double col27=rsGst14aa.getInt("col27");
+            double col15=rsGst14aa.getInt("col15");
+            String absval = rsGst14aa.getString("absvl");
+            Double t_score;
+            if(col15 != 0){
+                t_score = (col27 / col15) * 100;
+            }else {
+                t_score = 0.00;
+            }
+            int Zonal_rank = 0;
 
+            median = rsGst14aa.getDouble("median10c");
+            String formattedTotal = String.format("%.2f", t_score);
+            double totalScore = Double.parseDouble(formattedTotal);
+            int way_to_grade = score.marks10c(totalScore);
+            int insentavization = score.marks10c(totalScore);
+
+            if (col27 > median && way_to_grade < 10) {
+                insentavization += 1;
+            }
+            String gst = "no";
+            double un_formattedSubParameterWeightedAverage = insentavization * 0.3;
+            String formattedAverage = String.format("%.2f", un_formattedSubParameterWeightedAverage);
+            double sub_parameter_weighted_average = Double.parseDouble(formattedAverage);
+
+            gsta = new GSTCUS(zone_name, commname, totalScore,absval,zoneCode,ra,
+                    Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
+            allGstaList.add(gsta);
         }
         System.out.println("gst10c zone wise median :" + median);
         return allGstaList;
@@ -2738,7 +2769,37 @@ public class GstSubParameterService {
         double median = 0;
         List<GSTCUS> allGstaList = new ArrayList<>();
         while(rsGst14aa.next()) {
+            String ra= RelevantAspect.Gst10C_RA;
+            String zoneCode = rsGst14aa.getString("ZONE_CODE");
+            String zone_name = rsGst14aa.getString("ZONE_NAME");
+            String commname=rsGst14aa.getString("COMM_NAME");
+            double col27=rsGst14aa.getInt("col27");
+            double col15=rsGst14aa.getInt("col15");
+            String absval = rsGst14aa.getString("absvl");
+            Double t_score;
+            if(col15 != 0){
+                t_score = (col27 / col15) * 100;
+            }else {
+                t_score = 0.00;
+            }
+            int Zonal_rank = 0 ;
+            median = rsGst14aa.getDouble("median10c");
+            String formattedTotal = String.format("%.2f", t_score);
+            double totalScore = Double.parseDouble(formattedTotal);
+            int way_to_grade = score.marks10c(totalScore);
+            int insentavization = score.marks10c(totalScore);
 
+            if (col27 > median && way_to_grade < 10) {
+                insentavization += 1;
+            }
+            String gst = "no";
+            double un_formattedSubParameterWeightedAverage = insentavization * 0.3;
+            String formattedAverage = String.format("%.2f", un_formattedSubParameterWeightedAverage);
+            double sub_parameter_weighted_average = Double.parseDouble(formattedAverage);
+
+            gsta = new GSTCUS(zone_name, commname, totalScore,absval,zoneCode,ra,
+                    Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
+            allGstaList.add(gsta);
         }
         System.out.println("gst10c all_cmsnry_median wise median :" + median);
         return allGstaList;
@@ -2748,7 +2809,36 @@ public class GstSubParameterService {
         double median = 0;
         List<GSTCUS> allGstaList = new ArrayList<>();
         while(rsGst14aa.next()) {
+            String ra= RelevantAspect.Gst10C_RA;
+            String zoneCode = rsGst14aa.getString("ZONE_CODE");
+            String zone_name = rsGst14aa.getString("ZONE_NAME");
+            String commname=rsGst14aa.getString("COMM_NAME");
+            double col27=rsGst14aa.getInt("col27");
+            double col15=rsGst14aa.getInt("col15");
+            String absval = rsGst14aa.getString("absvl");
+            Double t_score;
+            if(col15 != 0){
+                t_score = (col27 / col15) * 100;
+            }else {
+                t_score = 0.00;
+            }
+            int Zonal_rank = 0 ;
+            median = rsGst14aa.getDouble("median10c");
+            String formattedTotal = String.format("%.2f", t_score);
+            double totalScore = Double.parseDouble(formattedTotal);
+            int way_to_grade = score.marks10c(totalScore);
+            int insentavization = score.marks10c(totalScore);
 
+            if (col27 > median && way_to_grade < 10) {
+                insentavization += 1;
+            }
+            String gst = "no";
+            double un_formattedSubParameterWeightedAverage = insentavization * 0.3;
+            String formattedAverage = String.format("%.2f", un_formattedSubParameterWeightedAverage);
+            double sub_parameter_weighted_average = Double.parseDouble(formattedAverage);
+            gsta = new GSTCUS(zone_name, commname, totalScore,absval,zoneCode,ra,
+                    Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
+            allGstaList.add(gsta);
         }
         System.out.println("gst10c all_cmsnry_median :" + median);
         return allGstaList;
