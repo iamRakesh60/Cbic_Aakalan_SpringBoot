@@ -2844,7 +2844,6 @@ public class GstSubParameterService {
         return allGstaList;
     }
 
-
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= gst11a zone wise *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
     public  List<GSTCUS> gst11aZone(ResultSet rsGst14aa) throws SQLException {
         double median = 0;
