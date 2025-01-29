@@ -2017,7 +2017,7 @@ public class CustomSubParameterWiseQuery {
                 + "    FROM mis_dri_cus_1 AS 14c\n"
                 + "    INNER JOIN mis_gst_commcode AS cc\n"
                 + "        ON 14c.COMM_CODE = cc.COMM_CODE\n"
-                + "        AND 14c.MM_YYYY BETWEEN '" + start_date + "' AND  '" + month_date + "' -- Financial year condition\n"
+                + "        AND 14c.MM_YYYY BETWEEN ? AND  ? -- Financial year condition\n" // -- start_date, month_date
                 + "    INNER JOIN mis_gst_zonecode AS zc\n"
                 + "        ON zc.ZONE_CODE = cc.ZONE_CODE\n"
                 + "    GROUP BY cc.ZONE_CODE, zc.ZONE_NAME\n"
@@ -2057,7 +2057,7 @@ public class CustomSubParameterWiseQuery {
                 + "    INNER JOIN mis_gst_zonecode AS zc\n"
                 + "        ON zc.ZONE_CODE = cc.ZONE_CODE\n"
                 + "    -- Filter for the financial year starting from April up to the target month\n"
-                + "    WHERE 15c_prev.MM_YYYY >= '" + start_date + "' AND 15c_prev.MM_YYYY <= '" + month_date + "'\n"
+                + "    WHERE 15c_prev.MM_YYYY >= ? AND 15c_prev.MM_YYYY <= ? \n"  // -- start_date, month_date
                 + "    GROUP BY zc.ZONE_CODE, zc.ZONE_NAME, DATE_FORMAT(15c_prev.MM_YYYY, '%Y-%m-01')\n"
                 + "),\n"
                 + "aggregated_col8_9_cte AS (\n"
@@ -2068,7 +2068,7 @@ public class CustomSubParameterWiseQuery {
                 + "        SUM(col8_ddm) AS col8_ddm,\n"
                 + "        SUM(col9_ddm) AS col9_ddm\n"
                 + "    FROM col8_9_cte\n"
-                + "    WHERE month <= '" + month_date + "' -- Ensure cumulative data up to the target month\n"
+                + "    WHERE month <= ? -- Ensure cumulative data up to the target month\n" // -- month_date
                 + "    GROUP BY ZONE_NAME, ZONE_CODE\n"
                 + ")\n"
                 + "SELECT \n"
@@ -2115,7 +2115,7 @@ public class CustomSubParameterWiseQuery {
                 + "    FROM mis_dri_cus_1 AS 14c\n"
                 + "    INNER JOIN mis_gst_commcode AS cc\n"
                 + "        ON 14c.COMM_CODE = cc.COMM_CODE\n"
-                + "        AND 14c.MM_YYYY BETWEEN'" + start_date + "' AND '" + month_date + "' -- Financial year condition\n"
+                + "        AND 14c.MM_YYYY BETWEEN ? AND ? -- Financial year condition\n" // -- start_date, month_date
                 + "    INNER JOIN mis_gst_zonecode AS zc\n"
                 + "        ON zc.ZONE_CODE = cc.ZONE_CODE\n"
                 + "    GROUP BY cc.ZONE_CODE, zc.ZONE_NAME, cc.COMM_NAME\n"
@@ -2156,7 +2156,7 @@ public class CustomSubParameterWiseQuery {
                 + "    INNER JOIN mis_gst_zonecode AS zc\n"
                 + "        ON zc.ZONE_CODE = cc.ZONE_CODE\n"
                 + "    -- Filter for the financial year starting from April up to the target month\n"
-                + "    WHERE 15c_prev.MM_YYYY >= '" + start_date + "' AND 15c_prev.MM_YYYY <= '" + month_date + "'\n"
+                + "    WHERE 15c_prev.MM_YYYY >= ? AND 15c_prev.MM_YYYY <= ? \n" // -- start_date, month_date
                 + "    GROUP BY zc.ZONE_CODE, zc.ZONE_NAME, cc.COMM_NAME, DATE_FORMAT(15c_prev.MM_YYYY, '%Y-%m-01')\n"
                 + "),\n"
                 + "aggregated_col8_9_cte AS (\n"
@@ -2168,7 +2168,7 @@ public class CustomSubParameterWiseQuery {
                 + "        SUM(col8_ddm) AS col8_ddm,\n"
                 + "        SUM(col9_ddm) AS col9_ddm\n"
                 + "    FROM col8_9_cte\n"
-                + "    WHERE month <= '" + month_date + "' -- Ensure cumulative data up to the target month\n"
+                + "    WHERE month <= ? -- Ensure cumulative data up to the target month\n" // --  month_date
                 + "    GROUP BY ZONE_NAME, ZONE_CODE, COMM_NAME\n"
                 + ")\n"
                 + "SELECT \n"
@@ -2184,7 +2184,7 @@ public class CustomSubParameterWiseQuery {
                 + "FROM cte\n"
                 + "LEFT JOIN aggregated_col8_9_cte AS agg\n"
                 + "    ON cte.ZONE_CODE = agg.ZONE_CODE AND cte.COMM_NAME = agg.COMM_NAME\n"
-                + "WHERE cte.ZONE_CODE = '"+zone_code+"'\n"
+                + "WHERE cte.ZONE_CODE = ? \n"
                 + "ORDER BY cte.col18_1 ASC;\n"
                 + "";
         return queryCustom6c;
@@ -2217,7 +2217,7 @@ public class CustomSubParameterWiseQuery {
                 + "    FROM mis_dri_cus_1 AS 14c\n"
                 + "    INNER JOIN mis_gst_commcode AS cc\n"
                 + "        ON 14c.COMM_CODE = cc.COMM_CODE\n"
-                + "        AND 14c.MM_YYYY BETWEEN '" + start_date + "' AND '" + month_date + "' -- Financial year condition\n"
+                + "        AND 14c.MM_YYYY BETWEEN ? AND ? -- Financial year condition\n" // -- start_date, month_date
                 + "    INNER JOIN mis_gst_zonecode AS zc\n"
                 + "        ON zc.ZONE_CODE = cc.ZONE_CODE\n"
                 + "    GROUP BY cc.ZONE_CODE, zc.ZONE_NAME, cc.COMM_NAME\n"
@@ -2258,7 +2258,7 @@ public class CustomSubParameterWiseQuery {
                 + "    INNER JOIN mis_gst_zonecode AS zc\n"
                 + "        ON zc.ZONE_CODE = cc.ZONE_CODE\n"
                 + "    -- Filter for the financial year starting from April up to the target month\n"
-                + "    WHERE 15c_prev.MM_YYYY >= '" + start_date + "' AND 15c_prev.MM_YYYY <= '" + month_date + "'\n"
+                + "    WHERE 15c_prev.MM_YYYY >= ? AND 15c_prev.MM_YYYY <= ? \n"// -- start_date, month_date
                 + "    GROUP BY zc.ZONE_CODE, zc.ZONE_NAME, cc.COMM_NAME, DATE_FORMAT(15c_prev.MM_YYYY, '%Y-%m-01')\n"
                 + "),\n"
                 + "aggregated_col8_9_cte AS (\n"
@@ -2270,7 +2270,7 @@ public class CustomSubParameterWiseQuery {
                 + "        SUM(col8_ddm) AS col8_ddm,\n"
                 + "        SUM(col9_ddm) AS col9_ddm\n"
                 + "    FROM col8_9_cte\n"
-                + "    WHERE month <= '" + month_date + "' -- Ensure cumulative data up to the target month\n"
+                + "    WHERE month <= ? -- Ensure cumulative data up to the target month\n"// --  month_date
                 + "    GROUP BY ZONE_NAME, ZONE_CODE, COMM_NAME\n"
                 + ")\n"
                 + "SELECT \n"

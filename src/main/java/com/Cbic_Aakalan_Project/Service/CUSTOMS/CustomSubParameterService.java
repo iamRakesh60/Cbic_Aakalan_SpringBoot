@@ -1885,7 +1885,36 @@ public class CustomSubParameterService {
     public List<GSTCUS> cus6cZoneWiseCommissionary(ResultSet rsGst14aa) throws SQLException {
         List<GSTCUS> allGstaList = new ArrayList<>();
         while (rsGst14aa.next()) {
-
+            String ra = CustomRelaventAspect.cus6c_RA;
+            String zoneCode = rsGst14aa.getString("ZONE_CODE");
+            String commname = rsGst14aa.getString("COMM_NAME");
+            int col18_1 = rsGst14aa.getInt("col18_1");
+            int col8_ddm = rsGst14aa.getInt("col8_ddm");
+            int col9_ddm = rsGst14aa.getInt("col9_ddm");
+            double median = rsGst14aa.getDouble("median_6c");
+            Double numerator_6c = rsGst14aa.getDouble("col18_1");
+            String absval = rsGst14aa.getString("abs_value_pq");
+            //col3a is giving null for any date column, that reason total_score is o
+            int Zonal_rank = 0;
+            String gst = "no";
+            if((col8_ddm+col9_ddm) != 0) {
+                total = ((double) (col18_1) * 100 / (col8_ddm+col9_ddm));
+            }else {
+                total = 0.00;
+            }
+            String formattedTotal = String.format("%.2f", total);
+            double totalScore = Double.parseDouble(formattedTotal);
+            int way_to_grade = score.c_marks6c(totalScore);
+            int insentavization = score.c_marks6c(totalScore);
+            if (numerator_6c > median && way_to_grade < 10) {
+                insentavization += 1;
+            }
+            double sub_parameter_weighted_average = insentavization * 0.2;
+            sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
+            gsta = new GSTCUS(rsGst14aa.getString("ZONE_NAME"), commname, totalScore,absval,zoneCode,ra,
+                    Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
+            allGstaList.add(gsta);
+            allGstaList.sort((a, b) -> Double.compare(b.getTotal_score(), a.getTotal_score()));
         }
         return allGstaList;
     }
@@ -1894,7 +1923,36 @@ public class CustomSubParameterService {
     public List<GSTCUS> cus6cAllCommissionary(ResultSet rsGst14aa) throws SQLException {
         List<GSTCUS> allGstaList = new ArrayList<>();
         while (rsGst14aa.next()) {
-
+            String ra = CustomRelaventAspect.cus6c_RA;
+            String zoneCode = rsGst14aa.getString("ZONE_CODE");
+            String commname = rsGst14aa.getString("COMM_NAME");
+            int col18_1 = rsGst14aa.getInt("col18_1");
+            int col8_ddm = rsGst14aa.getInt("col8_ddm");
+            int col9_ddm = rsGst14aa.getInt("col9_ddm");
+            double median = rsGst14aa.getDouble("median_6c");
+            Double numerator_6c = rsGst14aa.getDouble("col18_1");
+            String absval = rsGst14aa.getString("abs_value_pq");
+            //col3a is giving null for any date column, that reason total_score is o
+            int Zonal_rank = 0;
+            String gst = "no";
+            if((col8_ddm+col9_ddm) != 0) {
+                total = ((double) (col18_1) * 100 / (col8_ddm+col9_ddm));
+            }else {
+                total = 0.00;
+            }
+            String formattedTotal = String.format("%.2f", total);
+            double totalScore = Double.parseDouble(formattedTotal);
+            int way_to_grade = score.c_marks6c(totalScore);
+            int insentavization = score.c_marks6c(totalScore);
+            if (numerator_6c > median && way_to_grade < 10) {
+                insentavization += 1;
+            }
+            double sub_parameter_weighted_average = insentavization * 0.2;
+            sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
+            gsta = new GSTCUS(rsGst14aa.getString("ZONE_NAME"), commname, totalScore,absval,zoneCode,ra,
+                    Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
+            allGstaList.add(gsta);
+            allGstaList.sort((a, b) -> Double.compare(b.getTotal_score(), a.getTotal_score()));
         }
         return allGstaList;
     }
