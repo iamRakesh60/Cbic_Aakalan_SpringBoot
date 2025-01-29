@@ -2732,7 +2732,7 @@ public class CustomSubParameterWiseQuery {
                 "    FROM MIS_DRI_CUS_3B AS 14c\n" +
                 "    RIGHT JOIN mis_gst_commcode AS cc ON 14c.COMM_CODE = cc.COMM_CODE\n" +
                 "    LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
-                "    WHERE 14c.MM_YYYY = '" + prev_month_new + "' GROUP BY cc.ZONE_CODE\n" +
+                "    WHERE 14c.MM_YYYY = ? GROUP BY cc.ZONE_CODE\n" + // -- prev_month_new
                 "),\n" +
                 "cte_2 AS (\n" +
                 "    SELECT zc.ZONE_NAME, cc.ZONE_CODE,\n" +
@@ -2742,7 +2742,7 @@ public class CustomSubParameterWiseQuery {
                 "    FROM MIS_DRI_CUS_3B AS 14c\n" +
                 "    RIGHT JOIN mis_gst_commcode AS cc ON 14c.COMM_CODE = cc.COMM_CODE\n" +
                 "    LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
-                "    WHERE 14c.MM_YYYY = '" + month_date + "' GROUP BY cc.ZONE_CODE\n" +
+                "    WHERE 14c.MM_YYYY = ? GROUP BY cc.ZONE_CODE\n" +
                 "),\n" +
                 "ordered_cte AS (\n" +
                 "    SELECT col9, \n" +
@@ -2775,7 +2775,7 @@ public class CustomSubParameterWiseQuery {
                 "    FROM MIS_DRI_CUS_3B AS 14c\n" +
                 "    RIGHT JOIN mis_gst_commcode AS cc ON 14c.COMM_CODE = cc.COMM_CODE \n" +
                 "    LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE \n" +
-                "    WHERE 14c.MM_YYYY = '" + prev_month_new + "'\n" +
+                "    WHERE 14c.MM_YYYY = ? \n" + // -- prev_month_new
                 "),\n" +
                 "disposal_noc AS (\n" +
                 "    SELECT zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME,\n" +
@@ -2786,7 +2786,7 @@ public class CustomSubParameterWiseQuery {
                 "    FROM MIS_DRI_CUS_3B AS 14c\n" +
                 "    RIGHT JOIN mis_gst_commcode AS cc ON 14c.COMM_CODE = cc.COMM_CODE \n" +
                 "    LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE \n" +
-                "    WHERE 14c.MM_YYYY = '" + month_date + "'\n" +
+                "    WHERE 14c.MM_YYYY = ? \n" +
                 "),\n" +
                 "median_calculation AS (\n" +
                 "    SELECT col9,\n" +
@@ -2804,7 +2804,7 @@ public class CustomSubParameterWiseQuery {
                 "       (SELECT median6f FROM median_value) AS median6f\n" +
                 "FROM closing_noc cn\n" +
                 "JOIN disposal_noc dn ON cn.ZONE_CODE = dn.ZONE_CODE AND cn.COMM_NAME = dn.COMM_NAME\n" +
-                "WHERE cn.ZONE_CODE = '" + zone_code + "';";
+                "WHERE cn.ZONE_CODE = ? ;";
         return queryCustom6f;
     }
     public String QueryFor_cus6f_AllCommissonaryWise(String month_date){
@@ -2819,7 +2819,7 @@ public class CustomSubParameterWiseQuery {
                 "    FROM MIS_DRI_CUS_3B AS 14c\n" +
                 "    RIGHT JOIN mis_gst_commcode AS cc ON 14c.COMM_CODE = cc.COMM_CODE \n" +
                 "    LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE \n" +
-                "    WHERE 14c.MM_YYYY = '" + prev_month_new + "'\n" +
+                "    WHERE 14c.MM_YYYY = ? \n" + // -- prev_month_new
                 "),\n" +
                 "disposal_noc AS (\n" +
                 "    SELECT zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME,\n" +
@@ -2830,7 +2830,7 @@ public class CustomSubParameterWiseQuery {
                 "    FROM MIS_DRI_CUS_3B AS 14c\n" +
                 "    RIGHT JOIN mis_gst_commcode AS cc ON 14c.COMM_CODE = cc.COMM_CODE \n" +
                 "    LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE \n" +
-                "    WHERE 14c.MM_YYYY = '" + month_date + "'\n" +
+                "    WHERE 14c.MM_YYYY = ? \n" +
                 "),\n" +
                 "median_calculation AS (\n" +
                 "    SELECT col9,\n" +

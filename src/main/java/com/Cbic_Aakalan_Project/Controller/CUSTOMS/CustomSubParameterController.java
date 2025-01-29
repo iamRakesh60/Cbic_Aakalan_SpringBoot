@@ -971,36 +971,36 @@ public class CustomSubParameterController {
     //  http://localhost:8080/cbicApi/cbic/custom/cus6f?month_date=2024-04-01&zone_code=58&type=commissary
     //  http://localhost:8080/cbicApi/cbic/custom/cus6f?month_date=2024-04-01&type=all_commissary
     public Object CustomGst6f(@RequestParam String month_date,@RequestParam String type, @RequestParam(required = false) String zone_code){
+        String prev_month_new = DateCalculate.getPreviousMonth(month_date);
         List<GSTCUS> allGstaList = new ArrayList<>();
-        GSTCUS gsta = null;
-        int rank = 0;
-        double total = 0.00;
-        Double median = 0.00;
-        try {
-            // Query string
-            if (type.equalsIgnoreCase("zone")) {
-                //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
+        try (Connection con = JDBCConnection.getTNConnection()){
+            if("zone".equalsIgnoreCase(type)) {
                 String queryGst14aa = new CustomSubParameterWiseQuery().QueryFor_cus6f_ZoneWise(month_date);
-                ResultSet rsGst14aa = GetExecutionSQL.getResult(queryGst14aa);
-                allGstaList.addAll(customSubParameterService.cus6fZone(rsGst14aa));
-
-            } else if (type.equalsIgnoreCase("commissary")) {  // cus6f
-                //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
-                String queryGst14aa=new CustomSubParameterWiseQuery().QueryFor_cus6f_CommissonaryWise(month_date,zone_code);
-
-                ResultSet rsGst14aa =GetExecutionSQL.getResult(queryGst14aa);
-                while(rsGst14aa.next()) {
-
+                try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
+                    pstmt.setString(1, prev_month_new);
+                    pstmt.setString(2, month_date);
+                    ResultSet rsGst14aa = pstmt.executeQuery();
+                    allGstaList.addAll(customSubParameterService.cus6fZone(rsGst14aa));
                 }
-                System.out.println("cus 6F median commissionary rate wise :- "+ median);
-            }else if (type.equalsIgnoreCase("all_commissary")) {  // cus6f
-                //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
-                String queryGst14aa=new CustomSubParameterWiseQuery().QueryFor_cus6f_AllCommissonaryWise(month_date);
-                ResultSet rsGst14aa =GetExecutionSQL.getResult(queryGst14aa);
-                while(rsGst14aa.next()) {
 
+            }else if ("commissary".equalsIgnoreCase(type)) {
+                String queryGst14aa = new CustomSubParameterWiseQuery().QueryFor_cus6f_CommissonaryWise(month_date,zone_code);
+                try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
+                    pstmt.setString(1, prev_month_new);
+                    pstmt.setString(2, month_date);
+                    pstmt.setString(3, zone_code);
+                    ResultSet rsGst14aa = pstmt.executeQuery();
+                    allGstaList.addAll(customSubParameterService.cus6fZoneWiseCommissionary(rsGst14aa));
                 }
-                System.out.println("cus 6F median commissionary rate wise :- " + median);
+
+            }else if ("all_commissary".equalsIgnoreCase(type)) {
+                String queryGst14aa = new CustomSubParameterWiseQuery().QueryFor_cus6f_AllCommissonaryWise(month_date);
+                try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
+                    pstmt.setString(1, prev_month_new);
+                    pstmt.setString(2, month_date);
+                    ResultSet rsGst14aa = pstmt.executeQuery();
+                    allGstaList.addAll(customSubParameterService.cus6fAllCommissionary(rsGst14aa));
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
