@@ -2923,18 +2923,18 @@ public class CustomSubParameterWiseQuery {
     }
     // ********************************************************************************************************************************
     public String QueryFor_cus7b_ZoneWise(String month_date){
-        //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
+        //              ?	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
         String start_date=DateCalculate.getFinancialYearStart(month_date);
 
         String queryCustom7b="WITH calculated_data AS (\n" +
                 "    SELECT zc.ZONE_NAME, cc.ZONE_CODE, \n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY BETWEEN '" + start_date + "' AND '" + month_date + "' THEN c14.NO_PROSECUTION ELSE 0 END), 0) AS col7, \n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY BETWEEN '" + start_date + "' AND '" + month_date + "' THEN c14.NO_OF_ARREST_MADE ELSE 0 END), 0) AS col10 \n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY BETWEEN ? AND ? THEN c14.NO_PROSECUTION ELSE 0 END), 0) AS col7, \n" + //-- start_date, month_date
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY BETWEEN ? AND ? THEN c14.NO_OF_ARREST_MADE ELSE 0 END), 0) AS col10 \n" + //-- start_date, month_date
                 "    FROM mis_gst_commcode AS cc\n" +
                 "    INNER JOIN mis_dla_cus_1a AS c14 ON c14.COMM_CODE = cc.COMM_CODE\n" +
                 "    INNER JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
-                "    WHERE c14.MM_YYYY BETWEEN '" + start_date + "' AND '" + month_date + "'\n" +
+                "    WHERE c14.MM_YYYY BETWEEN ? AND ?\n" + //-- start_date, month_date
                 "      AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65') \n" +
                 "    GROUP BY zc.ZONE_CODE, zc.ZONE_NAME, cc.ZONE_CODE\n" +
                 "), \n" +
@@ -2954,18 +2954,18 @@ public class CustomSubParameterWiseQuery {
         return queryCustom7b;
     }
     public String QueryFor_cus7b_CommissonaryWise(String month_date, String zone_code){
-        //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
+        //              ?	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
         String start_date=DateCalculate.getFinancialYearStart(month_date);
 
         String queryCustom7b="WITH calculated_data AS (\n" +
                 "    SELECT zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME, \n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY BETWEEN '" + start_date + "' AND '" + month_date + "' THEN c14.NO_PROSECUTION ELSE 0 END), 0) AS col7,\n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY BETWEEN '" + start_date + "' AND '" + month_date + "' THEN c14.NO_OF_ARREST_MADE ELSE 0 END), 0) AS col10\n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY BETWEEN ? AND ? THEN c14.NO_PROSECUTION ELSE 0 END), 0) AS col7,\n" + //-- start_date, month_date
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY BETWEEN ? AND ? THEN c14.NO_OF_ARREST_MADE ELSE 0 END), 0) AS col10\n" + //-- start_date, month_date
                 "    FROM mis_gst_commcode AS cc\n" +
                 "    INNER JOIN mis_dla_cus_1a AS c14 ON c14.COMM_CODE = cc.COMM_CODE\n" +
                 "    INNER JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
-                "    WHERE c14.MM_YYYY BETWEEN '" + start_date + "' AND '" + month_date + "' \n" +
+                "    WHERE c14.MM_YYYY BETWEEN ? AND ? \n" + //-- start_date, month_date
                 "        AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65')\n" +
                 "    GROUP BY zc.ZONE_CODE, zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME\n" +
                 "), \n" +
@@ -2984,23 +2984,23 @@ public class CustomSubParameterWiseQuery {
                 "SELECT rd.ZONE_NAME, rd.ZONE_CODE, rd.COMM_NAME, rd.col7, rd.col10, mc.median_7b\n" +
                 "FROM ranked_data AS rd\n" +
                 "CROSS JOIN median_calculation AS mc\n" +
-                "WHERE rd.ZONE_CODE = '" + zone_code + "'	\n" +
+                "WHERE rd.ZONE_CODE = ?	\n" +
                 "LIMIT 1000;\n";
         return queryCustom7b;
     }
     public String QueryFor_cus7b_AllCommissonaryWise(String month_date){
-        //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
+        //              ?	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
         String start_date=DateCalculate.getFinancialYearStart(month_date);
 
         String queryCustom7b="WITH calculated_data AS (\n" +
                 "    SELECT zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME,\n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY BETWEEN '" + start_date + "' AND '" + month_date + "' THEN c14.NO_PROSECUTION ELSE 0 END), 0) AS col7,\n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY BETWEEN '" + start_date + "' AND '" + month_date + "' THEN c14.NO_OF_ARREST_MADE ELSE 0 END), 0) AS col10\n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY BETWEEN ? AND ? THEN c14.NO_PROSECUTION ELSE 0 END), 0) AS col7,\n" + //-- start_date, month_date
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY BETWEEN ? AND ? THEN c14.NO_OF_ARREST_MADE ELSE 0 END), 0) AS col10\n" + //-- start_date, month_date
                 "    FROM mis_gst_commcode AS cc\n" +
                 "    INNER JOIN mis_dla_cus_1a AS c14 ON c14.COMM_CODE = cc.COMM_CODE\n" +
                 "    INNER JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
-                "    WHERE c14.MM_YYYY BETWEEN '" + start_date + "' AND '" + month_date + "'\n" +
+                "    WHERE c14.MM_YYYY BETWEEN ? AND ?\n" + //-- start_date, month_date
                 "        AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65')\n" +
                 "    GROUP BY zc.ZONE_CODE, zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME\n" +
                 "), \n" +
