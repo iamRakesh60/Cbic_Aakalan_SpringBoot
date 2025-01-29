@@ -277,50 +277,36 @@ public class CustomSubParameterController {
     //  http://localhost:8080/cbicApi/cbic/custom/cus3b?month_date=2024-10-01&type=all_commissary
     public Object Custom3b(@RequestParam String month_date,@RequestParam String type, @RequestParam(required = false) String zone_code){
         List<GSTCUS> allGstaList = new ArrayList<>();
-        try (Connection con = JDBCConnection.getTNConnection()){
+        try (Connection con = JDBCConnection.getTNConnection()) {
+            String queryGst14aa;
+
             if("zone".equalsIgnoreCase(type)) {
-                String queryGst14aa = new CustomSubParameterWiseQuery().QueryFor_cus3b_ZoneWise(month_date);
-                try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
-                    pstmt.setString(1, month_date);
-                    pstmt.setString(2, month_date);
-                    pstmt.setString(3, month_date);
-                    pstmt.setString(4, month_date);
-                    pstmt.setString(5, month_date);
-                    pstmt.setString(6, month_date);
-                    pstmt.setString(7, month_date);
-                    pstmt.setString(8, month_date);
-                    ResultSet rsGst14aa = pstmt.executeQuery();
-                    allGstaList.addAll(customSubParameterService.cus3bZone(rsGst14aa));
-                }
-
-            }else if ("commissary".equalsIgnoreCase(type)) {
-                String queryGst14aa = new CustomSubParameterWiseQuery().QueryFor_cus3b_CommissonaryWise(month_date,zone_code);
-                try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
-                    pstmt.setString(1, month_date);
-                    pstmt.setString(2, month_date);
-                    pstmt.setString(3, month_date);
-                    pstmt.setString(4, month_date);
-                    pstmt.setString(5, month_date);
-                    pstmt.setString(6, month_date);
-                    pstmt.setString(7, month_date);
-                    pstmt.setString(8, month_date);
-                    pstmt.setString(9, zone_code);
-                    ResultSet rsGst14aa = pstmt.executeQuery();
-                    allGstaList.addAll(customSubParameterService.cus3bZoneWiseCommissionary(rsGst14aa));
-                }
-
+                queryGst14aa = new CustomSubParameterWiseQuery().QueryFor_cus3b_ZoneWise(month_date);
+            } else if ("commissary".equalsIgnoreCase(type)) {
+                queryGst14aa = new CustomSubParameterWiseQuery().QueryFor_cus3b_CommissonaryWise(month_date, zone_code);
             }else if ("all_commissary".equalsIgnoreCase(type)) {
-                String queryGst14aa = new CustomSubParameterWiseQuery().QueryFor_cus3b_AllCommissonaryWise(month_date);
-                try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
-                    pstmt.setString(1, month_date);
-                    pstmt.setString(2, month_date);
-                    pstmt.setString(3, month_date);
-                    pstmt.setString(4, month_date);
-                    pstmt.setString(5, month_date);
-                    pstmt.setString(6, month_date);
-                    pstmt.setString(7, month_date);
-                    pstmt.setString(8, month_date);
-                    ResultSet rsGst14aa = pstmt.executeQuery();
+                queryGst14aa = new CustomSubParameterWiseQuery().QueryFor_cus3b_AllCommissonaryWise(month_date);
+            } else {
+                throw new IllegalArgumentException("Invalid type: " + type);
+            }
+
+            try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
+                // Set `month_date` for indices 1 to 10 in a loop
+                for (int i = 1; i <= 8; i++) {
+                    pstmt.setString(i, month_date);
+                }
+                if (type.equalsIgnoreCase("commissary")) {
+                    pstmt.setString(9, zone_code); // Add zone_code for commissary
+                }
+
+                ResultSet rsGst14aa = pstmt.executeQuery();
+
+                // Add result processing logic
+                if("zone".equalsIgnoreCase(type)) {
+                    allGstaList.addAll(customSubParameterService.cus3bZone(rsGst14aa));
+                } else if ("commissary".equalsIgnoreCase(type)) {
+                    allGstaList.addAll(customSubParameterService.cus3bZoneWiseCommissionary(rsGst14aa));
+                }else if ("all_commissary".equalsIgnoreCase(type)) {
                     allGstaList.addAll(customSubParameterService.cus3bAllCommissionary(rsGst14aa));
                 }
             }
