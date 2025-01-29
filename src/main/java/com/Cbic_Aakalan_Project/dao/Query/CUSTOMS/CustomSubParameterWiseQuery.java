@@ -2445,7 +2445,7 @@ public class CustomSubParameterWiseQuery {
     }
     // ********************************************************************************************************************************
     public String QueryFor_cus6e_ZoneWise(String month_date){
-        //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
+        //              ?	 ?	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
         String queryCustom6e="WITH RankedValues AS (\n"
                 + "    SELECT \n"
@@ -2462,12 +2462,12 @@ public class CustomSubParameterWiseQuery {
                 + "    FROM mis_dri_cus_3a AS 14c\n"
                 + "    INNER JOIN mis_gst_commcode AS cc \n"
                 + "        ON 14c.COMM_CODE = cc.COMM_CODE \n"
-                + "        AND 14c.MM_YYYY = '" + month_date + "'\n"
+                + "        AND 14c.MM_YYYY = ?\n"
                 + "    INNER JOIN mis_gst_zonecode AS zc \n"
                 + "        ON zc.ZONE_CODE = cc.ZONE_CODE\n"
                 + "    INNER JOIN mis_dri_cus_3b AS 15c \n"
                 + "        ON 14c.COMM_CODE = 15c.COMM_CODE \n"
-                + "        AND 15c.MM_YYYY = '" + month_date + "'\n"
+                + "        AND 15c.MM_YYYY = ?\n"
                 + "    GROUP BY zc.ZONE_NAME, cc.ZONE_CODE\n"
                 + "),\n"
                 + "MedianCalculation AS (\n"
@@ -2516,11 +2516,11 @@ public class CustomSubParameterWiseQuery {
                 + "FROM mis_dri_cus_3a AS 14c\n"
                 + "INNER JOIN mis_dri_cus_3b AS 15c \n"
                 + "    ON 14c.COMM_CODE = 15c.COMM_CODE \n"
-                + "    AND 14c.MM_YYYY = '" + month_date + "' \n"
-                + "    AND 15c.MM_YYYY = '" + month_date + "'\n"
+                + "    AND 14c.MM_YYYY = ? \n"
+                + "    AND 15c.MM_YYYY = ?\n"
                 + "LEFT JOIN mis_dri_cus_3a AS 14c_prev \n"
                 + "    ON 14c.COMM_CODE = 14c_prev.COMM_CODE \n"
-                + "    AND 14c_prev.MM_YYYY = '" + prev_month_new + "'\n"
+                + "    AND 14c_prev.MM_YYYY = ?\n" // -- prev_month_new
                 + "INNER JOIN mis_gst_commcode AS cc \n"
                 + "    ON cc.COMM_CODE = 14c.COMM_CODE\n"
                 + "INNER JOIN mis_gst_zonecode AS zc \n"
@@ -2530,7 +2530,7 @@ public class CustomSubParameterWiseQuery {
         return queryCustom6e;
     }
     public String QueryFor_cus6e_CommissonaryWise(String month_date, String zone_code){
-        //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
+        //              ?	 ?	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
         String queryCustom6e="WITH RankedValues AS (\n"
                 + "    SELECT \n"
@@ -2547,12 +2547,12 @@ public class CustomSubParameterWiseQuery {
                 + "    FROM mis_dri_cus_3a AS 14c\n"
                 + "    INNER JOIN mis_gst_commcode AS cc \n"
                 + "        ON 14c.COMM_CODE = cc.COMM_CODE \n"
-                + "        AND 14c.MM_YYYY = '" + month_date + "'\n"
+                + "        AND 14c.MM_YYYY = ?\n"
                 + "    INNER JOIN mis_gst_zonecode AS zc \n"
                 + "        ON zc.ZONE_CODE = cc.ZONE_CODE\n"
                 + "    INNER JOIN mis_dri_cus_3b AS 15c \n"
                 + "        ON 14c.COMM_CODE = 15c.COMM_CODE \n"
-                + "        AND 15c.MM_YYYY = '" + month_date + "'\n"
+                + "        AND 15c.MM_YYYY = ?\n"
                 + "),\n"
                 + "MedianCalculation AS (\n"
                 + "    SELECT \n"
@@ -2601,16 +2601,16 @@ public class CustomSubParameterWiseQuery {
                 + "FROM mis_dri_cus_3a AS 14c\n"
                 + "INNER JOIN mis_dri_cus_3b AS 15c \n"
                 + "    ON 14c.COMM_CODE = 15c.COMM_CODE \n"
-                + "    AND 14c.MM_YYYY = '" + month_date + "' \n"
-                + "    AND 15c.MM_YYYY = '" + month_date + "'\n"
+                + "    AND 14c.MM_YYYY = ? \n"
+                + "    AND 15c.MM_YYYY = ?\n"
                 + "LEFT JOIN mis_dri_cus_3a AS 14c_prev \n"
                 + "    ON 14c.COMM_CODE = 14c_prev.COMM_CODE \n"
-                + "    AND 14c_prev.MM_YYYY = '" + prev_month_new + "'\n"
+                + "    AND 14c_prev.MM_YYYY = ?\n" // -- prev_month_new
                 + "INNER JOIN mis_gst_commcode AS cc \n"
                 + "    ON cc.COMM_CODE = 14c.COMM_CODE\n"
                 + "INNER JOIN mis_gst_zonecode AS zc \n"
                 + "    ON zc.ZONE_CODE = cc.ZONE_CODE\n"
-                + "WHERE cc.ZONE_CODE = '"+zone_code+"'  -- Apply the filter here\n"
+                + "WHERE cc.ZONE_CODE = ?  -- Apply the filter here\n"
                 + "GROUP BY zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME,  -- Include COMM_NAME in GROUP BY\n"
                 + "    14c.IMPORT_GOLD_DISPOSAL_NOC, 14c.IMPORT_NARCO_DISPOSAL_NOC, 14c.IMPORT_FICN_DISPOSAL_NOC, \n"
                 + "    14c.IMPORT_WILD_DISPOSAL_NOC, 14c.IMPORT_ODS_DISPOSAL_NOC, 14c.IMPORT_IPR_DISPOSAL_NOC, \n"
@@ -2626,7 +2626,7 @@ public class CustomSubParameterWiseQuery {
         return queryCustom6e;
     }
     public String QueryFor_cus6e_AllCommissonaryWise(String month_date){
-        //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
+        //              ?	 ?	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
         String queryCustom6e="WITH RankedValues AS (\n"
                 + "    SELECT \n"
@@ -2643,12 +2643,12 @@ public class CustomSubParameterWiseQuery {
                 + "    FROM mis_dri_cus_3a AS 14c\n"
                 + "    INNER JOIN mis_gst_commcode AS cc \n"
                 + "        ON 14c.COMM_CODE = cc.COMM_CODE \n"
-                + "        AND 14c.MM_YYYY = '" + month_date + "'\n"
+                + "        AND 14c.MM_YYYY = ?\n"
                 + "    INNER JOIN mis_gst_zonecode AS zc \n"
                 + "        ON zc.ZONE_CODE = cc.ZONE_CODE\n"
                 + "    INNER JOIN mis_dri_cus_3b AS 15c \n"
                 + "        ON 14c.COMM_CODE = 15c.COMM_CODE \n"
-                + "        AND 15c.MM_YYYY = '" + month_date + "'\n"
+                + "        AND 15c.MM_YYYY = ?\n"
                 + "),\n"
                 + "MedianCalculation AS (\n"
                 + "    SELECT \n"
@@ -2697,11 +2697,11 @@ public class CustomSubParameterWiseQuery {
                 + "FROM mis_dri_cus_3a AS 14c\n"
                 + "INNER JOIN mis_dri_cus_3b AS 15c \n"
                 + "    ON 14c.COMM_CODE = 15c.COMM_CODE \n"
-                + "    AND 14c.MM_YYYY = '" + month_date + "' \n"
-                + "    AND 15c.MM_YYYY = '" + month_date + "'\n"
+                + "    AND 14c.MM_YYYY = ? \n"
+                + "    AND 15c.MM_YYYY = ?\n"
                 + "LEFT JOIN mis_dri_cus_3a AS 14c_prev \n"
                 + "    ON 14c.COMM_CODE = 14c_prev.COMM_CODE \n"
-                + "    AND 14c_prev.MM_YYYY = '" + prev_month_new + "'\n"
+                + "    AND 14c_prev.MM_YYYY = ?\n" // -- prev_month_new
                 + "INNER JOIN mis_gst_commcode AS cc \n"
                 + "    ON cc.COMM_CODE = 14c.COMM_CODE\n"
                 + "INNER JOIN mis_gst_zonecode AS zc \n"

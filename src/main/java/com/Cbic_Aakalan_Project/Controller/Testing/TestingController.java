@@ -5,6 +5,7 @@ import com.Cbic_Aakalan_Project.entity.GSTCUS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -24,7 +25,7 @@ public class TestingController {
     GstGradeScore score = new GstGradeScore();
 
     @ResponseBody
-    @RequestMapping(value = "/refundsTesting")
+    @GetMapping(value = "/refundsTesting")
     //  http://localhost:8080/cbicApi/cbic/t_score/testing/refundsTesting?month_date=2023-04-01&type=parameter
     public Object refunds(@RequestParam String month_date, @RequestParam String type, @RequestParam(required = false) String zone_code, @RequestParam(required = false) String come_name) {
 
