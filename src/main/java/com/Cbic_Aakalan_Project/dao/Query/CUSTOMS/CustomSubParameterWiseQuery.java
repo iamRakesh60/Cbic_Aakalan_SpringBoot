@@ -1435,7 +1435,7 @@ public class CustomSubParameterWiseQuery {
                 "FROM mis_gst_commcode AS cc\n" +
                 "RIGHT JOIN mis_dgi_cus_2 AS 14c ON cc.COMM_CODE = 14c.COMM_CODE\n" +
                 "LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
-                "WHERE 14c.MM_YYYY = '" + month_date + "'\n" +
+                "WHERE 14c.MM_YYYY = ? \n" +
                 "GROUP BY zc.ZONE_NAME, cc.ZONE_CODE\n" +
                 "HAVING SUM(14c.CLOSING_NO) != 0; -- Exclude cases where denominator is 0\n";
         return queryCustom5c;
@@ -1463,8 +1463,8 @@ public class CustomSubParameterWiseQuery {
                 "    mis_gst_zonecode AS zc \n" +
                 "    ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
                 "WHERE \n" +
-                "    cus.MM_YYYY = '" + month_date + "'\n" +
-                "    AND cc.ZONE_CODE = '"+zone_code+"'\n" +
+                "    cus.MM_YYYY = ? \n" +
+                "    AND cc.ZONE_CODE = ? \n" +
                 "    AND cus.CLOSING_NO != 0;\n";
         return queryCustom5c;
     }
@@ -1477,7 +1477,7 @@ public class CustomSubParameterWiseQuery {
                 "    FROM mis_gst_commcode AS cc \n" +
                 "    RIGHT JOIN mis_dgi_cus_2 AS 14c ON cc.COMM_CODE = 14c.COMM_CODE \n" +
                 "    LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE \n" +
-                "    WHERE 14c.MM_YYYY = '" + month_date + "';";
+                "    WHERE 14c.MM_YYYY = ? ;";
         return queryCustom5c;
     }
     // ********************************************************************************************************************************

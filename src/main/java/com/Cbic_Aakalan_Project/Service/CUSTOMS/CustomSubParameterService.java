@@ -1514,7 +1514,28 @@ public class CustomSubParameterService {
     public List<GSTCUS> cus5cZone(ResultSet rsGst14aa) throws SQLException {
         List<GSTCUS> allGstaList = new ArrayList<>();
         while (rsGst14aa.next()) {
+            String zonename = rsGst14aa.getString("ZONE_NAME");
+            String zoneCode = rsGst14aa.getString("ZONE_CODE");
+            if (zoneCode == null) {
+                continue;
+            }
+            String ra= CustomRelaventAspect.cus5c_RA;
+            String commname= "ALL";
+            String absval= rsGst14aa.getString("absval");
 
+            total = rsGst14aa.getDouble("total_score") * 100;
+            int Zonal_rank = 0;
+            String gst = "no";
+            int insentavization = 0;
+
+            String formattedTotal = String.format("%.2f", total);
+            double totalScore = Double.parseDouble(formattedTotal);
+            int way_to_grade = score.c_marks5c(totalScore);
+            double sub_parameter_weighted_average = way_to_grade * 0.3;
+            sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
+            gsta=new GSTCUS(zonename,commname,totalScore,absval,zoneCode,ra,
+                    Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
+            allGstaList.add(gsta);
         }
         return allGstaList;
     }
@@ -1523,7 +1544,26 @@ public class CustomSubParameterService {
     public List<GSTCUS> cus5cZoneWiseCommissionary(ResultSet rsGst14aa) throws SQLException {
         List<GSTCUS> allGstaList = new ArrayList<>();
         while (rsGst14aa.next()) {
-
+            String zonename = rsGst14aa.getString("ZONE_NAME");
+            String zoneCode = rsGst14aa.getString("ZONE_CODE");
+            if (zoneCode == null) {
+                continue;
+            }
+            String ra= CustomRelaventAspect.cus5c_RA;
+            String commname= rsGst14aa.getString("COMM_NAME");
+            String absval= rsGst14aa.getString("absval");
+            total = rsGst14aa.getDouble("total_score")  * 100;
+            int Zonal_rank = 0;
+            String gst = "no";
+            int insentavization = 0;
+            String formattedTotal = String.format("%.2f", total);
+            double totalScore = Double.parseDouble(formattedTotal);
+            int way_to_grade = score.c_marks5c(totalScore);
+            double sub_parameter_weighted_average = way_to_grade * 0.3;
+            sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
+            gsta=new GSTCUS(zonename,commname,totalScore,absval,zoneCode,ra,
+                    Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
+            allGstaList.add(gsta);
         }
         return allGstaList;
     }
@@ -1532,7 +1572,26 @@ public class CustomSubParameterService {
     public List<GSTCUS> cus5cAllCommissionary(ResultSet rsGst14aa) throws SQLException {
         List<GSTCUS> allGstaList = new ArrayList<>();
         while (rsGst14aa.next()) {
-
+            String zonename = rsGst14aa.getString("ZONE_NAME");
+            String zoneCode = rsGst14aa.getString("ZONE_CODE");
+            if (zoneCode == null) {
+                continue;
+            }
+            String ra= CustomRelaventAspect.cus5c_RA;
+            String commname= rsGst14aa.getString("COMM_NAME");
+            String absval= rsGst14aa.getString("absval");
+            total = rsGst14aa.getDouble("total_score") * 100;
+            int Zonal_rank = 0;
+            String gst = "no";
+            int insentavization = 0;
+            String formattedTotal = String.format("%.2f", total);
+            double totalScore = Double.parseDouble(formattedTotal);
+            int way_to_grade = score.c_marks5c(totalScore);
+            double sub_parameter_weighted_average = way_to_grade * 0.3;
+            sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
+            gsta=new GSTCUS(zonename,commname,totalScore,absval,zoneCode,ra,
+                    Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
+            allGstaList.add(gsta);
         }
         return allGstaList;
     }
