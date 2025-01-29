@@ -3189,35 +3189,35 @@ public class CustomSubParameterWiseQuery {
     }
     // ********************************************************************************************************************************
     public String QueryFor_cus9a_ZoneWise(String month_date){
-        //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
+        //              ?	 ?	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
         String queryCustom9a="WITH main_query AS (\n" +
                 "    SELECT zc.ZONE_NAME, cc.ZONE_CODE, \n" +
-                "        SUM(CASE WHEN 14c.COMMODITY_CODE = 3 and 14c.MM_YYYY = '" + month_date + "' THEN 14c.SALE_QUAN ELSE 0 END) AS s3col9, \n" +
-                "        SUM(CASE WHEN 14c.COMMODITY_CODE = 3 and 14c.MM_YYYY = '" + month_date + "' THEN PARTY_QUAN ELSE 0 END) AS s3col12, \n" +
-                "        SUM(CASE WHEN 14c.COMMODITY_CODE = 3 and 14c.MM_YYYY = '" + prev_month_new + "' THEN CB_QUAN ELSE 0 END) AS s3col3,\n" +
-                "        SUM(CASE WHEN 14c.COMMODITY_CODE = 6 and 14c.MM_YYYY = '" + month_date + "' THEN 14c.SALE_QUAN ELSE 0 END) AS s6col9, \n" +
-                "        SUM(CASE WHEN 14c.COMMODITY_CODE = 6 and 14c.MM_YYYY = '" + month_date + "' THEN PARTY_QUAN ELSE 0 END) AS s6col12, \n" +
-                "        SUM(CASE WHEN 14c.COMMODITY_CODE = 6 and 14c.MM_YYYY = '" + prev_month_new + "' THEN CB_QUAN ELSE 0 END) AS s6col3,\n" +
+                "        SUM(CASE WHEN 14c.COMMODITY_CODE = 3 and 14c.MM_YYYY = ? THEN 14c.SALE_QUAN ELSE 0 END) AS s3col9, \n" +
+                "        SUM(CASE WHEN 14c.COMMODITY_CODE = 3 and 14c.MM_YYYY = ? THEN PARTY_QUAN ELSE 0 END) AS s3col12, \n" +
+                "        SUM(CASE WHEN 14c.COMMODITY_CODE = 3 and 14c.MM_YYYY = ? THEN CB_QUAN ELSE 0 END) AS s3col3,\n" +  // -- prev_month_new
+                "        SUM(CASE WHEN 14c.COMMODITY_CODE = 6 and 14c.MM_YYYY = ? THEN 14c.SALE_QUAN ELSE 0 END) AS s6col9, \n" +
+                "        SUM(CASE WHEN 14c.COMMODITY_CODE = 6 and 14c.MM_YYYY = ? THEN PARTY_QUAN ELSE 0 END) AS s6col12, \n" +
+                "        SUM(CASE WHEN 14c.COMMODITY_CODE = 6 and 14c.MM_YYYY = ? THEN CB_QUAN ELSE 0 END) AS s6col3,\n" +  // -- prev_month_new
                 "        \n" +
-                "        (SUM(CASE WHEN 14c.COMMODITY_CODE = 3 and 14c.MM_YYYY = '" + month_date + "' THEN 14c.SALE_QUAN ELSE 0 END) + \n" +
-                "         SUM(CASE WHEN 14c.COMMODITY_CODE = 3 and 14c.MM_YYYY = '" + month_date + "' THEN PARTY_QUAN ELSE 0 END) + \n" +
-                "         SUM(CASE WHEN 14c.COMMODITY_CODE = 6 and 14c.MM_YYYY = '" + month_date + "' THEN 14c.SALE_QUAN ELSE 0 END) + \n" +
-                "         SUM(CASE WHEN 14c.COMMODITY_CODE = 6 and 14c.MM_YYYY = '" + month_date + "' THEN PARTY_QUAN ELSE 0 END)) AS numerator_9a,\n" +
+                "        (SUM(CASE WHEN 14c.COMMODITY_CODE = 3 and 14c.MM_YYYY = ? THEN 14c.SALE_QUAN ELSE 0 END) + \n" +
+                "         SUM(CASE WHEN 14c.COMMODITY_CODE = 3 and 14c.MM_YYYY = ? THEN PARTY_QUAN ELSE 0 END) + \n" +
+                "         SUM(CASE WHEN 14c.COMMODITY_CODE = 6 and 14c.MM_YYYY = ? THEN 14c.SALE_QUAN ELSE 0 END) + \n" +
+                "         SUM(CASE WHEN 14c.COMMODITY_CODE = 6 and 14c.MM_YYYY = ? THEN PARTY_QUAN ELSE 0 END)) AS numerator_9a,\n" +
                 "\n" +
                 "        ( \n" +
-                "          (SUM(CASE WHEN 14c.COMMODITY_CODE = 3 and 14c.MM_YYYY = '" + month_date + "' THEN 14c.SALE_QUAN ELSE 0 END) + \n" +
-                "           SUM(CASE WHEN 14c.COMMODITY_CODE = 3 and 14c.MM_YYYY = '" + month_date + "' THEN PARTY_QUAN ELSE 0 END) + \n" +
-                "           SUM(CASE WHEN 14c.COMMODITY_CODE = 6 and 14c.MM_YYYY = '" + month_date + "' THEN 14c.SALE_QUAN ELSE 0 END) + \n" +
-                "           SUM(CASE WHEN 14c.COMMODITY_CODE = 6 and 14c.MM_YYYY = '" + month_date + "' THEN PARTY_QUAN ELSE 0 END)) \n" +
+                "          (SUM(CASE WHEN 14c.COMMODITY_CODE = 3 and 14c.MM_YYYY = ? THEN 14c.SALE_QUAN ELSE 0 END) + \n" +
+                "           SUM(CASE WHEN 14c.COMMODITY_CODE = 3 and 14c.MM_YYYY = ? THEN PARTY_QUAN ELSE 0 END) + \n" +
+                "           SUM(CASE WHEN 14c.COMMODITY_CODE = 6 and 14c.MM_YYYY = ? THEN 14c.SALE_QUAN ELSE 0 END) + \n" +
+                "           SUM(CASE WHEN 14c.COMMODITY_CODE = 6 and 14c.MM_YYYY = ? THEN PARTY_QUAN ELSE 0 END)) \n" +
                 "          / \n" +
-                "          (SUM(CASE WHEN 14c.COMMODITY_CODE = 3 and 14c.MM_YYYY = '" + prev_month_new + "' THEN CB_QUAN ELSE 0 END) + \n" +
-                "           SUM(CASE WHEN 14c.COMMODITY_CODE = 6 and 14c.MM_YYYY = '" + prev_month_new + "' THEN CB_QUAN ELSE 0 END))\n" +
+                "          (SUM(CASE WHEN 14c.COMMODITY_CODE = 3 and 14c.MM_YYYY = ? THEN CB_QUAN ELSE 0 END) + \n" + // -- prev_month_new
+                "           SUM(CASE WHEN 14c.COMMODITY_CODE = 6 and 14c.MM_YYYY = ? THEN CB_QUAN ELSE 0 END))\n" + // -- prev_month_new
                 "        ) AS total_score\n" +
                 "    FROM mis_gst_commcode AS cc \n" +
                 "    RIGHT JOIN mis_dol_cus_1 AS 14c ON cc.COMM_CODE = 14c.COMM_CODE \n" +
                 "    LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE \n" +
-                "    WHERE 14c.MM_YYYY IN ('" + month_date + "', '" + prev_month_new + "')\n" +
+                "    WHERE 14c.MM_YYYY IN (?, ?)\n" + // -- month_date, prev_month_new
                 "    AND 14c.COMMODITY_CODE IN (3, 6)\n" +
                 "    GROUP BY zc.ZONE_NAME, cc.ZONE_CODE\n" +
                 "),\n" +
@@ -3238,38 +3238,38 @@ public class CustomSubParameterWiseQuery {
         return queryCustom9a;
     }
     public String QueryFor_cus9a_CommissonaryWise(String month_date, String zone_code){
-        //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
+        //              ?	 ?	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
         String queryCustom9a="WITH main_query AS (\n"
                 + "    SELECT \n"
                 + "        zc.ZONE_NAME, \n"
                 + "        cc.ZONE_CODE, \n"
                 + "        cc.COMM_NAME, -- Added COMM_NAME\n"
-                + "        SUM(CASE WHEN 14c.COMMODITY_CODE = 3 AND 14c.MM_YYYY = '" + month_date + "' THEN 14c.SALE_QUAN ELSE 0 END) AS s3col9, \n"
-                + "        SUM(CASE WHEN 14c.COMMODITY_CODE = 3 AND 14c.MM_YYYY = '" + month_date + "' THEN PARTY_QUAN ELSE 0 END) AS s3col12, \n"
-                + "        SUM(CASE WHEN 14c.COMMODITY_CODE = 3 AND 14c.MM_YYYY = '" + month_date + "' THEN CB_QUAN ELSE 0 END) AS s3col3,\n"
-                + "        SUM(CASE WHEN 14c.COMMODITY_CODE = 6 AND 14c.MM_YYYY = '" + month_date + "' THEN 14c.SALE_QUAN ELSE 0 END) AS s6col9, \n"
-                + "        SUM(CASE WHEN 14c.COMMODITY_CODE = 6 AND 14c.MM_YYYY = '" + month_date + "' THEN PARTY_QUAN ELSE 0 END) AS s6col12, \n"
-                + "        SUM(CASE WHEN 14c.COMMODITY_CODE = 6 AND 14c.MM_YYYY = '" + prev_month_new + "' THEN CB_QUAN ELSE 0 END) AS s6col3,\n"
+                + "        SUM(CASE WHEN 14c.COMMODITY_CODE = 3 AND 14c.MM_YYYY = ? THEN 14c.SALE_QUAN ELSE 0 END) AS s3col9, \n"
+                + "        SUM(CASE WHEN 14c.COMMODITY_CODE = 3 AND 14c.MM_YYYY = ? THEN PARTY_QUAN ELSE 0 END) AS s3col12, \n"
+                + "        SUM(CASE WHEN 14c.COMMODITY_CODE = 3 AND 14c.MM_YYYY = ? THEN CB_QUAN ELSE 0 END) AS s3col3,\n"  // -- prev_month_new
+                + "        SUM(CASE WHEN 14c.COMMODITY_CODE = 6 AND 14c.MM_YYYY = ? THEN 14c.SALE_QUAN ELSE 0 END) AS s6col9, \n"
+                + "        SUM(CASE WHEN 14c.COMMODITY_CODE = 6 AND 14c.MM_YYYY = ? THEN PARTY_QUAN ELSE 0 END) AS s6col12, \n"
+                + "        SUM(CASE WHEN 14c.COMMODITY_CODE = 6 AND 14c.MM_YYYY = ? THEN CB_QUAN ELSE 0 END) AS s6col3,\n" // -- prev_month_new
                 + "\n"
-                + "        (SUM(CASE WHEN 14c.COMMODITY_CODE = 3 AND 14c.MM_YYYY = '" + month_date + "' THEN 14c.SALE_QUAN ELSE 0 END) + \n"
-                + "         SUM(CASE WHEN 14c.COMMODITY_CODE = 3 AND 14c.MM_YYYY = '" + month_date + "' THEN PARTY_QUAN ELSE 0 END) + \n"
-                + "         SUM(CASE WHEN 14c.COMMODITY_CODE = 6 AND 14c.MM_YYYY = '" + month_date + "' THEN 14c.SALE_QUAN ELSE 0 END) + \n"
-                + "         SUM(CASE WHEN 14c.COMMODITY_CODE = 6 AND 14c.MM_YYYY = '" + month_date + "' THEN PARTY_QUAN ELSE 0 END)) AS numerator_9a,\n"
+                + "        (SUM(CASE WHEN 14c.COMMODITY_CODE = 3 AND 14c.MM_YYYY = ? THEN 14c.SALE_QUAN ELSE 0 END) + \n"
+                + "         SUM(CASE WHEN 14c.COMMODITY_CODE = 3 AND 14c.MM_YYYY = ? THEN PARTY_QUAN ELSE 0 END) + \n"
+                + "         SUM(CASE WHEN 14c.COMMODITY_CODE = 6 AND 14c.MM_YYYY = ? THEN 14c.SALE_QUAN ELSE 0 END) + \n"
+                + "         SUM(CASE WHEN 14c.COMMODITY_CODE = 6 AND 14c.MM_YYYY = ? THEN PARTY_QUAN ELSE 0 END)) AS numerator_9a,\n"
                 + "\n"
                 + "        ( \n"
-                + "          (SUM(CASE WHEN 14c.COMMODITY_CODE = 3 AND 14c.MM_YYYY = '" + month_date + "'THEN 14c.SALE_QUAN ELSE 0 END) + \n"
-                + "           SUM(CASE WHEN 14c.COMMODITY_CODE = 3 AND 14c.MM_YYYY = '" + month_date + "' THEN PARTY_QUAN ELSE 0 END) + \n"
-                + "           SUM(CASE WHEN 14c.COMMODITY_CODE = 6 AND 14c.MM_YYYY = '" + month_date + "' THEN 14c.SALE_QUAN ELSE 0 END) + \n"
-                + "           SUM(CASE WHEN 14c.COMMODITY_CODE = 6 AND 14c.MM_YYYY = '" + month_date + "' THEN PARTY_QUAN ELSE 0 END)) \n"
+                + "          (SUM(CASE WHEN 14c.COMMODITY_CODE = 3 AND 14c.MM_YYYY = ?THEN 14c.SALE_QUAN ELSE 0 END) + \n"
+                + "           SUM(CASE WHEN 14c.COMMODITY_CODE = 3 AND 14c.MM_YYYY = ? THEN PARTY_QUAN ELSE 0 END) + \n"
+                + "           SUM(CASE WHEN 14c.COMMODITY_CODE = 6 AND 14c.MM_YYYY = ? THEN 14c.SALE_QUAN ELSE 0 END) + \n"
+                + "           SUM(CASE WHEN 14c.COMMODITY_CODE = 6 AND 14c.MM_YYYY = ? THEN PARTY_QUAN ELSE 0 END)) \n"
                 + "          / \n"
-                + "          (SUM(CASE WHEN 14c.COMMODITY_CODE = 3 AND 14c.MM_YYYY = '" + prev_month_new + "' THEN CB_QUAN ELSE 0 END) + \n"
-                + "           SUM(CASE WHEN 14c.COMMODITY_CODE = 6 AND 14c.MM_YYYY = '" + prev_month_new + "' THEN CB_QUAN ELSE 0 END))\n"
+                + "          (SUM(CASE WHEN 14c.COMMODITY_CODE = 3 AND 14c.MM_YYYY = ? THEN CB_QUAN ELSE 0 END) + \n" // -- prev_month_new
+                + "           SUM(CASE WHEN 14c.COMMODITY_CODE = 6 AND 14c.MM_YYYY = ? THEN CB_QUAN ELSE 0 END))\n" // -- prev_month_new
                 + "        ) AS total_score\n"
                 + "    FROM mis_gst_commcode AS cc \n"
                 + "    RIGHT JOIN mis_dol_cus_1 AS 14c ON cc.COMM_CODE = 14c.COMM_CODE \n"
                 + "    LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE \n"
-                + "    WHERE 14c.MM_YYYY IN ('" + month_date + "', '" + prev_month_new + "')\n"
+                + "    WHERE 14c.MM_YYYY IN (?, ?)\n" // -- month_date, prev_month_new
                 + "    AND 14c.COMMODITY_CODE IN (3, 6)\n"
                 + "    GROUP BY zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME -- Updated GROUP BY clause\n"
                 + "),\n"
@@ -3286,43 +3286,43 @@ public class CustomSubParameterWiseQuery {
                 + ")\n"
                 + "SELECT rq.*, mq.median_9a\n"
                 + "FROM ranked_query rq, median_query mq\n"
-                + "WHERE rq.ZONE_CODE = '"+zone_code+"' -- Filter for ZONE_CODE = 58\n"
+                + "WHERE rq.ZONE_CODE = ? -- Filter for ZONE_CODE = 58\n"
                 + "ORDER BY rq.total_score DESC;\n"
                 + "";
         return queryCustom9a;
     }
     public String QueryFor_cus9a_AllCommissonaryWise(String month_date){
-        //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
+        //              ?	 ?	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
         String queryCustom9a="WITH RankedData AS (\n" +
                 "    SELECT zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME, \n" +
-                "           SUM(CASE WHEN c.COMMODITY_CODE = 3 AND c.MM_YYYY= '" + month_date + "' THEN c.SALE_QUAN ELSE 0 END) AS s3col9, \n" +
-                "           SUM(CASE WHEN c.COMMODITY_CODE = 3 AND c.MM_YYYY= '" + month_date + "' THEN c.PARTY_QUAN ELSE 0 END) AS s3col12, \n" +
-                "           SUM(CASE WHEN c.COMMODITY_CODE = 3 AND c.MM_YYYY= '" + prev_month_new + "' THEN c.CB_QUAN ELSE 0 END) AS s3col3,\n" +
-                "           SUM(CASE WHEN c.COMMODITY_CODE = 6 AND c.MM_YYYY= '" + month_date + "' THEN c.SALE_QUAN ELSE 0 END) AS s6col9, \n" +
-                "           SUM(CASE WHEN c.COMMODITY_CODE = 6 AND c.MM_YYYY= '" + month_date + "' THEN c.PARTY_QUAN ELSE 0 END) AS s6col12, \n" +
-                "           SUM(CASE WHEN c.COMMODITY_CODE = 6 AND c.MM_YYYY= '" + prev_month_new + "' THEN c.CB_QUAN ELSE 0 END) AS s6col3,\n" +
+                "           SUM(CASE WHEN c.COMMODITY_CODE = 3 AND c.MM_YYYY= ? THEN c.SALE_QUAN ELSE 0 END) AS s3col9, \n" +
+                "           SUM(CASE WHEN c.COMMODITY_CODE = 3 AND c.MM_YYYY= ? THEN c.PARTY_QUAN ELSE 0 END) AS s3col12, \n" +
+                "           SUM(CASE WHEN c.COMMODITY_CODE = 3 AND c.MM_YYYY= ? THEN c.CB_QUAN ELSE 0 END) AS s3col3,\n" + // -- prev_month_new
+                "           SUM(CASE WHEN c.COMMODITY_CODE = 6 AND c.MM_YYYY= ? THEN c.SALE_QUAN ELSE 0 END) AS s6col9, \n" +
+                "           SUM(CASE WHEN c.COMMODITY_CODE = 6 AND c.MM_YYYY= ? THEN c.PARTY_QUAN ELSE 0 END) AS s6col12, \n" +
+                "           SUM(CASE WHEN c.COMMODITY_CODE = 6 AND c.MM_YYYY= ? THEN c.CB_QUAN ELSE 0 END) AS s6col3,\n" + // -- prev_month_new
                 "           -- numerator_9a as the sum of relevant columns\n" +
                 "           (\n" +
-                "             SUM(CASE WHEN c.COMMODITY_CODE = 3 AND c.MM_YYYY= '" + month_date + "' THEN c.SALE_QUAN ELSE 0 END) + \n" +
-                "             SUM(CASE WHEN c.COMMODITY_CODE = 3 AND c.MM_YYYY= '" + month_date + "' THEN c.PARTY_QUAN ELSE 0 END) + \n" +
-                "             SUM(CASE WHEN c.COMMODITY_CODE = 6 AND c.MM_YYYY= '" + month_date + "' THEN c.SALE_QUAN ELSE 0 END) + \n" +
-                "             SUM(CASE WHEN c.COMMODITY_CODE = 6 AND c.MM_YYYY= '" + month_date + "' THEN c.PARTY_QUAN ELSE 0 END)\n" +
+                "             SUM(CASE WHEN c.COMMODITY_CODE = 3 AND c.MM_YYYY= ? THEN c.SALE_QUAN ELSE 0 END) + \n" +
+                "             SUM(CASE WHEN c.COMMODITY_CODE = 3 AND c.MM_YYYY= ? THEN c.PARTY_QUAN ELSE 0 END) + \n" +
+                "             SUM(CASE WHEN c.COMMODITY_CODE = 6 AND c.MM_YYYY= ? THEN c.SALE_QUAN ELSE 0 END) + \n" +
+                "             SUM(CASE WHEN c.COMMODITY_CODE = 6 AND c.MM_YYYY= ? THEN c.PARTY_QUAN ELSE 0 END)\n" +
                 "           ) AS numerator_9a,\n" +
                 "           -- total_score calculation\n" +
                 "           (\n" +
-                "             (SUM(CASE WHEN c.COMMODITY_CODE = 3 AND c.MM_YYYY= '" + month_date + "' THEN c.SALE_QUAN ELSE 0 END) + \n" +
-                "              SUM(CASE WHEN c.COMMODITY_CODE = 3 AND c.MM_YYYY= '" + month_date + "' THEN c.PARTY_QUAN ELSE 0 END) + \n" +
-                "              SUM(CASE WHEN c.COMMODITY_CODE = 6 AND c.MM_YYYY= '" + month_date + "' THEN c.SALE_QUAN ELSE 0 END) + \n" +
-                "              SUM(CASE WHEN c.COMMODITY_CODE = 6 AND c.MM_YYYY= '" + month_date + "' THEN c.PARTY_QUAN ELSE 0 END)) \n" +
+                "             (SUM(CASE WHEN c.COMMODITY_CODE = 3 AND c.MM_YYYY= ? THEN c.SALE_QUAN ELSE 0 END) + \n" +
+                "              SUM(CASE WHEN c.COMMODITY_CODE = 3 AND c.MM_YYYY= ? THEN c.PARTY_QUAN ELSE 0 END) + \n" +
+                "              SUM(CASE WHEN c.COMMODITY_CODE = 6 AND c.MM_YYYY= ? THEN c.SALE_QUAN ELSE 0 END) + \n" +
+                "              SUM(CASE WHEN c.COMMODITY_CODE = 6 AND c.MM_YYYY= ? THEN c.PARTY_QUAN ELSE 0 END)) \n" +
                 "             / \n" +
-                "             (SUM(CASE WHEN c.COMMODITY_CODE = 3 AND c.MM_YYYY= '" + prev_month_new + "' THEN c.CB_QUAN ELSE 0 END) + \n" +
-                "              SUM(CASE WHEN c.COMMODITY_CODE = 6 AND c.MM_YYYY= '" + prev_month_new + "' THEN c.CB_QUAN ELSE 0 END))\n" +
+                "             (SUM(CASE WHEN c.COMMODITY_CODE = 3 AND c.MM_YYYY= ? THEN c.CB_QUAN ELSE 0 END) + \n" + // -- prev_month_new
+                "              SUM(CASE WHEN c.COMMODITY_CODE = 6 AND c.MM_YYYY= ? THEN c.CB_QUAN ELSE 0 END))\n" + // -- prev_month_new
                 "           ) AS total_score\n" +
                 "    FROM mis_gst_commcode AS cc \n" +
                 "    RIGHT JOIN mis_dol_cus_1 AS c ON cc.COMM_CODE = c.COMM_CODE \n" +
                 "    LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE \n" +
-                "    WHERE c.MM_YYYY IN ('" + month_date + "', '" + prev_month_new + "') \n" +
+                "    WHERE c.MM_YYYY IN (?, ?) \n" + // -- month_date, prev_month_new
                 "      AND c.COMMODITY_CODE IN (3, 6)\n" +
                 "    GROUP BY zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME\n" +
                 "),\n" +
