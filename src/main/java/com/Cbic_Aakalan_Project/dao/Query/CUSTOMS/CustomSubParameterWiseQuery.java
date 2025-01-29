@@ -3672,16 +3672,16 @@ public class CustomSubParameterWiseQuery {
     }
     // ********************************************************************************************************************************
     public String QueryFor_cus10b_ZoneWise(String month_date){
-        //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
+        //              ?	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
         String queryCustom10a="WITH calculated_data AS (\n" +
                 "    SELECT zc.ZONE_NAME,cc.ZONE_CODE,\n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' THEN c14.OPENING_AMT + c14.RECEIPTS_AMT - c14.REALISED_AMT - c14.OTHER_AMT ELSE 0 END), 0) AS col21,\n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' THEN c14.BELOW_YEAR_AMT ELSE 0 END), 0) AS col23\n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = ? THEN c14.OPENING_AMT + c14.RECEIPTS_AMT - c14.REALISED_AMT - c14.OTHER_AMT ELSE 0 END), 0) AS col21,\n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = ? THEN c14.BELOW_YEAR_AMT ELSE 0 END), 0) AS col23\n" +
                 "    FROM mis_gst_commcode AS cc\n" +
                 "    INNER JOIN mis_tar_cus_1d AS c14 ON c14.COMM_CODE = cc.COMM_CODE\n" +
                 "    INNER JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
-                "    WHERE c14.MM_YYYY = '" + month_date + "' AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65')\n" +
+                "    WHERE c14.MM_YYYY = ? AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65')\n" +
                 "    GROUP BY zc.ZONE_CODE, zc.ZONE_NAME, cc.ZONE_CODE\n" +
                 "),\n" +
                 "ranked_data AS (\n" +
@@ -3693,16 +3693,16 @@ public class CustomSubParameterWiseQuery {
         return queryCustom10a;
     }
     public String QueryFor_cus10b_CommissonaryWise(String month_date, String zone_code){
-        //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
+        //              ?	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
         String queryCustom10a="WITH calculated_data AS (\n" +
                 "    SELECT zc.ZONE_NAME,cc.ZONE_CODE,cc.COMM_NAME,\n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' THEN c14.OPENING_AMT + c14.RECEIPTS_AMT - c14.REALISED_AMT - c14.OTHER_AMT ELSE 0 END), 0) AS col21,\n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' THEN c14.BELOW_YEAR_AMT ELSE 0 END), 0) AS col23\n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = ? THEN c14.OPENING_AMT + c14.RECEIPTS_AMT - c14.REALISED_AMT - c14.OTHER_AMT ELSE 0 END), 0) AS col21,\n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = ? THEN c14.BELOW_YEAR_AMT ELSE 0 END), 0) AS col23\n" +
                 "    FROM mis_gst_commcode AS cc\n" +
                 "    INNER JOIN mis_tar_cus_1d AS c14 ON c14.COMM_CODE = cc.COMM_CODE\n" +
                 "    INNER JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
-                "    WHERE c14.MM_YYYY = '" + month_date + "' AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65')\n" +
+                "    WHERE c14.MM_YYYY = ? AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65')\n" +
                 "    GROUP BY zc.ZONE_CODE, zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME\n" +
                 "),\n" +
                 "ranked_data AS (\n" +
@@ -3711,20 +3711,20 @@ public class CustomSubParameterWiseQuery {
                 ")\n" +
                 "SELECT rd.ZONE_NAME,rd.ZONE_CODE,rd.COMM_NAME,rd.col21,rd.col23\n" +
                 "FROM ranked_data AS rd\n" +
-                "WHERE rd.ZONE_CODE = '" + zone_code + "' LIMIT 1000;\n";
+                "WHERE rd.ZONE_CODE = ? LIMIT 1000;\n";
         return queryCustom10a;
     }
     public String QueryFor_cus10b_AllCommissonaryWise(String month_date){
-        //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
+        //              ?	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
         String queryCustom10a="WITH calculated_data AS (\n" +
                 "    SELECT zc.ZONE_NAME,cc.ZONE_CODE,cc.COMM_NAME,\n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' THEN c14.OPENING_AMT + c14.RECEIPTS_AMT - c14.REALISED_AMT - c14.OTHER_AMT ELSE 0 END), 0) AS col21,\n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' THEN c14.BELOW_YEAR_AMT ELSE 0 END), 0) AS col23\n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = ? THEN c14.OPENING_AMT + c14.RECEIPTS_AMT - c14.REALISED_AMT - c14.OTHER_AMT ELSE 0 END), 0) AS col21,\n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = ? THEN c14.BELOW_YEAR_AMT ELSE 0 END), 0) AS col23\n" +
                 "    FROM mis_gst_commcode AS cc\n" +
                 "    INNER JOIN mis_tar_cus_1d AS c14 ON c14.COMM_CODE = cc.COMM_CODE\n" +
                 "    INNER JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
-                "    WHERE c14.MM_YYYY = '" + month_date + "' AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65')\n" +
+                "    WHERE c14.MM_YYYY = ? AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65')\n" +
                 "    GROUP BY zc.ZONE_CODE, zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME\n" +
                 "),\n" +
                 "ranked_data AS (\n" +
