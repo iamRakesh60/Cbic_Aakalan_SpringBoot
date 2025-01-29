@@ -282,17 +282,17 @@ public class CustomSubParameterWiseQuery {
     }
     // ********************************************************************************************************************************
     public String QueryFor_cus2c_ZoneWise(String month_date){
-        //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
+        //              ?	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
         String queryCustom4a="WITH calculated_data AS (\n" +
                 "    SELECT zc.ZONE_NAME, cc.ZONE_CODE, \n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' THEN c14.DUTY_RECOVERED_BY_DEPOSIT ELSE 0 END), 0) AS col14, \n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' THEN c14.DUTY_RECOVERED_ENFORCEMENT ELSE 0 END), 0) AS col16, \n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY <= '" + month_date + "' THEN c14.TOTAL_DUTY_EXPIRED ELSE 0 END), 0) AS col13 \n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = ? THEN c14.DUTY_RECOVERED_BY_DEPOSIT ELSE 0 END), 0) AS col14, \n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = ? THEN c14.DUTY_RECOVERED_ENFORCEMENT ELSE 0 END), 0) AS col16, \n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY <= ? THEN c14.TOTAL_DUTY_EXPIRED ELSE 0 END), 0) AS col13 \n" +
                 "    FROM mis_gst_commcode AS cc\n" +
                 "    INNER JOIN mis_dgi_cus_11 AS c14 ON c14.COMM_CODE = cc.COMM_CODE\n" +
                 "    INNER JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
-                "    WHERE  c14.MM_YYYY <= '" + month_date + "' AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65') \n" +
+                "    WHERE  c14.MM_YYYY <= ? AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65') \n" +
                 "    GROUP BY zc.ZONE_CODE, zc.ZONE_NAME, cc.ZONE_CODE\n" +
                 "),\n" +
                 "ranked_data AS (\n" +
@@ -315,17 +315,17 @@ public class CustomSubParameterWiseQuery {
         return queryCustom4a;
     }
     public String QueryFor_cus2c_CommissonaryWise(String month_date, String zone_code){
-        //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
+        //              ?	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
         String queryCustom4a="WITH calculated_data AS (\n" +
                 "    SELECT zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME,\n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' THEN c14.DUTY_RECOVERED_BY_DEPOSIT ELSE 0 END), 0) AS col14, \n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' THEN c14.DUTY_RECOVERED_ENFORCEMENT ELSE 0 END), 0) AS col16,\n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY <= '" + month_date + "' THEN c14.TOTAL_DUTY_EXPIRED ELSE 0 END), 0) AS col13 \n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = ? THEN c14.DUTY_RECOVERED_BY_DEPOSIT ELSE 0 END), 0) AS col14, \n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = ? THEN c14.DUTY_RECOVERED_ENFORCEMENT ELSE 0 END), 0) AS col16,\n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY <= ? THEN c14.TOTAL_DUTY_EXPIRED ELSE 0 END), 0) AS col13 \n" +
                 "    FROM mis_gst_commcode AS cc\n" +
                 "    INNER JOIN mis_dgi_cus_11 AS c14 ON c14.COMM_CODE = cc.COMM_CODE\n" +
                 "    INNER JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
-                "    WHERE  c14.MM_YYYY <= '" + month_date + "' AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65', '57') \n" +
+                "    WHERE  c14.MM_YYYY <= ? AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65', '57') \n" +
                 "    GROUP BY zc.ZONE_CODE, zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME\n" +
                 "),\n" +
                 "ranked_data AS (\n" +
@@ -347,17 +347,17 @@ public class CustomSubParameterWiseQuery {
         return queryCustom4a;
     }
     public String QueryFor_cus2c_AllCommissonaryWise(String month_date){
-        //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
+        //              ?	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
         String queryCustom4a="WITH calculated_data AS (\n" +
                 "    SELECT zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME, \n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' THEN c14.DUTY_RECOVERED_BY_DEPOSIT ELSE 0 END), 0) AS col14, \n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = '" + month_date + "' THEN c14.DUTY_RECOVERED_ENFORCEMENT ELSE 0 END), 0) AS col16,\n" +
-                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY <= '" + month_date + "' THEN c14.TOTAL_DUTY_EXPIRED ELSE 0 END), 0) AS col13\n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = ? THEN c14.DUTY_RECOVERED_BY_DEPOSIT ELSE 0 END), 0) AS col14, \n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY = ? THEN c14.DUTY_RECOVERED_ENFORCEMENT ELSE 0 END), 0) AS col16,\n" +
+                "        IFNULL(SUM(CASE WHEN c14.MM_YYYY <= ? THEN c14.TOTAL_DUTY_EXPIRED ELSE 0 END), 0) AS col13\n" +
                 "    FROM mis_gst_commcode AS cc\n" +
                 "    INNER JOIN mis_dgi_cus_11 AS c14 ON c14.COMM_CODE = cc.COMM_CODE\n" +
                 "    INNER JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
-                "    WHERE  c14.MM_YYYY <= '" + month_date + "' AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65','57') \n" +
+                "    WHERE  c14.MM_YYYY <= ? AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65','57') \n" +
                 "    GROUP BY zc.ZONE_CODE, zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME\n" +
                 "),\n" +
                 "ranked_data AS (\n" +
