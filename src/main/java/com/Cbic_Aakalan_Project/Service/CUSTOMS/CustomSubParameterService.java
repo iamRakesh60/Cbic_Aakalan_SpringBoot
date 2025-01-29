@@ -1273,6 +1273,269 @@ public class CustomSubParameterService {
         return allGstaList;
     }
 
+    // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=CUS5A zone wise *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+    public List<GSTCUS> cus5aZone(ResultSet rsGst14aa) throws SQLException {
+        List<GSTCUS> allGstaList = new ArrayList<>();
+        while (rsGst14aa.next()) {
+            String ra = CustomRelaventAspect.cus5a_RA;
+            String commname = "ALL";
+            String zoneCode = rsGst14aa.getString("ZONE_CODE");
+            int col5a = rsGst14aa.getInt("col5a");
+            int col3a = rsGst14aa.getInt("col3a");
+            median = rsGst14aa.getDouble("cus5a_median");
+            Double numerator_6c = rsGst14aa.getDouble("col5a");
+            int Zonal_rank = 0;
+            String gst = "no";
+            // String absval=String.valueOf(col5a)+"/"+String.valueOf(col3a);
+            String absval = "";
+            if (!(col5a == 0 && col3a == 0)) {
+                absval = String.valueOf(col5a ) + "/" + String.valueOf(col3a);
+            }
+            if((col3a) != 0) {
+                total = ((double) (col5a) * 100 / (col3a));
+            }else {
+                total = 0.00;
+            }
+            String formattedTotal = String.format("%.2f", total);
+            double totalScore = Double.parseDouble(formattedTotal);
+            int way_to_grade = score.c_marks5a(totalScore);
+            int insentavization = score.c_marks5a(totalScore);
+            if (numerator_6c > median && way_to_grade < 10) {
+                insentavization += 1;
+            }
+            double sub_parameter_weighted_average = insentavization * 0.3;
+            sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
+            if (!(col5a == 0 && col3a == 0)) {
+
+                gsta = new GSTCUS(rsGst14aa.getString("ZONE_NAME"), commname, totalScore, absval, zoneCode, ra,
+                        Zonal_rank, gst, way_to_grade, insentavization, sub_parameter_weighted_average);
+                allGstaList.add(gsta);
+            }
+        }
+        return allGstaList;
+    }
+
+    // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CUS5A Particular Zone=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+    public List<GSTCUS> cus5aZoneWiseCommissionary(ResultSet rsGst14aa) throws SQLException {
+        List<GSTCUS> allGstaList = new ArrayList<>();
+        while (rsGst14aa.next()) {
+            String ra = CustomRelaventAspect.cus5a_RA;
+            String zoneCode = rsGst14aa.getString("ZONE_CODE");
+            String commname = rsGst14aa.getString("COMM_NAME");
+            int col5a = rsGst14aa.getInt("col5a");
+            int col3a = rsGst14aa.getInt("col3a");
+            median = rsGst14aa.getDouble("cus5a_median");
+            Double numerator_6c = rsGst14aa.getDouble("col5a");
+            int Zonal_rank = 0;
+            String gst = "no";
+            // String absval=String.valueOf(col5a)+"/"+String.valueOf(col3a);
+            String absval = "";
+            if (!(col5a == 0 && col3a == 0)) {
+                absval = String.valueOf(col5a ) + "/" + String.valueOf(col3a);
+            }
+            if((col3a) != 0) {
+                total = ((double) (col5a) * 100 / (col3a));
+            }else {
+                total = 0.00;
+            }
+            String formattedTotal = String.format("%.2f", total);
+            double totalScore = Double.parseDouble(formattedTotal);
+            int way_to_grade = score.c_marks5a(totalScore);
+            int insentavization = score.c_marks5a(totalScore);
+            if (numerator_6c > median && way_to_grade < 10) {
+                insentavization += 1;
+            }
+            double sub_parameter_weighted_average = insentavization * 0.3;
+            sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
+            if (!(col5a == 0 && col3a == 0)){
+                gsta = new GSTCUS(rsGst14aa.getString("ZONE_NAME"), commname, totalScore,absval,zoneCode,ra,
+                        Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
+                allGstaList.add(gsta);}
+        }
+        return allGstaList;
+    }
+
+    // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CUS5A All Commissionary=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+    public List<GSTCUS> cus5aAllCommissionary(ResultSet rsGst14aa) throws SQLException {
+        List<GSTCUS> allGstaList = new ArrayList<>();
+        while (rsGst14aa.next()) {
+            String ra = CustomRelaventAspect.cus5a_RA;
+            String zoneCode = rsGst14aa.getString("ZONE_CODE");
+            String commname = rsGst14aa.getString("COMM_NAME");
+            int col5a = rsGst14aa.getInt("col5a");
+            int col3a = rsGst14aa.getInt("col3a");
+            median = rsGst14aa.getDouble("cus5a_median");
+            Double numerator_6c = rsGst14aa.getDouble("col5a");
+            //col3a is giving null for any date column, that reason total_score is o
+            int Zonal_rank = 0;
+            String gst = "no";
+            //  String absval=String.valueOf(col5a)+"/"+String.valueOf(col3a);
+            String absval = "";
+            if (!(col5a == 0 && col3a == 0)) {
+                absval = String.valueOf(col5a ) + "/" + String.valueOf(col3a);
+            }
+            if((col3a) != 0) {
+                total = ((double) (col5a) * 100 / (col3a));
+            }else {
+                total = 0.00;
+            }
+            String formattedTotal = String.format("%.2f", total);
+            double totalScore = Double.parseDouble(formattedTotal);
+            int way_to_grade = score.c_marks5a(totalScore);
+            int insentavization = score.c_marks5a(totalScore);
+            if (numerator_6c > median && way_to_grade < 10) {
+                insentavization += 1;
+            }
+            double sub_parameter_weighted_average = insentavization * 0.3;
+            sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
+            if (!(col5a == 0 && col3a == 0)){
+                gsta = new GSTCUS(rsGst14aa.getString("ZONE_NAME"), commname, totalScore,absval,zoneCode,ra,
+                        Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
+                allGstaList.add(gsta);}
+        }
+        return allGstaList;
+    }
+
+    // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=CUS5B zone wise *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+    public List<GSTCUS> cus5bZone(ResultSet rsGst14aa) throws SQLException {
+        List<GSTCUS> allGstaList = new ArrayList<>();
+        while (rsGst14aa.next()) {
+            String ra= CustomRelaventAspect.cus5B_RA;
+            String zoneCode = rsGst14aa.getString("ZONE_CODE");
+            String commname= "ALL";
+            int col7d=rsGst14aa.getInt("col7d");
+            int col6a=rsGst14aa.getInt("col6a");
+            int Zonal_rank = 0;
+            String gst = "no";
+            int insentavization = 0;
+            // String absval=String.valueOf(col7d)+"/"+String.valueOf(col6a);
+            String absval = "";
+            if (!(col7d == 0 && col6a == 0)) {
+                absval = String.valueOf(col7d ) + "/" + String.valueOf(col6a);
+            }
+
+            if(col6a !=0){
+                total = ((double) col7d * 100 / col6a);
+            }else {
+                total=0.00;
+            }
+
+            String formattedTotal = String.format("%.2f", total);
+            double totalScore = Double.parseDouble(formattedTotal);
+            int way_to_grade = score.c_marks5b(totalScore);
+            // 2 floating point
+            double sub_parameter_weighted_average = way_to_grade * 0.4;
+            sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
+            if (!(col7d == 0 && col6a == 0)){
+                gsta=new GSTCUS(rsGst14aa.getString("ZONE_NAME"),commname,totalScore,absval,zoneCode,ra,
+                        Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
+                allGstaList.add(gsta);}
+        }
+        return allGstaList;
+    }
+
+    // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CUS5B Particular Zone=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+    public List<GSTCUS> cus5bZoneWiseCommissionary(ResultSet rsGst14aa) throws SQLException {
+        List<GSTCUS> allGstaList = new ArrayList<>();
+        while (rsGst14aa.next()) {
+            String ra= CustomRelaventAspect.cus5B_RA;
+            String zoneCode = rsGst14aa.getString("ZONE_CODE");
+            String commname=rsGst14aa.getString("COMM_NAME");
+            int col7d=rsGst14aa.getInt("col7d");
+            int col6a=rsGst14aa.getInt("col6a");
+            int Zonal_rank = 0;
+            String gst = "no";
+            int insentavization = 0;
+            //String absval=String.valueOf(col7d)+"/"+String.valueOf(col6a);
+            String absval = "";
+            if (!(col7d == 0 && col6a == 0)) {
+                absval = String.valueOf(col7d ) + "/" + String.valueOf(col6a);
+            }
+
+            if(col6a !=0){
+                total = ((double) col7d * 100 / col6a);
+            }else {
+                total=0.00;
+            }
+
+            String formattedTotal = String.format("%.2f", total);
+            double totalScore = Double.parseDouble(formattedTotal);
+            int way_to_grade = score.c_marks5b(totalScore);
+            // 2 floating point
+            double sub_parameter_weighted_average = way_to_grade * 0.4;
+            sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
+            if (!(col7d == 0 && col6a == 0)){
+                gsta=new GSTCUS(rsGst14aa.getString("ZONE_NAME"),commname,totalScore,absval,zoneCode,ra,
+                        Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
+                allGstaList.add(gsta);}
+        }
+        return allGstaList;
+    }
+
+    // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CUS5B All Commissionary=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+    public List<GSTCUS> cus5bAllCommissionary(ResultSet rsGst14aa) throws SQLException {
+        List<GSTCUS> allGstaList = new ArrayList<>();
+        while (rsGst14aa.next()) {
+            String ra= CustomRelaventAspect.cus5B_RA;
+            String zoneCode = rsGst14aa.getString("ZONE_CODE");
+            String commname=rsGst14aa.getString("COMM_NAME");
+            int col7d=rsGst14aa.getInt("col7d");
+            int col6a=rsGst14aa.getInt("col6a");
+            int Zonal_rank = 0;
+            String gst = "no";
+            int insentavization = 0;
+            //String absval=String.valueOf(col7d)+"/"+String.valueOf(col6a);
+            String absval = "";
+            if (!(col7d == 0 && col6a == 0)) {
+                absval = String.valueOf(col7d ) + "/" + String.valueOf(col6a);
+            }
+
+            if(col6a !=0){
+                total = ((double) col7d * 100 / col6a);
+            }else {
+                total=0.00;
+            }
+
+            String formattedTotal = String.format("%.2f", total);
+            double totalScore = Double.parseDouble(formattedTotal);
+            int way_to_grade = score.c_marks5b(totalScore);
+            // 2 floating point
+            double sub_parameter_weighted_average = way_to_grade * 0.4;
+            sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
+            if (!(col7d == 0 && col6a == 0)){
+                gsta=new GSTCUS(rsGst14aa.getString("ZONE_NAME"),commname,totalScore,absval,zoneCode,ra,
+                        Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
+                allGstaList.add(gsta);}
+        }
+        return allGstaList;
+    }
+
+    // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=CUS5C zone wise *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+    public List<GSTCUS> cus5cZone(ResultSet rsGst14aa) throws SQLException {
+        List<GSTCUS> allGstaList = new ArrayList<>();
+        while (rsGst14aa.next()) {
+
+        }
+        return allGstaList;
+    }
+
+    // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CUS5C Particular Zone=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+    public List<GSTCUS> cus5cZoneWiseCommissionary(ResultSet rsGst14aa) throws SQLException {
+        List<GSTCUS> allGstaList = new ArrayList<>();
+        while (rsGst14aa.next()) {
+
+        }
+        return allGstaList;
+    }
+
+    // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CUS5C All Commissionary=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+    public List<GSTCUS> cus5cAllCommissionary(ResultSet rsGst14aa) throws SQLException {
+        List<GSTCUS> allGstaList = new ArrayList<>();
+        while (rsGst14aa.next()) {
+
+        }
+        return allGstaList;
+    }
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=cus6A zone wise *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
     public List<GSTCUS> cus6aZone(ResultSet rs) throws SQLException {
         List<GSTCUS> allGstaList = new ArrayList<>();
@@ -1321,17 +1584,34 @@ public class CustomSubParameterService {
         return allGstaList;
     }
 
-    // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= cus6B Zone wise *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-    public List<GSTCUS> cus6BZone(ResultSet rs) throws SQLException {
+    // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CUS6A Particular Zone=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+    public List<GSTCUS> cus6aZoneWiseCommissionary(ResultSet rsGst14aa) throws SQLException {
         List<GSTCUS> allGstaList = new ArrayList<>();
-        while (rs.next()) {
+        while (rsGst14aa.next()) {
+
+        }
+        return allGstaList;
+    }
+
+    // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CUS6A All Commissionary=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+    public List<GSTCUS> cus6aAllCommissionary(ResultSet rsGst14aa) throws SQLException {
+        List<GSTCUS> allGstaList = new ArrayList<>();
+        while (rsGst14aa.next()) {
+
+        }
+        return allGstaList;
+    }
+    // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= cus6B Zone wise *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+    public List<GSTCUS> cus6BZone(ResultSet rsGst14aa) throws SQLException {
+        List<GSTCUS> allGstaList = new ArrayList<>();
+        while (rsGst14aa.next()) {
             String ra = CustomRelaventAspect.cus6b_RA;
             String commname = "ALL";
-            String zoneCode = rs.getString("ZONE_CODE");
-            int col18_3a = rs.getInt("col18_3a");
-            int col18_3b = rs.getInt("col18_3b");
-            int col12_3a = rs.getInt("col12_3a");
-            int col12_3b = rs.getInt("col12_3b");
+            String zoneCode = rsGst14aa.getString("ZONE_CODE");
+            int col18_3a = rsGst14aa.getInt("col18_3a");
+            int col18_3b = rsGst14aa.getInt("col18_3b");
+            int col12_3a = rsGst14aa.getInt("col12_3a");
+            int col12_3b = rsGst14aa.getInt("col12_3b");
             int Zonal_rank = 0;
             String gst = "no";
             int insentavization = 0;
@@ -1350,10 +1630,27 @@ public class CustomSubParameterService {
             double sub_parameter_weighted_average = way_to_grade * 0.2;
             sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
             if (!(col18_3a+col18_3b == 0 && col12_3a+col12_3b== 0)){
-                gsta=new GSTCUS(rs.getString("ZONE_NAME"),commname,totalScore,absval,zoneCode,ra,
+                gsta=new GSTCUS(rsGst14aa.getString("ZONE_NAME"),commname,totalScore,absval,zoneCode,ra,
                         Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
                 allGstaList.add(gsta);}
             allGstaList.sort((a, b) -> Double.compare(a.getTotal_score(), b.getTotal_score()));
+        }
+        return allGstaList;
+    }
+    // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CUS6B Particular Zone=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+    public List<GSTCUS> cus6bZoneWiseCommissionary(ResultSet rsGst14aa) throws SQLException {
+        List<GSTCUS> allGstaList = new ArrayList<>();
+        while (rsGst14aa.next()) {
+
+        }
+        return allGstaList;
+    }
+
+    // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CUS6B All Commissionary=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+    public List<GSTCUS> cus6bAllCommissionary(ResultSet rsGst14aa) throws SQLException {
+        List<GSTCUS> allGstaList = new ArrayList<>();
+        while (rsGst14aa.next()) {
+
         }
         return allGstaList;
     }
@@ -1396,6 +1693,23 @@ public class CustomSubParameterService {
         System.out.println("median cus6c zone wise :-" + median);
         return allGstaList;
     }
+    // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CUS6c Particular Zone=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+    public List<GSTCUS> cus6cZoneWiseCommissionary(ResultSet rsGst14aa) throws SQLException {
+        List<GSTCUS> allGstaList = new ArrayList<>();
+        while (rsGst14aa.next()) {
+
+        }
+        return allGstaList;
+    }
+
+    // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CUS6c All Commissionary=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+    public List<GSTCUS> cus6cAllCommissionary(ResultSet rsGst14aa) throws SQLException {
+        List<GSTCUS> allGstaList = new ArrayList<>();
+        while (rsGst14aa.next()) {
+
+        }
+        return allGstaList;
+    }
 
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= cus6D zone wise *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
     public List<GSTCUS> cus6dZone(ResultSet rsGst14aa) throws SQLException {
@@ -1434,6 +1748,23 @@ public class CustomSubParameterService {
 
         }
         System.out.println("median cus6d zone wise :-" + median);
+        return allGstaList;
+    }
+    // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CUS6D Particular Zone=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+    public List<GSTCUS> cus6dZoneWiseCommissionary(ResultSet rsGst14aa) throws SQLException {
+        List<GSTCUS> allGstaList = new ArrayList<>();
+        while (rsGst14aa.next()) {
+
+        }
+        return allGstaList;
+    }
+
+    // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CUS6D All Commissionary=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+    public List<GSTCUS> cus6dAllCommissionary(ResultSet rsGst14aa) throws SQLException {
+        List<GSTCUS> allGstaList = new ArrayList<>();
+        while (rsGst14aa.next()) {
+
+        }
         return allGstaList;
     }
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= cus6E zone wise *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
@@ -1479,7 +1810,23 @@ public class CustomSubParameterService {
         System.out.println("median cus6e zone wise :-" + median);
         return allGstaList;
     }
+    // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CUS6E Particular Zone=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+    public List<GSTCUS> cus6eZoneWiseCommissionary(ResultSet rsGst14aa) throws SQLException {
+        List<GSTCUS> allGstaList = new ArrayList<>();
+        while (rsGst14aa.next()) {
 
+        }
+        return allGstaList;
+    }
+
+    // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CUS6E All Commissionary=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+    public List<GSTCUS> cus6eAllCommissionary(ResultSet rsGst14aa) throws SQLException {
+        List<GSTCUS> allGstaList = new ArrayList<>();
+        while (rsGst14aa.next()) {
+
+        }
+        return allGstaList;
+    }
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= cus6F zone wise *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
     public List<GSTCUS> cus6fZone(ResultSet rsGst14aa) throws SQLException {
         List<GSTCUS> allGstaList = new ArrayList<>();
@@ -1514,7 +1861,23 @@ public class CustomSubParameterService {
         }System.out.println("CUS 6F median zone wise :- "+median);
         return allGstaList;
     }
+    // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CUS6F Particular Zone=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+    public List<GSTCUS> cus6fZoneWiseCommissionary(ResultSet rsGst14aa) throws SQLException {
+        List<GSTCUS> allGstaList = new ArrayList<>();
+        while (rsGst14aa.next()) {
 
+        }
+        return allGstaList;
+    }
+
+    // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CUS6F All Commissionary=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+    public List<GSTCUS> cus6fAllCommissionary(ResultSet rsGst14aa) throws SQLException {
+        List<GSTCUS> allGstaList = new ArrayList<>();
+        while (rsGst14aa.next()) {
+
+        }
+        return allGstaList;
+    }
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= cus7A zone wise *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
     public List<GSTCUS> cus7aZone(ResultSet rs) throws SQLException {
         List<GSTCUS> allGstaList = new ArrayList<>();

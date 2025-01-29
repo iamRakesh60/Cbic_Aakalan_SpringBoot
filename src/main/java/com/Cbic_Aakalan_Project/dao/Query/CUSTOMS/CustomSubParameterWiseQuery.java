@@ -1245,7 +1245,7 @@ public class CustomSubParameterWiseQuery {
                 + "    LEFT JOIN \n"
                 + "        mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE \n"
                 + "    WHERE \n"
-                + "        14c.MM_YYYY = '" + month_date + "'\n"
+                + "        14c.MM_YYYY = ? \n" // '" + month_date + "'
                 + "    GROUP BY \n"
                 + "        zc.ZONE_NAME, cc.ZONE_CODE\n"
                 + "),\n"
@@ -1261,7 +1261,7 @@ public class CustomSubParameterWiseQuery {
                 + "    LEFT JOIN \n"
                 + "        mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE \n"
                 + "    WHERE \n"
-                + "        14c.MM_YYYY = DATE_SUB('" + month_date + "', INTERVAL 1 MONTH) \n"
+                + "        14c.MM_YYYY = DATE_SUB( ? , INTERVAL 1 MONTH) \n" // '" + month_date + "'
                 + "    GROUP BY \n"
                 + "        zc.ZONE_NAME, cc.ZONE_CODE\n"
                 + "),\n"
@@ -1308,9 +1308,9 @@ public class CustomSubParameterWiseQuery {
                 + "    LEFT JOIN \n"
                 + "        mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n"
                 + "    LEFT JOIN \n"
-                + "        Mis_DGI_CUS_1A AS c_prev ON c_prev.COMM_CODE = cc.COMM_CODE AND c_prev.MM_YYYY = '" + prev_month_new + "' -- Previous month\n"
+                + "        Mis_DGI_CUS_1A AS c_prev ON c_prev.COMM_CODE = cc.COMM_CODE AND c_prev.MM_YYYY = ? -- Previous month\n" // '" + prev_month_new + "'
                 + "    WHERE \n"
-                + "        c.MM_YYYY = '" + month_date + "'  -- Current month\n"
+                + "        c.MM_YYYY = ?  -- Current month\n" // '" + month_date + "'
                 + "),\n"
                 + "median_cte AS (\n"
                 + "    SELECT \n"
@@ -1336,7 +1336,7 @@ public class CustomSubParameterWiseQuery {
                 + "CROSS JOIN \n"
                 + "    median_cte\n"
                 + "WHERE \n"
-                + "    cte.ZONE_CODE = '"+zone_code+"';  -- Filter by ZONE_CODE\n"
+                + "    cte.ZONE_CODE = ? ;  -- Filter by ZONE_CODE\n"
                 + "";
         return queryCustom5a;
     }
@@ -1357,9 +1357,9 @@ public class CustomSubParameterWiseQuery {
                 + "    LEFT JOIN \n"
                 + "        mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n"
                 + "    LEFT JOIN \n"
-                + "        Mis_DGI_CUS_1A AS c_prev ON c_prev.COMM_CODE = cc.COMM_CODE AND c_prev.MM_YYYY = '" + prev_month_new + "' -- Previous month\n"
+                + "        Mis_DGI_CUS_1A AS c_prev ON c_prev.COMM_CODE = cc.COMM_CODE AND c_prev.MM_YYYY = ? -- Previous month\n"
                 + "    WHERE \n"
-                + "        c.MM_YYYY ='" + month_date + "'  -- Current month\n"
+                + "        c.MM_YYYY = ?  -- Current month\n"
                 + "),\n"
                 + "median_cte AS (\n"
                 + "    SELECT \n"
