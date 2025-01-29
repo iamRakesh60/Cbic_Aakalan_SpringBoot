@@ -1863,12 +1863,12 @@ public class CustomSubParameterWiseQuery {
                 + "FROM mis_dri_cus_3a AS 14c\n"
                 + "INNER JOIN mis_gst_commcode AS cc \n"
                 + "    ON 14c.COMM_CODE = cc.COMM_CODE \n"
-                + "    AND 14c.MM_YYYY = '" + month_date + "'  -- Ensuring data is from April 2024\n"
+                + "    AND 14c.MM_YYYY = ?  -- Ensuring data is from April 2024\n" //-- month_date
                 + "INNER JOIN mis_gst_zonecode AS zc \n"
                 + "    ON zc.ZONE_CODE = cc.ZONE_CODE\n"
                 + "INNER JOIN mis_dri_cus_3b AS 15c \n"
                 + "    ON 14c.COMM_CODE = 15c.COMM_CODE \n"
-                + "    AND 15c.MM_YYYY = '" + month_date + "'  -- Ensuring data is from April 2024 for col18_3b\n"
+                + "    AND 15c.MM_YYYY = ?  -- Ensuring data is from April 2024 for col18_3b\n" //-- month_date
                 + "\n"
                 + "GROUP BY cc.ZONE_CODE, zc.ZONE_NAME  -- Grouping by zone code and zone name\n"
                 + "ORDER BY col18_3a ASC;  -- Ordering results by col18_3a in ascending order\n"
@@ -1918,17 +1918,17 @@ public class CustomSubParameterWiseQuery {
                 + "FROM mis_dri_cus_3a AS 14c\n"
                 + "INNER JOIN mis_gst_commcode AS cc \n"
                 + "    ON 14c.COMM_CODE = cc.COMM_CODE \n"
-                + "    AND 14c.MM_YYYY = '" + month_date + "'\n"
+                + "    AND 14c.MM_YYYY = ? \n" //-- month_date
                 + "INNER JOIN mis_gst_zonecode AS zc \n"
                 + "    ON zc.ZONE_CODE = cc.ZONE_CODE\n"
                 + "INNER JOIN mis_dri_cus_3b AS 15c \n"
                 + "    ON 14c.COMM_CODE = 15c.COMM_CODE \n"
-                + "    AND 15c.MM_YYYY = '" + month_date + "'\n"
+                + "    AND 15c.MM_YYYY = ? \n" //-- month_date
                 + "INNER JOIN mis_dri_cus_3b AS 15c_prev \n"
                 + "    ON 14c.COMM_CODE = 15c_prev.COMM_CODE \n"
-                + "    AND 15c_prev.MM_YYYY = '" + month_date + "' -- Adjusted to previous month for closing values\n"
+                + "    AND 15c_prev.MM_YYYY = ?  -- Adjusted to previous month for closing values\n" //-- month_date
                 + "\n"
-                + "WHERE cc.ZONE_CODE = '"+zone_code+"' -- Added condition for ZONE_CODE\n"
+                + "WHERE cc.ZONE_CODE = ?  -- Added condition for ZONE_CODE\n"
                 + "ORDER BY col18_3a ASC;\n"
                 + "";
         return queryCustom6b;
@@ -1976,15 +1976,15 @@ public class CustomSubParameterWiseQuery {
                 + "FROM mis_dri_cus_3a AS 14c\n"
                 + "INNER JOIN mis_gst_commcode AS cc \n"
                 + "    ON 14c.COMM_CODE = cc.COMM_CODE \n"
-                + "    AND 14c.MM_YYYY = '" + month_date + "'\n"
+                + "    AND 14c.MM_YYYY = ? \n" //-- month_date
                 + "INNER JOIN mis_gst_zonecode AS zc \n"
                 + "    ON zc.ZONE_CODE = cc.ZONE_CODE\n"
                 + "INNER JOIN mis_dri_cus_3b AS 15c \n"
                 + "    ON 14c.COMM_CODE = 15c.COMM_CODE \n"
-                + "    AND 15c.MM_YYYY = '" + month_date + "'\n"
+                + "    AND 15c.MM_YYYY = ? \n" //-- month_date
                 + "INNER JOIN mis_dri_cus_3b AS 15c_prev \n"
                 + "    ON 14c.COMM_CODE = 15c_prev.COMM_CODE \n"
-                + "    AND 15c_prev.MM_YYYY = '" + month_date + "' -- Adjusted to previous month for closing values\n"
+                + "    AND 15c_prev.MM_YYYY = ? -- Adjusted to previous month for closing values\n" //-- month_date
                 + "ORDER BY col18_3a ASC;\n"
                 + "";
         return queryCustom6b;
