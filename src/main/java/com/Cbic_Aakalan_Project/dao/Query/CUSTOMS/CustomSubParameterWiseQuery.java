@@ -3124,7 +3124,7 @@ public class CustomSubParameterWiseQuery {
                 "    FROM mis_gst_commcode cc \n" +
                 "    INNER JOIN mis_dol_cus_4 c14 ON c14.COMM_CODE = cc.COMM_CODE \n" +
                 "    INNER JOIN mis_gst_zonecode zc ON zc.ZONE_CODE = cc.ZONE_CODE \n" +
-                "    WHERE c14.MM_YYYY = '" + month_date + "' \n" +
+                "    WHERE c14.MM_YYYY = ? \n" +
                 "      AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65') \n" +
                 "    GROUP BY zc.ZONE_CODE, zc.ZONE_NAME, cc.ZONE_CODE\n" +
                 "), \n" +
@@ -3150,7 +3150,7 @@ public class CustomSubParameterWiseQuery {
                 "    FROM mis_gst_commcode AS cc \n" +
                 "    INNER JOIN mis_dol_cus_4 AS c14 ON c14.COMM_CODE = cc.COMM_CODE \n" +
                 "    INNER JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE \n" +
-                "    WHERE c14.MM_YYYY = '" + month_date + "' AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65') \n" +
+                "    WHERE c14.MM_YYYY = ? AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65') \n" +
                 "    GROUP BY zc.ZONE_CODE, zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME\n" +
                 "), \n" +
                 "ranked_data AS (\n" +
@@ -3161,7 +3161,7 @@ public class CustomSubParameterWiseQuery {
                 ")\n" +
                 "SELECT rd.ZONE_NAME, rd.ZONE_CODE, rd.COMM_NAME, rd.col13c, rd.col11\n" +
                 "FROM ranked_data AS rd\n" +
-                "WHERE rd.ZONE_CODE = '" + zone_code + "'	 LIMIT 1000;\n";
+                "WHERE rd.ZONE_CODE = ?	 LIMIT 1000;\n";
         return queryCustom8b;
     }
     public String QueryFor_cus8b_AllCommissonaryWise(String month_date){
@@ -3174,7 +3174,7 @@ public class CustomSubParameterWiseQuery {
                 "    FROM mis_gst_commcode AS cc \n" +
                 "    INNER JOIN mis_dol_cus_4 AS c14 ON c14.COMM_CODE = cc.COMM_CODE \n" +
                 "    INNER JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE \n" +
-                "    WHERE c14.MM_YYYY = '" + month_date + "' AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65')\n" +
+                "    WHERE c14.MM_YYYY = ? AND cc.ZONE_CODE NOT IN ('70', '59', '18', '53', '63', '60', '65')\n" +
                 "    GROUP BY zc.ZONE_CODE, zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME\n" +
                 "), \n" +
                 "ranked_data AS (\n" +
