@@ -3343,21 +3343,21 @@ public class CustomSubParameterWiseQuery {
     }
     // ********************************************************************************************************************************
     public String QueryFor_cus9b_ZoneWise(String month_date){
-        //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
+        //              ?	 ?	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
         String queryCustom9b="WITH RipeDisposalCTE AS (\n" +
                 "    SELECT zc.ZONE_NAME, cc.ZONE_CODE, SUM(14c.RIPE_DISPOSAL) AS s5col13\n" +
                 "    FROM MIS_DOL_CUS_3 AS 14c  \n" +
                 "    RIGHT JOIN mis_gst_commcode AS cc ON 14c.COMM_CODE = cc.COMM_CODE \n" +
                 "    LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE \n" +
-                "    WHERE 14c.MM_YYYY = '" + month_date + "' GROUP BY cc.ZONE_CODE\n" +
+                "    WHERE 14c.MM_YYYY = ? GROUP BY cc.ZONE_CODE\n" +
                 "),\n" +
                 "RipeClosingCTE AS (\n" +
                 "    SELECT zc.ZONE_NAME, cc.ZONE_CODE, SUM(14c.RIPE_CLOSING) AS s5col11\n" +
                 "    FROM MIS_DOL_CUS_3 AS 14c  \n" +
                 "    RIGHT JOIN mis_gst_commcode AS cc ON 14c.COMM_CODE = cc.COMM_CODE \n" +
                 "    LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE \n" +
-                "    WHERE 14c.MM_YYYY = '" + prev_month_new + "' GROUP BY cc.ZONE_CODE\n" +
+                "    WHERE 14c.MM_YYYY = ? GROUP BY cc.ZONE_CODE\n" +
                 "),\n" +
                 "RankedDisposalCTE AS (\n" +
                 "    SELECT ZONE_NAME, ZONE_CODE, s5col13,\n" +
@@ -3376,14 +3376,14 @@ public class CustomSubParameterWiseQuery {
         return queryCustom9b;
     }
     public String QueryFor_cus9b_CommissonaryWise(String month_date, String zone_code){
-        //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
+        //              ?	 ?	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
         String queryCustom9b="WITH CTE_Ripe_Disposal AS (\n" +
                 "    SELECT zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME, SUM(14c.RIPE_DISPOSAL) AS s5col13\n" +
                 "    FROM MIS_DOL_CUS_3 AS 14c\n" +
                 "    RIGHT JOIN mis_gst_commcode AS cc ON 14c.COMM_CODE = cc.COMM_CODE \n" +
                 "    LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE \n" +
-                "    WHERE 14c.MM_YYYY = '" + month_date + "' \n" +
+                "    WHERE 14c.MM_YYYY = ? \n" +
                 "    GROUP BY zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME\n" +
                 "),\n" +
                 "CTE_Ripe_Closing AS (\n" +
@@ -3391,7 +3391,7 @@ public class CustomSubParameterWiseQuery {
                 "    FROM MIS_DOL_CUS_3 AS 14c\n" +
                 "    RIGHT JOIN mis_gst_commcode AS cc ON 14c.COMM_CODE = cc.COMM_CODE \n" +
                 "    LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE \n" +
-                "    WHERE 14c.MM_YYYY = '" + prev_month_new + "' \n" +
+                "    WHERE 14c.MM_YYYY = ? \n" +
                 "    GROUP BY zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME\n" +
                 "),\n" +
                 "CTE_Median AS (\n" +
@@ -3411,7 +3411,7 @@ public class CustomSubParameterWiseQuery {
                 "                                  AND r.ZONE_CODE = c.ZONE_CODE \n" +
                 "                                  AND r.COMM_NAME = c.COMM_NAME\n" +
                 "CROSS JOIN CTE_Median AS m  \n" +
-                "WHERE r.ZONE_CODE = '" + zone_code + "'  -- Adding the condition here\n" +
+                "WHERE r.ZONE_CODE = ?  -- Adding the condition here\n" +
                 "\n" +
                 "UNION ALL\n" +
                 "\n" +
@@ -3423,11 +3423,11 @@ public class CustomSubParameterWiseQuery {
                 "                                   AND r.COMM_NAME = c.COMM_NAME\n" +
                 "CROSS JOIN CTE_Median AS m  \n" +
                 "WHERE r.ZONE_NAME IS NULL\n" +
-                "  AND c.ZONE_CODE = '" + zone_code + "';  -- Adding the condition here\n";
+                "  AND c.ZONE_CODE = ? ;  -- Adding the condition here\n";
         return queryCustom9b;
     }
     public String QueryFor_cus9b_AllCommissonaryWise(String month_date){
-        //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
+        //              ?	 ?	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
         String queryCustom9b="-- cus 9b all c0mmi with median \n" +
                 "WITH CTE_Ripe_Disposal AS (\n" +
@@ -3435,7 +3435,7 @@ public class CustomSubParameterWiseQuery {
                 "    FROM MIS_DOL_CUS_3 AS 14c\n" +
                 "    RIGHT JOIN mis_gst_commcode AS cc ON 14c.COMM_CODE = cc.COMM_CODE \n" +
                 "    LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE \n" +
-                "    WHERE 14c.MM_YYYY = '" + month_date + "' \n" +
+                "    WHERE 14c.MM_YYYY = ? \n" +
                 "    GROUP BY zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME\n" +
                 "),\n" +
                 "CTE_Ripe_Closing AS (\n" +
@@ -3443,7 +3443,7 @@ public class CustomSubParameterWiseQuery {
                 "    FROM MIS_DOL_CUS_3 AS 14c\n" +
                 "    RIGHT JOIN mis_gst_commcode AS cc ON 14c.COMM_CODE = cc.COMM_CODE \n" +
                 "    LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE \n" +
-                "    WHERE 14c.MM_YYYY = '" + prev_month_new + "' \n" +
+                "    WHERE 14c.MM_YYYY = ? \n" +
                 "    GROUP BY zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME\n" +
                 "),\n" +
                 "CTE_Median AS (\n" +
