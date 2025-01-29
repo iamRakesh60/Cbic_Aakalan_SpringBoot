@@ -2292,7 +2292,7 @@ public class CustomSubParameterWiseQuery {
     }
     // ********************************************************************************************************************************
     public String QueryFor_cus6d_ZoneWise(String month_date){
-        //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
+        //              ?	 ?	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
         String getFinancialYear = DateCalculate.getFinancialYearStart(month_date);
 
@@ -2302,12 +2302,12 @@ public class CustomSubParameterWiseQuery {
                 "    FROM mis_gst_commcode AS cc\n" +
                 "    RIGHT JOIN mis_dri_cus_7 AS scr ON cc.COMM_CODE = scr.COMM_CODE\n" +
                 "    LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
-                "    WHERE scr.MM_YYYY BETWEEN '" + getFinancialYear + "' AND '" + month_date + "'\n" +
+                "    WHERE scr.MM_YYYY BETWEEN ? AND ?\n" + // -- getFinancialYear,month_date
                 "),\n" +
                 "cte AS ( SELECT zc.ZONE_NAME,cc.ZONE_CODE,\n" +
                 "        -- Replace the original col4_7 logic with MAX from CumulativeData\n" +
                 "        (SELECT MAX(cumulative_col4_7) FROM CumulativeData cd \n" +
-                "         WHERE cd.ZONE_CODE = cc.ZONE_CODE AND cd.MM_YYYY = '" + month_date + "') AS col4_7,\n" +
+                "         WHERE cd.ZONE_CODE = cc.ZONE_CODE AND cd.MM_YYYY = ?) AS col4_7,\n" +  // -- month_date
                 "        -- Total import/export calculations from mis_dri_cus_3a table for previous month\n" +
                 "        SUM(IFNULL(3a_prev.IMPORT_GOLD_CLOSING_DUTY, 0) + IFNULL(3a_prev.IMPORT_NARCO_CLOSING_DUTY, 0) + IFNULL(3a_prev.IMPORT_FICN_CLOSING_DUTY, 0) + IFNULL(3a_prev.IMPORT_WILD_CLOSING_DUTY, 0) + \n" +
                 "            IFNULL(3a_prev.IMPORT_ODS_CLOSING_DUTY, 0) + IFNULL(3a_prev.IMPORT_IPR_CLOSING_DUTY, 0) +IFNULL(3a_prev.IMPORT_OTHERS_CLOSING_DUTY, 0) + IFNULL(3a_prev.EXPORT_GOLD_CLOSING_DUTY, 0) + \n" +
@@ -2329,12 +2329,12 @@ public class CustomSubParameterWiseQuery {
                 "            IFNULL(3b.EXPORT_DEEC_RECEIPT_DUTY, 0) + IFNULL(3b.EXPORT_DEPB_RECEIPT_DUTY, 0) + IFNULL(3b.EXPORT_EPCG_RECEIPT_DUTY, 0) + IFNULL(3b.EXPORT_EOU_RECEIPT_DUTY, 0) + \n" +
                 "            IFNULL(3b.EXPORT_DBK_RECEIPT_DUTY, 0) +IFNULL(3b.EXPORT_OTHERS_RECEIPT_DUTY, 0)) AS col8_cus3b\n" +
                 "    FROM mis_dri_cus_7 AS 14c\n" +
-                "    INNER JOIN mis_gst_commcode AS cc ON 14c.COMM_CODE = cc.COMM_CODE AND 14c.MM_YYYY = '" + month_date + "'\n" +
+                "    INNER JOIN mis_gst_commcode AS cc ON 14c.COMM_CODE = cc.COMM_CODE AND 14c.MM_YYYY = ?\n" +  // -- month_date
                 "    INNER JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
-                "    INNER JOIN mis_dri_cus_3a AS 3a ON 14c.COMM_CODE = 3a.COMM_CODE AND 3a.MM_YYYY = '" + month_date + "'\n" +
-                "    INNER JOIN mis_dri_cus_3a AS 3a_prev ON 14c.COMM_CODE = 3a_prev.COMM_CODE AND 3a_prev.MM_YYYY = '" + prev_month_new + "'\n" +
-                "    INNER JOIN mis_dri_cus_3b AS 3b ON 14c.COMM_CODE = 3b.COMM_CODE AND 3b.MM_YYYY = '" + month_date + "'\n" +
-                "    INNER JOIN mis_dri_cus_3b AS 3b_prev ON 14c.COMM_CODE = 3b_prev.COMM_CODE AND 3b_prev.MM_YYYY = '" + prev_month_new + "'\n" +
+                "    INNER JOIN mis_dri_cus_3a AS 3a ON 14c.COMM_CODE = 3a.COMM_CODE AND 3a.MM_YYYY = ?\n" +  // -- month_date
+                "    INNER JOIN mis_dri_cus_3a AS 3a_prev ON 14c.COMM_CODE = 3a_prev.COMM_CODE AND 3a_prev.MM_YYYY = ?\n" +  // -- prev_month_new
+                "    INNER JOIN mis_dri_cus_3b AS 3b ON 14c.COMM_CODE = 3b.COMM_CODE AND 3b.MM_YYYY = ?\n" +  // -- month_date
+                "    INNER JOIN mis_dri_cus_3b AS 3b_prev ON 14c.COMM_CODE = 3b_prev.COMM_CODE AND 3b_prev.MM_YYYY = ?\n" +  // -- prev_month_new
                 "    GROUP BY cc.ZONE_CODE, zc.ZONE_NAME\n" +
                 "),\n" +
                 "row_numbered_cte AS ( SELECT *, ROW_NUMBER() OVER (ORDER BY col4_7 ASC) AS row_num,COUNT(*) OVER () AS total_rows FROM cte),\n" +
@@ -2346,7 +2346,7 @@ public class CustomSubParameterWiseQuery {
         return queryCustom6d;
     }
     public String QueryFor_cus6d_CommissonaryWise(String month_date, String zone_code){
-        //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
+        //              ?	 ?	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
         String getFinancialYear = DateCalculate.getFinancialYearStart(month_date);
 
@@ -2356,10 +2356,10 @@ public class CustomSubParameterWiseQuery {
                 "    FROM mis_gst_commcode AS cc\n" +
                 "    RIGHT JOIN mis_dri_cus_7 AS scr ON cc.COMM_CODE = scr.COMM_CODE\n" +
                 "    LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
-                "    WHERE scr.MM_YYYY BETWEEN '" + getFinancialYear + "' AND '" + month_date + "'),\n" +
+                "    WHERE scr.MM_YYYY BETWEEN ? AND ?),\n" + // -- getFinancialYear,month_date
                 "cte AS (SELECT zc.ZONE_NAME,cc.ZONE_CODE,cc.COMM_NAME,\n" +
                 "        (SELECT MAX(cumulative_col4_7) FROM CumulativeData cd \n" +
-                "         WHERE cd.ZONE_CODE = cc.ZONE_CODE AND cd.COMM_NAME = cc.COMM_NAME AND cd.MM_YYYY = '" + month_date + "') AS col4_7,\n" +
+                "         WHERE cd.ZONE_CODE = cc.ZONE_CODE AND cd.COMM_NAME = cc.COMM_NAME AND cd.MM_YYYY = ?) AS col4_7,\n" +  // -- month_date
                 "        SUM(IFNULL(3a_prev.IMPORT_GOLD_CLOSING_DUTY, 0) + IFNULL(3a_prev.IMPORT_NARCO_CLOSING_DUTY, 0) + IFNULL(3a_prev.IMPORT_FICN_CLOSING_DUTY, 0) + IFNULL(3a_prev.IMPORT_WILD_CLOSING_DUTY, 0) + \n" +
                 "            IFNULL(3a_prev.IMPORT_ODS_CLOSING_DUTY, 0) + IFNULL(3a_prev.IMPORT_IPR_CLOSING_DUTY, 0) +IFNULL(3a_prev.IMPORT_OTHERS_CLOSING_DUTY, 0) + IFNULL(3a_prev.EXPORT_GOLD_CLOSING_DUTY, 0) + \n" +
                 "            IFNULL(3a_prev.EXPORT_NARCO_CLOSING_DUTY, 0) + IFNULL(3a_prev.EXPORT_FICN_CLOSING_DUTY, 0) + IFNULL(3a_prev.EXPORT_WILD_CLOSING_DUTY, 0) + IFNULL(3a_prev.EXPORT_ODS_CLOSING_DUTY, 0) + \n" +
@@ -2377,12 +2377,12 @@ public class CustomSubParameterWiseQuery {
                 "            IFNULL(3b.EXPORT_DEEC_RECEIPT_DUTY, 0) + IFNULL(3b.EXPORT_DEPB_RECEIPT_DUTY, 0) + IFNULL(3b.EXPORT_EPCG_RECEIPT_DUTY, 0) + IFNULL(3b.EXPORT_EOU_RECEIPT_DUTY, 0) + \n" +
                 "            IFNULL(3b.EXPORT_DBK_RECEIPT_DUTY, 0) +IFNULL(3b.EXPORT_OTHERS_RECEIPT_DUTY, 0)) AS col8_cus3b\n" +
                 "    FROM mis_dri_cus_7 AS 14c\n" +
-                "    INNER JOIN mis_gst_commcode AS cc ON 14c.COMM_CODE = cc.COMM_CODE AND 14c.MM_YYYY = '" + month_date + "'\n" +
+                "    INNER JOIN mis_gst_commcode AS cc ON 14c.COMM_CODE = cc.COMM_CODE AND 14c.MM_YYYY = ?\n" +  // -- month_date
                 "    INNER JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
-                "    INNER JOIN mis_dri_cus_3a AS 3a ON 14c.COMM_CODE = 3a.COMM_CODE AND 3a.MM_YYYY = '" + month_date + "'\n" +
-                "    INNER JOIN mis_dri_cus_3a AS 3a_prev ON 14c.COMM_CODE = 3a_prev.COMM_CODE AND 3a_prev.MM_YYYY = '" + prev_month_new + "'\n" +
-                "    INNER JOIN mis_dri_cus_3b AS 3b ON 14c.COMM_CODE = 3b.COMM_CODE AND 3b.MM_YYYY = '" + month_date + "'\n" +
-                "    INNER JOIN mis_dri_cus_3b AS 3b_prev ON 14c.COMM_CODE = 3b_prev.COMM_CODE AND 3b_prev.MM_YYYY = '" + prev_month_new + "'\n" +
+                "    INNER JOIN mis_dri_cus_3a AS 3a ON 14c.COMM_CODE = 3a.COMM_CODE AND 3a.MM_YYYY = ?\n" +  // -- month_date
+                "    INNER JOIN mis_dri_cus_3a AS 3a_prev ON 14c.COMM_CODE = 3a_prev.COMM_CODE AND 3a_prev.MM_YYYY = ?\n" + // -- prev_month_new
+                "    INNER JOIN mis_dri_cus_3b AS 3b ON 14c.COMM_CODE = 3b.COMM_CODE AND 3b.MM_YYYY = ?\n" +   // -- month_date
+                "    INNER JOIN mis_dri_cus_3b AS 3b_prev ON 14c.COMM_CODE = 3b_prev.COMM_CODE AND 3b_prev.MM_YYYY = ?\n" + // -- prev_month_new
                 "    GROUP BY cc.ZONE_CODE, zc.ZONE_NAME, cc.COMM_NAME\n" +
                 "),\n" +
                 "row_numbered_cte AS (\n" +
@@ -2391,11 +2391,11 @@ public class CustomSubParameterWiseQuery {
                 ")\n" +
                 "SELECT ZONE_NAME,ZONE_CODE,COMM_NAME,col4_7,col5_cus3a,col8_cus3a,col5_cus3b,col8_cus3b,(SELECT col4_7 FROM median_cte) AS median_6c,\n" +
                 "    CONCAT(col4_7, '/', (col5_cus3a + col8_cus3a + col5_cus3b + col8_cus3b)) AS absolute_value,(col4_7 / (col5_cus3a + col8_cus3a + col5_cus3b + col8_cus3b)) * 100 AS total_score\n" +
-                "FROM cte WHERE ZONE_CODE = '" + zone_code + "'  ORDER BY col4_7 ASC;";
+                "FROM cte WHERE ZONE_CODE = ?  ORDER BY col4_7 ASC;";
         return queryCustom6d;
     }
     public String QueryFor_cus6d_AllCommissonaryWise(String month_date){
-        //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
+        //              ?	 ?	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
         String getFinancialYear = DateCalculate.getFinancialYearStart(month_date);
 
@@ -2405,10 +2405,10 @@ public class CustomSubParameterWiseQuery {
                 "    FROM mis_gst_commcode AS cc\n" +
                 "    RIGHT JOIN mis_dri_cus_7 AS scr ON cc.COMM_CODE = scr.COMM_CODE\n" +
                 "    LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
-                "    WHERE scr.MM_YYYY BETWEEN '" + getFinancialYear + "' AND '" + month_date + "' ),\n" +
+                "    WHERE scr.MM_YYYY BETWEEN ? AND ? ),\n" + // -- getFinancialYear,month_date
                 "cte AS (SELECT zc.ZONE_NAME,cc.ZONE_CODE, cc.COMM_NAME,\n" +
                 "        (SELECT MAX(cumulative_col4_7) FROM CumulativeData cd \n" +
-                "         WHERE cd.ZONE_CODE = cc.ZONE_CODE AND cd.COMM_NAME = cc.COMM_NAME AND cd.MM_YYYY = '" + month_date + "') AS col4_7,\n" +
+                "         WHERE cd.ZONE_CODE = cc.ZONE_CODE AND cd.COMM_NAME = cc.COMM_NAME AND cd.MM_YYYY = ?) AS col4_7,\n" +   // -- month_date
                 "        SUM(IFNULL(3a_prev.IMPORT_GOLD_CLOSING_DUTY, 0) + IFNULL(3a_prev.IMPORT_NARCO_CLOSING_DUTY, 0) + IFNULL(3a_prev.IMPORT_FICN_CLOSING_DUTY, 0) + IFNULL(3a_prev.IMPORT_WILD_CLOSING_DUTY, 0) + \n" +
                 "            IFNULL(3a_prev.IMPORT_ODS_CLOSING_DUTY, 0) + IFNULL(3a_prev.IMPORT_IPR_CLOSING_DUTY, 0) +IFNULL(3a_prev.IMPORT_OTHERS_CLOSING_DUTY, 0) + IFNULL(3a_prev.EXPORT_GOLD_CLOSING_DUTY, 0) + \n" +
                 "            IFNULL(3a_prev.EXPORT_NARCO_CLOSING_DUTY, 0) + IFNULL(3a_prev.EXPORT_FICN_CLOSING_DUTY, 0) + IFNULL(3a_prev.EXPORT_WILD_CLOSING_DUTY, 0) + IFNULL(3a_prev.EXPORT_ODS_CLOSING_DUTY, 0) + \n" +
@@ -2426,12 +2426,12 @@ public class CustomSubParameterWiseQuery {
                 "            IFNULL(3b.EXPORT_DEEC_RECEIPT_DUTY, 0) + IFNULL(3b.EXPORT_DEPB_RECEIPT_DUTY, 0) + IFNULL(3b.EXPORT_EPCG_RECEIPT_DUTY, 0) + IFNULL(3b.EXPORT_EOU_RECEIPT_DUTY, 0) + \n" +
                 "            IFNULL(3b.EXPORT_DBK_RECEIPT_DUTY, 0) +IFNULL(3b.EXPORT_OTHERS_RECEIPT_DUTY, 0)) AS col8_cus3b\n" +
                 "    FROM mis_dri_cus_7 AS 14c\n" +
-                "    INNER JOIN mis_gst_commcode AS cc ON 14c.COMM_CODE = cc.COMM_CODE AND 14c.MM_YYYY = '" + month_date + "'\n" +
+                "    INNER JOIN mis_gst_commcode AS cc ON 14c.COMM_CODE = cc.COMM_CODE AND 14c.MM_YYYY = ?\n" + //  // -- month_date
                 "    INNER JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE\n" +
-                "    INNER JOIN mis_dri_cus_3a AS 3a ON 14c.COMM_CODE = 3a.COMM_CODE AND 3a.MM_YYYY = '" + month_date + "'\n" +
-                "    INNER JOIN mis_dri_cus_3a AS 3a_prev ON 14c.COMM_CODE = 3a_prev.COMM_CODE AND 3a_prev.MM_YYYY = '" + prev_month_new + "'\n" +
-                "    INNER JOIN mis_dri_cus_3b AS 3b ON 14c.COMM_CODE = 3b.COMM_CODE AND 3b.MM_YYYY = '" + month_date + "'\n" +
-                "    INNER JOIN mis_dri_cus_3b AS 3b_prev ON 14c.COMM_CODE = 3b_prev.COMM_CODE AND 3b_prev.MM_YYYY = '" + prev_month_new + "'\n" +
+                "    INNER JOIN mis_dri_cus_3a AS 3a ON 14c.COMM_CODE = 3a.COMM_CODE AND 3a.MM_YYYY = ?\n" +   // -- month_date
+                "    INNER JOIN mis_dri_cus_3a AS 3a_prev ON 14c.COMM_CODE = 3a_prev.COMM_CODE AND 3a_prev.MM_YYYY = ?\n" + // -- prev_month_new
+                "    INNER JOIN mis_dri_cus_3b AS 3b ON 14c.COMM_CODE = 3b.COMM_CODE AND 3b.MM_YYYY = ?\n" +   // -- month_date
+                "    INNER JOIN mis_dri_cus_3b AS 3b_prev ON 14c.COMM_CODE = 3b_prev.COMM_CODE AND 3b_prev.MM_YYYY = ?\n" + // -- prev_month_new
                 "    GROUP BY cc.ZONE_CODE, zc.ZONE_NAME, cc.COMM_NAME\n" +
                 "),\n" +
                 "row_numbered_cte AS (SELECT *, ROW_NUMBER() OVER (ORDER BY col4_7 ASC) AS row_num, COUNT(*) OVER () AS total_rows FROM cte),\n" +
