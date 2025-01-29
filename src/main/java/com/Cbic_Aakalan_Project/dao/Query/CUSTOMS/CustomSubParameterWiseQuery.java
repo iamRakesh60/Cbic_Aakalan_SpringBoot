@@ -1397,7 +1397,7 @@ public class CustomSubParameterWiseQuery {
                 " SUM(14c.AC_CLOSING_NO + 14c.JC_CLOSING_NO + 14c.COMM_CLOSING_NO) AS col6a\n" +
                 " FROM  mis_dgi_cus_1A  AS 14c  RIGHT JOIN mis_gst_commcode AS cc ON 14c.COMM_CODE = cc.COMM_CODE \n" +
                 " LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE \n" +
-                " WHERE 14c.MM_YYYY = '" + month_date + "' GROUP BY cc.ZONE_CODE ;";
+                " WHERE 14c.MM_YYYY = ? GROUP BY cc.ZONE_CODE ;";
         return queryCustom5b;
     }
     public String QueryFor_cus5b_CommissonaryWise(String month_date, String zone_code){
@@ -1408,7 +1408,7 @@ public class CustomSubParameterWiseQuery {
                 " (14c.AC_CLOSING_NO + 14c.JC_CLOSING_NO + 14c.COMM_CLOSING_NO) AS col6a\n" +
                 " FROM  mis_dgi_cus_1A  AS 14c  RIGHT JOIN mis_gst_commcode AS cc ON 14c.COMM_CODE = cc.COMM_CODE \n" +
                 " LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE \n" +
-                " WHERE 14c.MM_YYYY ='" + month_date + "' and cc.ZONE_CODE = '"+zone_code+"';";
+                " WHERE 14c.MM_YYYY =? and cc.ZONE_CODE = ?;";
         return queryCustom5b;
     }
     public String QueryFor_cus5b_AllCommissonaryWise(String month_date){
@@ -1419,7 +1419,7 @@ public class CustomSubParameterWiseQuery {
                 " (14c.AC_CLOSING_NO + 14c.JC_CLOSING_NO + 14c.COMM_CLOSING_NO) AS col6a\n" +
                 " FROM  mis_dgi_cus_1A  AS 14c  RIGHT JOIN mis_gst_commcode AS cc ON 14c.COMM_CODE = cc.COMM_CODE \n" +
                 " LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE \n" +
-                " WHERE 14c.MM_YYYY = '" + month_date + "';";
+                " WHERE 14c.MM_YYYY = ?;";
         return queryCustom5b;
     }
     // ********************************************************************************************************************************

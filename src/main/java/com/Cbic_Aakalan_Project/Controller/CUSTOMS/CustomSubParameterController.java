@@ -616,37 +616,32 @@ public class CustomSubParameterController {
     //  http://localhost:8080/cbicApi/cbic/custom/cus5b?month_date=2022-02-01&type=all_commissary
     public Object CustomGst5b(@RequestParam String month_date,@RequestParam String type, @RequestParam(required = false) String zone_code){
         List<GSTCUS> allGstaList = new ArrayList<>();
-        GSTCUS gsta = null;
-        int rank = 0;
-        double total = 0.00;
-
-
-        try {
-            // Query string
-            if (type.equalsIgnoreCase("zone")) {
+        try (Connection con = JDBCConnection.getTNConnection()){
+            if("zone".equalsIgnoreCase(type)) {
                 String queryGst14aa = new CustomSubParameterWiseQuery().QueryFor_cus5b_ZoneWise(month_date);
-                ResultSet rsGst14aa = GetExecutionSQL.getResult(queryGst14aa);
-
-                while(rsGst14aa.next()) {
-
+                try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
+                    pstmt.setString(1, month_date);
+                    ResultSet rsGst14aa = pstmt.executeQuery();
+                    allGstaList.addAll(customSubParameterService.cus5bZone(rsGst14aa));
                 }
 
-            } else if (type.equalsIgnoreCase("commissary")) {  // cus5b
-                String queryGst14aa=new CustomSubParameterWiseQuery().QueryFor_cus5b_CommissonaryWise(month_date,zone_code);
-
-                ResultSet rsGst14aa =GetExecutionSQL.getResult(queryGst14aa);
-                while(rsGst14aa.next()) {
-
+            }else if ("commissary".equalsIgnoreCase(type)) {
+                String queryGst14aa = new CustomSubParameterWiseQuery().QueryFor_cus5b_CommissonaryWise(month_date,zone_code);
+                try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
+                    pstmt.setString(1, month_date);
+                    pstmt.setString(2, zone_code);
+                    ResultSet rsGst14aa = pstmt.executeQuery();
+                    allGstaList.addAll(customSubParameterService.cus5bZoneWiseCommissionary(rsGst14aa));
                 }
-            }else if (type.equalsIgnoreCase("all_commissary")) {  // cus5b
-                String queryGst14aa=new CustomSubParameterWiseQuery().QueryFor_cus5b_AllCommissonaryWise(month_date);
 
-                ResultSet rsGst14aa =GetExecutionSQL.getResult(queryGst14aa);
-                while(rsGst14aa.next()) {
-
+            }else if ("all_commissary".equalsIgnoreCase(type)) {
+                String queryGst14aa = new CustomSubParameterWiseQuery().QueryFor_cus5b_AllCommissonaryWise(month_date);
+                try (PreparedStatement pstmt = con.prepareStatement(queryGst14aa)) {
+                    pstmt.setString(1, month_date);
+                    ResultSet rsGst14aa = pstmt.executeQuery();
+                    allGstaList.addAll(customSubParameterService.cus5bAllCommissionary(rsGst14aa));
                 }
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
