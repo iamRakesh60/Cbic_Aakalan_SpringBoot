@@ -16,7 +16,7 @@ public class UserEmail {
 
     private String email;
 
-    private String role; // New field for role
+    private String role;
 
     public Long getId() {
         return id;
