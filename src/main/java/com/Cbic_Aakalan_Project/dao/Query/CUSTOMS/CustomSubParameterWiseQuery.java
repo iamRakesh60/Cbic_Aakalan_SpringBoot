@@ -4089,14 +4089,14 @@ public class CustomSubParameterWiseQuery {
     }
     // ********************************************************************************************************************************
     public String QueryFor_cus12b_ZoneWise(String month_date){
-        //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
+        //              ?	 '" + prev_month_new + "'	?		'" + come_name + "' 	'" + next_month_new + "'
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
         String queryCustom12b ="WITH cte_1 AS (\n" +
                 "    SELECT zc.ZONE_NAME, cc.ZONE_CODE,SUM(14c.CLOSING_NO) AS s5col29_T1, SUM(14c.AGEWISE_1) AS s5col31_T1\n" +
                 "    FROM MIS_DLA_CUS_1 AS 14c  \n" +
                 "    RIGHT JOIN mis_gst_commcode AS cc ON 14c.COMM_CODE = cc.COMM_CODE \n" +
                 "    LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE \n" +
-                "    WHERE 14c.MM_YYYY = '" + month_date + "' AND FORUM_CODE = 5\n" +
+                "    WHERE 14c.MM_YYYY = ? AND FORUM_CODE = 5\n" +
                 "    GROUP BY zc.ZONE_NAME, cc.ZONE_CODE\n" +
                 "),\n" +
                 "cte_2 AS (\n" +
@@ -4104,7 +4104,7 @@ public class CustomSubParameterWiseQuery {
                 "    FROM MIS_DLA_CUS_2 AS 14c  \n" +
                 "    RIGHT JOIN mis_gst_commcode AS cc ON 14c.COMM_CODE = cc.COMM_CODE \n" +
                 "    LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE \n" +
-                "    WHERE 14c.MM_YYYY = '" + month_date + "' AND FORUM_CODE = 5\n" +
+                "    WHERE 14c.MM_YYYY = ? AND FORUM_CODE = 5\n" +
                 "    GROUP BY zc.ZONE_NAME, cc.ZONE_CODE\n" +
                 ")\n" +
                 "\n" +
@@ -4116,21 +4116,21 @@ public class CustomSubParameterWiseQuery {
         return queryCustom12b;
     }
     public String QueryFor_cus12b_CommissonaryWise(String month_date, String zone_code){
-        //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
+        //              ?	 '" + prev_month_new + "'	?		'" + come_name + "' 	'" + next_month_new + "'
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
         String queryCustom12b="WITH Query1 AS (\n" +
                 "    SELECT zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME,(14c.CLOSING_NO) AS s5col29_T1, (14c.AGEWISE_1) AS s5col31_T1\n" +
                 "    FROM MIS_DLA_CUS_1 AS 14c  \n" +
                 "    RIGHT JOIN mis_gst_commcode AS cc ON 14c.COMM_CODE = cc.COMM_CODE \n" +
                 "    LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE \n" +
-                "    WHERE 14c.MM_YYYY = '" + month_date + "' AND FORUM_CODE = 5 AND cc.ZONE_CODE = '" + zone_code + "'\n" +
+                "    WHERE 14c.MM_YYYY = ? AND FORUM_CODE = 5 AND cc.ZONE_CODE = ?\n" +
                 "),\n" +
                 "Query2 AS (\n" +
                 "    SELECT zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME,(14c.CLOSING_NO) AS s5col23_T2, (14c.AGEWISE_1) AS s5col25_T2\n" +
                 "    FROM MIS_DLA_CUS_2 AS 14c  \n" +
                 "    RIGHT JOIN mis_gst_commcode AS cc ON 14c.COMM_CODE = cc.COMM_CODE \n" +
                 "    LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE \n" +
-                "    WHERE 14c.MM_YYYY = '" + month_date + "' AND FORUM_CODE = 5 AND cc.ZONE_CODE = '" + zone_code + "'\n" +
+                "    WHERE 14c.MM_YYYY = ? AND FORUM_CODE = 5 AND cc.ZONE_CODE = ?\n" +
                 ")\n" +
                 "SELECT q1.ZONE_NAME, q1.ZONE_CODE, q1.COMM_NAME, q1.s5col29_T1, q1.s5col31_T1,q2.s5col23_T2, q2.s5col25_T2,\n" +
                 "concat(((q1.s5col29_T1 - q1.s5col31_T1) + (q2.s5col23_T2 - q2.s5col25_T2)),'/',(q1.s5col29_T1 + q2.s5col23_T2)) AS absvl,\n" +
@@ -4140,21 +4140,21 @@ public class CustomSubParameterWiseQuery {
         return queryCustom12b;
     }
     public String QueryFor_cus12b_AllCommissonaryWise(String month_date){
-        //              '" + month_date + "'	 '" + prev_month_new + "'	'" + zone_code + "'		'" + come_name + "' 	'" + next_month_new + "'
+        //              ?	 '" + prev_month_new + "'	?		'" + come_name + "' 	'" + next_month_new + "'
         String prev_month_new = DateCalculate.getPreviousMonth(month_date);
         String queryCustom12b ="WITH Query1 AS (\n" +
                 "    SELECT zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME,(14c.CLOSING_NO) AS s5col29_T1, (14c.AGEWISE_1) AS s5col31_T1\n" +
                 "    FROM MIS_DLA_CUS_1 AS 14c  \n" +
                 "    RIGHT JOIN mis_gst_commcode AS cc ON 14c.COMM_CODE = cc.COMM_CODE \n" +
                 "    LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE \n" +
-                "    WHERE 14c.MM_YYYY = '" + month_date + "' AND FORUM_CODE = 5\n" +
+                "    WHERE 14c.MM_YYYY = ? AND FORUM_CODE = 5\n" +
                 "),\n" +
                 "Query2 AS (\n" +
                 "    SELECT zc.ZONE_NAME, cc.ZONE_CODE, cc.COMM_NAME,(14c.CLOSING_NO) AS s5col23_T2, (14c.AGEWISE_1) AS s5col25_T2\n" +
                 "    FROM MIS_DLA_CUS_2 AS 14c  \n" +
                 "    RIGHT JOIN mis_gst_commcode AS cc ON 14c.COMM_CODE = cc.COMM_CODE \n" +
                 "    LEFT JOIN mis_gst_zonecode AS zc ON zc.ZONE_CODE = cc.ZONE_CODE \n" +
-                "    WHERE 14c.MM_YYYY = '" + month_date + "' AND FORUM_CODE = 5\n" +
+                "    WHERE 14c.MM_YYYY = ? AND FORUM_CODE = 5\n" +
                 ")\n" +
                 "SELECT q1.ZONE_NAME, q1.ZONE_CODE, q1.COMM_NAME, q1.s5col29_T1, q1.s5col31_T1,q2.s5col23_T2, q2.s5col25_T2,\n" +
                 "concat(((q1.s5col29_T1 - q1.s5col31_T1) + (q2.s5col23_T2 - q2.s5col25_T2)),'/',(q1.s5col29_T1 + q2.s5col23_T2)) AS absvl,\n" +

@@ -3346,6 +3346,7 @@ public class CustomSubParameterService {
                     Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
             allGstaList.add(gsta);
         }
+        System.out.println("median cus11B zone wise :-" + median);
         return allGstaList;
     }
 
@@ -3387,6 +3388,7 @@ public class CustomSubParameterService {
                     Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
             allGstaList.add(gsta);
         }
+        System.out.println("median cus11B all commi wise :-" + median);
         return allGstaList;
     }
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=cus12A ZONE *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
@@ -3420,7 +3422,7 @@ public class CustomSubParameterService {
                     Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
             allGstaList.add(gsta);
         }
-        System.out.println("median cus9b zone wise :-" + median);
+        System.out.println("median cus12A zone wise :-" + median);
         return allGstaList;
     }
 
@@ -3455,7 +3457,7 @@ public class CustomSubParameterService {
                     Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
             allGstaList.add(gsta);
         }
-        System.out.println("median cus9b zone wise :-" + median);
+        System.out.println("median cus12A zone wise :-" + median);
         return allGstaList;
     }
 
@@ -3490,16 +3492,35 @@ public class CustomSubParameterService {
                     Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
             allGstaList.add(gsta);
         }
-        System.out.println("median cus9b zone wise :-" + median);
+        System.out.println("median cus12A zone wise :-" + median);
         return allGstaList;
     }
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=cus12B ZONE *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
     public List<GSTCUS> cus12bZone(ResultSet rsGst14aa) throws SQLException {
         List<GSTCUS> allGstaList = new ArrayList<>();
         while (rsGst14aa.next()) {
+            String ra= CustomRelaventAspect.cus12b_RA;
+            String zoneCode = rsGst14aa.getString("ZONE_CODE");
+            String zoneName =rsGst14aa.getString("ZONE_NAME");
+            String commname= "ALL";
+            total=rsGst14aa.getDouble("total_score") * 100;
+            String absval = rsGst14aa.getString("absvl");
 
+            String formattedTotal = String.format("%.2f", total);
+            double totalScore = Double.parseDouble(formattedTotal);
+            int way_to_grade = score.c_marks12b(totalScore);
+            int insentavization = 0;
+
+            int Zonal_rank = 0;
+            String gst = "CUS12B";
+
+            // 2 floating point
+            double sub_parameter_weighted_average = way_to_grade * 0.5 ;
+            sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
+            gsta=new GSTCUS(zoneName,commname,totalScore,absval,zoneCode,ra,
+                    Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
+            allGstaList.add(gsta);
         }
-        System.out.println("median cus12b zone wise :-" + median);
         return allGstaList;
     }
 
@@ -3507,9 +3528,28 @@ public class CustomSubParameterService {
     public List<GSTCUS> cus12bZoneWiseCommissionary(ResultSet rsGst14aa) throws SQLException {
         List<GSTCUS> allGstaList = new ArrayList<>();
         while (rsGst14aa.next()) {
+            String ra= CustomRelaventAspect.cus12b_RA;
+            String zoneCode = rsGst14aa.getString("ZONE_CODE");
+            String zoneName =rsGst14aa.getString("ZONE_NAME");
+            String commname= rsGst14aa.getString("COMM_NAME");
+            total=rsGst14aa.getDouble("total_score") * 100;
+            String absval = rsGst14aa.getString("absvl");
 
+            String formattedTotal = String.format("%.2f", total);
+            double totalScore = Double.parseDouble(formattedTotal);
+            int way_to_grade = score.c_marks12b(totalScore);
+            int insentavization = 0;
+
+            int Zonal_rank = 0;
+            String gst = "CUS12B";
+
+            // 2 floating point
+            double sub_parameter_weighted_average = way_to_grade * 0.5 ;
+            sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
+            gsta=new GSTCUS(zoneName,commname,totalScore,absval,zoneCode,ra,
+                    Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
+            allGstaList.add(gsta);
         }
-        System.out.println("median cus12b zone wise :-" + median);
         return allGstaList;
     }
 
@@ -3517,7 +3557,27 @@ public class CustomSubParameterService {
     public List<GSTCUS> cus12bAllCommissionary(ResultSet rsGst14aa) throws SQLException {
         List<GSTCUS> allGstaList = new ArrayList<>();
         while (rsGst14aa.next()) {
+            String ra= CustomRelaventAspect.cus12b_RA;
+            String zoneCode = rsGst14aa.getString("ZONE_CODE");
+            String zoneName =rsGst14aa.getString("ZONE_NAME");
+            String commname= rsGst14aa.getString("COMM_NAME");
+            total=rsGst14aa.getDouble("total_score") * 100;
+            String absval = rsGst14aa.getString("absvl");
 
+            String formattedTotal = String.format("%.2f", total);
+            double totalScore = Double.parseDouble(formattedTotal);
+            int way_to_grade = score.c_marks12b(totalScore);
+            int insentavization = 0;
+
+            int Zonal_rank = 0;
+            String gst = "CUS12B";
+
+            // 2 floating point
+            double sub_parameter_weighted_average = way_to_grade * 0.5 ;
+            sub_parameter_weighted_average = Math.round(sub_parameter_weighted_average * 100.0) / 100.0;
+            gsta=new GSTCUS(zoneName,commname,totalScore,absval,zoneCode,ra,
+                    Zonal_rank,gst,way_to_grade,insentavization,sub_parameter_weighted_average);
+            allGstaList.add(gsta);
         }
         System.out.println("median cus12b zone wise :-" + median);
         return allGstaList;
