@@ -1,7 +1,7 @@
 package com.Cbic_Aakalan_Project.Controller.Testing; //TestingBugReport2
 
 import com.Cbic_Aakalan_Project.Service.CGST.GstGradeScore;
-import com.Cbic_Aakalan_Project.Service.RelevantAspect;
+import com.Cbic_Aakalan_Project.Service.CGST.RelevantAspect;
 import com.Cbic_Aakalan_Project.entity.GSTCUS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

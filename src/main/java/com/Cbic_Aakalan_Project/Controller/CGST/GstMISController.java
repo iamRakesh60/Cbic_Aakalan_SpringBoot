@@ -2,7 +2,7 @@ package com.Cbic_Aakalan_Project.Controller.CGST;
 
 
 import com.Cbic_Aakalan_Project.Service.CGST.GstGradeScore;
-import com.Cbic_Aakalan_Project.Service.RelevantAspect;
+import com.Cbic_Aakalan_Project.Service.CGST.RelevantAspect;
 import com.Cbic_Aakalan_Project.dao.Query.CGST.GstMISQuery;
 import com.Cbic_Aakalan_Project.dao.result.GetExecutionSQL;
 import com.Cbic_Aakalan_Project.entity.TotalScore;

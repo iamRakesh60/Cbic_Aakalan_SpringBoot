@@ -1,13 +1,11 @@
 package com.Cbic_Aakalan_Project.Service.CGST;
 
 
-import com.Cbic_Aakalan_Project.Service.RelevantAspect;
 import com.Cbic_Aakalan_Project.entity.GSTCUS;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class GstSubParameterService {

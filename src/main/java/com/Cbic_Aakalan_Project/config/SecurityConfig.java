@@ -22,7 +22,7 @@ public class SecurityConfig {
                 .and()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/cbicApi/**").authenticated() // Secure all /cbicApi endpoints
+                .antMatchers("/cbicApi/**").authenticated()
                 .and()
                 .httpBasic()
                 .and()

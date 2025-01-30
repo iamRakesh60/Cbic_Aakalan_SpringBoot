@@ -1,7 +1,7 @@
 package com.Cbic_Aakalan_Project.Controller.Testing;
 
 import com.Cbic_Aakalan_Project.Service.CGST.GstGradeScore;
-import com.Cbic_Aakalan_Project.Service.RelevantAspect;
+import com.Cbic_Aakalan_Project.Service.CGST.RelevantAspect;
 import com.Cbic_Aakalan_Project.dao.Query.CGST.GstSubParameterWiseQuery;
 import com.Cbic_Aakalan_Project.dao.result.GetExecutionSQL;
 import com.Cbic_Aakalan_Project.entity.GSTCUS;
